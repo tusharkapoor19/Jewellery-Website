@@ -1,0 +1,688 @@
+/* ==========================================================================
+   HIRANYA LUXURY ECOMMERCE - ADDRESS MODAL ARCHITECTURE
+   Inspired by Apple, Rolex, Cartier, Dior, Tanishq & CaratLane
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. DESIGN SYSTEM & CSS VARIABLES
+   -------------------------------------------------------------------------- */
+:root {
+  /* Typography */
+  --hiranya-font-serif: "Playfair Display", "Cinzel", "Cormorant Garamond", Georgia, serif;
+  --hiranya-font-sans: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Montserrat", "Segoe UI", Roboto, sans-serif;
+
+  /* Color Palette - Royal Gold & High Contrast Luxury */
+  --hiranya-gold-100: #FFF9E6;
+  --hiranya-gold-200: #F3E5AB;
+  --hiranya-gold-300: #E6CA65;
+  --hiranya-gold-400: #D4AF37; /* Metallic Royal Gold Primary */
+  --hiranya-gold-500: #AA7C11;
+  --hiranya-gold-600: #886208;
+  
+  --hiranya-black-900: #0D0D0D;
+  --hiranya-black-800: #1A1A1A;
+  --hiranya-black-700: #262626;
+
+  --hiranya-white: #FFFFFF;
+  --hiranya-cream: #FAF8F5;
+  
+  --hiranya-grey-50: #F9FAFB;
+  --hiranya-grey-100: #F3F4F6;
+  --hiranya-grey-200: #E5E7EB;
+  --hiranya-grey-300: #D1D5DB;
+  --hiranya-grey-400: #9CA3AF;
+  --hiranya-grey-500: #6B7280;
+  --hiranya-grey-600: #4B5563;
+
+  --hiranya-error-bg: #FFF5F5;
+  --hiranya-error-border: #FEB2B2;
+  --hiranya-error-text: #C53030;
+
+  /* Gradients */
+  --hiranya-gold-gradient: linear-gradient(135deg, #D4AF37 0%, #EDC967 50%, #AA7C11 100%);
+  --hiranya-gold-gradient-hover: linear-gradient(135deg, #EDC967 0%, #D4AF37 50%, #886208 100%);
+  --hiranya-glass-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 248, 245, 0.98) 100%);
+
+  /* Shadows & Glows */
+  --hiranya-shadow-ambient: 0 30px 60px -12px rgba(0, 0, 0, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.15);
+  --hiranya-shadow-gold-glow: 0 8px 25px rgba(212, 175, 55, 0.35);
+  --hiranya-shadow-input-focus: 0 0 0 4px rgba(212, 175, 55, 0.15);
+
+  /* Transitions & Timing */
+  --hiranya-ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --hiranya-ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --hiranya-transition-fast: 0.2s var(--hiranya-ease-smooth);
+  --hiranya-transition-normal: 0.35s var(--hiranya-ease-smooth);
+  --hiranya-transition-slow: 0.5s var(--hiranya-ease-smooth);
+
+  /* Borders & Radius */
+  --hiranya-radius-sm: 8px;
+  --hiranya-radius-md: 12px;
+  --hiranya-radius-lg: 20px;
+  --hiranya-radius-xl: 28px;
+  --hiranya-radius-full: 9999px;
+  
+  --hiranya-border-light: 1px solid rgba(229, 231, 235, 0.8);
+  --hiranya-border-gold: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   1. MODAL OVERLAY & CONTAINER
+   -------------------------------------------------------------------------- */
+.hiranya-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(13, 13, 13, 0.65);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+  animation: hiranyaOverlayFadeIn 0.4s var(--hiranya-ease-smooth) forwards;
+  will-change: opacity;
+}
+
+.hiranya-address-modal {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  max-height: calc(100vh - 3rem);
+  display: flex;
+  flex-direction: column;
+  background: var(--hiranya-glass-gradient);
+  border-radius: var(--hiranya-radius-xl);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: var(--hiranya-shadow-ambient), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+  overflow: hidden;
+  font-family: var(--hiranya-font-sans);
+  color: var(--hiranya-black-900);
+  animation: hiranyaModalScaleUp 0.45s var(--hiranya-ease-out-back) forwards;
+  will-change: transform, opacity;
+}
+
+/* Modal Animations */
+@keyframes hiranyaOverlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hiranyaModalScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. HEADER & CLOSE BUTTON
+   -------------------------------------------------------------------------- */
+.hiranya-modal-header {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 2.25rem 2.5rem 1.5rem 2.5rem;
+  background: transparent;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  z-index: 10;
+}
+
+.hiranya-modal-header h2 {
+  margin: 0 0 0.35rem 0;
+  font-family: var(--hiranya-font-serif);
+  font-size: 1.85rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--hiranya-black-900);
+  background: linear-gradient(135deg, #0D0D0D 0%, #333333 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hiranya-modal-header p {
+  margin: 0;
+  font-size: 0.925rem;
+  color: var(--hiranya-grey-500);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.hiranya-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-left: 1rem;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--hiranya-radius-full);
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--hiranya-black-800);
+  cursor: pointer;
+  transition: all var(--hiranya-transition-fast);
+  outline: none;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.hiranya-close-btn:hover {
+  background: var(--hiranya-black-900);
+  color: var(--hiranya-gold-400);
+  border-color: var(--hiranya-black-900);
+  transform: rotate(90deg) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.hiranya-close-btn:active {
+  transform: rotate(90deg) scale(0.95);
+}
+
+/* --------------------------------------------------------------------------
+   3. MODAL BODY & SCROLLBAR
+   -------------------------------------------------------------------------- */
+.hiranya-modal-body {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+.hiranya-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hiranya-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hiranya-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.25);
+  border-radius: var(--hiranya-radius-full);
+  transition: background var(--hiranya-transition-fast);
+}
+
+.hiranya-modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--hiranya-gold-400);
+}
+
+/* --------------------------------------------------------------------------
+   4. FORM GRID & INPUT FIELDS
+   -------------------------------------------------------------------------- */
+.hiranya-address-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 1.25rem;
+}
+
+.hiranya-field {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.hiranya-field.hiranya-full {
+  grid-column: span 2;
+}
+
+.hiranya-field label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--hiranya-black-800);
+}
+
+.hiranya-field label svg {
+  color: var(--hiranya-gold-400);
+  transition: transform var(--hiranya-transition-fast);
+}
+
+.hiranya-field:focus-within label svg {
+  transform: scale(1.15);
+  color: var(--hiranya-gold-500);
+}
+
+/* Universal Input & Select Styling */
+.hiranya-field input[type="text"],
+.hiranya-field input[type="tel"],
+.hiranya-field select {
+  width: 100%;
+  height: 52px;
+  padding: 0 1.15rem;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.975rem;
+  font-weight: 400;
+  color: var(--hiranya-black-900);
+  background: var(--hiranya-white);
+  border: 1.5px solid var(--hiranya-grey-200);
+  border-radius: var(--hiranya-radius-md);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) inset;
+  transition: all var(--hiranya-transition-fast);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+}
+
+/* Placeholder Styling */
+.hiranya-field input::placeholder {
+  color: var(--hiranya-grey-400);
+  font-weight: 300;
+}
+
+/* Hover & Focus Interactions */
+.hiranya-field input[type="text"]:hover:not(:disabled),
+.hiranya-field input[type="tel"]:hover:not(:disabled),
+.hiranya-field select:hover:not(:disabled) {
+  border-color: var(--hiranya-gold-300);
+  background: #FFFFFF;
+}
+
+.hiranya-field input[type="text"]:focus,
+.hiranya-field input[type="tel"]:focus,
+.hiranya-field select:focus {
+  border-color: var(--hiranya-gold-400);
+  background: var(--hiranya-white);
+  box-shadow: var(--hiranya-shadow-input-focus), 0 4px 12px rgba(212, 175, 55, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Custom Select Dropdown Arrow */
+.hiranya-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%20D4AF37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.15rem center;
+  background-size: 1.1rem;
+  padding-right: 2.75rem;
+  cursor: pointer;
+}
+
+/* Disabled State */
+.hiranya-field input:disabled,
+.hiranya-field select:disabled {
+  background: var(--hiranya-grey-100);
+  border-color: var(--hiranya-grey-200);
+  color: var(--hiranya-grey-500);
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+/* Validation Error Styles */
+.hiranya-error {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.775rem;
+  font-weight: 500;
+  color: var(--hiranya-error-text);
+  letter-spacing: 0.01em;
+  animation: hiranyaShake 0.3s var(--hiranya-ease-smooth);
+}
+
+.hiranya-field:has(.hiranya-error) input,
+.hiranya-field:has(.hiranya-error) select {
+  border-color: var(--hiranya-error-border) !important;
+  background-color: var(--hiranya-error-bg) !important;
+}
+
+@keyframes hiranyaShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+/* --------------------------------------------------------------------------
+   5. ADDRESS TYPE CHIPS (PILL SELECTOR)
+   -------------------------------------------------------------------------- */
+.hiranya-address-type-selector {
+  margin-top: 1.75rem;
+}
+
+.hiranya-address-type-selector label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--hiranya-black-800);
+}
+
+.hiranya-chip-group {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.hiranya-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  height: 46px;
+  padding: 0 1.4rem;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--hiranya-grey-600);
+  background: var(--hiranya-white);
+  border: 1.5px solid var(--hiranya-grey-200);
+  border-radius: var(--hiranya-radius-full);
+  cursor: pointer;
+  transition: all var(--hiranya-transition-fast);
+  outline: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.hiranya-chip svg {
+  color: var(--hiranya-grey-400);
+  transition: color var(--hiranya-transition-fast);
+}
+
+.hiranya-chip:hover {
+  border-color: var(--hiranya-gold-300);
+  color: var(--hiranya-black-900);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.hiranya-chip:hover svg {
+  color: var(--hiranya-gold-500);
+}
+
+/* Active Gold Chip State */
+.hiranya-chip.active {
+  background: var(--hiranya-black-900);
+  color: var(--hiranya-gold-300);
+  border-color: var(--hiranya-black-900);
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(13, 13, 13, 0.2), 0 0 0 1px var(--hiranya-gold-400);
+  transform: translateY(-2px);
+}
+
+.hiranya-chip.active svg {
+  color: var(--hiranya-gold-400);
+}
+
+/* --------------------------------------------------------------------------
+   6. DEFAULT ADDRESS CHECKBOX
+   -------------------------------------------------------------------------- */
+.hiranya-default-option {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed rgba(212, 175, 55, 0.2);
+}
+
+.hiranya-default-option label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: var(--hiranya-black-800);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Custom Checkbox Design */
+.hiranya-default-option input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--hiranya-grey-300);
+  border-radius: 6px;
+  background: var(--hiranya-white);
+  cursor: pointer;
+  position: relative;
+  transition: all var(--hiranya-transition-fast);
+  outline: none;
+  margin: 0;
+}
+
+.hiranya-default-option input[type="checkbox"]:hover {
+  border-color: var(--hiranya-gold-400);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.hiranya-default-option input[type="checkbox"]:checked {
+  background: var(--hiranya-black-900);
+  border-color: var(--hiranya-black-900);
+}
+
+.hiranya-default-option input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 7px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--hiranya-gold-400);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+  animation: hiranyaCheckmark 0.2s ease-out;
+}
+
+@keyframes hiranyaCheckmark {
+  from {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. FOOTER & ACTION BUTTONS
+   -------------------------------------------------------------------------- */
+.hiranya-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.5rem 2.5rem 2rem 2.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/* Base Button Architecture */
+.hiranya-cancel-btn,
+.hiranya-save-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  padding: 0 2rem;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--hiranya-radius-full);
+  cursor: pointer;
+  transition: all var(--hiranya-transition-normal);
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Cancel Button (Luxury Outline) */
+.hiranya-cancel-btn {
+  background: transparent;
+  color: var(--hiranya-black-800);
+  border: 1.5px solid var(--hiranya-grey-300);
+}
+
+.hiranya-cancel-btn:hover {
+  background: var(--hiranya-grey-100);
+  border-color: var(--hiranya-black-900);
+  color: var(--hiranya-black-900);
+  transform: translateY(-2px);
+}
+
+.hiranya-cancel-btn:active {
+  transform: translateY(0);
+}
+
+/* Save Button (Royal Gold Metallic) */
+.hiranya-save-btn {
+  background: var(--hiranya-gold-gradient);
+  color: var(--hiranya-black-900);
+  border: none;
+  box-shadow: var(--hiranya-shadow-gold-glow);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.hiranya-save-btn:hover:not(:disabled) {
+  background: var(--hiranya-gold-gradient-hover);
+  box-shadow: 0 10px 28px rgba(212, 175, 55, 0.45);
+  transform: translateY(-2px);
+}
+
+.hiranya-save-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.3);
+}
+
+/* Loading & Disabled States */
+.hiranya-save-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  box-shadow: none;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   8. RESPONSIVE DESIGN (BREAKPOINTS)
+   -------------------------------------------------------------------------- */
+/* Laptop & Small Desktop */
+@media (max-width: 768px) {
+  .hiranya-modal-overlay {
+    padding: 1rem;
+  }
+
+  .hiranya-address-modal {
+    max-height: calc(100vh - 2rem);
+    border-radius: var(--hiranya-radius-lg);
+  }
+
+  .hiranya-modal-header {
+    padding: 1.75rem 1.75rem 1.25rem 1.75rem;
+  }
+
+  .hiranya-modal-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .hiranya-modal-body {
+    padding: 1.5rem 1.75rem;
+  }
+
+  .hiranya-modal-footer {
+    padding: 1.25rem 1.75rem 1.5rem 1.75rem;
+  }
+}
+
+/* Tablet & Mobile */
+@media (max-width: 640px) {
+  .hiranya-address-grid {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+  }
+
+  .hiranya-field.hiranya-full {
+    grid-column: span 1;
+  }
+
+  .hiranya-chip-group {
+    width: 100%;
+  }
+
+  .hiranya-chip {
+    flex: 1;
+    justify-content: center;
+    padding: 0 0.85rem;
+  }
+
+  .hiranya-modal-footer {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+
+  .hiranya-cancel-btn,
+  .hiranya-save-btn {
+    width: 100%;
+    height: 48px;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 400px) {
+  .hiranya-modal-header {
+    padding: 1.25rem 1.25rem 1rem 1.25rem;
+  }
+
+  .hiranya-modal-body {
+    padding: 1.25rem;
+  }
+
+  .hiranya-modal-footer {
+    padding: 1rem 1.25rem 1.25rem 1.25rem;
+  }
+
+  .hiranya-chip-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .hiranya-chip {
+    width: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9. ACCESSIBILITY & PREFERENCES
+   -------------------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--hiranya-gold-400);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hiranya-modal-overlay,
+  .hiranya-address-modal,
+  .hiranya-close-btn,
+  .hiranya-chip,
+  .hiranya-save-btn,
+  .hiranya-cancel-btn,
+  .hiranya-field input,
+  .hiranya-field select {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

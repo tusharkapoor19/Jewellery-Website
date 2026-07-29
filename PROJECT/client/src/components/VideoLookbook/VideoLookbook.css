@@ -1,0 +1,108 @@
+.lookbook{
+    position:relative;
+    margin:90px 8%;
+    height:620px;
+    border-radius:30px;
+    overflow:hidden;
+}
+
+.lookbook-video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.8s;
+}
+
+.lookbook:hover .lookbook-video{
+    transform:scale(1.03);
+}
+
+.lookbook-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    background:linear-gradient(
+        rgba(0,0,0,.45),
+        rgba(0,0,0,.55)
+    );
+}
+
+.lookbook-content{
+    color:#fff;
+    max-width:700px;
+}
+
+.lookbook-content span{
+    color:#d4af37;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    font-size:13px;
+    font-weight:700;
+}
+
+.lookbook-content h2{
+    margin:20px 0;
+    font-size:62px;
+    line-height:1.1;
+    font-family:"Cormorant Garamond",serif;
+}
+
+.lookbook-content p{
+    max-width:600px;
+    margin:0 auto 35px;
+    color:#eee;
+    line-height:1.9;
+}
+
+.play-btn{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    font-size:34px;
+    color:#fff;
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(12px);
+    transition:.35s;
+}
+
+.play-btn:hover{
+    transform:scale(1.12);
+    background:#d4af37;
+    color:#111;
+}
+
+/* MODAL */
+
+.video-modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.92);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.popup-video{
+    width:85%;
+    max-width:1100px;
+    border-radius:18px;
+}
+
+.close-btn{
+    position:absolute;
+    top:35px;
+    right:40px;
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:50%;
+    background:#fff;
+    cursor:pointer;
+    font-size:20px;
+}

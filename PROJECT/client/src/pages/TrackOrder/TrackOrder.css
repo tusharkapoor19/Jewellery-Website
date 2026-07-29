@@ -1,0 +1,246 @@
+.track-section{
+  padding:70px 20px;
+  background:var(--bg-color);
+  min-height:100vh;
+}
+
+.track-container{
+  max-width:1200px;
+  margin:auto;
+}
+
+.track-hero{
+  display:flex;
+  align-items:center;
+  gap:25px;
+  margin-bottom:40px;
+  background:var(--card-bg);
+  border-radius:20px;
+  padding:35px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.track-icon{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#d4af37,#f5d76e);
+  color:#fff;
+  font-size:34px;
+}
+
+.track-content span{
+  color:#d4af37;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:2px;
+}
+
+.track-content h1{
+  margin:10px 0;
+  font-size:38px;
+  color:var(--text-color);
+}
+
+.track-content p{
+  color:var(--secondary-text);
+  line-height:1.8;
+}
+
+.track-card{
+  background:var(--card-bg);
+  padding:35px;
+  border-radius:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  margin-bottom:35px;
+}
+
+.track-card h2{
+  margin-bottom:20px;
+  color:var(--text-color);
+}
+
+.track-card input{
+  width:100%;
+  padding:15px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  outline:none;
+  margin-bottom:20px;
+  font-size:15px;
+  background:transparent;
+  color:var(--text-color);
+}
+
+.track-btn{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:#d4af37;
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+  transition:.3s;
+}
+
+.track-btn:hover{
+  background:#b89227;
+}
+
+.tracking-result{
+  background:var(--card-bg);
+  border-radius:20px;
+  padding:35px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  margin-bottom:35px;
+}
+
+.order-info{
+  margin:25px 0;
+}
+
+.order-info p{
+  margin:10px 0;
+  color:var(--secondary-text);
+}
+
+.status{
+  color:#2e8b57;
+  font-weight:700;
+}
+.tracking-timeline{
+  margin-top:30px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.timeline-item{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:14px 18px;
+  border:1px solid rgba(212,175,55,.2);
+  border-radius:12px;
+  background:var(--card-bg);
+  color:var(--secondary-text);
+  transition:.3s;
+}
+
+.timeline-item i{
+  font-size:20px;
+}
+
+.timeline-item.completed{
+  color:#2e8b57;
+  border-color:#2e8b57;
+}
+
+.timeline-item.active{
+  background:rgba(212,175,55,.12);
+  border:2px solid #d4af37;
+  color:#d4af37;
+  font-weight:600;
+}
+
+.timeline-item.active i{
+  animation:truckMove 1.5s infinite;
+}
+
+@keyframes truckMove{
+  0%{
+    transform:translateX(0);
+  }
+  50%{
+    transform:translateX(6px);
+  }
+  100%{
+    transform:translateX(0);
+  }
+}
+
+.error{
+  text-align:center;
+}
+
+.error i{
+  font-size:60px;
+  color:#e63946;
+  margin-bottom:15px;
+}
+
+.error h2{
+  color:var(--text-color);
+  margin-bottom:10px;
+}
+
+.error p{
+  color:var(--secondary-text);
+}
+
+.track-features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
+  margin-top:40px;
+}
+
+.track-features .feature-card{
+  background:var(--card-bg);
+  padding:30px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  transition:.3s;
+}
+
+.track-features .feature-card:hover{
+  transform:translateY(-6px);
+}
+
+.track-features .feature-card i{
+  font-size:34px;
+  color:#d4af37;
+  margin-bottom:18px;
+}
+
+.track-features .feature-card h3{
+  color:var(--text-color);
+  margin-bottom:12px;
+}
+
+.track-features .feature-card p{
+  color:var(--secondary-text);
+  line-height:1.7;
+}
+
+@media(max-width:768px){
+
+  .track-hero{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .track-content h1{
+    font-size:30px;
+  }
+
+  .track-features{
+    grid-template-columns:1fr;
+  }
+
+  .track-card,
+  .tracking-result{
+    padding:25px;
+  }
+
+  .timeline-item{
+    align-items:flex-start;
+  }
+
+}

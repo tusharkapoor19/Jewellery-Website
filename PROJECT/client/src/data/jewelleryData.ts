@@ -1,0 +1,271 @@
+import type { JewelleryCategory, JewelleryItem } from '../types/Jewellery';
+
+import necklace1 from '../assets/try-on/images/necklace-1.png';
+import necklace2 from '../assets/try-on/images/necklace-2.png';
+import necklace3 from '../assets/try-on/images/necklace-3.png';
+import earrings1 from '../assets/try-on/images/earrings-1.png';
+import earrings2 from '../assets/try-on/images/earrings-2.png';
+import earrings3 from '../assets/try-on/images/earrings-3.png';
+import rings1 from '../assets/try-on/images/rings-1.png';
+import rings2 from '../assets/try-on/images/rings-2.png';
+import rings3 from '../assets/try-on/images/rings-3.png';
+import rings4 from '../assets/try-on/images/rings-4.png';
+import rings5 from '../assets/try-on/images/rings-5.png';
+import rings6 from '../assets/try-on/images/rings-6.png';
+import bangles1 from '../assets/try-on/images/bangles-1.png';
+import bracelets1 from '../assets/try-on/images/bracelets-1.png';
+import bracelets2 from '../assets/try-on/images/bracelets-2.png';
+import watches1 from '../assets/try-on/images/watches-1.svg'
+import mangalsutra1 from '../assets/try-on/images/mangalsutra-1.png';
+import mangalsutra2 from '../assets/try-on/images/mangalsutra-2.png';
+import mangalsutra3 from '../assets/try-on/images/mangalsutra-3.png';
+import chains1 from '../assets/try-on/images/chains-1.png';
+import chains2 from '../assets/try-on/images/chains-2.png';
+
+export const CATEGORIES: JewelleryCategory[] = [
+  { id: 'necklace', label: 'Necklaces', icon: '💎' },
+  { id: 'earrings', label: 'Earrings', icon: '✨' },
+  { id: 'rings', label: 'Rings', icon: '💍' },
+  { id: 'bangles', label: 'Bangles', icon: '⭕' },
+  { id: 'bracelets', label: 'Bracelets', icon: '🔗' },
+  { id: 'watches', label: 'Watches', icon: '⌚' },
+  { id: 'mangalsutra', label: 'Mangalsutra', icon: '⚫' },
+  { id: 'chains', label: 'Chains', icon: '➰' },
+];
+
+export const JEWELLERY_ITEMS: JewelleryItem[] = [
+  {
+    id: 'necklace-royal-choker',
+    name: 'Royal Ruby Choker',
+    categoryId: 'necklace',
+    image: necklace1,
+    thumbnail: necklace1,
+    anchor: 'neck',
+    defaultScale: 1,
+    price: 24999,
+    tags: ['bridal', 'gold', 'ruby'],
+  },
+  {
+    id: 'necklace-layered-gold',
+    name: 'Layered Gold Necklace',
+    categoryId: 'necklace',
+    image: necklace2,
+    thumbnail: necklace2,
+    anchor: 'neck',
+    defaultScale: 1,
+    price: 18999,
+    tags: ['daily-wear', 'gold'],
+  },
+  {
+    id: 'necklace-layered-gold2',
+    name: 'Layered Gold Necklace',
+    categoryId: 'necklace',
+    image: necklace3,
+    thumbnail: necklace3,
+    anchor: 'neck',
+    defaultScale: 1,
+    price: 18999,
+    tags: ['daily-wear', 'gold', 'diamond'],
+  },
+  {
+    id: 'earrings-jhumka',
+    name: 'Classic Gold Jhumka',
+    categoryId: 'earrings',
+    image: earrings1,
+    thumbnail: earrings1,
+    anchor: 'ear-both',
+    defaultScale: 1,
+    price: 8499,
+    tags: ['traditional', 'gold'],
+  },
+  {
+    id: 'earrings-diamond-stud',
+    name: 'Diamond Halo Studs',
+    categoryId: 'earrings',
+    image: earrings2,
+    thumbnail: earrings2,
+    anchor: 'ear-both',
+    defaultScale: 1,
+    price: 32999,
+    tags: ['diamond', 'party'],
+  },
+  {
+    id: 'earrings-diamond-stud2',
+    name: 'Diamond Halo Studs',
+    categoryId: 'earrings',
+    image: earrings3,
+    thumbnail: earrings3,
+    anchor: 'ear-both',
+    defaultScale: 1,
+    price: 32999,
+    tags: ['diamond', 'party'],
+  },
+  {
+    id: 'ring-sapphire',
+    name: 'Sapphire Solitaire Ring',
+    categoryId: 'rings',
+    image: rings1,
+    thumbnail: rings1,
+    anchor: 'finger',
+    defaultScale: 1,
+    price: 15999,
+    tags: ['gold', 'sapphire'],
+  },
+  {
+    id: 'ring-sapphire2',
+    name: 'Sapphire Solitaire Ring',
+    categoryId: 'rings',
+    image: rings2,
+    thumbnail: rings2,
+    anchor: 'finger',
+    defaultScale: 1,
+    price: 15999,
+    tags: ['gold', 'sapphire'],
+  },
+  {
+    id: 'ring-sapphire3',
+    name: 'Sapphire Solitaire Ring',
+    categoryId: 'rings',
+    image: rings3,
+    thumbnail: rings3,
+    anchor: 'finger',
+    defaultScale: 1,
+    price: 15999,
+    tags: ['gold', 'sapphire'],
+  },
+  {
+    id: 'ring-sapphire4',
+    name: 'Sapphire Solitaire Ring',
+    categoryId: 'rings',
+    image: rings4,
+    thumbnail: rings4,
+    anchor: 'finger',
+    defaultScale: 1,
+    price: 15999,
+    tags: ['gold', 'sapphire'],
+  },
+  {
+    id: 'ring-sapphire5',
+    name: 'Sapphire Solitaire Ring',
+    categoryId: 'rings',
+    image: rings5,
+    thumbnail: rings5,
+    anchor: 'finger',
+    defaultScale: 1,
+    price: 15999,
+    tags: ['gold', 'sapphire'],
+  },
+  {
+    id: 'ring-sapphire6',
+    name: 'Sapphire Solitaire Ring',
+    categoryId: 'rings',
+    image: rings6,
+    thumbnail: rings6,
+    anchor: 'finger',
+    defaultScale: 1,
+    price: 15999,
+    tags: ['gold', 'sapphire'],
+  },
+  {
+    id: 'bangle-classic',
+    name: 'Classic Gold Bangle',
+    categoryId: 'bangles',
+    image: bangles1,
+    thumbnail: bangles1,
+    anchor: 'wrist',
+    defaultScale: 1,
+    price: 21999,
+    tags: ['gold', 'traditional'],
+  },
+  {
+    id: 'bracelet-chain',
+    name: 'Gold Link Bracelet',
+    categoryId: 'bracelets',
+    image: bracelets1,
+    thumbnail: bracelets1,
+    anchor: 'wrist',
+    defaultScale: 1,
+    price: 9999,
+    tags: ['gold', 'daily-wear'],
+  },
+  {
+    id: 'bracelet-chain2',
+    name: 'Gold Link Bracelet',
+    categoryId: 'bracelets',
+    image: bracelets2,
+    thumbnail: bracelets2,
+    anchor: 'wrist',
+    defaultScale: 1,
+    price: 9999,
+    tags: ['gold', 'daily-wear'],
+  },
+  {
+    id: 'watch-luxury',
+    name: 'Heritage Gold Watch',
+    categoryId: 'watches',
+    image: watches1,
+    thumbnail: watches1,
+    anchor: 'wrist',
+    defaultScale: 1,
+    price: 45999,
+    tags: ['luxury', 'gold'],
+  },
+  {
+    id: 'mangalsutra-classic',
+    name: 'Classic Black Bead Mangalsutra',
+    categoryId: 'mangalsutra',
+    image: mangalsutra1,
+    thumbnail: mangalsutra1,
+    anchor: 'neck',
+    defaultScale: 1,
+    price: 27999,
+    tags: ['gold', 'traditional'],
+  },
+  {
+    id: 'mangalsutra-classic2',
+    name: 'Classic Black Bead Mangalsutra',
+    categoryId: 'mangalsutra',
+    image: mangalsutra2,
+    thumbnail: mangalsutra2,
+    anchor: 'neck',
+    defaultScale: 1,
+    price: 27999,
+    tags: ['gold', 'traditional'],
+  },
+  {
+    id: 'mangalsutra-classic3',
+    name: 'Classic Black Bead Mangalsutra',
+    categoryId: 'mangalsutra',
+    image: mangalsutra3,
+    thumbnail: mangalsutra3,
+    anchor: 'neck',
+    defaultScale: 1,
+    price: 27999,
+    tags: ['gold', 'traditional'],
+  },
+  {
+    id: 'chain-simple',
+    name: 'Simple Gold Chain',
+    categoryId: 'chains',
+    image: chains1,
+    thumbnail: chains1,
+    anchor: 'neck',
+    defaultScale: 1,
+    price: 11999,
+    tags: ['gold', 'daily-wear'],
+  },
+  {
+    id: 'chain-simple2',
+    name: 'Simple Gold Chain',
+    categoryId: 'chains',
+    image: chains2,
+    thumbnail: chains2,
+    anchor: 'neck',
+    defaultScale: 1,
+    price: 11999,
+    tags: ['gold', 'daily-wear'],
+  },
+];
+
+export const getItemsByCategory = (categoryId: string): JewelleryItem[] =>
+  JEWELLERY_ITEMS.filter((item) => item.categoryId === categoryId);

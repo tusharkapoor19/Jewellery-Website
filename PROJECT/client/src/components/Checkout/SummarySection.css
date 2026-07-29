@@ -1,0 +1,63 @@
+.hiranya-summary-product{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    margin:18px 0;
+
+    padding-bottom:18px;
+
+    border-bottom:1px solid rgba(0,0,0,.08);
+
+}
+
+.hiranya-summary-image{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:14px;
+
+    object-fit:cover;
+
+}
+
+.hiranya-summary-product-info{
+
+    flex:1;
+
+}
+
+.hiranya-summary-product-info h4{
+
+    margin:0 0 6px;
+
+    font-size:15px;
+
+}
+
+.hiranya-summary-product-info p{
+
+    margin:0;
+
+    font-size:13px;
+
+    color:#777;
+
+}
+
+.hiranya-summary-product-info span{
+
+    display:block;
+
+    margin-top:4px;
+
+    font-size:13px;
+
+    color:#999;
+
+}

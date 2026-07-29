@@ -1,0 +1,103 @@
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+    background: #f8f5ef;
+    color: #222;
+    font-size: 12px;
+    border-bottom: 1px solid #e5dfd2;
+}
+
+.topbar-container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 8px 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar-left,
+.topbar-center,
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.topbar-center{
+    flex: 1;
+    justify-content: center;
+}
+
+.topbar-right span,
+.topbar-left span,
+.topbar-center span {
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.topbar-right span:hover,
+.topbar-left span:hover,
+.topbar-center span:hover {
+    color: #c9a14a;
+}
+
+/* Live Rates */
+
+.gold-rate,
+.silver-rate{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:#c9a14a;
+    font-weight:600;
+}
+
+.live-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#00c853;
+    box-shadow:0 0 8px #00c853;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%{
+        transform:scale(1);
+        opacity:1;
+    }
+    50%{
+        transform:scale(1.4);
+        opacity:.6;
+    }
+    100%{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+@media (max-width:1200px){
+    .gold-rate,
+    .silver-rate{
+        display:none;
+    }
+}
+
+@media (max-width:992px){
+    .topbar-center{
+        display:none;
+    }
+}
+
+@media (max-width:768px){
+    .topbar{
+        display:none;
+    }
+}

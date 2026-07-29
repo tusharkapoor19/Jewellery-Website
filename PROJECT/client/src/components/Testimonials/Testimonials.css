@@ -1,0 +1,231 @@
+.testimonials{
+    padding:90px 8%;
+    background:linear-gradient(180deg,#fffdf9 0%,#f8f3eb 100%);
+}
+
+.testimonial-heading{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.testimonial-heading span{
+    color:#d4af37;
+    font-size:13px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    font-weight:700;
+}
+
+.testimonial-heading h2{
+    margin:18px 0 15px;
+    font-size:52px;
+    font-family:"Cormorant Garamond",serif;
+    color:#1f1f1f;
+}
+
+.testimonial-heading p{
+    max-width:620px;
+    margin:auto;
+    color:#666;
+    font-size:17px;
+    line-height:1.8;
+}
+
+/* GRID */
+
+.testimonial-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:35px;
+}
+
+/* CARD */
+
+.testimonial-card{
+    background:rgba(255,255,255,.75);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+
+    border:1px solid rgba(212,175,55,.15);
+
+    border-radius:26px;
+
+    padding:45px 35px;
+
+    text-align:center;
+
+    transition:.45s ease;
+
+    box-shadow:
+    0 12px 35px rgba(0,0,0,.06);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.testimonial-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    background:rgba(212,175,55,.08);
+
+    border-radius:50%;
+
+    top:-80px;
+    right:-70px;
+
+    transition:.5s;
+}
+
+.testimonial-card:hover{
+
+    transform:translateY(-12px);
+
+    border-color:#d4af37;
+
+    box-shadow:
+    0 20px 55px rgba(0,0,0,.12);
+}
+
+.testimonial-card:hover::before{
+
+    transform:scale(1.25);
+}
+
+/* IMAGE */
+
+.testimonial-card img{
+
+    width:90px;
+    height:90px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:4px solid #d4af37;
+
+    margin-bottom:22px;
+
+    transition:.45s;
+}
+
+.testimonial-card:hover img{
+
+    transform:scale(1.08);
+}
+
+/* STARS */
+
+.stars{
+
+    color:#d4af37;
+
+    font-size:20px;
+
+    letter-spacing:4px;
+
+    margin-bottom:18px;
+}
+
+/* REVIEW */
+
+.testimonial-card .review{
+
+    background:none;
+    border-left:none; 
+    border-radius:0; 
+    padding:0;
+
+    color:#555;
+
+    line-height:1.9;
+
+    font-size:16px;
+
+    margin-bottom:28px;
+
+    min-height:145px;
+
+    font-style:italic;
+}
+
+/* NAME */
+
+.testimonial-card h3{
+
+    margin-bottom:6px;
+
+    color:#222;
+
+    font-size:22px;
+
+    font-family:"Cormorant Garamond",serif;
+}
+
+.testimonial-card span{
+
+    color:#888;
+
+    font-size:15px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+
+.testimonial-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.testimonials{
+
+padding:70px 5%;
+
+}
+
+.testimonial-heading h2{
+
+font-size:40px;
+
+}
+
+.testimonial-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.review{
+
+min-height:auto;
+
+}
+
+.testimonial-card figure{
+    margin:0 auto 22px;
+    width:fit-content;
+    display:flex;
+    justify-content:center;
+}
+
+}
+.quote-icon{
+    font-size:60px;
+    color:#d4af37;
+    line-height:1;
+    margin-bottom:12px;
+    opacity:.9;
+}

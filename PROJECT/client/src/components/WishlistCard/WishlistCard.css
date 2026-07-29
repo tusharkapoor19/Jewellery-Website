@@ -1,0 +1,394 @@
+/* ==========================================================================
+   HIRANYA - LUXURY JEWELLERY WISHLIST CARD STYLES
+   Design System: Apple / Cartier / Tiffany / Bvlgari inspired
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   01. GLOBAL VARIABLES & TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+  --hiranya-gold-primary: #C8A24D;
+  --hiranya-gold-light: #E6CA85;
+  --hiranya-gold-dark: #9A7B31;
+  --hiranya-black: #0D0D0D;
+  --hiranya-charcoal: #1A1A1A;
+  --hiranya-gray-muted: #737373;
+  --hiranya-gray-light: #F9F9F8;
+  --hiranya-white: #FFFFFF;
+
+  --hiranya-font-serif: "Cinzel", "Playfair Display", "Didot", serif;
+  --hiranya-font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --hiranya-glass-bg: rgba(255, 255, 255, 0.65);
+  --hiranya-glass-border: rgba(200, 162, 77, 0.25);
+  --hiranya-shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.04);
+  --hiranya-shadow-hover: 0 24px 48px rgba(13, 13, 13, 0.12), 0 0 20px rgba(200, 162, 77, 0.15);
+
+  --hiranya-transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --------------------------------------------------------------------------
+   02. CARD BASE CONTAINER
+   -------------------------------------------------------------------------- */
+.hiranya-wishlist-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--hiranya-white);
+  border: 1px solid rgba(200, 162, 77, 0.18);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.6s var(--hiranya-transition-smooth),
+              box-shadow 0.6s var(--hiranya-transition-smooth),
+              border-color 0.4s ease;
+  box-shadow: var(--hiranya-shadow-soft);
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.hiranya-wishlist-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--hiranya-gold-primary);
+  box-shadow: var(--hiranya-shadow-hover);
+}
+
+.hiranya-card-removing {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   03. IMAGE ARCHITECTURE & GLASS OVERLAY
+   -------------------------------------------------------------------------- */
+.hiranya-card-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 110%; /* Elegant portrait showcase proportion */
+  background-color: var(--hiranya-gray-light);
+  overflow: hidden;
+}
+
+.hiranya-image-skeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #f2f2f0 25%, #e8e8e4 50%, #f2f2f0 75%);
+  background-size: 200% 100%;
+  animation: hiranyaSkeletonShimmer 1.8s infinite;
+}
+
+.hiranya-card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.9s var(--hiranya-transition-smooth);
+}
+
+.hiranya-card-image.loaded {
+  opacity: 1;
+}
+
+.hiranya-wishlist-card:hover .hiranya-card-image {
+  transform: scale(1.06);
+}
+
+.hiranya-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 13, 13, 0.25) 0%,
+    rgba(0, 0, 0, 0) 35%,
+    rgba(13, 13, 13, 0.05) 100%
+  );
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* --------------------------------------------------------------------------
+   04. BADGES
+   -------------------------------------------------------------------------- */
+.hiranya-badge-container {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hiranya-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-radius: 1px;
+}
+
+.hiranya-badge-collection {
+  background: rgba(13, 13, 13, 0.75);
+  color: var(--hiranya-gold-light);
+  border: 1px solid rgba(200, 162, 77, 0.4);
+}
+
+.hiranya-badge-metal {
+  background: var(--hiranya-glass-bg);
+  color: var(--hiranya-black);
+  border: 1px solid var(--hiranya-glass-border);
+}
+
+.hiranya-badge-certified {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--hiranya-gold-dark);
+  border: 1px solid rgba(200, 162, 77, 0.3);
+}
+
+.hiranya-badge-stock.low-stock {
+  background: rgba(200, 162, 77, 0.9);
+  color: var(--hiranya-white);
+}
+
+.hiranya-badge-stock.out-of-stock {
+  background: rgba(13, 13, 13, 0.85);
+  color: #A3A3A3;
+}
+
+/* --------------------------------------------------------------------------
+   05. WISHLIST HEART ACTION
+   -------------------------------------------------------------------------- */
+.hiranya-wishlist-heart-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--hiranya-glass-bg);
+  border: 1px solid var(--hiranya-glass-border);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hiranya-gold-primary);
+  cursor: pointer;
+  z-index: 3;
+  transition: all 0.3s var(--hiranya-transition-smooth);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.hiranya-wishlist-heart-btn:hover {
+  background: var(--hiranya-white);
+  transform: scale(1.1);
+  color: #D93838; /* Soft subtle luxury ruby red on direct interaction */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.hiranya-heart-icon.filled {
+  fill: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   06. PRODUCT INFO CONTENT
+   -------------------------------------------------------------------------- */
+.hiranya-card-content {
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background: var(--hiranya-white);
+}
+
+.hiranya-card-header {
+  margin-bottom: 12px;
+}
+
+.hiranya-card-subtitle {
+  display: block;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hiranya-gray-muted);
+  margin-bottom: 4px;
+}
+
+.hiranya-card-title {
+  font-family: var(--hiranya-font-serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--hiranya-black);
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hiranya-card-pricing {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.hiranya-price-label {
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hiranya-gray-muted);
+}
+
+.hiranya-price-value {
+  font-family: var(--hiranya-font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--hiranya-gold-dark);
+  letter-spacing: 0.03em;
+  margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   07. LUXURY BUTTONS & ACTIONS
+   -------------------------------------------------------------------------- */
+.hiranya-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.hiranya-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 12px;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 1px;
+  cursor: pointer;
+  transition: all 0.3s var(--hiranya-transition-smooth);
+}
+
+/* Secondary Button - Outline Gold */
+.hiranya-btn-secondary {
+  background: transparent;
+  color: var(--hiranya-black);
+  border: 1px solid rgba(13, 13, 13, 0.2);
+}
+
+.hiranya-btn-secondary:hover {
+  border-color: var(--hiranya-gold-primary);
+  color: var(--hiranya-gold-dark);
+  background: rgba(200, 162, 77, 0.04);
+}
+
+/* Primary Button - Black Gold Shine */
+.hiranya-btn-primary {
+  position: relative;
+  background: var(--hiranya-black);
+  color: var(--hiranya-white);
+  border: 1px solid var(--hiranya-black);
+  overflow: hidden;
+}
+
+.hiranya-btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(200, 162, 77, 0.35),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.hiranya-btn-primary:hover::before {
+  left: 100%;
+}
+
+.hiranya-btn-primary:hover {
+  background: var(--hiranya-charcoal);
+  border-color: var(--hiranya-gold-primary);
+  box-shadow: 0 4px 14px rgba(200, 162, 77, 0.25);
+}
+
+.hiranya-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   08. KEYFRAME ANIMATIONS
+   -------------------------------------------------------------------------- */
+@keyframes hiranyaSkeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   09. RESPONSIVE DESIGN
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .hiranya-wishlist-card {
+    max-width: 100%;
+  }
+
+  .hiranya-card-content {
+    padding: 16px 18px 18px;
+  }
+
+  .hiranya-card-title {
+    font-size: 1.05rem;
+  }
+
+  .hiranya-card-actions {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .hiranya-btn {
+    padding: 10px 10px;
+  }
+}

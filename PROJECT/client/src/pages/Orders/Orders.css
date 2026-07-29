@@ -1,0 +1,177 @@
+.orders-section{
+  padding:60px 20px;
+  background:var(--bg-color);
+  min-height:100vh;
+}
+
+.orders-container{
+  max-width:1200px;
+  margin:auto;
+}
+
+.orders-hero{
+  display:flex;
+  align-items:center;
+  gap:30px;
+  padding:35px;
+  background:var(--card-bg);
+  border-radius:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  margin-bottom:35px;
+}
+
+.orders-icon{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#d4af37,#b8860b);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  font-size:48px;
+  flex-shrink:0;
+}
+
+.orders-content span{
+  color:#c79b2c;
+  font-weight:700;
+  letter-spacing:2px;
+  font-size:13px;
+}
+
+.orders-content h1{
+  margin:10px 0;
+  font-size:38px;
+  color:var(--text-color);
+}
+
+.orders-content p{
+  color:var(--secondary-text);
+  line-height:1.8;
+}
+
+.orders-card{
+  background:var(--card-bg);
+  border-radius:20px;
+  padding:50px 30px;
+  text-align:center;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  margin-bottom:40px;
+}
+
+.empty-icon{
+  font-size:80px;
+  color:#c79b2c;
+  margin-bottom:25px;
+}
+
+.orders-card h2{
+  font-size:32px;
+  color:var(--text-color);
+  margin-bottom:15px;
+}
+
+.orders-card p{
+  color:var(--secondary-text);
+  line-height:1.9;
+  margin-bottom:30px;
+}
+
+.shop-btn{
+  display:inline-block;
+  text-decoration:none;
+  background:#c79b2c;
+  color:#fff;
+  padding:14px 35px;
+  border-radius:35px;
+  font-weight:600;
+  transition:.3s;
+}
+
+.shop-btn:hover{
+  background:#a87f17;
+  transform:translateY(-3px);
+}
+
+.order-benefits{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:25px;
+}
+
+.benefit-card{
+  background:var(--card-bg);
+  padding:30px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  transition:.3s;
+}
+
+.benefit-card:hover{
+  transform:translateY(-8px);
+}
+
+.benefit-card i{
+  font-size:42px;
+  color:#c79b2c;
+  margin-bottom:18px;
+}
+
+.benefit-card h3{
+  color:var(--text-color);
+  margin-bottom:12px;
+}
+
+.benefit-card p{
+  color:var(--secondary-text);
+  line-height:1.8;
+}
+
+@media(max-width:992px){
+
+  .order-benefits{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .orders-hero{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .orders-icon{
+    width:100px;
+    height:100px;
+    font-size:40px;
+  }
+
+  .orders-content h1{
+    font-size:30px;
+  }
+
+}
+
+@media(max-width:480px){
+
+  .orders-section{
+    padding:40px 15px;
+  }
+
+  .orders-card{
+    padding:40px 20px;
+  }
+
+  .orders-card h2{
+    font-size:26px;
+  }
+
+  .empty-icon{
+    font-size:60px;
+  }
+
+}

@@ -1,0 +1,3087 @@
+/* =======================================================
+   HIRANYA CHECKOUT — COMPACT LUXURY EDITION
+======================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+
+    /* -- Core palette -- */
+    --hiranya-ink: #17140f;
+    --hiranya-ink-soft: #2b271f;
+
+    --hiranya-gold: #b6863c;
+    --hiranya-gold-deep: #93672a;
+    --hiranya-gold-light: #e9cf8e;
+    --hiranya-gold-shine: #f7e6b8;
+
+    --hiranya-emerald: #1c6b52;
+    --hiranya-garnet: #8a2f3c;
+
+    --hiranya-bg: #faf7f0;
+    --hiranya-card: #ffffff;
+    --hiranya-ivory: #fffdf9;
+
+    --hiranya-text: #1d1a15;
+    --hiranya-muted: #6b6357;
+
+    --hiranya-border: rgba(182,134,60,.18);
+    --hiranya-border-soft: rgba(23,20,15,.07);
+
+    --hiranya-shadow: 0 10px 28px rgba(43,32,10,.07);
+    --hiranya-shadow-lg: 0 20px 46px rgba(43,32,10,.11);
+    --hiranya-glow-gold: 0 14px 32px rgba(182,134,60,.26);
+
+    --hiranya-radius: 18px;
+    --hiranya-transition: .3s cubic-bezier(.22,.7,.24,1);
+    --hiranya-transition-fast: .18s ease;
+
+    /* -- Type -- */
+    --hiranya-font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+    --hiranya-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    /* -- Gradients -- */
+    --hiranya-gold-gradient: linear-gradient(135deg, #d9b563 0%, #b6863c 45%, #93672a 100%);
+    --hiranya-gold-gradient-soft: linear-gradient(135deg, rgba(182,134,60,.14), rgba(233,207,142,.10));
+
+}
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+.hiranya-checkout-page {
+
+    background:
+
+    radial-gradient(1100px 550px at 15% -5%, rgba(182,134,60,.06), transparent 60%),
+
+    radial-gradient(800px 450px at 100% 8%, rgba(182,134,60,.04), transparent 55%),
+
+    linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #fbfaf5 45%,
+        #f7f3e8 100%
+    );
+
+    min-height: 100vh;
+
+    overflow: hidden;
+
+    font-family: var(--hiranya-font-body);
+
+    color: var(--hiranya-text);
+
+}
+
+.hiranya-checkout-container {
+
+    width: min(1320px,92%);
+
+    margin: 34px auto;
+
+    display: grid;
+
+    grid-template-columns: 1.9fr 1fr;
+
+    gap: 26px;
+
+    align-items: start;
+
+}
+
+.hiranya-checkout-left {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+}
+
+.hiranya-checkout-left > * {
+
+    opacity: 0;
+
+    animation: hiranyaFadeUp .55s cubic-bezier(.22,.7,.24,1) forwards;
+
+}
+
+.hiranya-checkout-left > *:nth-child(1) { animation-delay: .03s; }
+.hiranya-checkout-left > *:nth-child(2) { animation-delay: .08s; }
+.hiranya-checkout-left > *:nth-child(3) { animation-delay: .13s; }
+.hiranya-checkout-left > *:nth-child(4) { animation-delay: .18s; }
+
+.hiranya-checkout-right {
+
+    position: sticky;
+
+    top: 24px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+}
+
+.hiranya-checkout-right > * {
+
+    opacity: 0;
+
+    animation: hiranyaFadeUp .55s cubic-bezier(.22,.7,.24,1) forwards;
+
+}
+
+.hiranya-checkout-right > *:nth-child(1) { animation-delay: .10s; }
+.hiranya-checkout-right > *:nth-child(2) { animation-delay: .16s; }
+
+/* =======================================================
+   INLINE ERROR BANNER
+======================================================= */
+
+.hiranya-checkout-error-banner {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px 20px;
+
+    margin-bottom: -8px;
+
+    border-radius: 14px;
+
+    background: #fdf3f1;
+
+    border: 1px solid rgba(138,47,60,.20);
+
+    color: var(--hiranya-garnet);
+
+    font-weight: 600;
+
+    font-size: .92rem;
+
+    animation: hiranyaShake .5s ease;
+
+}
+
+.hiranya-checkout-error-banner p {
+
+    margin: 0;
+
+    line-height: 1.5;
+
+}
+
+.hiranya-checkout-error-dot {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--hiranya-garnet);
+
+    flex-shrink: 0;
+
+    box-shadow: 0 0 0 4px rgba(138,47,60,.14);
+
+}
+
+@keyframes hiranyaShake {
+
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(2px); }
+
+}
+
+/* =======================================================
+   HERO — COMPACT
+======================================================= */
+
+.hiranya-checkout-hero {
+
+    position: relative;
+
+    width: min(1320px,92%);
+
+    margin: 22px auto 20px;
+
+    padding: 34px 44px;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #ffffff,
+
+        #fbfaf5,
+
+        #f7f2e4
+
+    );
+
+    box-shadow: var(--hiranya-shadow-lg);
+
+    border: 1px solid var(--hiranya-border-soft);
+
+}
+
+.hiranya-checkout-hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:320px;
+
+    height:320px;
+
+    right:-90px;
+
+    top:-110px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(
+
+        rgba(182,134,60,.22),
+
+        transparent 70%
+
+    );
+
+    animation: hiranyaDrift 14s ease-in-out infinite;
+
+}
+
+.hiranya-checkout-hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:200px;
+
+    height:200px;
+
+    left:-60px;
+
+    bottom:-70px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(
+
+        rgba(233,207,142,.22),
+
+        transparent 70%
+
+    );
+
+    animation: hiranyaDrift 18s ease-in-out infinite reverse;
+
+}
+
+@keyframes hiranyaDrift {
+
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(-12px, 14px) scale(1.05); }
+
+}
+
+.hiranya-checkout-hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:640px;
+
+}
+
+.hiranya-checkout-badge{
+
+    position: relative;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:7px 16px;
+
+    border-radius:999px;
+
+    background:rgba(182,134,60,.10);
+
+    border: 1px solid rgba(182,134,60,.24);
+
+    color:var(--hiranya-gold-deep);
+
+    font-weight:700;
+
+    letter-spacing:1.2px;
+
+    text-transform:uppercase;
+
+    font-size:.70rem;
+
+    margin-bottom:16px;
+
+    overflow: hidden;
+
+}
+
+.hiranya-checkout-badge::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: -60%;
+
+    width: 40%;
+
+    height: 100%;
+
+    background: linear-gradient(115deg, transparent, rgba(255,255,255,.75), transparent);
+
+    animation: hiranyaShine 3.2s ease-in-out infinite;
+
+}
+
+@keyframes hiranyaShine {
+
+    0% { left: -60%; }
+    55%, 100% { left: 130%; }
+
+}
+
+.hiranya-checkout-hero h1{
+
+    font-family: var(--hiranya-font-display);
+
+    font-size:2.3rem;
+
+    line-height:1.12;
+
+    font-weight:600;
+
+    letter-spacing: -.3px;
+
+    color:var(--hiranya-ink);
+
+    margin-bottom:10px;
+
+}
+
+.hiranya-checkout-hero p{
+
+    font-size:.95rem;
+
+    line-height:1.6;
+
+    color:var(--hiranya-muted);
+
+    max-width:560px;
+
+}
+
+.hiranya-checkout-highlights{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:20px;
+
+}
+
+.hiranya-highlight{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 16px;
+
+    border-radius:14px;
+
+    background:#ffffff;
+
+    border:1px solid var(--hiranya-border);
+
+    box-shadow:0 8px 18px rgba(43,32,10,.05);
+
+    transition:var(--hiranya-transition);
+
+}
+
+.hiranya-highlight:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 14px 30px rgba(43,32,10,.09);
+
+    border-color: rgba(182,134,60,.4);
+
+}
+
+.hiranya-highlight svg{
+
+    color:var(--hiranya-gold);
+
+    width: 16px;
+
+    height: 16px;
+
+}
+
+.hiranya-highlight span{
+
+    font-weight:600;
+
+    color:#2d2a24;
+
+    font-size: .82rem;
+
+}
+
+/* =======================================================
+   CHECKOUT STEPPER — COMPACT
+======================================================= */
+
+.hiranya-checkout-stepper{
+
+    width:min(1320px,92%);
+
+    margin:0 auto 22px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.hiranya-step{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.hiranya-step-circle{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border:2px solid #ddd6c8;
+
+    background:#fff;
+
+    color:#8a8272;
+
+    transition: var(--hiranya-transition);
+
+    font-family: var(--hiranya-font-display);
+
+    font-weight: 700;
+
+    font-size: .92rem;
+
+}
+
+.hiranya-step span{
+
+    font-size:.86rem;
+
+    font-weight:600;
+
+    color:#6b6357;
+
+    font-family: var(--hiranya-font-body);
+
+}
+
+.hiranya-step.active .hiranya-step-circle{
+
+    background: conic-gradient(from 210deg, #d9b563, #f7e6b8, #b6863c, #d9b563);
+
+    border:none;
+
+    color:#fff;
+
+    box-shadow: var(--hiranya-glow-gold), 0 0 0 4px rgba(182,134,60,.12);
+
+    animation: hiranyaPulseRing 2.4s ease-in-out infinite;
+
+}
+
+@keyframes hiranyaPulseRing {
+
+    0%, 100% { box-shadow: var(--hiranya-glow-gold), 0 0 0 4px rgba(182,134,60,.12); }
+    50% { box-shadow: var(--hiranya-glow-gold), 0 0 0 7px rgba(182,134,60,.05); }
+
+}
+
+.hiranya-step.completed .hiranya-step-circle{
+
+    background: var(--hiranya-emerald);
+
+    color:#fff;
+
+    border:none;
+
+}
+
+.hiranya-step.active span,
+
+.hiranya-step.completed span{
+
+    color:#1d1a15;
+
+}
+
+.hiranya-step-line{
+
+    flex:1;
+
+    height:2px;
+
+    margin:0 12px;
+
+    border-radius:999px;
+
+    background:#ece6d8;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.hiranya-step-line.filled{
+
+    background: var(--hiranya-gold-gradient);
+
+}
+
+/* =======================================================
+   CHECKOUT SECTIONS — COMPACT
+======================================================= */
+
+.hiranya-checkout-section{
+
+    background:var(--hiranya-card);
+
+    border:1px solid var(--hiranya-border-soft);
+
+    border-radius:20px;
+
+    padding:22px 24px;
+
+    box-shadow:var(--hiranya-shadow);
+
+    transition: var(--hiranya-transition);
+
+}
+
+.hiranya-checkout-section:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow: var(--hiranya-shadow-lg);
+
+    border-color: var(--hiranya-border);
+
+}
+
+.hiranya-section-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:16px;
+
+    gap:14px;
+
+}
+
+.hiranya-section-tag{
+
+    color:var(--hiranya-gold-deep);
+
+    font-size:.68rem;
+
+    font-weight:700;
+
+    letter-spacing:1.8px;
+
+    text-transform:uppercase;
+
+    margin-bottom:4px;
+
+}
+
+.hiranya-section-header h2{
+
+    font-family: var(--hiranya-font-display);
+
+    font-size:1.5rem;
+
+    color:var(--hiranya-ink);
+
+    font-weight:600;
+
+}
+
+.hiranya-outline-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    border:1px solid var(--hiranya-gold);
+
+    background:#fff;
+
+    color:var(--hiranya-gold-deep);
+
+    padding:9px 18px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    font-size: .85rem;
+
+    font-family: var(--hiranya-font-body);
+
+    transition: var(--hiranya-transition-fast);
+
+}
+
+.hiranya-outline-btn:hover{
+
+    background: var(--hiranya-gold-gradient);
+
+    color:#fff;
+
+    border-color: transparent;
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--hiranya-glow-gold);
+
+}
+
+.hiranya-outline-btn:focus-visible,
+.hiranya-gold-btn:focus-visible,
+.hiranya-payment-btn:focus-visible,
+.hiranya-address-card:focus-visible,
+.hiranya-delivery-card:focus-visible,
+.hiranya-mobile-pay-btn:focus-visible {
+
+    outline: 2px solid var(--hiranya-gold-deep);
+
+    outline-offset: 3px;
+
+}
+
+/* =======================================================
+   EMPTY ADDRESS
+======================================================= */
+
+.hiranya-empty-address{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:36px 24px;
+
+    border:2px dashed rgba(182,134,60,.28);
+
+    border-radius:18px;
+
+    background:#fffdf7;
+
+}
+
+.hiranya-empty-address svg{
+
+    color:var(--hiranya-gold);
+
+    margin-bottom:10px;
+
+    width: 34px;
+
+    height: 34px;
+
+}
+
+.hiranya-empty-address h3{
+
+    font-family: var(--hiranya-font-display);
+
+    font-size:1.4rem;
+
+    font-weight: 600;
+
+    margin-bottom:8px;
+
+    color: var(--hiranya-ink);
+
+}
+
+.hiranya-empty-address p{
+
+    color:#6b6357;
+
+    max-width:400px;
+
+    line-height:1.6;
+
+    margin-bottom:18px;
+
+    font-size: .9rem;
+
+}
+
+.hiranya-gold-btn{
+
+    position: relative;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:11px 22px;
+
+    border-radius:13px;
+
+    font-weight:700;
+
+    font-size: .9rem;
+
+    font-family: var(--hiranya-font-body);
+
+    color:#fff;
+
+    background: var(--hiranya-gold-gradient);
+
+    transition: var(--hiranya-transition);
+
+    overflow: hidden;
+
+}
+
+.hiranya-gold-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow: var(--hiranya-glow-gold);
+
+}
+
+.hiranya-gold-btn:active::after,
+.hiranya-payment-btn:active::after,
+.hiranya-coupon-box button:active::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background: radial-gradient(circle, rgba(255,255,255,.45) 0%, transparent 60%);
+
+    animation: hiranyaRipple .55s ease-out;
+
+}
+
+@keyframes hiranyaRipple {
+
+    from { opacity: 1; transform: scale(0); }
+    to { opacity: 0; transform: scale(2.2); }
+
+}
+
+/* =======================================================
+   ADDRESS GRID — 2 COMPACT CARDS PER ROW
+======================================================= */
+
+.hiranya-address-grid{
+
+    display:grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap:14px;
+
+}
+
+.hiranya-address-card{
+
+    position:relative;
+
+    background:#fff;
+
+    border-radius:16px;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    padding:16px 18px;
+
+    cursor:pointer;
+
+    transition: var(--hiranya-transition);
+
+}
+
+.hiranya-address-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow: var(--hiranya-shadow-lg);
+
+    border-color: rgba(182,134,60,.3);
+
+}
+
+.hiranya-address-card.selected{
+
+    border:2px solid var(--hiranya-gold);
+
+    box-shadow:
+
+    0 0 0 4px rgba(182,134,60,.10), var(--hiranya-shadow);
+
+    background: linear-gradient(180deg, #fffdf7, #ffffff);
+
+}
+
+.hiranya-address-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:10px;
+
+}
+
+.hiranya-address-type{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-weight:600;
+
+    color:#333;
+
+    font-size: .88rem;
+
+}
+
+.hiranya-address-type svg{
+
+    color:var(--hiranya-gold);
+
+    width: 15px;
+
+    height: 15px;
+
+}
+
+.hiranya-default-badge{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:4px 10px;
+
+    background:#f1f7f3;
+
+    color:var(--hiranya-emerald);
+
+    border-radius:999px;
+
+    font-size:.68rem;
+
+    font-weight:700;
+
+}
+
+.hiranya-address-body h4{
+
+    font-size:.98rem;
+
+    margin-bottom:5px;
+
+    color:#1d1a15;
+
+}
+
+.hiranya-address-body p{
+
+    color:#6b6357;
+
+    line-height:1.5;
+
+    font-size:.82rem;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 3;
+
+    line-clamp: 3;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+
+}
+
+.hiranya-address-footer{
+
+    margin-top:12px;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+}
+
+.hiranya-address-footer button{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    border:none;
+
+    cursor:pointer;
+
+    background:#f6f4ee;
+
+    padding:8px 14px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    font-size: .8rem;
+
+    font-family: var(--hiranya-font-body);
+
+    transition: var(--hiranya-transition-fast);
+
+}
+
+.hiranya-address-footer button:hover{
+
+    background: var(--hiranya-gold-gradient);
+
+    color:#fff;
+
+}
+
+/* =======================================================
+   DELIVERY — COMPACT HORIZONTAL CARDS
+======================================================= */
+
+.hiranya-delivery-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:14px;
+
+}
+
+.hiranya-delivery-card{
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 14px;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    border-radius:16px;
+
+    padding:14px 16px;
+
+    cursor:pointer;
+
+    transition: var(--hiranya-transition);
+
+    background:#fff;
+
+}
+
+.hiranya-delivery-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow: var(--hiranya-shadow-lg);
+
+    border-color: rgba(182,134,60,.3);
+
+}
+
+.hiranya-delivery-card.active{
+
+    border:2px solid var(--hiranya-gold);
+
+    box-shadow:
+
+    0 0 0 4px rgba(182,134,60,.10), var(--hiranya-shadow);
+
+    background: linear-gradient(180deg, #fffdf7, #ffffff);
+
+}
+
+.hiranya-delivery-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:0;
+
+    flex: 1;
+
+}
+
+.hiranya-delivery-icon{
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(182,134,60,.12);
+
+    color:var(--hiranya-gold);
+
+    flex-shrink: 0;
+
+}
+
+.hiranya-delivery-icon svg {
+
+    width: 18px;
+
+    height: 18px;
+
+}
+
+.hiranya-delivery-icon.express{
+
+    background:#fdf1d6;
+
+}
+
+.hiranya-delivery-top h3{
+
+    font-family: var(--hiranya-font-display);
+
+    font-size:1.02rem;
+
+    font-weight: 600;
+
+    margin-bottom:2px;
+
+    color: var(--hiranya-ink);
+
+}
+
+.hiranya-delivery-top span{
+
+    color:#6b6357;
+
+    font-size: .78rem;
+
+}
+
+.hiranya-delivery-price{
+
+    font-size:1.05rem;
+
+    font-weight:700;
+
+    color:var(--hiranya-gold-deep);
+
+    margin-bottom:0;
+
+    font-family: var(--hiranya-font-display);
+
+    flex-shrink: 0;
+
+}
+
+.hiranya-delivery-card p{
+
+    color:#6b6357;
+
+    line-height:1.5;
+
+    font-size: .78rem;
+
+    display: none;
+
+}
+
+/* =======================================================
+   GIFT SECTION — COMPACT
+======================================================= */
+
+.hiranya-gift-container{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.hiranya-gift-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:14px 16px;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    border-radius:16px;
+
+    background:#fff;
+
+    transition: var(--hiranya-transition);
+
+}
+
+.hiranya-gift-item:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow: var(--hiranya-shadow);
+
+    border-color: rgba(182,134,60,.22);
+
+}
+
+.hiranya-gift-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.hiranya-gift-left svg{
+
+    color:var(--hiranya-gold);
+
+    width: 18px;
+
+    height: 18px;
+
+}
+
+.hiranya-gift-left h4{
+
+    font-size:.92rem;
+
+    color:#1d1a15;
+
+    margin-bottom:2px;
+
+}
+
+.hiranya-gift-left p{
+
+    color:#6b6357;
+
+    font-size:.78rem;
+
+    line-height:1.4;
+
+}
+
+/* =======================================================
+   LUXURY SWITCH — COMPACT
+======================================================= */
+
+.hiranya-switch{
+
+    position:relative;
+
+    width:46px;
+
+    height:26px;
+
+    display:inline-block;
+
+}
+
+.hiranya-switch input{
+
+    display:none;
+
+}
+
+.hiranya-switch span{
+
+    position:absolute;
+
+    inset:0;
+
+    background:#ddd6c8;
+
+    border-radius:999px;
+
+    cursor:pointer;
+
+    transition: var(--hiranya-transition);
+
+}
+
+.hiranya-switch span::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:20px;
+
+    height:20px;
+
+    left:3px;
+
+    top:3px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    transition: var(--hiranya-transition);
+
+    box-shadow:0 4px 10px rgba(43,32,10,.20);
+
+}
+
+.hiranya-switch input:checked + span{
+
+    background: var(--hiranya-gold-gradient);
+
+}
+
+.hiranya-switch input:checked + span::before{
+
+    transform:translateX(20px);
+
+}
+
+/* =======================================================
+   GIFT MESSAGE — COLLAPSIBLE FEEL
+======================================================= */
+
+.hiranya-gift-message{
+
+    margin-top:2px;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    border-radius:16px;
+
+    padding:16px;
+
+    background:#fffefb;
+
+    animation: hiranyaFadeUp .35s ease both;
+
+}
+
+.hiranya-message-header{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:flex-start;
+
+    margin-bottom:12px;
+
+}
+
+.hiranya-message-header svg{
+
+    color:var(--hiranya-gold);
+
+    margin-top:2px;
+
+    width: 16px;
+
+    height: 16px;
+
+}
+
+.hiranya-message-header h4{
+
+    margin-bottom:3px;
+
+    color:#1d1a15;
+
+    font-size: .92rem;
+
+}
+
+.hiranya-message-header p{
+
+    color:#6b6357;
+
+    line-height:1.5;
+
+    font-size: .8rem;
+
+}
+
+.hiranya-gift-message textarea{
+
+    width:100%;
+
+    resize:none;
+
+    outline:none;
+
+    background:#fff;
+
+    border-radius:12px;
+
+    padding:12px 14px;
+
+    font-size:.88rem;
+
+    line-height:1.6;
+
+    color:#222;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    font-family: var(--hiranya-font-body);
+
+    transition: var(--hiranya-transition-fast);
+
+    min-height: 80px;
+
+}
+
+.hiranya-gift-message textarea:focus{
+
+    border-color:var(--hiranya-gold);
+
+    box-shadow:0 0 0 4px rgba(182,134,60,.10);
+
+}
+
+.hiranya-message-footer{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    margin-top:8px;
+
+    color:#6b6357;
+
+    font-size:.76rem;
+
+}
+
+/* =======================================================
+   NOTES SECTION — COMPACT / COLLAPSED FEEL
+======================================================= */
+
+.hiranya-notes-card{
+
+    display:flex;
+
+    gap:14px;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    border-radius:16px;
+
+    background:#fff;
+
+    padding:16px 18px;
+
+}
+
+.hiranya-notes-icon{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    background:rgba(182,134,60,.12);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:var(--hiranya-gold);
+
+    flex-shrink:0;
+
+}
+
+.hiranya-notes-icon svg {
+
+    width: 18px;
+
+    height: 18px;
+
+}
+
+.hiranya-notes-content{
+
+    flex:1;
+
+}
+
+.hiranya-notes-content h4{
+
+    font-size:.96rem;
+
+    margin-bottom:3px;
+
+    color:#1d1a15;
+
+}
+
+.hiranya-notes-content p{
+
+    color:#6b6357;
+
+    margin-bottom:10px;
+
+    line-height:1.5;
+
+    font-size: .82rem;
+
+}
+
+.hiranya-notes-textarea{
+
+    width:100%;
+
+    min-height:70px;
+
+    resize:vertical;
+
+    border-radius:12px;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    background:#fff;
+
+    padding:12px 14px;
+
+    outline:none;
+
+    font-size:.88rem;
+
+    line-height:1.6;
+
+    font-family: var(--hiranya-font-body);
+
+    transition: var(--hiranya-transition-fast);
+
+}
+
+.hiranya-notes-textarea:focus{
+
+    border-color:var(--hiranya-gold);
+
+    box-shadow:0 0 0 4px rgba(182,134,60,.10);
+
+}
+
+.hiranya-notes-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:8px;
+
+    color:#6b6357;
+
+    font-size:.76rem;
+
+}
+
+/* =======================================================
+   ORDER SUMMARY — APPLE-STYLE COMPACT
+======================================================= */
+
+.hiranya-summary{
+
+    width:100%;
+
+}
+
+.hiranya-summary-card{
+
+    position: relative;
+
+    background:#ffffff;
+
+    border-radius:22px;
+
+    padding:22px 24px;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    box-shadow:var(--hiranya-shadow);
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+    overflow: hidden;
+
+}
+
+.hiranya-summary-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    right: 0;
+
+    height: 3px;
+
+    background: var(--hiranya-gold-gradient);
+
+}
+
+.hiranya-summary-card h2{
+
+    font-family: var(--hiranya-font-display);
+
+    font-size:1.5rem;
+
+    color:var(--hiranya-ink);
+
+    font-weight:600;
+
+}
+
+/* =======================================================
+   PRODUCTS — SMALL COMPACT ROWS
+======================================================= */
+
+.hiranya-summary-products{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.hiranya-summary-products h3{
+
+    font-size:.82rem;
+
+    letter-spacing: .3px;
+
+    color:#1d1a15;
+
+    text-transform: uppercase;
+
+    font-weight: 700;
+
+}
+
+.hiranya-summary-product{
+
+    display:flex;
+
+    align-items: center;
+
+    gap:12px;
+
+    padding:8px;
+
+    border-radius:14px;
+
+    background:#fbfaf6;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    transition: var(--hiranya-transition);
+
+}
+
+.hiranya-summary-product:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow: var(--hiranya-shadow);
+
+    border-color: rgba(182,134,60,.2);
+
+}
+
+.hiranya-summary-product img{
+
+    width:56px;
+
+    height:56px;
+
+    border-radius:12px;
+
+    object-fit:cover;
+
+    background:#fff;
+
+    box-shadow: 0 4px 10px rgba(43,32,10,.10);
+
+    flex-shrink: 0;
+
+}
+
+.hiranya-summary-product-info{
+
+    flex:1;
+
+    min-width: 0;
+
+}
+
+.hiranya-summary-product-info h4{
+
+    font-size:.86rem;
+
+    margin-bottom:3px;
+
+    color:#1d1a15;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+.hiranya-summary-product-info span{
+
+    display: inline-block;
+
+    color:#6b6357;
+
+    font-size:.72rem;
+
+    margin-right: 8px;
+
+}
+
+.hiranya-product-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:4px;
+
+}
+
+.hiranya-product-footer strong{
+
+    color:var(--hiranya-gold-deep);
+
+    font-size:.9rem;
+
+    font-family: var(--hiranya-font-display);
+
+}
+
+/* =======================================================
+   COUPON — COMPACT
+======================================================= */
+
+.hiranya-coupon-box{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.hiranya-coupon-input{
+
+    flex:1;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    border-radius:12px;
+
+    padding:0 14px;
+
+    background:#fff;
+
+    transition: var(--hiranya-transition-fast);
+
+}
+
+.hiranya-coupon-input:focus-within {
+
+    border-color: var(--hiranya-gold);
+
+    box-shadow: 0 0 0 4px rgba(182,134,60,.10);
+
+}
+
+.hiranya-coupon-input svg{
+
+    color:var(--hiranya-gold);
+
+    width: 16px;
+
+    height: 16px;
+
+}
+
+.hiranya-coupon-input input{
+
+    width:100%;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    height:42px;
+
+    font-size:.86rem;
+
+    font-family: var(--hiranya-font-body);
+
+}
+
+.hiranya-coupon-box button{
+
+    position: relative;
+
+    overflow: hidden;
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:0 18px;
+
+    border-radius:12px;
+
+    font-weight:700;
+
+    font-size: .85rem;
+
+    font-family: var(--hiranya-font-body);
+
+    color:#fff;
+
+    background: var(--hiranya-gold-gradient);
+
+    transition: var(--hiranya-transition-fast);
+
+}
+
+.hiranya-coupon-box button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow: var(--hiranya-glow-gold);
+
+}
+
+/* =======================================================
+   PRICE BREAKDOWN — COMPACT
+======================================================= */
+
+.hiranya-price-breakdown{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:9px;
+
+}
+
+.hiranya-price-breakdown div{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    color:#4b473d;
+
+    font-size: .87rem;
+
+    padding-bottom:9px;
+
+    border-bottom:1px dashed rgba(23,20,15,.10);
+
+}
+
+.hiranya-price-breakdown strong{
+
+    color:#1d1a15;
+
+}
+
+.hiranya-summary-total{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding-top:4px;
+
+}
+
+.hiranya-summary-total span{
+
+    font-size:1rem;
+
+    font-weight:700;
+
+}
+
+.hiranya-summary-total strong{
+
+    font-family: var(--hiranya-font-display);
+
+    font-size:1.7rem;
+
+    color:var(--hiranya-gold-deep);
+
+}
+
+/* =======================================================
+   DELIVERY INFO — COMPACT
+======================================================= */
+
+.hiranya-delivery-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px 14px;
+
+    border-radius:14px;
+
+    background:#fffdf5;
+
+    border:1px solid rgba(182,134,60,.18);
+
+}
+
+.hiranya-delivery-info svg{
+
+    color:var(--hiranya-gold);
+
+    width: 18px;
+
+    height: 18px;
+
+    flex-shrink: 0;
+
+}
+
+.hiranya-delivery-info h4{
+
+    margin-bottom:2px;
+
+    color:#1d1a15;
+
+    font-size: .86rem;
+
+}
+
+.hiranya-delivery-info p{
+
+    color:#6b6357;
+
+    font-size: .78rem;
+
+}
+
+/* =======================================================
+   SECURITY — COMPACT
+======================================================= */
+
+.hiranya-security{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:11px 14px;
+
+    border-radius:12px;
+
+    background:#f2f8f4;
+
+    color:var(--hiranya-emerald);
+
+    font-weight:600;
+
+    font-size: .84rem;
+
+}
+
+.hiranya-security svg{
+
+    color:var(--hiranya-emerald);
+
+    width: 16px;
+
+    height: 16px;
+
+}
+
+/* =======================================================
+   PAYMENT BUTTON
+======================================================= */
+
+.hiranya-payment-btn{
+
+    position: relative;
+
+    overflow: hidden;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    width:100%;
+
+    height:52px;
+
+    border:none;
+
+    cursor:pointer;
+
+    border-radius:14px;
+
+    font-size:.94rem;
+
+    font-weight:700;
+
+    font-family: var(--hiranya-font-body);
+
+    letter-spacing: .2px;
+
+    color:#fff;
+
+    background: var(--hiranya-gold-gradient);
+
+    transition: var(--hiranya-transition);
+
+}
+
+.hiranya-payment-btn::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: -60%;
+
+    width: 40%;
+
+    height: 100%;
+
+    background: linear-gradient(115deg, transparent, rgba(255,255,255,.35), transparent);
+
+    animation: hiranyaShine 3.6s ease-in-out infinite;
+
+}
+
+.hiranya-payment-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow: 0 20px 40px rgba(182,134,60,.36);
+
+}
+
+.hiranya-payment-btn:disabled{
+
+    opacity:.7;
+
+    cursor:not-allowed;
+
+    transform: none;
+
+}
+
+/* =======================================================
+   TRUST STRIP — COMPACT (replaces oversized trust cards)
+======================================================= */
+
+.hiranya-trust-grid{
+
+    display:flex;
+
+    flex-wrap: wrap;
+
+    gap:8px;
+
+}
+
+.hiranya-trust-grid div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 12px;
+
+    border-radius:12px;
+
+    background:#faf8f2;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    flex: 1 1 calc(50% - 8px);
+
+    font-size: .8rem;
+
+}
+
+.hiranya-trust-grid svg{
+
+    color:var(--hiranya-gold);
+
+    width: 15px;
+
+    height: 15px;
+
+    flex-shrink: 0;
+
+}
+
+.hiranya-payment-strip{
+
+    text-align:center;
+
+    margin-top:10px;
+
+    color:#6b6357;
+
+    font-size:.8rem;
+
+}
+
+/* =======================================================
+   TRUST SECTION — COMPACT STRIP
+======================================================= */
+
+.hiranya-trust-section{
+
+    margin-top:16px;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:20px 24px;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    box-shadow:var(--hiranya-shadow);
+
+}
+
+.hiranya-trust-header{
+
+    text-align:center;
+
+    margin-bottom:16px;
+
+}
+
+.hiranya-trust-header span{
+
+    display:inline-block;
+
+    color:var(--hiranya-gold-deep);
+
+    font-size:.68rem;
+
+    letter-spacing:1.8px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    margin-bottom:6px;
+
+}
+
+.hiranya-trust-header h2{
+
+    font-family: var(--hiranya-font-display);
+
+    font-size:1.5rem;
+
+    font-weight: 600;
+
+    color:#1d1a15;
+
+    margin-bottom:6px;
+
+}
+
+.hiranya-trust-header p{
+
+    max-width:620px;
+
+    margin:auto;
+
+    color:#6b6357;
+
+    line-height:1.5;
+
+    font-size: .84rem;
+
+}
+
+.hiranya-trust-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px 14px;
+
+    border-radius:14px;
+
+    background:#faf8f2;
+
+    border:1px solid var(--hiranya-border-soft);
+
+    transition: var(--hiranya-transition);
+
+}
+
+.hiranya-trust-card:hover{
+
+    transform:translateY(-3px);
+
+    background:#fff;
+
+    box-shadow: var(--hiranya-shadow-lg);
+
+    border-color: rgba(182,134,60,.22);
+
+}
+
+.hiranya-trust-icon{
+
+    width:36px;
+
+    height:36px;
+
+    border-radius:12px;
+
+    background:rgba(182,134,60,.12);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:var(--hiranya-gold);
+
+    flex-shrink: 0;
+
+}
+
+.hiranya-trust-icon svg {
+
+    width: 16px;
+
+    height: 16px;
+
+}
+
+.hiranya-trust-card h4{
+
+    margin-bottom:2px;
+
+    color:#1d1a15;
+
+    font-size: .88rem;
+
+}
+
+.hiranya-trust-card p{
+
+    color:#6b6357;
+
+    font-size:.76rem;
+
+}
+
+.hiranya-security-strip{
+
+    margin-top:16px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:12px;
+
+    border-radius:14px;
+
+    background:#f5faf6;
+
+    color:var(--hiranya-emerald);
+
+    font-weight:600;
+
+    font-size: .84rem;
+
+}
+
+/* =======================================================
+   MOBILE STICKY CTA
+======================================================= */
+
+.hiranya-mobile-sticky-bar{
+
+    display:none;
+
+}
+
+.hiranya-mobile-price{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.hiranya-mobile-price span{
+
+    font-size:.72rem;
+
+    color:#6b6357;
+
+}
+
+.hiranya-mobile-price strong{
+
+    font-family: var(--hiranya-font-display);
+
+    font-size:1.2rem;
+
+    color:#1d1a15;
+
+}
+
+.hiranya-mobile-pay-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:11px 20px;
+
+    border-radius:13px;
+
+    background: var(--hiranya-gold-gradient);
+
+    color:#fff;
+
+    font-weight:700;
+
+    font-size: .88rem;
+
+    font-family: var(--hiranya-font-body);
+
+    transition: var(--hiranya-transition);
+
+}
+
+.hiranya-mobile-pay-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow: var(--hiranya-glow-gold);
+
+}
+
+/* =======================================================
+   CUSTOM SCROLLBAR
+======================================================= */
+
+::-webkit-scrollbar{
+
+    width:9px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#f4f2ec;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background: var(--hiranya-gold-gradient);
+
+    border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--hiranya-gold-deep);
+
+}
+
+/* =======================================================
+   MICRO ANIMATIONS
+======================================================= */
+
+@keyframes hiranyaFadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(16px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.hiranya-checkout-hero,
+
+.hiranya-trust-section{
+
+    animation:hiranyaFadeUp .55s cubic-bezier(.22,.7,.24,1) both;
+
+}
+
+@keyframes shimmer{
+
+    0%{
+
+        background-position:-200px 0;
+
+    }
+
+    100%{
+
+        background-position:200px 0;
+
+    }
+
+}
+
+.hiranya-skeleton{
+
+    background:
+
+    linear-gradient(
+
+        90deg,
+
+        #f2f0e8 25%,
+
+        #ece8dc 37%,
+
+        #f2f0e8 63%
+
+    );
+
+    background-size:400% 100%;
+
+    animation:shimmer 1.4s infinite linear;
+
+    border-radius:10px;
+
+}
+
+/* respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration: .001ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: .001ms !important;
+
+        scroll-behavior: auto !important;
+
+    }
+
+    .hiranya-checkout-left > *,
+    .hiranya-checkout-right > * {
+
+        opacity: 1;
+
+    }
+
+}
+
+/* =======================================================
+   INPUTS
+======================================================= */
+
+input,
+
+textarea,
+
+select{
+
+    font-family: var(--hiranya-font-body);
+
+}
+
+input:focus,
+
+textarea:focus,
+
+select:focus{
+
+    outline:none;
+
+}
+
+button{
+
+    font-family: var(--hiranya-font-body);
+
+}
+
+img{
+
+    max-width:100%;
+
+    display:block;
+
+}
+
+/* =======================================================
+   RESPONSIVE
+======================================================= */
+
+@media (max-width:1400px){
+
+    .hiranya-checkout-container{
+
+        width:95%;
+
+        gap:22px;
+
+    }
+
+}
+
+@media (max-width:1200px){
+
+    .hiranya-checkout-container{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .hiranya-checkout-right{
+
+        position:static;
+
+    }
+
+    .hiranya-summary-card{
+
+        position:static;
+
+    }
+
+}
+
+@media (max-width:992px){
+
+    .hiranya-checkout-hero{
+
+        padding:30px 32px;
+
+    }
+
+    .hiranya-checkout-hero h1{
+
+        font-size:2rem;
+
+    }
+
+    .hiranya-checkout-highlights{
+
+        gap:8px;
+
+    }
+
+    .hiranya-delivery-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .hiranya-checkout-container{
+
+        width:94%;
+
+        margin:24px auto 100px;
+
+        gap:18px;
+
+    }
+
+    .hiranya-checkout-hero{
+
+        width:94%;
+
+        padding:26px 20px;
+
+        border-radius:20px;
+
+    }
+
+    .hiranya-checkout-hero h1{
+
+        font-size:1.7rem;
+
+    }
+
+    .hiranya-checkout-hero p{
+
+        font-size:.86rem;
+
+        line-height:1.6;
+
+    }
+
+    .hiranya-checkout-highlights{
+
+        flex-direction:column;
+
+    }
+
+    .hiranya-highlight{
+
+        width:100%;
+
+    }
+
+    .hiranya-checkout-stepper{
+
+        width:94%;
+
+        overflow-x:auto;
+
+        justify-content:flex-start;
+
+        padding-bottom:6px;
+
+    }
+
+    .hiranya-step{
+
+        min-width:120px;
+
+    }
+
+    .hiranya-step-line{
+
+        min-width:44px;
+
+    }
+
+    .hiranya-checkout-section{
+
+        padding:18px;
+
+        border-radius:18px;
+
+    }
+
+    .hiranya-section-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap: 10px;
+
+    }
+
+    .hiranya-section-header h2{
+
+        font-size:1.3rem;
+
+    }
+
+    .hiranya-outline-btn{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+    .hiranya-address-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .hiranya-summary-card{
+
+        padding:18px;
+
+    }
+
+    .hiranya-summary-total strong{
+
+        font-size:1.5rem;
+
+    }
+
+    .hiranya-trust-section{
+
+        padding:20px;
+
+    }
+
+    .hiranya-trust-header h2{
+
+        font-size:1.35rem;
+
+    }
+
+    .hiranya-mobile-sticky-bar{
+
+        position:fixed;
+
+        left:0;
+
+        right:0;
+
+        bottom:0;
+
+        z-index:9999;
+
+        display:flex;
+
+        justify-content:space-between;
+
+        align-items:center;
+
+        gap:16px;
+
+        padding:14px 18px;
+
+        background:rgba(255,255,255,.96);
+
+        -webkit-backdrop-filter:blur(20px);
+
+        backdrop-filter:blur(20px);
+
+        border-top:1px solid rgba(182,134,60,.20);
+
+        box-shadow:0 -10px 28px rgba(43,32,10,.10);
+
+    }
+
+    .hiranya-mobile-pay-btn{
+
+        flex-shrink:0;
+
+    }
+
+}
+
+@media (max-width:576px){
+
+    .hiranya-checkout-hero{
+
+        padding:22px 16px;
+
+    }
+
+    .hiranya-checkout-hero h1{
+
+        font-size:1.5rem;
+
+    }
+
+    .hiranya-checkout-badge{
+
+        font-size:.65rem;
+
+        padding:6px 12px;
+
+    }
+
+    .hiranya-step-circle{
+
+        width:34px;
+
+        height:34px;
+
+    }
+
+    .hiranya-step span{
+
+        font-size:.78rem;
+
+    }
+
+    .hiranya-address-card{
+
+        padding:14px;
+
+    }
+
+    .hiranya-delivery-card{
+
+        padding:12px 14px;
+
+    }
+
+    .hiranya-gift-item{
+
+        flex-direction:row;
+
+        align-items:center;
+
+        gap:12px;
+
+    }
+
+    .hiranya-notes-card{
+
+        flex-direction:column;
+
+    }
+
+    .hiranya-notes-icon{
+
+        width:38px;
+
+        height:38px;
+
+    }
+
+    .hiranya-coupon-box{
+
+        flex-direction:column;
+
+    }
+
+    .hiranya-coupon-box button{
+
+        height:42px;
+
+    }
+
+    .hiranya-payment-btn{
+
+        height:50px;
+
+        font-size:.88rem;
+
+    }
+
+    .hiranya-trust-grid div {
+
+        flex: 1 1 100%;
+
+    }
+
+    .hiranya-security-strip{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .hiranya-checkout-error-banner {
+
+        padding: 12px 14px;
+
+        font-size: .85rem;
+
+    }
+
+}
+
+@media (max-width:400px){
+
+    .hiranya-checkout-container{
+
+        width:96%;
+
+    }
+
+    .hiranya-checkout-section{
+
+        padding:14px;
+
+    }
+
+    .hiranya-summary-card{
+
+        padding:14px;
+
+    }
+
+    .hiranya-checkout-hero h1{
+
+        font-size:1.35rem;
+
+    }
+
+    .hiranya-mobile-sticky-bar{
+
+        padding:12px;
+
+    }
+
+    .hiranya-mobile-price strong{
+
+        font-size:1rem;
+
+    }
+
+    .hiranya-mobile-pay-btn{
+
+        padding:10px 16px;
+
+        font-size:.82rem;
+
+    }
+
+}
+
+/* =======================================================
+   UTILITIES
+======================================================= */
+
+.hiranya-hidden{
+
+    display:none !important;
+
+}
+
+.hiranya-text-center{
+
+    text-align:center;
+
+}
+
+.hiranya-w-100{
+
+    width:100%;
+
+}
+
+.hiranya-mt-20{
+
+    margin-top:12px;
+
+}
+
+.hiranya-mb-20{
+
+    margin-bottom:12px;
+
+}
