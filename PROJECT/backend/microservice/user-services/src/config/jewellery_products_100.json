@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Rahul Sharma",
+    "email": "rahul.sharma@example.com",
+    "password": "$2b$10$g3lV7x5m6iYH8LqM1N0s5eA9vZfB1Qy7R2P8tD4JkL9mX6nW3cY8G",
+    "phone": "9876543210",
+    "address": "B-102, Rohini Sector 5, Delhi - 110085",
+    "role": "customer",
+    "otp": null,
+    "logotp": null,
+    "otpExpiry": null,
+    "isOtpVerified": true
+  },
+  {
+    "name": "Priya Verma",
+    "email": "priya.verma@example.com",
+    "password": "$2b$10$L8hP3vX9yQ2mA7nD5sR1uF4kJ6tW0bE9cY3zH8pN2qM5rT7xV1aB",
+    "phone": "9812345678",
+    "address": "Flat 203, Dwarka Sector 10, New Delhi - 110075",
+    "role": "customer",
+    "otp": null,
+    "logotp": null,
+    "otpExpiry": null,
+    "isOtpVerified": true
+  },
+  {
+    "name": "Amit Kumar",
+    "email": "amit.kumar@example.com",
+    "password": "$2b$10$P4mN8vX2kJ7rQ5sD1wZ6cF9yT3uL0bH8eA2nM5pR7xV4qY1tG9hC",
+    "phone": "9898765432",
+    "address": "House No. 45, Pitampura, Delhi - 110034",
+    "role": "customer",
+    "otp": null,
+    "logotp": null,
+    "otpExpiry": null,
+    "isOtpVerified": false
+  },
+  {
+    "name": "Sneha Gupta",
+    "email": "sneha.gupta@example.com",
+    "password": "$2b$10$D7rK5xV9mN2qP8tL1yF4wH6zA3cE0uB5jR7nM9sQ2vX8kT1gY6hP",
+    "phone": "9988776655",
+    "address": "A-56, Janakpuri, New Delhi - 110058",
+    "role": "customer",
+    "otp": null,
+    "logotp": null,
+    "otpExpiry": null,
+    "isOtpVerified": true
+  },
+  {
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "password": "$2b$10$W6pM2qN9xR4tK8yF1hD5vL7zA3cJ0uE8bG2nP5sQ9mX1rT6kY4wH",
+    "phone": "9999999999",
+    "address": "Corporate Office, Connaught Place, New Delhi - 110001",
+    "role": "admin",
+    "otp": null,
+    "logotp": null,
+    "otpExpiry": null,
+    "isOtpVerified": true
+  }
+]

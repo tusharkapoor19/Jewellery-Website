@@ -1,0 +1,11 @@
+require("dotenv").config();
+const express = require("express");
+const app = express();
+app.use(express.json());
+const cors = require("cors");
+const payroutes = require("./routes/payment_routes");
+const errorMiddleware = require("./middleware/error_mid");
+app.use(cors());
+app.use("/payment",payroutes);
+app.use(errorMiddleware);
+module.exports = app;

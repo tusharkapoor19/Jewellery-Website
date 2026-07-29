@@ -1,0 +1,10 @@
+const express = require("express");
+const app = express();
+app.use(express.json());
+const cors = require("cors");
+const prodRoutes = require("./routes/productroutes");
+const errorMiddleware = require("./middleware/globalmidd");
+app.use(cors());
+app.use("/product", prodRoutes);
+app.use(errorMiddleware);
+module.exports = app;
