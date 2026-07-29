@@ -1,0 +1,203 @@
+/* ==========================================================
+   HIRANYA ADDRESS SKELETON
+========================================================== */
+
+.hiranya-skeleton-grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(auto-fit,minmax(350px,1fr));
+
+    gap:28px;
+
+}
+
+.hiranya-address-skeleton{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:30px;
+
+    border-radius:28px;
+
+    background:#ffffff;
+
+    border:1px solid rgba(212,175,55,.10);
+
+    box-shadow:
+
+        0 18px 45px rgba(0,0,0,.06);
+
+}
+
+.hiranya-address-skeleton::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-150%;
+
+    width:70%;
+
+    height:100%;
+
+    background:
+
+        linear-gradient(
+
+            90deg,
+
+            transparent,
+
+            rgba(255,255,255,.85),
+
+            transparent
+
+        );
+
+    animation:
+
+        hiranyaShimmer 1.5s infinite;
+
+}
+
+/* ========================= */
+
+.hiranya-sk-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:28px;
+
+}
+
+.hiranya-sk-chip{
+
+    width:120px;
+
+    height:38px;
+
+    border-radius:999px;
+
+    background:#ececec;
+
+}
+
+.hiranya-sk-badge{
+
+    width:90px;
+
+    height:38px;
+
+    border-radius:999px;
+
+    background:#ececec;
+
+}
+
+.hiranya-sk-title{
+
+    width:65%;
+
+    height:26px;
+
+    border-radius:10px;
+
+    background:#ececec;
+
+    margin-bottom:18px;
+
+}
+
+.hiranya-sk-phone{
+
+    width:45%;
+
+    height:18px;
+
+    border-radius:8px;
+
+    background:#ececec;
+
+    margin-bottom:25px;
+
+}
+
+.hiranya-sk-line{
+
+    width:100%;
+
+    height:15px;
+
+    border-radius:8px;
+
+    background:#ececec;
+
+    margin-bottom:14px;
+
+}
+
+.hiranya-sk-line.short{
+
+    width:70%;
+
+}
+
+.hiranya-sk-footer{
+
+    display:flex;
+
+    gap:14px;
+
+    margin-top:28px;
+
+}
+
+.hiranya-sk-btn{
+
+    flex:1;
+
+    height:48px;
+
+    border-radius:16px;
+
+    background:#ececec;
+
+}
+
+/* ========================= */
+
+@keyframes hiranyaShimmer{
+
+    from{
+
+        left:-150%;
+
+    }
+
+    to{
+
+        left:180%;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .hiranya-skeleton-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

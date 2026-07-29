@@ -1,0 +1,714 @@
+/* ==========================================
+   HERO
+========================================== */
+
+.offers-hero{
+    min-height:100vh;
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 20px;
+    position:relative;
+}
+
+.offers-hero::before{
+    content:"";
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background:linear-gradient(to bottom,
+    rgba(0,0,0,.15),
+    rgba(0,0,0,.55));
+}
+
+.offers-hero-content{
+    position:relative;
+    z-index:2;
+    max-width:850px;
+    color:#fff;
+}
+
+.offers-hero-content span{
+    display:inline-block;
+    color:#d4af37;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    font-weight:600;
+    margin-bottom:20px;
+}
+
+.offers-hero-content h1{
+    font-size:4.3rem;
+    line-height:1.15;
+    margin-bottom:25px;
+    font-weight:700;
+}
+
+.offers-hero-content p{
+    max-width:720px;
+    margin:0 auto 40px;
+    font-size:1.08rem;
+    color:#ececec;
+    line-height:1.9;
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.primary-btn,
+.secondary-btn{
+    padding:15px 34px;
+    border-radius:50px;
+    text-decoration:none;
+    font-weight:600;
+    transition:.35s;
+}
+
+.primary-btn{
+    background:#d4af37;
+    color:#111;
+}
+
+.primary-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 30px rgba(212,175,55,.35);
+}
+
+.secondary-btn{
+    border:2px solid #fff;
+    color:#fff;
+}
+
+.secondary-btn:hover{
+    background:#fff;
+    color:#111;
+}
+
+/* ==========================================
+   COMMON
+========================================== */
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.section-heading{
+    text-align:center;
+    margin-bottom:70px;
+}
+
+.section-heading span{
+    color:#d4af37;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-weight:600;
+}
+
+.section-heading h2{
+    font-size:2.9rem;
+    margin:18px 0;
+    color:#111;
+}
+
+.section-heading p{
+    max-width:700px;
+    margin:auto;
+    color:#666;
+    line-height:1.8;
+}
+
+/* ==========================================
+   FEATURED OFFER
+========================================== */
+
+.featured-offer-section{
+    padding:110px 0;
+    background:#111;
+}
+
+.featured-offer-card{
+    min-height:520px;
+    border-radius:30px;
+    overflow:hidden;
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    padding:70px;
+    position:relative;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+}
+
+.featured-offer-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background:linear-gradient(to right,
+    rgba(0,0,0,.75),
+    rgba(0,0,0,.30));
+}
+
+.featured-offer-content{
+    position:relative;
+    z-index:2;
+    max-width:520px;
+    color:#fff;
+}
+
+.featured-offer-content span{
+    color:#d4af37;
+    letter-spacing:3px;
+    text-transform:uppercase;
+}
+
+.featured-offer-content h2{
+    font-size:3.4rem;
+    margin:18px 0 10px;
+}
+
+.featured-offer-content h3{
+    font-size:1.7rem;
+    margin-bottom:25px;
+    color:#f3f3f3;
+}
+
+.featured-offer-content p{
+    color:#ddd;
+    line-height:1.9;
+    margin-bottom:35px;
+}
+
+/* ==========================================
+   OFFER GRID
+========================================== */
+
+.offers-grid-section{
+    padding:110px 0;
+    background:#faf8f2;
+}
+
+.offers-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.offer-card{
+    background:#fff;
+    padding:45px 35px;
+    border-radius:22px;
+    text-align:center;
+    transition:.35s;
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+    position:relative;
+    overflow:hidden;
+}
+
+.offer-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:5px;
+    background:#d4af37;
+}
+
+.offer-card:hover{
+    transform:translateY(-12px);
+    box-shadow:0 22px 50px rgba(0,0,0,.16);
+}
+
+.offer-icon{
+    width:85px;
+    height:85px;
+    margin:auto;
+    border-radius:50%;
+    background:#111;
+    color:#d4af37;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2rem;
+    margin-bottom:28px;
+}
+
+.offer-card h3{
+    font-size:1.7rem;
+    color:#111;
+    margin-bottom:10px;
+}
+
+.offer-card h4{
+    color:#d4af37;
+    margin-bottom:18px;
+    font-weight:600;
+}
+
+.offer-card p{
+    color:#666;
+    line-height:1.8;
+}
+/* ==========================================
+   FESTIVAL SECTION
+========================================== */
+
+.festival-section{
+    padding:110px 0;
+    background:#fff;
+}
+
+.festival-wrapper{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:center;
+}
+
+.festival-image img{
+    width:100%;
+    border-radius:24px;
+    display:block;
+    box-shadow:0 25px 60px rgba(0,0,0,.18);
+    transition:.4s;
+}
+
+.festival-image img:hover{
+    transform:scale(1.03);
+}
+
+.festival-content{
+    display:grid;
+    gap:25px;
+}
+
+.festival-card{
+    background:#faf8f2;
+    padding:30px;
+    border-radius:20px;
+    border-left:5px solid #d4af37;
+    transition:.35s;
+    box-shadow:0 12px 35px rgba(0,0,0,.06);
+}
+
+.festival-card:hover{
+    transform:translateX(10px);
+    box-shadow:0 20px 45px rgba(0,0,0,.12);
+}
+
+.festival-card h3{
+    color:#111;
+    margin-bottom:15px;
+    font-size:1.4rem;
+}
+
+.festival-card p{
+    color:#666;
+    line-height:1.8;
+}
+
+/* ==========================================
+   MEMBERSHIP
+========================================== */
+
+.membership-section{
+    padding:110px 0;
+    background:#111;
+}
+
+.membership-wrapper{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:60px;
+    align-items:center;
+}
+
+.membership-content{
+    color:#fff;
+}
+
+.membership-content span{
+    display:inline-block;
+    color:#d4af37;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:18px;
+}
+
+.membership-content h2{
+    font-size:3rem;
+    margin-bottom:25px;
+    line-height:1.2;
+}
+
+.membership-content p{
+    color:#ddd;
+    line-height:1.9;
+    margin-bottom:35px;
+}
+
+.membership-content ul{
+    list-style:none;
+    padding:0;
+    margin:0 0 40px;
+}
+
+.membership-content ul li{
+    padding:14px 0;
+    color:#f3f3f3;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.membership-image img{
+    width:100%;
+    display:block;
+    border-radius:24px;
+    box-shadow:0 25px 60px rgba(0,0,0,.30);
+    transition:.4s;
+}
+
+.membership-image img:hover{
+    transform:scale(1.03);
+}
+
+/* ==========================================
+   WHY SHOP
+========================================== */
+
+.why-shop-section{
+    padding:110px 0;
+    background:#faf8f2;
+}
+
+.why-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.why-card{
+    background:#fff;
+    padding:40px 30px;
+    border-radius:22px;
+    text-align:center;
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+}
+
+.why-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:5px;
+    background:#d4af37;
+}
+
+.why-card:hover{
+    transform:translateY(-12px);
+    box-shadow:0 22px 50px rgba(0,0,0,.15);
+}
+
+.why-card h3{
+    color:#111;
+    font-size:1.45rem;
+    margin-bottom:18px;
+}
+
+.why-card p{
+    color:#666;
+    line-height:1.8;
+}
+/* ==========================================
+   FAQ
+========================================== */
+
+.faq-section{
+    padding:110px 0;
+    background:#fff;
+}
+
+.faq-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:30px;
+}
+
+.faq-card{
+    background:#faf8f2;
+    padding:35px;
+    border-radius:22px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    transition:.35s;
+    border-left:5px solid transparent;
+}
+
+.faq-card:hover{
+    transform:translateY(-10px);
+    border-left-color:#d4af37;
+    box-shadow:0 22px 50px rgba(0,0,0,.15);
+}
+
+.faq-card h3{
+    font-size:1.35rem;
+    color:#111;
+    margin-bottom:18px;
+}
+
+.faq-card p{
+    color:#666;
+    line-height:1.8;
+}
+
+/* ==========================================
+   CTA
+========================================== */
+
+.offers-cta{
+    padding:140px 20px;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    position:relative;
+    text-align:center;
+}
+
+.offers-cta::before{
+    content:"";
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background:rgba(0,0,0,.25);
+}
+
+.offers-cta-content{
+    position:relative;
+    z-index:2;
+    max-width:760px;
+    margin:auto;
+    color:#fff;
+}
+
+.offers-cta-content span{
+    display:inline-block;
+    color:#d4af37;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    margin-bottom:20px;
+}
+
+.offers-cta-content h2{
+    font-size:3rem;
+    margin-bottom:25px;
+    line-height:1.2;
+}
+
+.offers-cta-content p{
+    color:#ececec;
+    line-height:1.9;
+    margin-bottom:40px;
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+.offer-card,
+.festival-card,
+.why-card,
+.faq-card{
+    animation:fadeUp .8s ease;
+}
+
+.featured-offer-card,
+.membership-image img,
+.festival-image img{
+    animation:zoomIn 1s ease;
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+@keyframes zoomIn{
+
+    from{
+        opacity:0;
+        transform:scale(.92);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .offers-hero-content h1{
+        font-size:3.3rem;
+    }
+
+    .offers-grid,
+    .why-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .festival-wrapper,
+    .membership-wrapper{
+        grid-template-columns:1fr;
+    }
+
+    .festival-image{
+        order:-1;
+    }
+
+    .faq-grid{
+        grid-template-columns:1fr;
+    }
+
+    .featured-offer-card{
+        padding:50px;
+    }
+
+    .section-heading h2{
+        font-size:2.4rem;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .offers-hero{
+        min-height:80vh;
+        padding:100px 20px;
+    }
+
+    .offers-hero-content h1{
+        font-size:2.6rem;
+    }
+
+    .offers-grid,
+    .why-grid{
+        grid-template-columns:1fr;
+    }
+
+    .featured-offer-card{
+        min-height:initial;
+        padding:40px 30px;
+    }
+
+    .featured-offer-content h2{
+        font-size:2.5rem;
+    }
+
+    .membership-content h2{
+        font-size:2.3rem;
+    }
+
+    .offers-cta-content h2{
+        font-size:2.2rem;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .primary-btn,
+    .secondary-btn{
+        width:100%;
+        max-width:280px;
+        text-align:center;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .container{
+        width:92%;
+    }
+
+    .offers-hero-content h1{
+        font-size:2rem;
+    }
+
+    .section-heading h2{
+        font-size:1.8rem;
+    }
+
+    .offer-card,
+    .festival-card,
+    .why-card,
+    .faq-card{
+        padding:25px;
+    }
+
+    .featured-offer-content h2{
+        font-size:2rem;
+    }
+
+    .featured-offer-content h3{
+        font-size:1.3rem;
+    }
+
+    .membership-content h2{
+        font-size:2rem;
+    }
+
+    .offers-cta{
+        padding:100px 20px;
+    }
+
+    .offers-cta-content h2{
+        font-size:1.8rem;
+    }
+
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer{
+    margin-top:0;
+}

@@ -1,0 +1,597 @@
+/* ==========================================
+   HALLMARK CERTIFICATION
+========================================== */
+
+.hallmark-hero{
+    min-height:95vh;
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:120px 20px;
+    position:relative;
+}
+
+.hallmark-hero::before{
+    content:"";
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    -webkit-backdrop-filter:blur(2px);
+    backdrop-filter:blur(2px);
+}
+
+.hallmark-hero-content{
+    position:relative;
+    z-index:2;
+    max-width:760px;
+    text-align:center;
+    color:#fff;
+}
+
+.hallmark-hero-content span{
+    display:inline-block;
+    color:#d4af37;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    margin-bottom:18px;
+    font-size:.9rem;
+}
+
+.hallmark-hero-content h1{
+    font-size:4rem;
+    line-height:1.15;
+    margin-bottom:25px;
+    font-weight:700;
+}
+
+.hallmark-hero-content p{
+    max-width:680px;
+    margin:auto;
+    color:#ececec;
+    line-height:1.8;
+    font-size:1.1rem;
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    margin-top:40px;
+    flex-wrap:wrap;
+}
+
+.primary-btn{
+    padding:15px 34px;
+    border-radius:40px;
+    background:#d4af37;
+    color:#111;
+    text-decoration:none;
+    font-weight:600;
+    transition:.35s;
+}
+
+.primary-btn:hover{
+    background:#fff;
+    transform:translateY(-5px);
+}
+
+.secondary-btn{
+    padding:15px 34px;
+    border-radius:40px;
+    border:1px solid #d4af37;
+    color:#fff;
+    text-decoration:none;
+    transition:.35s;
+}
+
+.secondary-btn:hover{
+    background:#d4af37;
+    color:#111;
+    transform:translateY(-5px);
+}
+
+/* ==========================================
+   COMMON
+========================================== */
+
+.container{
+    width:90%;
+    max-width:1240px;
+    margin:auto;
+}
+
+.section-heading{
+    text-align:center;
+    margin-bottom:70px;
+}
+
+.section-heading span{
+    display:inline-block;
+    color:#d4af37;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-size:.85rem;
+}
+
+.section-heading h2{
+    font-size:2.8rem;
+    margin:18px 0;
+    color:#111;
+}
+
+.section-heading p{
+    max-width:720px;
+    margin:auto;
+    color:#666;
+    line-height:1.8;
+}
+
+/* ==========================================
+   IMPORTANCE
+========================================== */
+
+.importance-section{
+    padding:110px 0;
+    background:#faf8f2;
+}
+
+.importance-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:28px;
+}
+
+.importance-card{
+    background:#fff;
+    padding:40px 30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    transition:.35s;
+}
+
+.importance-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 45px rgba(0,0,0,.15);
+}
+
+.importance-card h3{
+    font-size:1.35rem;
+    color:#111;
+    margin-bottom:15px;
+}
+
+.importance-card p{
+    color:#666;
+    line-height:1.8;
+}
+
+/* ==========================================
+   HALLMARK FEATURES
+========================================== */
+
+.methods-section{
+    padding:110px 0;
+    background:#fff;
+}
+
+.methods-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:35px;
+}
+
+.method-card{
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    transition:.35s;
+}
+
+.method-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 45px rgba(0,0,0,.15);
+}
+
+.method-card img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.method-card:hover img{
+    transform:scale(1.08);
+}
+
+.method-content{
+    padding:28px;
+}
+
+.method-content h3{
+    margin-bottom:15px;
+    color:#111;
+    font-size:1.4rem;
+}
+
+.method-content p{
+    color:#666;
+    line-height:1.8;
+}
+/* ==========================================
+   GOLD PURITY
+========================================== */
+
+.purity-section{
+    padding:110px 0;
+    background:#111;
+}
+
+.purity-section .section-heading h2,
+.purity-section .section-heading p{
+    color:#fff;
+}
+
+.purity-section .importance-card{
+    background:#fff;
+    position:relative;
+    overflow:hidden;
+}
+
+.purity-section .importance-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:5px;
+    background:#d4af37;
+}
+
+.purity-section .importance-card:hover{
+    transform:translateY(-10px);
+}
+
+/* ==========================================
+   BIS HALLMARK COMPONENTS
+========================================== */
+
+.hallmark-components-section{
+    padding:110px 0;
+    background:#faf8f2;
+}
+
+.steps-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:28px;
+}
+
+.step-card{
+    background:#fff;
+    padding:40px 28px;
+    border-radius:20px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    transition:.35s;
+}
+
+.step-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:5px;
+    background:#d4af37;
+}
+
+.step-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 22px 50px rgba(0,0,0,.15);
+}
+
+.step-card h1{
+    font-size:3rem;
+    color:#d4af37;
+    margin-bottom:18px;
+}
+
+.step-card h3{
+    color:#111;
+    margin-bottom:15px;
+    font-size:1.4rem;
+}
+
+.step-card p{
+    color:#666;
+    line-height:1.8;
+}
+
+/* ==========================================
+   DIAMOND CERTIFICATION
+========================================== */
+
+.diamond-section{
+    padding:110px 0;
+    background:#fff;
+}
+
+.diamond-section .method-card{
+    border:1px solid #f2f2f2;
+    text-align:center;
+    position:relative;
+}
+
+.diamond-section .method-card::after{
+    content:"💎";
+    position:absolute;
+    top:18px;
+    right:20px;
+    font-size:1.3rem;
+}
+
+.diamond-section .method-card:hover{
+    border-color:#d4af37;
+}
+
+.diamond-section .method-content{
+    padding:45px 30px;
+}
+
+.diamond-section .method-content h3{
+    font-size:1.7rem;
+    margin-bottom:18px;
+    color:#111;
+}
+
+.diamond-section .method-content p{
+    color:#666;
+    line-height:1.9;
+}
+/* ==========================================
+   FAQ
+========================================== */
+
+.faq-section{
+    padding:110px 0;
+    background:#faf8f2;
+}
+
+.faq-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:30px;
+}
+
+.faq-card{
+    background:#fff;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    transition:.35s;
+    border-left:4px solid transparent;
+}
+
+.faq-card:hover{
+    transform:translateY(-10px);
+    border-left-color:#d4af37;
+    box-shadow:0 22px 50px rgba(0,0,0,.15);
+}
+
+.faq-card h3{
+    color:#111;
+    margin-bottom:18px;
+    font-size:1.35rem;
+}
+
+.faq-card p{
+    color:#666;
+    line-height:1.8;
+}
+
+/* ==========================================
+   CTA
+========================================== */
+
+.hallmark-cta{
+    padding:140px 20px;
+    background-size:cover;
+    background-position:center;
+    text-align:center;
+    position:relative;
+}
+
+.hallmark-cta-content{
+    max-width:760px;
+    margin:auto;
+    color:#fff;
+    position:relative;
+    z-index:2;
+}
+
+.hallmark-cta-content span{
+    display:inline-block;
+    color:#d4af37;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:18px;
+}
+
+.hallmark-cta-content h2{
+    font-size:3rem;
+    margin-bottom:24px;
+    line-height:1.2;
+}
+
+.hallmark-cta-content p{
+    max-width:650px;
+    margin:auto;
+    color:#f3f3f3;
+    line-height:1.9;
+    font-size:1.05rem;
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+.importance-card,
+.method-card,
+.step-card,
+.faq-card{
+    animation:fadeUp .8s ease;
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .hallmark-hero-content h1{
+        font-size:3rem;
+    }
+
+    .importance-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .methods-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .steps-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .faq-grid{
+        grid-template-columns:1fr;
+    }
+
+    .section-heading h2{
+        font-size:2.3rem;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .hallmark-hero{
+        min-height:80vh;
+        padding:100px 20px;
+    }
+
+    .hallmark-hero-content h1{
+        font-size:2.4rem;
+    }
+
+    .hallmark-hero-content p{
+        font-size:1rem;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .primary-btn,
+    .secondary-btn{
+        width:100%;
+        max-width:280px;
+        text-align:center;
+    }
+
+    .importance-grid,
+    .methods-grid,
+    .steps-grid{
+        grid-template-columns:1fr;
+    }
+
+    .method-card img{
+        height:240px;
+    }
+
+    .section-heading{
+        margin-bottom:50px;
+    }
+
+    .section-heading h2{
+        font-size:2rem;
+    }
+
+    .hallmark-cta-content h2{
+        font-size:2.2rem;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .container{
+        width:92%;
+    }
+
+    .hallmark-hero-content span,
+    .section-heading span{
+        font-size:.75rem;
+        letter-spacing:2px;
+    }
+
+    .hallmark-hero-content h1{
+        font-size:2rem;
+    }
+
+    .section-heading h2{
+        font-size:1.7rem;
+    }
+
+    .importance-card,
+    .step-card,
+    .faq-card,
+    .method-content{
+        padding:24px;
+    }
+
+    .hallmark-cta{
+        padding:100px 20px;
+    }
+
+    .hallmark-cta-content h2{
+        font-size:1.9rem;
+    }
+
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer{
+    margin-top:0;
+}

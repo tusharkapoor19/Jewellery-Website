@@ -1,0 +1,737 @@
+/* ===================================
+   HOME COLLECTIONS
+=================================== */
+
+.collections-home{
+
+    padding:90px 0;
+
+    background:#fff;
+
+    overflow:hidden;
+
+}
+
+/* ===================================
+   FEATURES
+=================================== */
+.features{
+
+    width:min(1450px,92%);
+
+    margin:0 auto 80px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:0;
+
+    background:#fff;
+
+    border:1px solid rgba(200,162,77,.15);
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.06);
+
+}
+.feature{
+
+    flex:1;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:16px;
+
+    padding:28px 20px;
+
+}
+
+
+.feature-icon{
+
+    width:60px;
+
+    height:60px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #C8A24D,
+        #E4C56C
+    );
+
+    color:#fff;
+
+    font-size:24px;
+
+    flex-shrink:0;
+
+}
+
+.feature h4{
+
+    margin:0;
+
+    font-size:17px;
+
+    color:#1b1b1b;
+
+    font-weight:700;
+
+}
+
+.feature p{
+
+    margin-top:6px;
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+.feature-divider{
+
+    width:1px;
+
+    align-self:stretch;
+
+    background:rgba(200,162,77,.15);
+
+}
+
+/* ===================================
+   HEADING
+=================================== */
+
+.section-heading{
+
+    text-align:center;
+
+    margin-bottom:65px;
+
+}
+
+.section-subtitle{
+
+    font-size:15px;
+
+    text-transform:uppercase;
+
+    letter-spacing:4px;
+
+    color:#C8A24D;
+
+    font-weight:700;
+
+    margin-bottom:12px;
+
+}
+
+.section-heading h2{
+
+    font-size:46px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    color:#1b1b1b;
+
+    margin-bottom:22px;
+
+}
+
+.gold-divider{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.gold-divider span{
+
+    width:70px;
+
+    height:2px;
+
+    background:#C8A24D;
+
+}
+
+.gold-divider i{
+
+    color:#C8A24D;
+
+    font-size:18px;
+
+}
+/* ===================================
+   SWIPER
+=================================== */
+
+.collections-slider{
+
+    width:min(1450px,92%);
+
+    margin:auto;
+
+    padding:15px 8px 70px;
+
+}
+
+.collections-slider .swiper-button-next,
+
+.collections-slider .swiper-button-prev{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    border:1px solid rgba(200,162,77,.22);
+
+    color:#C8A24D;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+}
+
+.collections-slider .swiper-button-next:hover,
+
+.collections-slider .swiper-button-prev:hover{
+
+    background:#C8A24D;
+
+    color:#fff;
+
+    transform:translateY(-3px);
+
+}
+
+.collections-slider .swiper-button-next::after,
+
+.collections-slider .swiper-button-prev::after{
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+/* ===================================
+   COLLECTION CARD
+=================================== */
+
+.collection-card{
+
+    background:#fff;
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    text-align:center;
+
+    border:1px solid rgba(200,162,77,.16);
+
+    box-shadow:0 18px 45px rgba(0,0,0,.06);
+
+    transition:.45s;
+
+    padding:22px;
+
+}
+
+.collection-card:hover{
+
+    transform:translateY(-12px);
+
+    box-shadow:0 30px 70px rgba(0,0,0,.12);
+
+}
+
+.collection-image{
+
+    position:relative;
+
+    width:100%;
+
+    aspect-ratio:1/1;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    margin-bottom:20px;
+
+}
+
+.image-border{
+
+    width:100%;
+
+    height:100%;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+}
+
+.image-border img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.55s;
+
+}
+
+.collection-card:hover img{
+
+    transform:scale(1.08);
+
+}
+
+.collection-card h3{
+
+    font-size:24px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    color:#1b1b1b;
+
+    margin-bottom:18px;
+
+    font-weight:700;
+
+}
+/* ===================================
+   SHOP BUTTON
+=================================== */
+
+.shop-btn{
+
+    width:100%;
+
+    margin-top:8px;
+
+    padding:14px 18px;
+
+    border:none;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#fff;
+
+    background:linear-gradient(
+        135deg,
+        #C8A24D,
+        #E3C574
+    );
+
+    transition:.35s;
+
+    box-shadow:0 12px 25px rgba(200,162,77,.28);
+
+}
+
+.shop-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 18px 35px rgba(200,162,77,.45);
+
+    background:linear-gradient(
+        135deg,
+        #B88F34,
+        #DAB457
+    );
+
+}
+
+.shop-btn:active{
+
+    transform:scale(.97);
+
+}
+
+/* ===================================
+   FOOTER CTA
+=================================== */
+
+.collections-footer{
+
+    width:min(1450px,92%);
+
+    margin:80px auto 0;
+
+}
+
+.collections-footer-content{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:30px;
+
+    padding:38px 45px;
+
+    border-radius:26px;
+
+    background:linear-gradient(
+        135deg,
+        #fffdf8,
+        #faf5e8
+    );
+
+    border:1px solid rgba(200,162,77,.18);
+
+    box-shadow:0 18px 45px rgba(0,0,0,.06);
+
+}
+
+.collections-footer-content span{
+
+    font-size:20px;
+
+    color:#444;
+
+    font-weight:600;
+
+    line-height:1.7;
+
+    max-width:650px;
+
+}
+
+/* ===================================
+   VIEW ALL BUTTON
+=================================== */
+
+.view-all-btn{
+
+    padding:16px 38px;
+
+    border:none;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#fff;
+
+    background:linear-gradient(
+        135deg,
+        #C8A24D,
+        #E3C574
+    );
+
+    transition:.35s;
+
+    box-shadow:0 15px 35px rgba(200,162,77,.32);
+
+}
+
+.view-all-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 22px 45px rgba(200,162,77,.45);
+
+}
+
+.view-all-btn:active{
+
+    transform:scale(.97);
+
+}
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media (max-width:1200px){
+
+    .features{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .feature-divider{
+
+        display:none;
+
+    }
+
+}
+
+@media (max-width:992px){
+
+    .collections-home{
+
+        padding:70px 0;
+
+    }
+
+    .section-heading h2{
+
+        font-size:38px;
+
+    }
+
+    .collections-footer-content{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .collections-footer-content span{
+
+        max-width:100%;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .features{
+
+         display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .feature{
+
+        padding:22px;
+
+    }
+
+    .section-heading{
+
+        margin-bottom:45px;
+
+    }
+
+    .section-heading h2{
+
+        font-size:32px;
+
+    }
+
+    .section-subtitle{
+
+        font-size:13px;
+
+        letter-spacing:3px;
+
+    }
+
+    .gold-divider span{
+
+        width:45px;
+
+    }
+
+    .collection-card{
+
+        padding:18px;
+
+        border-radius:22px;
+
+    }
+
+    .collection-image{
+
+        border-radius:18px;
+
+    }
+
+    .image-border{
+
+        border-radius:18px;
+
+    }
+
+    .collection-card h3{
+
+        font-size:22px;
+
+    }
+
+    .shop-btn{
+
+        padding:13px;
+
+        font-size:14px;
+
+    }
+
+    .collections-slider{
+
+        padding-bottom:50px;
+
+    }
+
+    .collections-slider .swiper-button-next,
+
+    .collections-slider .swiper-button-prev{
+
+        width:44px;
+
+        height:44px;
+
+    }
+
+}
+
+@media (max-width:576px){
+
+    .collections-home{
+
+        padding:55px 0;
+
+    }
+
+    .section-heading h2{
+
+        font-size:28px;
+
+        line-height:1.2;
+
+    }
+
+    .feature{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .feature-icon{
+
+        width:56px;
+
+        height:56px;
+
+        font-size:22px;
+
+    }
+
+    .collections-footer{
+
+        margin-top:55px;
+
+    }
+
+    .collections-footer-content{
+
+        padding:28px 22px;
+
+        border-radius:20px;
+
+    }
+
+    .collections-footer-content span{
+
+        font-size:16px;
+
+    }
+
+    .view-all-btn{
+
+        width:100%;
+
+        padding:15px;
+
+    }
+
+}
+
+/* ===================================
+   PREMIUM HOVER
+=================================== */
+
+.collection-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+
+        135deg,
+
+        rgba(255,255,255,.25),
+
+        transparent
+
+    );
+
+    opacity:0;
+
+    transition:.45s;
+
+    pointer-events:none;
+
+}
+
+.collection-card{
+
+    position:relative;
+
+}
+
+.collection-card:hover::before{
+
+    opacity:1;
+
+}

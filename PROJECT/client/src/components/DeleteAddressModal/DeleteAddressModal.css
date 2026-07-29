@@ -1,0 +1,438 @@
+/* ==========================================================
+   HIRANYA DELETE ADDRESS MODAL
+========================================================== */
+
+.hiranya-delete-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:99999;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:30px;
+
+    background:rgba(0,0,0,.62);
+
+    -webkit-backdrop-filter:blur(14px);
+    backdrop-filter:blur(14px);
+
+    animation:hiranyaDeleteFade .35s ease;
+
+}
+
+.hiranya-delete-modal{
+
+    position:relative;
+
+    width:100%;
+
+    max-width:520px;
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:42px;
+
+    text-align:center;
+
+    border:1px solid rgba(212,175,55,.18);
+
+    box-shadow:
+
+        0 35px 80px rgba(0,0,0,.18),
+
+        0 0 40px rgba(212,175,55,.12);
+
+    animation:
+
+        hiranyaDeletePopup .4s ease;
+
+}
+
+/* ==========================================================
+   CLOSE BUTTON
+========================================================== */
+
+.hiranya-delete-close{
+
+    position:absolute;
+
+    top:18px;
+
+    right:18px;
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#fafafa;
+
+    transition:.35s;
+
+}
+
+.hiranya-delete-close:hover{
+
+    background:#d4af37;
+
+    color:white;
+
+    transform:rotate(90deg);
+
+}
+
+/* ==========================================================
+   WARNING ICON
+========================================================== */
+
+.hiranya-delete-icon{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#d32f2f;
+
+    background:
+
+        rgba(211,47,47,.08);
+
+    box-shadow:
+
+        inset 0 0 20px rgba(211,47,47,.08);
+
+    animation:
+
+        hiranyaPulse 2s infinite;
+
+}
+
+.hiranya-delete-icon svg{
+
+    stroke-width:2;
+
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.hiranya-delete-modal h2{
+
+    margin-top:28px;
+
+    margin-bottom:18px;
+
+    color:#1c1c1c;
+
+    font-size:2rem;
+
+    font-weight:700;
+
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.hiranya-delete-modal p{
+
+    margin:0;
+
+    color:#555;
+
+    line-height:1.8;
+
+    font-size:1rem;
+
+}
+
+.hiranya-delete-modal strong{
+
+    color:#111;
+
+    font-weight:700;
+
+}
+
+.hiranya-delete-modal span{
+
+    display:block;
+
+    margin-top:18px;
+
+    color:#c62828;
+
+    font-size:.92rem;
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   ACTIONS
+========================================================== */
+
+.hiranya-delete-actions{
+
+    margin-top:36px;
+
+    display:flex;
+
+    gap:18px;
+
+}
+
+.hiranya-delete-actions button{
+
+    flex:1;
+
+    height:54px;
+
+    border-radius:16px;
+
+    border:none;
+
+    cursor:pointer;
+
+    font-size:.95rem;
+
+    font-weight:700;
+
+    transition:.35s;
+
+}
+
+/* ==========================================================
+   CANCEL
+========================================================== */
+
+.hiranya-delete-cancel{
+
+    background:white;
+
+    color:#333;
+
+    border:1px solid rgba(0,0,0,.08) !important;
+
+}
+
+.hiranya-delete-cancel:hover{
+
+    transform:translateY(-3px);
+
+    border-color:#d4af37 !important;
+
+    color:#b8860b;
+
+}
+
+/* ==========================================================
+   DELETE
+========================================================== */
+
+.hiranya-delete-confirm{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:white;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #d32f2f,
+
+            #ff6b6b
+
+        );
+
+    box-shadow:
+
+        0 16px 35px rgba(211,47,47,.30);
+
+}
+
+.hiranya-delete-confirm:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+
+        0 22px 45px rgba(211,47,47,.45);
+
+}
+
+.hiranya-delete-confirm:disabled,
+
+.hiranya-delete-cancel:disabled,
+
+.hiranya-delete-close:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+/* ==========================================================
+   ANIMATIONS
+========================================================== */
+
+@keyframes hiranyaDeleteFade{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+@keyframes hiranyaDeletePopup{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(25px) scale(.94);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0) scale(1);
+
+    }
+
+}
+
+@keyframes hiranyaPulse{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.06);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media(max-width:768px){
+
+    .hiranya-delete-modal{
+
+        padding:28px;
+
+        border-radius:24px;
+
+    }
+
+    .hiranya-delete-actions{
+
+        flex-direction:column;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .hiranya-delete-modal{
+
+        padding:22px;
+
+    }
+
+    .hiranya-delete-modal h2{
+
+        font-size:1.55rem;
+
+    }
+
+    .hiranya-delete-icon{
+
+        width:74px;
+
+        height:74px;
+
+    }
+
+}
+
+/* ==========================================================
+   REDUCED MOTION
+========================================================== */
+
+@media(prefers-reduced-motion:reduce){
+
+    *{
+
+        animation:none !important;
+
+        transition:none !important;
+
+    }
+
+}

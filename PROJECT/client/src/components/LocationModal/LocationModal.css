@@ -1,0 +1,87 @@
+.location-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:3000;
+}
+
+.location-modal{
+    width:420px;
+    background:#fff;
+    border-radius:22px;
+    padding:24px;
+    animation:popup .25s ease;
+}
+
+@keyframes popup{
+    from{
+        opacity:0;
+        transform:scale(.9);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.location-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close-btn{
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.detect-btn{
+    width:100%;
+    border:none;
+    background:#c9a24d;
+    color:#fff;
+    padding:14px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:15px;
+    margin-bottom:20px;
+}
+
+.detect-btn i{
+    margin-right:10px;
+}
+
+.divider{
+    font-weight:600;
+    margin-bottom:15px;
+}
+
+.city-list{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.city-list button{
+    border:1px solid #ddd;
+    background:#fff;
+    border-radius:12px;
+    padding:12px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.city-list button:hover{
+    background:#c9a24d;
+    color:#fff;
+}
+
+.city-list i{
+    margin-right:8px;
+}
