@@ -1,0 +1,114 @@
+.dragdrop-zone {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.upload-hero {
+  /* display: grid; */
+  place-items: center;
+  height: 100%;
+  padding: 24px;
+}
+
+.upload-hero-inner {
+  padding-top: 200px;
+  max-width: 460px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8f6820;
+  margin-bottom: 10px;
+}
+
+.upload-hero-title {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.15;
+  color: var(--ivory);
+}
+
+.upload-hero-title em {
+  font-style: italic;
+  color: #8f6820;
+  -webkit-text-fill-color: #8f6820;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.upload-hero-subtitle {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0 0 28px;
+}
+
+.upload-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.upload-hero-or {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.upload-hero-hint {
+  font-size: 12px;
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.dragdrop-active .upload-hero-inner {
+  opacity: 0.3;
+}
+
+.dragdrop-overlay {
+  position: absolute;
+  inset: 12px;
+  border: 2px dashed var(--gold);
+  border-radius: var(--radius-lg);
+  display: grid;
+  place-items: center;
+  background: rgba(201, 162, 75, 0.08);
+  font-size: 16px;
+  color: var(--gold-light);
+  pointer-events: none;
+}
+
+@media (max-width: 560px) {
+  .upload-hero-title {
+    font-size: 32px;
+  }
+
+  .upload-hero-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .upload-hero-or {
+    display: none;
+  }
+}

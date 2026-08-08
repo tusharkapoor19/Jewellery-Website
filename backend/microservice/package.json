@@ -1,0 +1,24 @@
+{
+  "name": "auth-services",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "concurrently \"npm start --prefix auth-services\" \"npm start --prefix product-services\" \"npm start --prefix order-services\" \"npm start --prefix payment_service\" \"npm start --prefix user-services\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "concurrently": "^10.0.4",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.7.4",
+    "nodemailer": "^9.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

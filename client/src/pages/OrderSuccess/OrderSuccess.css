@@ -1,0 +1,1805 @@
+/* ===========================================================
+   ORDER SUCCESS
+   HIRANYA Luxury Jewellery
+=========================================================== */
+
+.order-success-page{
+
+    position:relative;
+
+    overflow:hidden;
+
+    min-height:100vh;
+
+    background:
+    linear-gradient(
+        180deg,
+        #faf8f3 0%,
+        #ffffff 35%,
+        #f8f6ef 100%
+    );
+
+    padding-bottom:120px;
+
+}
+
+
+/* ===========================================================
+   Background Glow
+=========================================================== */
+
+.order-success-page::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-220px;
+
+    left:-170px;
+
+    width:520px;
+
+    height:520px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(212,175,55,.18),
+        transparent 72%
+    );
+
+    filter:blur(28px);
+
+    pointer-events:none;
+
+}
+
+.order-success-page::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:-180px;
+
+    top:280px;
+
+    width:500px;
+
+    height:500px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,215,120,.14),
+        transparent 72%
+    );
+
+    filter:blur(32px);
+
+    pointer-events:none;
+
+}
+
+
+
+/* ===========================================================
+   Loader
+=========================================================== */
+
+.order-success-loader{
+
+    min-height:75vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:28px;
+
+}
+
+.order-loader-circle{
+
+    width:74px;
+
+    height:74px;
+
+    border-radius:50%;
+
+    border:4px solid #ece2cb;
+
+    border-top:4px solid #b68d40;
+
+    animation:orderLoaderSpin 1s linear infinite;
+
+}
+
+.order-success-loader h2{
+
+    color:#333;
+
+    font-size:22px;
+
+    font-weight:600;
+
+}
+
+@keyframes orderLoaderSpin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+
+/* ===========================================================
+   Hero
+=========================================================== */
+
+.order-success-hero{
+
+    position:relative;
+
+    max-width:1350px;
+
+    margin:auto;
+
+    padding:
+
+    90px
+
+    24px
+
+    60px;
+
+    text-align:center;
+
+    overflow:hidden;
+
+}
+
+.order-success-bg-glow{
+
+    position:absolute;
+
+    width:360px;
+
+    height:360px;
+
+    border-radius:50%;
+
+    left:50%;
+
+    top:25px;
+
+    transform:translateX(-50%);
+
+    background:
+
+    radial-gradient(
+
+        circle,
+
+        rgba(212,175,55,.30),
+
+        transparent 72%
+
+    );
+
+    filter:blur(28px);
+
+}
+
+.order-success-circle{
+
+    position:relative;
+
+    width:150px;
+
+    height:150px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #f6d365,
+
+        #d4af37
+
+    );
+
+    box-shadow:
+
+    0 25px 65px rgba(212,175,55,.35);
+
+}
+
+.order-success-circle svg{
+
+    width:74px;
+
+    height:74px;
+
+    color:#fff;
+
+}
+
+.order-success-heading{
+
+    margin-top:34px;
+
+}
+
+.order-success-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+
+    10px
+
+    20px;
+
+    border-radius:40px;
+
+    background:#fff;
+
+    border:1px solid rgba(212,175,55,.20);
+
+    color:#b68d40;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    box-shadow:
+
+    0 12px 30px rgba(0,0,0,.05);
+
+}
+
+.order-success-heading h1{
+
+    margin-top:28px;
+
+    font-size:58px;
+
+    font-weight:800;
+
+    color:#1f1f1f;
+
+}
+
+.order-success-heading p{
+
+    max-width:760px;
+
+    margin:
+
+    22px auto 0;
+
+    color:#666;
+
+    font-size:18px;
+
+    line-height:1.9;
+
+}
+
+
+
+/* ===========================================================
+   Order Cards
+=========================================================== */
+
+.order-info-grid{
+
+    max-width:1350px;
+
+    margin:auto;
+
+    padding:
+
+    0
+
+    24px
+
+    60px;
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(4,1fr);
+
+    gap:24px;
+
+}
+
+.order-info-card{
+
+    background:
+
+    rgba(255,255,255,.86);
+
+    -webkit-backdrop-filter:
+
+    blur(18px);
+
+    backdrop-filter:
+
+    blur(18px);
+
+    border:1px solid rgba(212,175,55,.18);
+
+    border-radius:24px;
+
+    padding:30px;
+
+    text-align:center;
+
+    transition:.35s;
+
+    box-shadow:
+
+    0 18px 45px rgba(0,0,0,.06);
+
+}
+
+.order-info-card:hover{
+
+    transform:
+
+    translateY(-8px);
+
+    box-shadow:
+
+    0 25px 65px rgba(212,175,55,.14);
+
+}
+
+.order-info-card svg{
+
+    width:34px;
+
+    height:34px;
+
+    color:#b68d40;
+
+}
+
+.order-info-card span{
+
+    display:block;
+
+    margin-top:16px;
+
+    color:#888;
+
+    font-size:14px;
+
+}
+
+.order-info-card h3{
+
+    margin-top:10px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#222;
+
+    word-break:break-word;
+
+}
+/* ===========================================================
+   Main Grid
+=========================================================== */
+
+.order-main-grid{
+
+    max-width:1350px;
+
+    margin:auto;
+
+    padding:0 24px;
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:32px;
+
+    align-items:start;
+
+}
+
+.order-left-column,
+.order-right-column{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:28px;
+
+}
+
+
+/* ===========================================================
+   Luxury Cards
+=========================================================== */
+
+.order-luxury-card{
+
+    background:rgba(255,255,255,.90);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+
+    border:1px solid rgba(212,175,55,.18);
+
+    border-radius:26px;
+
+    padding:32px;
+
+    box-shadow:
+    0 18px 45px rgba(0,0,0,.05);
+
+    transition:.35s;
+
+}
+
+.order-luxury-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+    0 25px 60px rgba(212,175,55,.12);
+
+}
+
+.order-card-heading{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    margin-bottom:28px;
+
+}
+
+.order-card-heading svg{
+
+    color:#b68d40;
+
+    width:28px;
+
+    height:28px;
+
+}
+
+.order-card-heading h2{
+
+    font-size:24px;
+
+    color:#1f1f1f;
+
+    font-weight:700;
+
+    margin-bottom:6px;
+
+}
+
+.order-card-heading p{
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+
+/* ===========================================================
+   Products
+=========================================================== */
+
+.order-products-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.order-product-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    border:1px solid #efefef;
+
+    transition:.3s;
+
+    background:#fff;
+
+}
+
+.order-product-card:hover{
+
+    border-color:#d4af37;
+
+    transform:translateY(-3px);
+
+}
+
+.order-product-image{
+
+    width:95px;
+
+    height:95px;
+
+    flex-shrink:0;
+
+}
+
+.order-product-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:16px;
+
+}
+
+.order-image-placeholder{
+
+    width:100%;
+
+    height:100%;
+
+    border-radius:16px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#faf7ef;
+
+    border:1px solid #ead9a0;
+
+}
+
+.order-image-placeholder svg{
+
+    color:#c49b2f;
+
+    width:38px;
+
+    height:38px;
+
+}
+
+.order-product-details{
+
+    flex:1;
+
+}
+
+.order-product-details h3{
+
+    font-size:18px;
+
+    color:#222;
+
+    margin-bottom:10px;
+
+}
+
+.order-product-details span{
+
+    color:#777;
+
+    font-size:15px;
+
+}
+
+.order-product-price{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#b68d40;
+
+}
+
+
+/* ===========================================================
+   Order Summary
+=========================================================== */
+
+.order-summary-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.order-summary-list div{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    font-size:16px;
+
+}
+
+.order-summary-list span{
+
+    color:#666;
+
+}
+
+.order-summary-list strong{
+
+    color:#222;
+
+    font-weight:700;
+
+}
+
+.order-discount{
+
+    color:#2e8b57 !important;
+
+}
+
+.order-summary-total{
+
+    margin-top:10px;
+
+    padding-top:20px;
+
+    border-top:1px solid #ececec;
+
+}
+
+.order-summary-total span{
+
+    font-size:18px;
+
+    font-weight:600;
+
+}
+
+.order-summary-total strong{
+
+    color:#b68d40;
+
+    font-size:24px;
+
+}
+/* ===========================================================
+   Order Timeline
+=========================================================== */
+
+.order-timeline{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:22px;
+
+}
+
+.timeline-item{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:18px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:#fafafa;
+
+    border:1px solid #ededed;
+
+    transition:.3s;
+
+}
+
+.timeline-item.active{
+
+    background:rgba(212,175,55,.08);
+
+    border-color:rgba(212,175,55,.30);
+
+}
+
+.timeline-item:hover{
+
+    transform:translateX(6px);
+
+}
+
+.timeline-item svg{
+
+    width:26px;
+
+    height:26px;
+
+    color:#b68d40;
+
+    flex-shrink:0;
+
+    margin-top:2px;
+
+}
+
+.timeline-item h4{
+
+    font-size:17px;
+
+    color:#222;
+
+    margin-bottom:6px;
+
+}
+
+.timeline-item span{
+
+    color:#666;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+}
+
+
+/* ===========================================================
+   Delivery Address
+=========================================================== */
+
+.order-address-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.order-address-card h3{
+
+    font-size:22px;
+
+    color:#222;
+
+    margin-bottom:6px;
+
+}
+
+.order-address-card p{
+
+    color:#666;
+
+    line-height:1.8;
+
+    font-size:15px;
+
+}
+
+
+/* ===========================================================
+   Order Details
+=========================================================== */
+
+.order-info-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.order-info-list div{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding-bottom:14px;
+
+    border-bottom:1px solid #f1f1f1;
+
+}
+
+.order-info-list div:last-child{
+
+    border-bottom:none;
+
+    padding-bottom:0;
+
+}
+
+.order-info-list span{
+
+    color:#666;
+
+    font-size:15px;
+
+}
+
+.order-info-list strong{
+
+    color:#222;
+
+    font-weight:700;
+
+    text-align:right;
+
+}
+
+.order-status-success{
+
+    color:#2e8b57 !important;
+
+}
+
+
+/* ===========================================================
+   HIRANYA Promise
+=========================================================== */
+
+.order-benefits-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.order-benefits-list div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:14px 16px;
+
+    border-radius:16px;
+
+    background:#fcfcfc;
+
+    border:1px solid #efefef;
+
+    transition:.3s;
+
+}
+
+.order-benefits-list div:hover{
+
+    border-color:#d4af37;
+
+    transform:translateX(6px);
+
+}
+
+.order-benefits-list svg{
+
+    width:22px;
+
+    height:22px;
+
+    color:#b68d40;
+
+}
+
+.order-benefits-list span{
+
+    color:#444;
+
+    font-weight:500;
+
+}
+
+
+/* ===========================================================
+   Support
+=========================================================== */
+
+.order-support-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.order-support-list div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:16px;
+
+    border-radius:16px;
+
+    background:#fafafa;
+
+    border:1px solid #efefef;
+
+}
+
+.order-support-list svg{
+
+    color:#b68d40;
+
+    width:22px;
+
+    height:22px;
+
+}
+
+.order-support-list span{
+
+    color:#444;
+
+    font-weight:500;
+
+}
+
+
+/* ===========================================================
+   Action Buttons
+=========================================================== */
+
+.order-action-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+}
+
+.order-primary-btn,
+.order-secondary-btn,
+.order-outline-btn{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:16px 22px;
+
+    border-radius:16px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.order-primary-btn{
+
+    border:none;
+
+    color:#fff;
+
+    background:linear-gradient(
+        135deg,
+        #d4af37,
+        #b68d40
+    );
+
+}
+
+.order-primary-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 18px 35px rgba(212,175,55,.35);
+
+}
+
+.order-secondary-btn{
+
+    background:#fff;
+
+    color:#222;
+
+    border:1px solid rgba(212,175,55,.25);
+
+}
+
+.order-secondary-btn:hover{
+
+    background:#faf7ef;
+
+    border-color:#d4af37;
+
+}
+
+.order-outline-btn{
+
+    background:transparent;
+
+    border:2px solid #d4af37;
+
+    color:#b68d40;
+
+}
+
+.order-outline-btn:hover{
+
+    background:#d4af37;
+
+    color:#fff;
+
+}
+/* ===========================================================
+   Thank You Section
+=========================================================== */
+
+.order-thankyou-section{
+
+    max-width:1350px;
+
+    margin:90px auto 60px;
+
+    padding:0 24px;
+
+}
+
+.order-thankyou-content{
+
+    position:relative;
+
+    overflow:hidden;
+
+    text-align:center;
+
+    padding:70px 50px;
+
+    border-radius:32px;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #1f1a12,
+        #3b2f18,
+        #b68d40
+    );
+
+    color:#fff;
+
+    box-shadow:
+    0 30px 70px rgba(182,141,64,.28);
+
+}
+
+.order-thankyou-content::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:420px;
+
+    height:420px;
+
+    border-radius:50%;
+
+    top:-220px;
+
+    right:-120px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,255,255,.15),
+        transparent 72%
+    );
+
+}
+
+.order-thankyou-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 22px;
+
+    border-radius:40px;
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.18);
+
+    font-size:14px;
+
+    font-weight:700;
+
+    letter-spacing:.8px;
+
+}
+
+.order-thankyou-content h2{
+
+    margin-top:28px;
+
+    font-size:46px;
+
+    font-weight:800;
+
+}
+
+.order-thankyou-content h2 span{
+
+    color:#ffe18b;
+
+}
+
+.order-thankyou-content p{
+
+    max-width:760px;
+
+    margin:24px auto 0;
+
+    line-height:1.9;
+
+    font-size:17px;
+
+    color:rgba(255,255,255,.88);
+
+}
+
+
+/* ===========================================================
+   Explore Section
+=========================================================== */
+
+.order-explore-section{
+
+    max-width:1350px;
+
+    margin:auto;
+
+    padding:20px 24px 100px;
+
+}
+
+.order-explore-header{
+
+    text-align:center;
+
+    margin-bottom:50px;
+
+}
+
+.order-explore-header h2{
+
+    font-size:40px;
+
+    color:#222;
+
+    font-weight:800;
+
+}
+
+.order-explore-header p{
+
+    margin-top:14px;
+
+    color:#777;
+
+    font-size:17px;
+
+}
+
+.order-explore-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:26px;
+
+}
+
+.order-explore-card{
+
+    background:#fff;
+
+    border-radius:26px;
+
+    border:1px solid rgba(212,175,55,.16);
+
+    padding:34px;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    box-shadow:
+    0 18px 45px rgba(0,0,0,.05);
+
+}
+
+.order-explore-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#d4af37;
+
+    box-shadow:
+    0 28px 60px rgba(212,175,55,.16);
+
+}
+
+.order-explore-card svg{
+
+    width:42px;
+
+    height:42px;
+
+    color:#b68d40;
+
+}
+
+.order-explore-card h3{
+
+    margin-top:24px;
+
+    font-size:24px;
+
+    color:#222;
+
+}
+
+.order-explore-card p{
+
+    margin-top:16px;
+
+    color:#666;
+
+    line-height:1.8;
+
+}
+
+.order-explore-card span{
+
+    margin-top:28px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#b68d40;
+
+    font-weight:700;
+
+}
+
+
+/* ===========================================================
+   Responsive
+=========================================================== */
+
+@media(max-width:1100px){
+
+    .order-main-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .order-info-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .order-explore-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .order-success-heading h1{
+
+        font-size:38px;
+
+    }
+
+    .order-success-circle{
+
+        width:120px;
+
+        height:120px;
+
+    }
+
+    .order-success-circle svg{
+
+        width:56px;
+
+        height:56px;
+
+    }
+
+    .order-info-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .order-luxury-card{
+
+        padding:24px;
+
+    }
+
+    .order-product-card{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .order-product-price{
+
+        margin-top:12px;
+
+    }
+
+    .order-thankyou-content{
+
+        padding:50px 28px;
+
+    }
+
+    .order-thankyou-content h2{
+
+        font-size:34px;
+
+    }
+
+    .order-explore-header h2{
+
+        font-size:32px;
+
+    }
+
+}
+/* ===========================================================
+   Premium Animations
+=========================================================== */
+
+@keyframes floatGlow{
+
+    0%{
+
+        transform:translateY(0px);
+
+    }
+
+    50%{
+
+        transform:translateY(-10px);
+
+    }
+
+    100%{
+
+        transform:translateY(0px);
+
+    }
+
+}
+
+@keyframes pulseGold{
+
+    0%{
+
+        box-shadow:
+        0 0 0 rgba(212,175,55,.25);
+
+    }
+
+    50%{
+
+        box-shadow:
+        0 0 45px rgba(212,175,55,.35);
+
+    }
+
+    100%{
+
+        box-shadow:
+        0 0 0 rgba(212,175,55,.25);
+
+    }
+
+}
+
+.order-success-circle{
+
+    animation:
+    floatGlow 4s ease-in-out infinite,
+    pulseGold 3s ease-in-out infinite;
+
+}
+
+
+/* ===========================================================
+   Scrollbar
+=========================================================== */
+
+.order-products-list::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.order-products-list::-webkit-scrollbar-thumb{
+
+    background:#d4af37;
+
+    border-radius:20px;
+
+}
+
+.order-products-list::-webkit-scrollbar-track{
+
+    background:#f4f4f4;
+
+}
+
+
+/* ===========================================================
+   Focus States
+=========================================================== */
+
+.order-primary-btn:focus,
+.order-secondary-btn:focus,
+.order-outline-btn:focus{
+
+    outline:none;
+
+    box-shadow:
+    0 0 0 4px rgba(212,175,55,.18);
+
+}
+
+
+/* ===========================================================
+   Selection
+=========================================================== */
+
+::selection{
+
+    background:#d4af37;
+
+    color:#fff;
+
+}
+
+
+/* ===========================================================
+   Smooth Hover
+=========================================================== */
+
+.order-luxury-card,
+.order-product-card,
+.order-info-card,
+.order-explore-card,
+.timeline-item,
+.order-benefits-list div,
+.order-support-list div{
+
+    transition:
+
+    transform .35s ease,
+
+    box-shadow .35s ease,
+
+    border-color .35s ease,
+
+    background .35s ease;
+
+}
+
+
+/* ===========================================================
+   Luxury Gradient Text
+=========================================================== */
+
+.order-success-heading h1,
+.order-thankyou-content h2{
+
+    background:
+
+    linear-gradient(
+
+        90deg,
+
+        #7b5b16,
+
+        #d4af37,
+
+        #f4d97b
+
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    background-clip:text;
+
+}
+
+
+/* ===========================================================
+   Button Active State
+=========================================================== */
+
+.order-primary-btn:active,
+.order-secondary-btn:active,
+.order-outline-btn:active{
+
+    transform:scale(.97);
+
+}
+
+
+/* ===========================================================
+   Card Hover Shine
+=========================================================== */
+
+.order-info-card,
+.order-luxury-card,
+.order-explore-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.order-info-card::before,
+.order-luxury-card::before,
+.order-explore-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-140%;
+
+    width:80%;
+
+    height:100%;
+
+    background:
+
+    linear-gradient(
+
+        90deg,
+
+        transparent,
+
+        rgba(255,255,255,.45),
+
+        transparent
+
+    );
+
+    transition:.8s;
+
+}
+
+.order-info-card:hover::before,
+.order-luxury-card:hover::before,
+.order-explore-card:hover::before{
+
+    left:160%;
+
+}
+
+
+/* ===========================================================
+   Large Desktop
+=========================================================== */
+
+@media(min-width:1600px){
+
+    .order-success-page{
+
+        font-size:105%;
+
+    }
+
+}
+
+
+/* ===========================================================
+   Small Mobile
+=========================================================== */
+
+@media(max-width:480px){
+
+    .order-success-hero{
+
+        padding:
+
+        70px
+
+        18px
+
+        40px;
+
+    }
+
+    .order-success-heading h1{
+
+        font-size:30px;
+
+        line-height:1.3;
+
+    }
+
+    .order-success-heading p{
+
+        font-size:15px;
+
+    }
+
+    .order-card-heading{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .order-summary-list div{
+
+        font-size:14px;
+
+    }
+
+    .order-summary-total strong{
+
+        font-size:20px;
+
+    }
+
+    .order-action-group{
+
+        gap:12px;
+
+    }
+
+    .order-primary-btn,
+    .order-secondary-btn,
+    .order-outline-btn{
+
+        padding:14px 18px;
+
+        font-size:14px;
+
+    }
+
+    .order-thankyou-content{
+
+        border-radius:22px;
+
+    }
+
+    .order-explore-card{
+
+        padding:26px;
+
+    }
+
+}

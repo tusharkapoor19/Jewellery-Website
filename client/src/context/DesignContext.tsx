@@ -1,0 +1,59 @@
+import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
+import type { DesignSelection, PriceEstimate } from '../types'
+import { calculatePriceEstimate } from '../utils/priceCalculator'
+
+const initialSelection: DesignSelection = {
+  jewellery: null,
+  material: null,
+  purity: null,
+  gemstone: null,
+  carat: 0,
+  style: null,
+  budget: 100000,
+  referenceImage: null,
+  weight: 0,
+}
+
+interface DesignContextValue {
+  selection: DesignSelection
+  updateSelection: (patch: Partial<DesignSelection>) => void
+  resetSelection: () => void
+  estimate: PriceEstimate
+  step: number
+  setStep: (step: number) => void
+}
+
+const DesignContext = createContext<DesignContextValue | undefined>(undefined)
+
+export function DesignProvider({ children }: { children: ReactNode }) {
+  const [selection, setSelection] = useState<DesignSelection>(initialSelection)
+  const [step, setStep] = useState(0)
+
+  const updateSelection = (patch: Partial<DesignSelection>) => {
+    setSelection((prev) => ({ ...prev, ...patch }))
+  }
+
+  const resetSelection = () => {
+    setSelection(initialSelection)
+    setStep(0)
+  }
+
+  const estimate = useMemo(() => calculatePriceEstimate(selection), [selection])
+
+  const value: DesignContextValue = {
+    selection,
+    updateSelection,
+    resetSelection,
+    estimate,
+    step,
+    setStep,
+  }
+
+  return <DesignContext.Provider value={value}>{children}</DesignContext.Provider>
+}
+
+export function useDesignContext(): DesignContextValue {
+  const ctx = useContext(DesignContext)
+  if (!ctx) throw new Error('useDesignContext must be used within a DesignProvider')
+  return ctx
+}

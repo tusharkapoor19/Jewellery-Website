@@ -1,0 +1,184 @@
+.shipping-policy{
+    width:100%;
+    min-height:100vh;
+    background:var(--bg-color);
+    color:var(--text-color);
+}
+
+/* Banner */
+
+.shipping-banner{
+    text-align:center;
+    padding:90px 20px 70px;
+    background:var(--secondary-bg);
+}
+
+.shipping-banner h1{
+    font-size:3rem;
+    margin-bottom:20px;
+    color:var(--text-color);
+}
+
+.shipping-banner span{
+    color:#c79b45;
+    font-weight:600;
+}
+
+.shipping-banner p{
+    max-width:800px;
+    margin:auto;
+    line-height:1.8;
+    color:var(--text-secondary);
+}
+
+/* Feature Cards */
+
+.shipping-features{
+    max-width:1200px;
+    margin:60px auto;
+    padding:0 20px;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.shipping-card{
+    background:var(--secondary-bg);
+    padding:35px 25px;
+    border-radius:16px;
+    text-align:center;
+    border:1px solid rgba(180,180,180,.15);
+    transition:.3s ease;
+}
+
+.shipping-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+.shipping-icon{
+    font-size:3rem;
+    color:#c79b45;
+    margin-bottom:20px;
+}
+
+.shipping-card h3{
+    margin-bottom:15px;
+    font-size:1.4rem;
+}
+
+.shipping-card p{
+    color:var(--text-secondary);
+    line-height:1.8;
+}
+
+/* Main Content */
+
+.shipping-container{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 20px 80px;
+}
+
+.shipping-section{
+    margin-bottom:45px;
+    padding-bottom:35px;
+    border-bottom:1px solid rgba(180,180,180,.15);
+}
+
+.shipping-section:last-child{
+    border-bottom:none;
+}
+
+.shipping-section h2{
+    font-size:1.8rem;
+    margin-bottom:18px;
+    color:var(--text-color);
+}
+
+.shipping-section p{
+    line-height:1.9;
+    color:var(--text-secondary);
+}
+
+.shipping-section strong{
+    color:#c79b45;
+}
+
+.shipping-section ul{
+    margin:20px 0;
+    padding-left:25px;
+}
+
+.shipping-section li{
+    margin-bottom:12px;
+    color:var(--text-secondary);
+}
+
+/* Contact Card */
+
+.shipping-contact{
+    margin-top:25px;
+    padding:25px;
+    background:var(--secondary-bg);
+    border-radius:14px;
+    border:1px solid rgba(180,180,180,.15);
+}
+
+.shipping-contact p{
+    margin-bottom:12px;
+}
+
+.shipping-contact p:last-child{
+    margin-bottom:0;
+}
+
+.shipping-update{
+    margin-top:20px;
+    color:#c79b45;
+    font-weight:600;
+    font-style:italic;
+}
+
+/* Responsive */
+
+@media(max-width:992px){
+
+    .shipping-features{
+        grid-template-columns:1fr;
+    }
+
+    .shipping-banner h1{
+        font-size:2.5rem;
+    }
+
+    .shipping-section h2{
+        font-size:1.5rem;
+    }
+
+}
+
+@media(max-width:576px){
+
+    .shipping-banner{
+        padding:70px 15px 50px;
+    }
+
+    .shipping-banner h1{
+        font-size:2rem;
+    }
+
+    .shipping-card{
+        padding:30px 20px;
+    }
+
+    .shipping-icon{
+        font-size:2.5rem;
+    }
+
+    .shipping-section h2{
+        font-size:1.3rem;
+    }
+
+}

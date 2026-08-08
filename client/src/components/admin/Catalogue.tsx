@@ -1,0 +1,318 @@
+import React, { useState } from "react";
+import { Product, ProductCategory } from "../../types/types";
+import { NewProductPayload, uploadProductImage } from "../../api/products";
+
+interface CatalogueProps {
+  products: Product[];
+  onAddProduct: (payload: NewProductPayload) => Promise<void>;
+}
+
+const categories: ProductCategory[] = [
+  "Rings",
+  "Necklaces",
+  "Earrings",
+  "Bangles",
+  "Bracelets",
+  "Pendants",
+];
+
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(value);
+
+interface FormState {
+  name: string;
+  category: ProductCategory;
+  collection: string;
+  metal: string;
+  description: string;
+  price: string;
+  weight: string;
+  stock: string;
+  image: string;
+}
+
+const emptyForm: FormState = {
+  name: "",
+  category: "Rings",
+  collection: "",
+  metal: "",
+  description: "",
+  price: "",
+  weight: "",
+  stock: "",
+  image: "",
+};
+
+const Catalogue: React.FC<CatalogueProps> = ({ products, onAddProduct }) => {
+  const [form, setForm] = useState<FormState>(emptyForm);
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [toast, setToast] = useState<string>("");
+  const [submitError, setSubmitError] = useState<string>("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleChange = (field: keyof FormState, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: undefined }));
+  };
+
+  const validate = (): boolean => {
+    const nextErrors: Partial<Record<keyof FormState, string>> = {};
+    if (!form.name.trim()) nextErrors.name = "Product name is required";
+    if (!form.collection.trim()) nextErrors.collection = "Collection is required";
+    if (!form.metal.trim()) nextErrors.metal = "Metal is required";
+    if (!form.description.trim()) nextErrors.description = "Description is required";
+    if (!form.price || Number(form.price) <= 0) nextErrors.price = "Enter a valid price";
+    if (!form.weight || Number(form.weight) <= 0) nextErrors.weight = "Enter a valid weight";
+    if (!form.stock || Number(form.stock) <= 0) nextErrors.stock = "Enter a valid stock count";
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
+
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingImage(true);
+    try {
+      const url = await uploadProductImage(file); // from api/products.ts
+      handleChange("image", url);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Image upload failed");
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitError("");
+    if (!validate()) return;
+
+    const payload: NewProductPayload = {
+      name: form.name.trim(),
+      category: form.category,
+      collection: form.collection.trim(),
+      metal: form.metal.trim(),
+      description: form.description.trim(),
+      price: Number(form.price),
+      weight: Number(form.weight),
+      stock: Number(form.stock),
+      image: form.image.trim() || undefined,
+    };
+
+    setSubmitting(true);
+    try {
+      await onAddProduct(payload);
+      setForm(emptyForm);
+      setToast(`"${payload.name}" added to catalogue`);
+      window.setTimeout(() => setToast(""), 3000);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Failed to add product"
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <section className="panel">
+      <header className="panel-header">
+        <div>
+          <p className="eyebrow">Product catalogue</p>
+          <h2>Catalogue</h2>
+          <p className="panel-subtitle">Add new jewellery pieces so they appear on the storefront.</p>
+        </div>
+        <div className="stat-strip">
+          <div className="stat-card">
+            <span className="stat-value">{products.length}</span>
+            <span className="stat-label">Products live</span>
+          </div>
+        </div>
+      </header>
+
+      <div className="catalogue-layout">
+        <form className="product-form" onSubmit={handleSubmit} noValidate>
+          <h3>Add a product</h3>
+
+          <div className="field">
+            <label htmlFor="name">Product name</label>
+            <input
+              id="name"
+              type="text"
+              placeholder="e.g. Emerald Halo Pendant"
+              value={form.name}
+              onChange={(e) => handleChange("name", e.target.value)}
+            />
+            {errors.name && <span className="field-error">{errors.name}</span>}
+          </div>
+
+          <div className="field-row">
+            <div className="field">
+              <label htmlFor="category">Category</label>
+              <select
+                id="category"
+                value={form.category}
+                onChange={(e) => handleChange("category", e.target.value)}
+              >
+                {categories.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="field">
+              <label htmlFor="collection">Collection</label>
+              <input
+                id="collection"
+                type="text"
+                placeholder="e.g. Heritage"
+                value={form.collection}
+                onChange={(e) => handleChange("collection", e.target.value)}
+              />
+              {errors.collection && <span className="field-error">{errors.collection}</span>}
+            </div>
+          </div>
+
+          <div className="field-row">
+            <div className="field">
+              <label htmlFor="price">Price (INR)</label>
+              <input
+                id="price"
+                type="number"
+                min={0}
+                placeholder="25000"
+                value={form.price}
+                onChange={(e) => handleChange("price", e.target.value)}
+              />
+              {errors.price && <span className="field-error">{errors.price}</span>}
+            </div>
+
+            <div className="field">
+              <label htmlFor="stock">Stock quantity</label>
+              <input
+                id="stock"
+                type="number"
+                min={0}
+                placeholder="10"
+                value={form.stock}
+                onChange={(e) => handleChange("stock", e.target.value)}
+              />
+              {errors.stock && <span className="field-error">{errors.stock}</span>}
+            </div>
+          </div>
+
+          <div className="field-row">
+            <div className="field">
+              <label htmlFor="metal">Metal</label>
+              <input
+                id="metal"
+                type="text"
+                placeholder="18K Gold"
+                value={form.metal}
+                onChange={(e) => handleChange("metal", e.target.value)}
+              />
+              {errors.metal && <span className="field-error">{errors.metal}</span>}
+            </div>
+
+            <div className="field">
+              <label htmlFor="weight">Weight (grams)</label>
+              <input
+                id="weight"
+                type="number"
+                min={0}
+                step="0.1"
+                placeholder="6.5"
+                value={form.weight}
+                onChange={(e) => handleChange("weight", e.target.value)}
+              />
+              {errors.weight && <span className="field-error">{errors.weight}</span>}
+            </div>
+          </div>
+
+          <div className="field">
+            <label htmlFor="description">Description</label>
+            <textarea
+              id="description"
+              rows={3}
+              placeholder="Short description shown on the storefront"
+              value={form.description}
+              onChange={(e) => handleChange("description", e.target.value)}
+            />
+            {errors.description && <span className="field-error">{errors.description}</span>}
+          </div>
+          
+          <div className="field">
+            <label htmlFor="image">Product image</label>
+            <input
+              id="image"
+              type="file"
+              accept="image/*"
+              onChange={handleImageSelect}
+            />
+            {uploadingImage && <span className="field-error" style={{ color: "#555" }}>Uploading…</span>}
+            {form.image && (
+              <img
+                src={form.image}
+                alt="Preview"
+                style={{ width: 90, height: 90, objectFit: "cover", borderRadius: 8, marginTop: 8 }}
+              />
+            )}
+          </div>
+
+          {submitError && <div className="banner banner--error">{submitError}</div>}
+
+          <button type="submit" className="btn btn-primary btn-full" disabled={submitting}>
+            {submitting ? "Adding…" : "Add to catalogue"}
+          </button>
+
+          {toast && <div className="toast">{toast}</div>}
+        </form>
+
+        <div className="product-grid">
+          {products.length === 0 ? (
+            <div className="empty-state">
+              <p>No products yet.</p>
+              <span>Products you add will appear here.</span>
+            </div>
+          ) : (
+            products.map((product) => (
+              <article className="product-card" key={product.id}>
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="product-card-image"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src =
+                      "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' fill='%23F1E9DC'/%3E%3Cpath d='M60 20 L95 50 L60 100 L25 50 Z' fill='%23C7A24A'/%3E%3C/svg%3E";
+                  }}
+                />
+                <div className="product-card-body">
+                  <span className="product-card-category">{product.category}</span>
+                  <h4>{product.name}</h4>
+                  <p className="product-card-material">{product.material}</p>
+                  <div className="product-card-footer">
+                    <span className="product-card-price">{formatCurrency(product.price)}</span>
+                    <span className={`stock-pill ${product.stock < 5 ? "stock-pill--low" : ""}`}>
+                      {product.stock} in stock
+                    </span>
+                  </div>
+                </div>
+              </article>
+            ))
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Catalogue;

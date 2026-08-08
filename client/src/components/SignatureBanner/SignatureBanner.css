@@ -1,0 +1,119 @@
+.signature-banner{
+    position:relative;
+    margin:90px 8%;
+    border-radius:28px;
+    overflow:hidden;
+    height:500px;
+    box-shadow:0 25px 60px rgba(0,0,0,.18);
+}
+
+/* IMAGE */
+
+.signature-banner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    position:absolute;
+    inset:0;
+    z-index:1;
+    transition:transform .6s ease;
+}
+
+.signature-banner:hover img{
+    transform:scale(1.04);
+}
+
+/* OVERLAY */
+
+.signature-overlay{
+    position:absolute;
+    inset:0;
+    z-index:2;
+
+    display:flex;
+    align-items:center;
+    padding:0 8%;
+
+    background:linear-gradient(
+        90deg,
+        rgba(0,0,0,.48) 0%,
+        rgba(0,0,0,.22) 45%,
+        rgba(0,0,0,0) 100%
+    );
+}
+
+/* CONTENT */
+
+.signature-content{
+    position:relative;
+    z-index:3;
+    max-width:620px;
+    color:#fff;
+}
+
+.signature-content span{
+    color:#d4af37;
+    letter-spacing:6px;
+    text-transform:uppercase;
+    font-size:13px;
+    font-weight:700;
+}
+
+.signature-content h2{
+    margin:20px 0;
+    font-size:60px;
+    line-height:1.12;
+    font-family:"Cormorant Garamond", serif;
+    font-weight:600;
+    color:#fff;
+    text-shadow:0 4px 20px rgba(0,0,0,.45);
+}
+
+.signature-content p{
+    max-width:500px;
+    color:#f4f4f4;
+    line-height:1.9;
+    font-size:18px;
+    margin-top:12px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+
+    .signature-banner{
+        margin:70px 5%;
+        height:420px;
+    }
+
+    .signature-content h2{
+        font-size:42px;
+    }
+
+}
+
+@media(max-width:576px){
+
+    .signature-banner{
+        height:360px;
+        border-radius:20px;
+    }
+
+    .signature-overlay{
+        padding:30px;
+    }
+
+    .signature-content h2{
+        font-size:32px;
+    }
+
+    .signature-content p{
+        font-size:14px;
+        line-height:1.7;
+    }
+
+}
+.signature-banner:hover img{
+    transform:scale(1.015);
+}

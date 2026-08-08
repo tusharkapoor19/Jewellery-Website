@@ -1,0 +1,28 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+"scripts": {
+  "client": "npm start --prefix client",
+
+  "server1": "npm start --prefix backend/microservice/auth-services",
+
+  "server2": "npm start --prefix backend/microservice/order-services",
+
+  "server3": "npm start --prefix backend/microservice/payment_service",
+
+  "server4": "npm start --prefix backend/microservice/product-services",
+
+  "server5": "npm start --prefix backend/microservice/user-services",
+
+  "server6": "npm start --prefix backend/microservice/custom-design-services",
+
+  "dev": "concurrently \"npm run server1\" \"npm run server2\" \"npm run server3\" \"npm run server4\" \"npm run server5\" \"npm run server6\" \"npm run client\""
+},
+  "keywords": [],
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^10.0.4"
+  }
+}

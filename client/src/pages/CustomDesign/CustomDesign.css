@@ -1,0 +1,13 @@
+/* Page-specific overrides for the Custom Design flow that go beyond
+   utility classes — kept minimal since Tailwind handles most styling. */
+
+.custom-design-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #c9a667;
+  cursor: pointer;
+  border: 2px solid #0d0c0b;
+}

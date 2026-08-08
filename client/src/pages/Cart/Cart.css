@@ -1,0 +1,991 @@
+:root {
+  /* Color Palette - Luxury Warm Palette */
+  --hiranya-bg: #FCFAF7;
+  --hiranya-bg-alt: #F7F3EE;
+  --hiranya-card-bg: #FFFFFF;
+  --hiranya-gold-primary: #C9A14A;
+  --hiranya-gold-light: #E8D3A7;
+  --hiranya-gold-dark: #9A7B31;
+  --hiranya-champagne: #F4EBE1;
+  --hiranya-black: #151515;
+  --hiranya-black-soft: #222222;
+  --hiranya-charcoal: #333333;
+  --hiranya-muted: #7A7570;
+  --hiranya-border-light: rgba(201, 161, 74, 0.18);
+  --hiranya-border-strong: rgba(201, 161, 74, 0.45);
+  --hiranya-success: #2E6F40;
+  --hiranya-error: #9B2C2C;
+
+  /* Glassmorphism & Overlays */
+  --hiranya-glass-bg: rgba(255, 255, 255, 0.75);
+  --hiranya-glass-card: rgba(252, 250, 247, 0.85);
+  --hiranya-glass-border: rgba(201, 161, 74, 0.22);
+  --hiranya-overlay-dark: linear-gradient(180deg, rgba(21, 21, 21, 0.6) 0%, rgba(21, 21, 21, 0.85) 100%);
+
+  /* Typography System */
+  --hiranya-font-serif: "Cinzel", "Playfair Display", "Didot", "Baskerville", serif;
+  --hiranya-font-sans: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Shadows & Depth */
+  --hiranya-shadow-sm: 0 4px 16px rgba(21, 21, 21, 0.03);
+  --hiranya-shadow-md: 0 12px 32px rgba(21, 21, 21, 0.06);
+  --hiranya-shadow-lg: 0 24px 60px rgba(21, 21, 21, 0.09);
+  --hiranya-shadow-gold: 0 16px 40px rgba(201, 161, 74, 0.2);
+
+  /* Micro-Interaction Transitions */
+  --hiranya-easing: cubic-bezier(0.25, 1, 0.5, 1);
+  --hiranya-transition-fast: 0.25s var(--hiranya-easing);
+  --hiranya-transition-normal: 0.45s var(--hiranya-easing);
+  --hiranya-transition-slow: 0.75s var(--hiranya-easing);
+
+  /* Layout Constants */
+  --hiranya-max-width: 1500px;
+  --hiranya-radius-card: 24px;
+  --hiranya-radius-sm: 8px;
+  --hiranya-radius-button: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   02. GLOBAL RESETS, SELECTION & BASE STYLES
+   -------------------------------------------------------------------------- */
+::selection {
+  background-color: var(--hiranya-gold-primary);
+  color: var(--hiranya-black);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--hiranya-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--hiranya-gold-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hiranya-gold-primary);
+}
+
+.hiranya-cart-page {
+  background-color: var(--hiranya-bg);
+  color: var(--hiranya-black);
+  font-family: var(--hiranya-font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: var(--hiranya-max-width);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 60px);
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   03. HERO SECTION - HAUTE JOAILLERIE BANNER
+   -------------------------------------------------------------------------- */
+.hiranya-cart-hero {
+  position: relative;
+  width: 100%;
+  height: clamp(320px, 35vh, 480px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--hiranya-black);
+}
+
+.hiranya-cart-hero img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.55;
+  transform: scale(1.03);
+  transition: transform 12s ease-out;
+  filter: contrast(1.05) brightness(0.9);
+}
+
+.hiranya-cart-hero:hover img {
+  transform: scale(1.08);
+}
+
+.hiranya-cart-hero .hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(21, 21, 21, 0.4) 0%,
+    rgba(21, 21, 21, 0.75) 70%,
+    var(--hiranya-bg) 100%
+  );
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.hiranya-cart-hero .container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hiranya-cart-hero .breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(0.7rem, 1vw, 0.8rem);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--hiranya-gold-light);
+  margin-bottom: 16px;
+}
+
+.hiranya-cart-hero .breadcrumb a {
+  color: var(--hiranya-bg);
+  text-decoration: none;
+  transition: color var(--hiranya-transition-fast);
+  opacity: 0.8;
+}
+
+.hiranya-cart-hero .breadcrumb a:hover {
+  color: var(--hiranya-gold-primary);
+  opacity: 1;
+}
+
+.hiranya-cart-hero .hero-tag {
+  display: block;
+  font-family: var(--hiranya-font-sans);
+  font-size: clamp(0.65rem, 0.8vw, 0.75rem);
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--hiranya-gold-primary);
+  margin-bottom: 8px;
+}
+
+.hiranya-cart-hero h1 {
+  font-family: var(--hiranya-font-serif);
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-weight: 400;
+  color: #FFFFFF;
+  letter-spacing: 0.04em;
+  margin: 0 0 12px 0;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hiranya-cart-hero p {
+  font-family: var(--hiranya-font-serif);
+  font-style: italic;
+  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 580px;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   04. CART SECTION & MAIN LAYOUT GRID
+   -------------------------------------------------------------------------- */
+.hiranya-cart-section {
+  padding: clamp(40px, 6vw, 90px) 0;
+  position: relative;
+  z-index: 2;
+  margin-top: -30px;
+}
+
+.cart-grid {
+  display: grid;
+  grid-template-columns: 1fr 440px;
+  gap: clamp(30px, 4vw, 70px);
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   05. PRODUCT CARDS & BAG ITEMS
+   -------------------------------------------------------------------------- */
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.cart-item-card {
+  background: var(--hiranya-card-bg);
+  border: 1px solid var(--hiranya-border-light);
+  border-radius: var(--hiranya-radius-card);
+  padding: clamp(20px, 2.5vw, 32px);
+  display: grid;
+  grid-template-columns: clamp(140px, 18vw, 220px) 1fr;
+  gap: clamp(20px, 3vw, 40px);
+  box-shadow: var(--hiranya-shadow-sm);
+  transition: transform var(--hiranya-transition-normal),
+              box-shadow var(--hiranya-transition-normal),
+              border-color var(--hiranya-transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.cart-item-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--hiranya-radius-card);
+  padding: 1px;
+  background: linear-gradient(135deg, var(--hiranya-gold-primary), transparent 60%);
+  /* Add standard 'mask' for Firefox and other browsers */
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  /* Composite modes: -webkit uses 'xor', standard uses 'exclude' (where supported) */
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.3;
+  transition: opacity var(--hiranya-transition-normal);
+  pointer-events: none;
+}
+
+.cart-item-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--hiranya-shadow-md), var(--hiranya-shadow-gold);
+  border-color: var(--hiranya-border-strong);
+}
+
+.cart-item-card:hover::before {
+  opacity: 1;
+}
+
+/* Product Image & Glass Effect */
+.item-image {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: calc(var(--hiranya-radius-card) - 8px);
+  overflow: hidden;
+  background: var(--hiranya-bg-alt);
+  border: 1px solid rgba(201, 161, 74, 0.12);
+}
+
+.item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform var(--hiranya-transition-slow);
+}
+
+.cart-item-card:hover .item-image img {
+  transform: scale(1.08);
+}
+
+/* Item Details Structure */
+.item-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item-details h3 {
+  font-family: var(--hiranya-font-serif);
+  font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+  font-weight: 400;
+  color: var(--hiranya-black);
+  margin: 0 0 6px 0;
+  letter-spacing: 0.02em;
+}
+
+.item-meta {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hiranya-muted);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.item-price-row {
+  font-family: var(--hiranya-font-serif);
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  font-weight: 600;
+  color: var(--hiranya-gold-dark);
+  margin-bottom: 18px;
+}
+
+/* Quantity Control Stepper */
+.quantity-controls {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--hiranya-border-strong);
+  border-radius: var(--hiranya-radius-button);
+  background: var(--hiranya-bg);
+  padding: 4px;
+  width: fit-content;
+  margin-bottom: 20px;
+}
+
+.quantity-controls button {
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hiranya-black);
+  cursor: pointer;
+  transition: all var(--hiranya-transition-fast);
+  border-radius: 2px;
+}
+
+.quantity-controls button:hover {
+  background: var(--hiranya-gold-primary);
+  color: var(--hiranya-black);
+}
+
+.quantity-controls span {
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  min-width: 36px;
+  text-align: center;
+  color: var(--hiranya-black);
+}
+
+.item-total {
+  font-family: var(--hiranya-font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--hiranya-black);
+  margin-bottom: 16px;
+}
+
+/* Cart Item Action Buttons */
+.cart-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(21, 21, 21, 0.06);
+  padding-top: 16px;
+  margin-top: auto;
+}
+
+.cart-actions button {
+  background: transparent;
+  border: none;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hiranya-charcoal);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  transition: color var(--hiranya-transition-fast);
+}
+
+.cart-actions button:hover {
+  color: var(--hiranya-gold-dark);
+}
+
+/* --------------------------------------------------------------------------
+   06. ORDER SUMMARY - STICKY GLASSMORPHIC SIDEBAR
+   -------------------------------------------------------------------------- */
+.cart-summary {
+  position: sticky;
+  top: 40px;
+}
+
+.summary-card {
+  background: var(--hiranya-glass-card);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--hiranya-border-strong);
+  border-radius: var(--hiranya-radius-card);
+  padding: clamp(24px, 3vw, 40px);
+  box-shadow: var(--hiranya-shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-card > span {
+  display: block;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--hiranya-gold-primary);
+  margin-bottom: 6px;
+}
+
+.summary-card h2 {
+  font-family: var(--hiranya-font-serif);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--hiranya-black);
+  margin: 0 0 28px 0;
+  letter-spacing: 0.02em;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 0.92rem;
+}
+
+.summary-row p {
+  margin: 0;
+  color: var(--hiranya-muted);
+  font-weight: 400;
+}
+
+.summary-row strong {
+  font-family: var(--hiranya-font-serif);
+  color: var(--hiranya-black);
+  font-weight: 600;
+}
+
+.summary-row.discount strong {
+  color: var(--hiranya-success);
+}
+
+.summary-card hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hiranya-border-strong), transparent);
+  margin: 24px 0;
+}
+
+.grand-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 28px;
+}
+
+.grand-total h3 {
+  font-family: var(--hiranya-font-serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--hiranya-black);
+  margin: 0;
+}
+
+.grand-total p {
+  font-size: 0.72rem;
+  color: var(--hiranya-muted);
+  margin: 2px 0 0 0;
+  letter-spacing: 0.05em;
+}
+
+.grand-total h2 {
+  font-family: var(--hiranya-font-serif);
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--hiranya-gold-dark);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   07. COUPON SECTION & DISCOUNTS
+   -------------------------------------------------------------------------- */
+.coupon-box {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.coupon-box input {
+  flex: 1;
+  background: var(--hiranya-bg);
+  border: 1px solid var(--hiranya-border-light);
+  border-radius: var(--hiranya-radius-button);
+  padding: 12px 16px;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hiranya-black);
+  outline: none;
+  transition: border-color var(--hiranya-transition-fast);
+}
+
+.coupon-box input:focus {
+  border-color: var(--hiranya-gold-primary);
+  background: var(--hiranya-card-bg);
+}
+
+.coupon-box button {
+  background: var(--hiranya-black);
+  color: var(--hiranya-bg);
+  border: 1px solid var(--hiranya-black);
+  border-radius: var(--hiranya-radius-button);
+  padding: 0 20px;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--hiranya-transition-fast);
+}
+
+.coupon-box button:hover {
+  background: var(--hiranya-gold-primary);
+  border-color: var(--hiranya-gold-primary);
+  color: var(--hiranya-black);
+}
+
+.coupon-error {
+  color: var(--hiranya-error);
+  font-size: 0.78rem;
+  margin: -8px 0 16px 0;
+  letter-spacing: 0.02em;
+}
+
+.coupon-success {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(46, 111, 64, 0.08);
+  border: 1px solid var(--hiranya-success);
+  border-radius: var(--hiranya-radius-button);
+  padding: 10px 14px;
+  margin-bottom: 20px;
+}
+
+.coupon-success div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--hiranya-success);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+}
+
+.coupon-success button {
+  background: transparent;
+  border: none;
+  color: var(--hiranya-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.coupon-success button:hover {
+  color: var(--hiranya-error);
+}
+
+/* Coupon Available Cards Carousel / List */
+.coupon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.coupon-card {
+  background: var(--hiranya-bg);
+  border: 1px dashed var(--hiranya-border-strong);
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all var(--hiranya-transition-fast);
+}
+
+.coupon-card:hover {
+  border-style: solid;
+  border-color: var(--hiranya-gold-primary);
+  background: var(--hiranya-champagne);
+}
+
+.coupon-card h4 {
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--hiranya-gold-dark);
+  margin: 0 0 4px 0;
+}
+
+.coupon-card p {
+  font-size: 0.75rem;
+  color: var(--hiranya-charcoal);
+  margin: 0 0 4px 0;
+}
+
+.coupon-card small {
+  font-size: 0.68rem;
+  color: var(--hiranya-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --------------------------------------------------------------------------
+   08. CHECKOUT BUTTON & TRUST BADGES
+   -------------------------------------------------------------------------- */
+.checkout-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--hiranya-black) 0%, var(--hiranya-black-soft) 100%);
+  color: var(--hiranya-gold-light);
+  border: 1px solid var(--hiranya-gold-primary);
+  border-radius: var(--hiranya-radius-button);
+  padding: 18px 24px;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(21, 21, 21, 0.2);
+  transition: all var(--hiranya-transition-normal);
+  text-decoration: none;
+}
+
+.checkout-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 161, 74, 0.4),
+    transparent
+  );
+  transition: left 0.75s ease;
+}
+
+.checkout-btn:hover::before {
+  left: 100%;
+}
+
+.checkout-btn:hover {
+  background: var(--hiranya-gold-primary);
+  color: var(--hiranya-black);
+  border-color: var(--hiranya-gold-light);
+  box-shadow: var(--hiranya-shadow-gold);
+  transform: translateY(-2px);
+}
+
+.checkout-btn svg {
+  transition: transform var(--hiranya-transition-fast);
+}
+
+.checkout-btn:hover svg:last-child {
+  transform: translateX(4px);
+}
+
+.trust-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(21, 21, 21, 0.06);
+}
+
+.trust-row div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hiranya-muted);
+}
+
+.trust-row svg {
+  color: var(--hiranya-gold-primary);
+}
+
+/* --------------------------------------------------------------------------
+   09. EMPTY CART STATE
+   -------------------------------------------------------------------------- */
+.empty-cart {
+  text-align: center;
+  padding: clamp(60px, 8vw, 120px) 20px;
+  max-width: 540px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-cart svg {
+  color: var(--hiranya-gold-primary);
+  margin-bottom: 24px;
+  opacity: 0.8;
+}
+
+.empty-cart h2 {
+  font-family: var(--hiranya-font-serif);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 400;
+  color: var(--hiranya-black);
+  margin: 0 0 12px 0;
+  letter-spacing: 0.03em;
+}
+
+.empty-cart p {
+  color: var(--hiranya-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0 0 32px 0;
+}
+
+/* --------------------------------------------------------------------------
+   10. RECOMMENDATIONS & YOU MAY ALSO LIKE SECTION
+   -------------------------------------------------------------------------- */
+.recommendation-section {
+  padding: clamp(60px, 8vw, 120px) 0;
+  background: var(--hiranya-bg-alt);
+  border-top: 1px solid var(--hiranya-border-light);
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+
+.section-heading span {
+  display: block;
+  font-family: var(--hiranya-font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--hiranya-gold-primary);
+  margin-bottom: 8px;
+}
+
+.section-heading h2 {
+  font-family: var(--hiranya-font-serif);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 400;
+  color: var(--hiranya-black);
+  margin: 0 0 12px 0;
+  letter-spacing: 0.03em;
+}
+
+.section-heading p {
+  color: var(--hiranya-muted);
+  font-size: 0.95rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.recommendation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 32px;
+}
+
+/* --------------------------------------------------------------------------
+   11. TRUST BADGES & GUARANTEES
+   -------------------------------------------------------------------------- */
+.trust-section {
+  padding: clamp(60px, 7vw, 100px) 0;
+  background: var(--hiranya-bg);
+  border-top: 1px solid var(--hiranya-border-light);
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(24px, 3vw, 40px);
+}
+
+.trust-card {
+  background: var(--hiranya-card-bg);
+  border: 1px solid var(--hiranya-border-light);
+  border-radius: var(--hiranya-radius-card);
+  padding: 36px 28px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all var(--hiranya-transition-normal);
+  box-shadow: var(--hiranya-shadow-sm);
+}
+
+.trust-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--hiranya-gold-primary);
+  box-shadow: var(--hiranya-shadow-md);
+}
+
+.trust-card svg {
+  color: var(--hiranya-gold-primary);
+  margin-bottom: 20px;
+}
+
+.trust-card h3 {
+  font-family: var(--hiranya-font-serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--hiranya-black);
+  margin: 0 0 8px 0;
+  letter-spacing: 0.02em;
+}
+
+.trust-card p {
+  font-size: 0.85rem;
+  color: var(--hiranya-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   12. KEYFRAME ANIMATIONS
+   -------------------------------------------------------------------------- */
+@keyframes hiranyaShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes hiranyaFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cart-item-card {
+  animation: hiranyaFadeUp 0.6s var(--hiranya-easing) backwards;
+}
+
+/* --------------------------------------------------------------------------
+   13. RESPONSIVE BREAKPOINTS (1920px down to 320px)
+   -------------------------------------------------------------------------- */
+
+/* Desktop Extra Large (1600px - 1920px) */
+@media (min-width: 1600px) {
+  .cart-grid {
+    grid-template-columns: 1fr 480px;
+  }
+}
+
+/* Standard Desktop / Laptop (1025px - 1366px) */
+@media (max-width: 1366px) {
+  .cart-grid {
+    grid-template-columns: 1fr 400px;
+    gap: 40px;
+  }
+}
+
+/* Tablet Landscape & Small Laptop (993px - 1024px) */
+@media (max-width: 1024px) {
+  .cart-grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .cart-summary {
+    position: static;
+  }
+}
+
+/* Tablet Portrait (769px - 992px) */
+@media (max-width: 992px) {
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile & Small Tablet (577px - 768px) */
+@media (max-width: 768px) {
+  .cart-item-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .item-image {
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  .item-details {
+    text-align: center;
+    align-items: center;
+  }
+
+  .quantity-controls {
+    margin: 0 auto 16px auto;
+  }
+
+  .cart-actions {
+    justify-content: center;
+  }
+
+  .trust-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* Small Mobile Devices (320px - 576px) */
+@media (max-width: 576px) {
+  .hiranya-cart-hero {
+    height: 280px;
+  }
+
+  .summary-card {
+    padding: 20px 16px;
+  }
+
+  .coupon-box {
+    flex-direction: column;
+  }
+
+  .coupon-box button {
+    padding: 12px;
+  }
+
+  .trust-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Mobile Sticky Checkout Bar */
+  .checkout-btn {
+    padding: 16px 20px;
+    font-size: 0.78rem;
+  }
+}

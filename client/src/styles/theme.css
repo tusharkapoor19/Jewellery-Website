@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ink: #0d0c0b;
+  --color-ink-soft: #171512;
+  --color-ivory: #f7f2e7;
+  --color-ivory-dim: #ece4d2;
+  --color-gold: #c9a667;
+  --color-gold-bright: #e6c98a;
+  --color-gold-deep: #8a6d3b;
+  --color-emerald: #113c2c;
+  --color-emerald-bright: #1c5a41;
+  --color-rose: #c99687;
+  --color-line: #2a2621;
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html[data-theme='light'] {
+  --color-ink: #f9f5ec;
+  --color-ink-soft: #f0e9d8;
+  --color-ivory: #1c1811;
+  --color-ivory-dim: #4a4438;
+  --color-gold: #a9793a;
+  --color-gold-bright: #8a6323;
+  --color-gold-deep: #6e4f1f;
+  --color-emerald: #cfe3da;
+  --color-emerald-bright: #9dbfae;
+  --color-rose: #b97a68;
+  --color-line: #e2d8c2;
+}
+
+html,
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-ivory);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-gold);
+  color: var(--color-ink);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold-deep) var(--color-ink);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-gold-deep);
+  border-radius: 8px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.hairline {
+  border-color: var(--color-line);
+}
+
+.gold-text {
+  background: linear-gradient(120deg, var(--color-gold-deep), var(--color-gold-bright), var(--color-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ledger-underline {
+  position: relative;
+}
+.ledger-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}

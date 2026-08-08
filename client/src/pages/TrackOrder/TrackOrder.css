@@ -1,0 +1,1405 @@
+/* ===========================================================
+   TRACK ORDER
+=========================================================== */
+
+.track-page{
+
+    min-height:100vh;
+
+    background:
+
+    linear-gradient(
+
+        180deg,
+
+        #faf8f2 0%,
+
+        #ffffff 42%,
+
+        #f8f5ed 100%
+
+    );
+
+    overflow:hidden;
+
+    position:relative;
+
+    padding-bottom:90px;
+
+}
+
+.track-page::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-220px;
+
+    left:-180px;
+
+    width:520px;
+
+    height:520px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(
+
+        circle,
+
+        rgba(212,175,55,.16),
+
+        transparent 72%
+
+    );
+
+    filter:blur(30px);
+
+}
+
+.track-page::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:-180px;
+
+    top:260px;
+
+    width:500px;
+
+    height:500px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(
+
+        circle,
+
+        rgba(255,220,120,.13),
+
+        transparent 72%
+
+    );
+
+    filter:blur(35px);
+
+}
+
+/* ===========================================================
+   Loader
+=========================================================== */
+
+.track-loader{
+
+    min-height:75vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:24px;
+
+}
+
+.track-spinner{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:50%;
+
+    border:4px solid #efe2bf;
+
+    border-top:4px solid #c69b2f;
+
+    animation:trackSpin 1s linear infinite;
+
+}
+
+.track-loader h2{
+
+    color:#333;
+
+    font-size:22px;
+
+}
+
+@keyframes trackSpin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* ===========================================================
+   Hero
+=========================================================== */
+
+.track-hero{
+
+    position:relative;
+
+    max-width:1350px;
+
+    margin:auto;
+
+    padding:90px 24px 55px;
+
+    text-align:center;
+
+    overflow:hidden;
+
+}
+
+.track-glow{
+
+    position:absolute;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:340px;
+
+    height:340px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(
+
+        circle,
+
+        rgba(212,175,55,.26),
+
+        transparent 72%
+
+    );
+
+    filter:blur(30px);
+
+}
+
+.track-heading{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.track-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 20px;
+
+    border-radius:40px;
+
+    background:#fff;
+
+    border:1px solid rgba(212,175,55,.18);
+
+    color:#b68d40;
+
+    font-weight:700;
+
+    font-size:14px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.05);
+
+}
+
+.track-heading h1{
+
+    margin-top:26px;
+
+    font-size:58px;
+
+    font-weight:800;
+
+    color:#222;
+
+}
+
+.track-heading p{
+
+    max-width:720px;
+
+    margin:18px auto 0;
+
+    color:#666;
+
+    font-size:18px;
+
+    line-height:1.8;
+
+}
+
+/* ===========================================================
+   Search
+=========================================================== */
+
+.track-search-section{
+
+    max-width:1350px;
+
+    margin:auto;
+
+    padding:0 24px 50px;
+
+}
+
+.track-search-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    background:#fff;
+
+    border-radius:22px;
+
+    border:1px solid rgba(212,175,55,.18);
+
+    padding:18px 22px;
+
+    box-shadow:0 18px 45px rgba(0,0,0,.05);
+
+}
+
+.track-search-box svg{
+
+    color:#b68d40;
+
+}
+
+.track-search-box input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    font-size:16px;
+
+}
+
+.track-search-box button{
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:14px 28px;
+
+    border-radius:14px;
+
+    color:#fff;
+
+    font-weight:700;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #d4af37,
+
+        #b68d40
+
+    );
+
+    transition:.3s;
+
+}
+
+.track-search-box button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 18px 35px rgba(212,175,55,.28);
+
+}
+/* ===========================================================
+   Order Header
+=========================================================== */
+
+.track-order-header{
+
+    max-width:1350px;
+
+    margin:auto;
+
+    padding:0 24px 45px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.track-order-header span{
+
+    color:#888;
+
+    font-size:14px;
+
+}
+
+.track-order-header h2{
+
+    margin-top:8px;
+
+    font-size:30px;
+
+    color:#222;
+
+    font-weight:700;
+
+}
+
+
+/* ===========================================================
+   Status Badge
+=========================================================== */
+
+.track-status{
+
+    padding:12px 24px;
+
+    border-radius:40px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    letter-spacing:.6px;
+
+    text-transform:uppercase;
+
+}
+
+/* Pending */
+
+.track-status.pending{
+
+    background:#fff7e2;
+
+    color:#c28a00;
+
+}
+
+/* Confirmed */
+
+.track-status.confirmed{
+
+    background:#eef9f0;
+
+    color:#2e8b57;
+
+}
+
+/* Packed */
+
+.track-status.packed{
+
+    background:#eef7ff;
+
+    color:#1878d3;
+
+}
+
+/* Shipped */
+
+.track-status.shipped{
+
+    background:#edf4ff;
+
+    color:#2767d8;
+
+}
+
+/* Out For Delivery */
+
+.track-status.outfordelivery{
+
+    background:#f4efff;
+
+    color:#6d3fc5;
+
+}
+
+/* Delivered */
+
+.track-status.delivered{
+
+    background:#e8faef;
+
+    color:#198b45;
+
+}
+
+/* Cancelled */
+
+.track-status.cancelled{
+
+    background:#fdecec;
+
+    color:#d0342c;
+
+}
+
+
+/* ===========================================================
+   Timeline
+=========================================================== */
+
+.track-timeline{
+
+    max-width:1350px;
+
+    margin:auto;
+
+    padding:0 24px 70px;
+
+    display:grid;
+
+    grid-template-columns:repeat(6,1fr);
+
+    gap:20px;
+
+    position:relative;
+
+}
+
+.track-timeline::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:28px;
+
+    left:8%;
+
+    right:8%;
+
+    height:4px;
+
+    background:#ececec;
+
+    z-index:0;
+
+    border-radius:30px;
+
+}
+
+.track-step{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    text-align:center;
+
+}
+
+.track-step-icon{
+
+    width:58px;
+
+    height:58px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#fff;
+
+    border:2px solid #e4e4e4;
+
+    transition:.35s;
+
+    box-shadow:0 12px 28px rgba(0,0,0,.05);
+
+}
+
+.track-step-icon svg{
+
+    width:26px;
+
+    height:26px;
+
+    color:#999;
+
+}
+
+.track-step.active .track-step-icon{
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #d4af37,
+
+        #b68d40
+
+    );
+
+    border-color:#d4af37;
+
+}
+
+.track-step.active .track-step-icon svg{
+
+    color:#fff;
+
+}
+
+.track-step span{
+
+    margin-top:18px;
+
+    color:#666;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    line-height:1.5;
+
+}
+
+.track-step.active span{
+
+    color:#222;
+
+}
+/* ===========================================================
+   Main Grid
+=========================================================== */
+
+.track-grid{
+
+    max-width:1350px;
+
+    margin:auto;
+
+    padding:0 24px;
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:30px;
+
+    align-items:start;
+
+}
+
+.track-left,
+.track-right{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:28px;
+
+}
+
+
+/* ===========================================================
+   Luxury Cards
+=========================================================== */
+
+.track-card{
+
+    background:rgba(255,255,255,.92);
+    /* Enable backdrop blur for supported browsers, include WebKit prefix for Safari/iOS */
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+
+    border:1px solid rgba(212,175,55,.18);
+
+    border-radius:28px;
+
+    padding:30px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.05);
+
+    transition:.35s;
+
+}
+
+.track-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 28px 60px rgba(212,175,55,.14);
+
+}
+
+.track-card-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:26px;
+
+}
+
+.track-card-title svg{
+
+    width:28px;
+
+    height:28px;
+
+    color:#b68d40;
+
+}
+
+.track-card-title h3{
+
+    font-size:24px;
+
+    color:#222;
+
+    font-weight:700;
+
+}
+
+
+/* ===========================================================
+   Products
+=========================================================== */
+
+.track-products{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.track-product{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    border:1px solid #ececec;
+
+    background:#fff;
+
+    transition:.3s;
+
+}
+
+.track-product:hover{
+
+    border-color:#d4af37;
+
+    transform:translateX(6px);
+
+}
+
+.track-product-image{
+
+    width:90px;
+
+    height:90px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    background:#faf6ec;
+
+    border:1px solid #ead9a0;
+
+}
+
+.track-product-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+.track-product-image svg{
+
+    width:36px;
+
+    height:36px;
+
+    color:#c69b2f;
+
+}
+
+.track-product-info{
+
+    flex:1;
+
+}
+
+.track-product-info h4{
+
+    font-size:18px;
+
+    color:#222;
+
+    margin-bottom:8px;
+
+}
+
+.track-product-info span{
+
+    color:#777;
+
+    font-size:15px;
+
+}
+
+.track-product strong{
+
+    color:#b68d40;
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+
+/* ===========================================================
+   Delivery Address
+=========================================================== */
+
+.track-address{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.track-address h4{
+
+    font-size:22px;
+
+    color:#222;
+
+    font-weight:700;
+
+}
+
+.track-address p{
+
+    color:#666;
+
+    line-height:1.8;
+
+    font-size:15px;
+
+}
+
+.track-address span{
+
+    margin-top:6px;
+
+    color:#b68d40;
+
+    font-weight:700;
+
+}
+
+
+/* ===========================================================
+   Summary
+=========================================================== */
+
+.track-summary{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.track-summary div{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding-bottom:16px;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.track-summary div:last-child{
+
+    border-bottom:none;
+
+    padding-bottom:0;
+
+}
+
+.track-summary span{
+
+    color:#777;
+
+    font-size:15px;
+
+}
+
+.track-summary strong{
+
+    color:#222;
+
+    font-weight:700;
+
+}
+
+.track-total strong{
+
+    color:#b68d40;
+
+    font-size:24px;
+
+}
+/* ===========================================================
+   Need Help
+=========================================================== */
+
+.track-help-text{
+
+    color:#666;
+
+    line-height:1.9;
+
+    font-size:15px;
+
+    margin-bottom:24px;
+
+}
+
+.track-support-btn{
+
+    width:100%;
+
+    height:54px;
+
+    border:none;
+
+    border-radius:16px;
+
+    cursor:pointer;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #d4af37,
+
+        #b68d40
+
+    );
+
+    transition:.3s;
+
+}
+
+.track-support-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 18px 35px rgba(212,175,55,.30);
+
+}
+
+
+/* ===========================================================
+   Bottom Buttons
+=========================================================== */
+
+.track-actions{
+
+    max-width:1350px;
+
+    margin:70px auto 0;
+
+    padding:0 24px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+}
+
+.track-primary-btn,
+.track-outline-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    min-width:220px;
+
+    height:56px;
+
+    padding:0 28px;
+
+    border-radius:16px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.track-primary-btn{
+
+    border:none;
+
+    color:#fff;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #d4af37,
+
+        #b68d40
+
+    );
+
+}
+
+.track-primary-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 18px 35px rgba(212,175,55,.35);
+
+}
+
+.track-outline-btn{
+
+    background:#fff;
+
+    color:#222;
+
+    border:1px solid rgba(212,175,55,.22);
+
+}
+
+.track-outline-btn:hover{
+
+    background:#faf7ef;
+
+    border-color:#d4af37;
+
+}
+
+
+/* ===========================================================
+   Empty State
+=========================================================== */
+
+.track-empty{
+
+    max-width:900px;
+
+    margin:80px auto;
+
+    padding:70px 40px;
+
+    text-align:center;
+
+    background:#fff;
+
+    border-radius:30px;
+
+    border:1px solid rgba(212,175,55,.18);
+
+    box-shadow:0 20px 50px rgba(0,0,0,.05);
+
+}
+
+.track-empty svg{
+
+    width:70px;
+
+    height:70px;
+
+    color:#d4af37;
+
+}
+
+.track-empty h2{
+
+    margin-top:24px;
+
+    font-size:34px;
+
+    color:#222;
+
+}
+
+.track-empty p{
+
+    margin:18px auto 0;
+
+    max-width:500px;
+
+    color:#777;
+
+    line-height:1.8;
+
+}
+
+.track-empty button{
+
+    margin-top:34px;
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:16px 32px;
+
+    border-radius:14px;
+
+    color:#fff;
+
+    font-weight:700;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #d4af37,
+
+        #b68d40
+
+    );
+
+}
+
+
+/* ===========================================================
+   Responsive
+=========================================================== */
+
+@media(max-width:1100px){
+
+    .track-timeline{
+
+        grid-template-columns:repeat(3,1fr);
+
+        row-gap:35px;
+
+    }
+
+    .track-timeline::before{
+
+        display:none;
+
+    }
+
+    .track-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .track-heading h1{
+
+        font-size:40px;
+
+    }
+
+    .track-search-box{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+    .track-search-box button{
+
+        width:100%;
+
+    }
+
+    .track-order-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .track-timeline{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+    .track-product{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .track-product strong{
+
+        margin-top:10px;
+
+    }
+
+    .track-actions{
+
+        flex-direction:column;
+
+    }
+
+    .track-primary-btn,
+    .track-outline-btn{
+
+        width:100%;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .track-hero{
+
+        padding:70px 18px 40px;
+
+    }
+
+    .track-heading h1{
+
+        font-size:30px;
+
+    }
+
+    .track-heading p{
+
+        font-size:15px;
+
+    }
+
+    .track-card{
+
+        padding:22px;
+
+    }
+
+    .track-card-title{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .track-summary div{
+
+        font-size:14px;
+
+    }
+
+    .track-total strong{
+
+        font-size:20px;
+
+    }
+
+    .track-timeline{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+
+/* ===========================================================
+   Animations
+=========================================================== */
+
+.track-glow{
+
+    animation:
+
+    trackFloat 6s ease-in-out infinite;
+
+}
+
+@keyframes trackFloat{
+
+    0%{
+
+        transform:translateX(-50%) translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateX(-50%) translateY(-12px);
+
+    }
+
+    100%{
+
+        transform:translateX(-50%) translateY(0);
+
+    }
+
+}
+
+.track-card,
+.track-product,
+.track-primary-btn,
+.track-outline-btn{
+
+    transition:
+
+    transform .35s ease,
+
+    box-shadow .35s ease,
+
+    border-color .35s ease;
+
+}
+
+.track-page ::selection{
+
+    background:#d4af37;
+
+    color:#fff;
+
+}
+
+.track-page ::-webkit-scrollbar{
+
+    width:7px;
+
+}
+
+.track-page ::-webkit-scrollbar-thumb{
+
+    background:#d4af37;
+
+    border-radius:20px;
+
+}

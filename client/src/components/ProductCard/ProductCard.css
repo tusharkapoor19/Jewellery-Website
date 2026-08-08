@@ -1,0 +1,896 @@
+/* ==========================================
+   HIRANYA PREMIUM PRODUCT CARD
+========================================== */
+
+.hiranya-card{
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:#ffffff;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    border:1px solid rgba(200,162,77,.15);
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.08),
+        0 2px 8px rgba(0,0,0,.05);
+
+    transition:
+        transform .45s ease,
+        box-shadow .45s ease,
+        border-color .45s ease;
+
+    height:100%;
+
+}
+
+.hiranya-card:hover{
+
+    transform:translateY(-12px);
+
+    border-color:#C8A24D;
+
+    box-shadow:
+
+        0 35px 80px rgba(0,0,0,.15),
+
+        0 0 40px rgba(200,162,77,.16);
+
+}
+
+/* ==============================
+        IMAGE AREA
+============================== */
+
+.hiranya-image-area{
+
+    position:relative;
+
+    width:100%;
+
+    height:360px;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #f8f6f2,
+
+        #fefcf8
+
+    );
+
+}
+
+.hiranya-image{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+
+        transform .7s ease,
+
+        filter .5s ease;
+
+}
+
+.hiranya-card:hover .hiranya-image{
+
+    transform:scale(1.09);
+
+    filter:brightness(.96);
+
+}
+
+/* ==============================
+        IMAGE OVERLAY
+============================== */
+
+.image-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+
+        to top,
+
+        rgba(0,0,0,.38),
+
+        rgba(0,0,0,.05),
+
+        transparent
+
+    );
+
+    opacity:0;
+
+    transition:.45s;
+
+    z-index:2;
+
+}
+
+.hiranya-card:hover .image-overlay{
+
+    opacity:1;
+
+}
+
+/* ==============================
+      COLLECTION CHIP
+============================== */
+
+.collection-chip{
+
+    position:absolute;
+
+    left:20px;
+
+    top:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 18px;
+
+    border-radius:50px;
+
+    background:
+
+    rgba(255,255,255,.82);
+
+    -webkit-backdrop-filter:blur(16px);
+
+    backdrop-filter:blur(16px);
+
+    color:#222;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:.7px;
+
+    z-index:20;
+
+    box-shadow:
+
+    0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.collection-chip svg{
+
+    color:#C8A24D;
+
+}
+
+/* ==============================
+      WISHLIST BUTTON
+============================== */
+
+.wishlist-btn{
+
+    position:absolute;
+
+    right:20px;
+
+    top:20px;
+
+    width:52px;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:
+
+    rgba(255,255,255,.84);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    backdrop-filter:blur(18px);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    z-index:30;
+
+    box-shadow:
+
+    0 10px 25px rgba(0,0,0,.10);
+
+}
+
+.wishlist-btn svg{
+
+    color:#444;
+
+    transition:.35s;
+
+}
+
+.wishlist-btn:hover{
+
+    transform:scale(1.12);
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #C8A24D,
+
+        #E5C979
+
+    );
+
+}
+
+.wishlist-btn:hover svg{
+
+    color:white;
+
+}
+
+.wishlist-btn.active{
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #C8A24D,
+
+        #E5C979
+
+    );
+
+}
+
+.wishlist-btn.active svg{
+
+    color:#fff;
+
+}
+/* ==========================================
+        STOCK CHIP
+========================================== */
+
+.stock-chip{
+
+    position:absolute;
+
+    left:20px;
+
+    bottom:20px;
+
+    padding:9px 18px;
+
+    border-radius:50px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:.8px;
+
+    text-transform:uppercase;
+
+    color:#fff;
+
+    z-index:20;
+
+    -webkit-backdrop-filter:blur(14px);
+
+    backdrop-filter:blur(14px);
+
+    box-shadow:
+
+        0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.available{
+
+    background:linear-gradient(
+        135deg,
+        #1ea34a,
+        #29c765
+    );
+
+}
+
+.sold{
+
+    background:linear-gradient(
+        135deg,
+        #d62828,
+        #ef4444
+    );
+
+}
+
+/* ==========================================
+        QUICK VIEW
+========================================== */
+
+.quick-view{
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:34px;
+
+    transform:translate(-50%,35px);
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 22px;
+
+    border-radius:60px;
+
+    background:rgba(255,255,255,.90);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    backdrop-filter:blur(18px);
+
+    font-weight:600;
+
+    color:#222;
+
+    opacity:0;
+
+    transition:.45s;
+
+    z-index:25;
+
+    box-shadow:
+
+        0 18px 35px rgba(0,0,0,.15);
+
+}
+
+.hiranya-card:hover .quick-view{
+
+    opacity:1;
+
+    transform:translate(-50%,0);
+
+}
+
+.quick-view svg{
+
+    color:#C8A24D;
+
+}
+
+/* ==========================================
+        CONTENT
+========================================== */
+
+.hiranya-content{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+    padding:26px;
+
+    flex:1;
+
+    background:#fff;
+
+}
+
+/* ==========================================
+        TOP ROW
+========================================== */
+
+.rating-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.rating-pill,
+
+.secure-pill{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:8px 14px;
+
+    border-radius:50px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+.rating-pill{
+
+    color:#C8A24D;
+
+    background:#fff8e7;
+
+}
+
+.secure-pill{
+
+    background:#f6f6f6;
+
+    color:#555;
+
+}
+
+/* ==========================================
+        TITLE
+========================================== */
+
+.hiranya-title{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#222;
+
+    line-height:1.45;
+
+    min-height:70px;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.hiranya-title:hover{
+
+    color:#C8A24D;
+
+}
+
+/* ==========================================
+        META TAGS
+========================================== */
+
+.meta-row{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+}
+
+.metal-tag,
+
+.certificate-tag{
+
+    padding:8px 14px;
+
+    border-radius:50px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+}
+
+.metal-tag{
+
+    background:#faf4e5;
+
+    color:#9b6d00;
+
+}
+
+.certificate-tag{
+
+    background:#f2f2f2;
+
+    color:#555;
+
+}
+
+/* ==========================================
+        PRICE BOX
+========================================== */
+
+.price-box{
+
+    margin-top:auto;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #faf7ef,
+            #fff
+        );
+
+    border:1px solid rgba(200,162,77,.15);
+
+}
+
+.price-label{
+
+    display:block;
+
+    font-size:12px;
+
+    color:#888;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    margin-bottom:8px;
+
+}
+
+.price-box h2{
+
+    font-size:34px;
+
+    color:#C8A24D;
+
+    font-weight:800;
+
+    line-height:1;
+
+}
+/* ==========================================
+        CARD ACTIONS
+========================================== */
+
+.card-actions{
+
+    display:flex;
+
+    gap:14px;
+
+    margin-top:24px;
+
+}
+
+/* ==========================================
+        ADD TO CART
+========================================== */
+
+.cart-button{
+
+    flex:1;
+
+    height:58px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:linear-gradient(
+        135deg,
+        #B8891F,
+        #D4AF37,
+        #F0D889
+    );
+
+    color:#fff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    letter-spacing:.3px;
+
+    cursor:pointer;
+
+    transition:all .35s ease;
+
+    box-shadow:
+        0 14px 30px rgba(200,162,77,.28);
+
+}
+
+.cart-button:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+        0 22px 40px rgba(200,162,77,.42);
+
+    filter:brightness(1.03);
+
+}
+
+.cart-button:active{
+
+    transform:scale(.96);
+
+}
+
+/* ==========================================
+        DETAILS BUTTON
+========================================== */
+
+.details-button{
+
+    width:145px;
+
+    height:58px;
+
+    border-radius:18px;
+
+    border:1px solid rgba(200,162,77,.35);
+
+    background:rgba(255,255,255,.88);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    backdrop-filter:blur(18px);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:9px;
+
+    color:#C8A24D;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:all .35s ease;
+
+}
+
+.details-button:hover{
+
+    background:#C8A24D;
+
+    color:#fff;
+
+    transform:translateY(-5px);
+
+    box-shadow:
+        0 18px 35px rgba(200,162,77,.35);
+
+}
+
+.details-button:active{
+
+    transform:scale(.96);
+
+}
+
+/* ==========================================
+        MICRO INTERACTIONS
+========================================== */
+
+.hiranya-card:hover .collection-chip{
+
+    transform:translateY(-2px);
+
+}
+
+.hiranya-card:hover .stock-chip{
+
+    transform:translateY(-3px);
+
+}
+
+.hiranya-card:hover .price-box{
+
+    border-color:#C8A24D;
+
+    box-shadow:
+        0 12px 25px rgba(200,162,77,.12);
+
+}
+
+.hiranya-card:hover .wishlist-btn{
+
+    box-shadow:
+        0 16px 30px rgba(0,0,0,.18);
+
+}
+
+/* ==========================================
+        SMOOTH TRANSITIONS
+========================================== */
+
+.hiranya-card *{
+
+    transition:
+        background .35s ease,
+        color .35s ease,
+        transform .35s ease,
+        box-shadow .35s ease;
+
+}
+
+/* ==========================================
+        RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .hiranya-image-area{
+
+        height:320px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .hiranya-content{
+
+        padding:20px;
+
+    }
+
+    .hiranya-title{
+
+        font-size:20px;
+
+        min-height:auto;
+
+    }
+
+    .price-box h2{
+
+        font-size:28px;
+
+    }
+
+    .card-actions{
+
+        flex-direction:column;
+
+    }
+
+    .details-button{
+
+        width:100%;
+
+    }
+
+    .cart-button{
+
+        width:100%;
+
+    }
+
+    .hiranya-image-area{
+
+        height:280px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .hiranya-image-area{
+
+        height:250px;
+
+    }
+
+    .collection-chip{
+
+        left:14px;
+
+        top:14px;
+
+        padding:8px 14px;
+
+        font-size:11px;
+
+    }
+
+    .wishlist-btn{
+
+        width:46px;
+
+        height:46px;
+
+        right:14px;
+
+        top:14px;
+
+    }
+
+    .stock-chip{
+
+        left:14px;
+
+        bottom:14px;
+
+        font-size:11px;
+
+    }
+
+    .quick-view{
+
+        padding:10px 18px;
+
+        font-size:13px;
+
+    }
+
+}

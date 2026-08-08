@@ -1,0 +1,1738 @@
+/* ===================================================
+                    HIRANYA
+                    MY ACCOUNT
+=================================================== */
+
+:root{
+
+    --ha-gold-1:#B8891F;
+    --ha-gold-2:#D4AF37;
+    --ha-gold-3:#F4D98C;
+    --ha-gold-soft:#C8A24D;
+    --ha-ink:#1f1f1f;
+    --ha-muted:#666;
+    --ha-bg:#fcfaf6;
+    --ha-card:#ffffff;
+    --ha-border:#ece5d5;
+    --ha-danger:#e53935;
+    --ha-success:#2e8b57;
+
+}
+
+.account-page{
+
+    width:100%;
+
+    padding:80px 7% 120px;
+
+    background:var(--ha-bg);
+
+}
+
+/* ===========================
+        HERO
+=========================== */
+
+.account-hero{
+
+    padding-top: 100px;
+
+    position:relative;
+
+    min-height:60vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #181818 0%,
+
+        #2b2113 35%,
+
+        #111111 100%
+
+    );
+
+}
+
+.account-hero .hero-glow{
+
+    position:absolute;
+
+    width:900px;
+
+    height:900px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(
+
+        rgba(212,175,55,.28),
+
+        transparent 70%
+
+    );
+
+    filter:blur(20px);
+
+    animation:accGlow 10s ease-in-out infinite;
+
+}
+
+.account-hero .hero-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+
+        rgba(0,0,0,.25),
+
+        rgba(0,0,0,.45)
+
+    );
+
+}
+
+.account-hero-content{
+
+    position:relative;
+
+    z-index:5;
+
+    width:min(900px,90%);
+
+    text-align:center;
+
+    animation:accFadeUp .9s ease;
+
+}
+
+.account-hero-content span{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:10px 22px;
+
+    border-radius:40px;
+
+    background:rgba(255,255,255,.08);
+
+    -webkit-backdrop-filter:blur(15px);
+
+    backdrop-filter:blur(15px);
+
+    color:var(--ha-gold-2);
+
+    font-size:14px;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    font-weight:700;
+
+    margin-bottom:30px;
+
+}
+
+.account-hero-content h1{
+
+    font-size:60px;
+
+    line-height:1.15;
+
+    color:#fff;
+
+    margin-bottom:24px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-weight:700;
+
+}
+
+.account-hero-content p{
+
+    max-width:680px;
+
+    margin:auto;
+
+    color:#e8e8e8;
+
+    font-size:18px;
+
+    line-height:1.9;
+
+}
+
+/* ===========================
+    ACCOUNT LOADING / ERROR
+=========================== */
+
+.account-loading{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:14px;
+
+    padding:60px 0;
+
+    color:var(--ha-gold-soft);
+
+    font-size:17px;
+
+    font-weight:600;
+
+}
+
+.account-load-error{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:16px;
+
+    padding:60px 0;
+
+    color:var(--ha-danger);
+
+    text-align:center;
+
+}
+
+.account-load-error p{
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:var(--ha-ink);
+
+}
+
+/* ===========================
+    ACCOUNT OVERVIEW CARDS
+=========================== */
+
+.overview-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:28px;
+
+    margin:-70px auto 90px;
+
+    max-width:1300px;
+
+    position:relative;
+
+    z-index:10;
+
+}
+
+.overview-card{
+
+    position:relative;
+
+    background:var(--ha-card);
+
+    border:1px solid var(--ha-border);
+
+    border-radius:24px;
+
+    padding:32px 26px;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.08);
+
+    transition:all .35s ease;
+
+    font-family:inherit;
+
+}
+
+.overview-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:var(--ha-gold-2);
+
+    box-shadow:0 30px 60px rgba(212,175,55,.2);
+
+}
+
+.overview-icon{
+
+    width:56px;
+
+    height:56px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:linear-gradient(135deg, var(--ha-gold-1), var(--ha-gold-2), var(--ha-gold-3));
+
+    color:#fff;
+
+    margin-bottom:18px;
+
+}
+
+.overview-card h3{
+
+    font-size:20px;
+
+    color:var(--ha-ink);
+
+    margin-bottom:6px;
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+.overview-card p{
+
+    font-size:13.5px;
+
+    color:var(--ha-muted);
+
+    line-height:1.6;
+
+    padding-right:20px;
+
+}
+
+.overview-arrow{
+
+    position:absolute;
+
+    right:22px;
+
+    bottom:26px;
+
+    color:var(--ha-gold-2);
+
+    transition:transform .3s ease;
+
+}
+
+.overview-card:hover .overview-arrow{
+
+    transform:translateX(6px);
+
+}
+
+/* ===========================
+    SECTION HEADERS
+=========================== */
+
+.account-section{
+
+    max-width:1300px;
+
+    margin:0 auto 70px;
+
+    scroll-margin-top:120px;
+
+}
+
+.account-section-header{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:space-between;
+
+    flex-wrap:wrap;
+
+    gap:18px;
+
+    margin-bottom:26px;
+
+}
+
+.account-section-tag{
+
+    display:block;
+
+    color:var(--ha-gold-soft);
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    margin-bottom:10px;
+
+}
+
+.danger-tag{
+
+    color:var(--ha-danger);
+
+}
+
+.account-section-header h2{
+
+    font-size:36px;
+
+    color:var(--ha-ink);
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+/* ===========================
+    PREMIUM CARD SHELL
+=========================== */
+
+.account-card{
+
+    background:var(--ha-card);
+
+    border:1px solid var(--ha-border);
+
+    border-radius:28px;
+
+    padding:40px;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.06);
+
+}
+
+/* ===========================
+    AVATAR BLOCK
+=========================== */
+
+.avatar-block{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:22px;
+
+    margin-bottom:34px;
+
+    padding-bottom:30px;
+
+    border-bottom:1px solid var(--ha-border);
+
+}
+
+.avatar-circle{
+
+    position:relative;
+
+    width:84px;
+
+    height:84px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg, #f4ecd8, #fff);
+
+    border:2px solid var(--ha-gold-2);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:var(--ha-gold-1);
+
+    flex-shrink:0;
+
+    overflow:hidden;
+
+}
+
+.avatar-block h4{
+
+    font-size:19px;
+
+    color:var(--ha-ink);
+
+    font-family:"Cormorant Garamond",serif;
+
+    margin-bottom:4px;
+
+}
+
+.avatar-block p{
+
+    font-size:13.5px;
+
+    color:var(--ha-muted);
+
+}
+
+/* ===========================
+    FORM GRID
+=========================== */
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:26px;
+
+}
+
+.form-field{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.form-field-wide{
+
+    grid-column:1 / -1;
+
+}
+
+.form-field label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    text-transform:uppercase;
+
+    color:#555;
+
+}
+
+.form-field label svg{
+
+    color:var(--ha-gold-2);
+
+}
+
+.form-field input,
+.form-field textarea{
+
+    width:100%;
+
+    padding:14px 18px;
+
+    border-radius:14px;
+
+    border:1px solid var(--ha-border);
+
+    background:#fdfcf9;
+
+    font-size:15px;
+
+    color:var(--ha-ink);
+
+    outline:none;
+
+    transition:all .3s ease;
+
+    font-family:inherit;
+
+    resize:vertical;
+
+}
+
+.form-field input:disabled,
+.form-field textarea:disabled{
+
+    background:#f6f4ee;
+
+    color:#8a8a8a;
+
+    cursor:not-allowed;
+
+}
+
+.form-field input:focus,
+.form-field textarea:focus{
+
+    border-color:var(--ha-gold-2);
+
+    box-shadow:0 0 0 4px rgba(212,175,55,.15);
+
+}
+
+.input-error{
+
+    border-color:var(--ha-danger) !important;
+
+    box-shadow:0 0 0 4px rgba(229,57,53,.1) !important;
+
+}
+
+.input-success{
+
+    border-color:var(--ha-success) !important;
+
+}
+
+.field-error{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    color:var(--ha-danger);
+
+    font-size:12.5px;
+
+}
+
+/* ===========================
+    STATIC / READ-ONLY FIELD
+    (email + phone in Personal
+    Information, since they can
+    only change through the
+    OTP flow below)
+=========================== */
+
+.field-static{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:14px;
+
+    padding:14px 18px;
+
+    border-radius:14px;
+
+    border:1px solid var(--ha-border);
+
+    background:#f6f4ee;
+
+    font-size:15px;
+
+    color:var(--ha-ink);
+
+}
+
+.field-static-value{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+}
+
+.field-static-value svg{
+
+    color:var(--ha-gold-2);
+
+    flex-shrink:0;
+
+}
+
+.field-change-btn{
+
+    border:none;
+
+    background:none;
+
+    color:var(--ha-gold-soft);
+
+    font-weight:700;
+
+    font-size:13px;
+
+    cursor:pointer;
+
+    flex-shrink:0;
+
+    transition:.3s;
+
+}
+
+.field-change-btn:hover{
+
+    color:var(--ha-gold-1);
+
+}
+
+.address-empty-note{
+
+    display:block;
+
+    color:var(--ha-muted);
+
+    font-size:13.5px;
+
+}
+
+/* ===========================
+    PASSWORD FIELD
+=========================== */
+
+.password-input{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.password-input input{
+
+    padding-right:46px;
+
+}
+
+.eye-toggle{
+
+    position:absolute;
+
+    right:14px;
+
+    background:none;
+
+    border:none;
+
+    cursor:pointer;
+
+    color:#999;
+
+    display:flex;
+
+    align-items:center;
+
+    transition:color .25s ease;
+
+}
+
+.eye-toggle:hover{
+
+    color:var(--ha-gold-2);
+
+}
+
+/* ===========================
+    STRENGTH METER
+=========================== */
+
+.strength-meter{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-top:2px;
+
+}
+
+.strength-track{
+
+    flex:1;
+
+    height:6px;
+
+    border-radius:10px;
+
+    background:#eee;
+
+    overflow:hidden;
+
+}
+
+.strength-fill{
+
+    height:100%;
+
+    border-radius:10px;
+
+    transition:width .35s ease, background .35s ease;
+
+}
+
+.strength-weak{
+
+    background:var(--ha-danger);
+
+}
+
+.strength-moderate{
+
+    background:#e6a417;
+
+}
+
+.strength-strong{
+
+    background:var(--ha-success);
+
+}
+
+.strength-label{
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+.strength-text-weak{ color:var(--ha-danger); }
+.strength-text-moderate{ color:#c98a12; }
+.strength-text-strong{ color:var(--ha-success); }
+
+/* ===========================
+    FORM ACTIONS / BUTTONS
+=========================== */
+
+.form-actions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:16px;
+
+    margin-top:32px;
+
+    padding-top:26px;
+
+    border-top:1px solid var(--ha-border);
+
+}
+
+.gold-btn{
+
+    height:52px;
+
+    padding:0 30px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:linear-gradient(135deg, var(--ha-gold-1), var(--ha-gold-2), var(--ha-gold-3));
+
+    color:#fff;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    cursor:pointer;
+
+    font-size:14.5px;
+
+    font-weight:700;
+
+    transition:.35s;
+
+    box-shadow:0 15px 35px rgba(212,175,55,.25);
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.gold-btn:hover:not(:disabled){
+
+    transform:translateY(-4px);
+
+    box-shadow:0 20px 45px rgba(212,175,55,.35);
+
+}
+
+.gold-btn:active:not(:disabled)::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:rgba(255,255,255,.25);
+
+    animation:accRipple .5s ease;
+
+}
+
+.gold-btn:disabled{
+
+    opacity:.55;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+    box-shadow:none;
+
+}
+
+.gold-btn:focus-visible{
+
+    outline:3px solid rgba(212,175,55,.45);
+
+    outline-offset:2px;
+
+}
+
+.outline-btn{
+
+    height:52px;
+
+    padding:0 26px;
+
+    border-radius:50px;
+
+    border:1px solid var(--ha-border);
+
+    background:#fff;
+
+    color:#444;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    font-size:14px;
+
+    transition:.3s;
+
+}
+
+.outline-btn:hover:not(:disabled){
+
+    border-color:var(--ha-gold-2);
+
+    color:var(--ha-gold-soft);
+
+    transform:translateY(-3px);
+
+}
+
+.outline-btn:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+.ghost-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:12px 22px;
+
+    border-radius:50px;
+
+    border:1px solid var(--ha-gold-2);
+
+    background:rgba(212,175,55,.06);
+
+    color:var(--ha-gold-soft);
+
+    font-weight:700;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.ghost-btn:hover{
+
+    background:var(--ha-gold-2);
+
+    color:#fff;
+
+    transform:translateY(-3px);
+
+}
+
+.spin{
+
+    animation:accSpin .8s linear infinite;
+
+}
+
+/* ===========================
+    VERIFICATION
+=========================== */
+
+.verification-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:26px;
+
+}
+
+.verify-card{
+
+    background:var(--ha-card);
+
+    border:1px solid var(--ha-border);
+
+    border-radius:26px;
+
+    padding:30px;
+
+    box-shadow:0 18px 40px rgba(0,0,0,.05);
+
+    transition:.35s;
+
+}
+
+.verify-card:hover{
+
+    box-shadow:0 25px 50px rgba(0,0,0,.09);
+
+}
+
+.verify-card-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    flex-wrap:wrap;
+
+}
+
+.verify-icon{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg, #fdf6e3, #fff);
+
+    border:1px solid var(--ha-border);
+
+    color:var(--ha-gold-1);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+}
+
+.verify-card-header h4{
+
+    font-size:17px;
+
+    color:var(--ha-ink);
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+.verify-card-header p{
+
+    font-size:13px;
+
+    color:var(--ha-muted);
+
+}
+
+.verify-badge{
+
+    margin-left:auto;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:7px 14px;
+
+    border-radius:30px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+.verify-badge-success{
+
+    background:rgba(46,139,87,.1);
+
+    color:var(--ha-success);
+
+}
+
+.verify-badge-failed{
+
+    background:rgba(229,57,53,.1);
+
+    color:var(--ha-danger);
+
+}
+
+.verify-badge-pending{
+
+    background:rgba(200,162,77,.12);
+
+    color:var(--ha-gold-soft);
+
+}
+
+.verify-card-body{
+
+    margin-top:22px;
+
+    padding-top:22px;
+
+    border-top:1px solid var(--ha-border);
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+}
+
+.otp-row{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.otp-row input{
+
+    flex:1;
+
+    padding:13px 16px;
+
+    border-radius:14px;
+
+    border:1px solid var(--ha-border);
+
+    background:#fdfcf9;
+
+    font-size:15px;
+
+    letter-spacing:3px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.otp-row input:focus{
+
+    border-color:var(--ha-gold-2);
+
+    box-shadow:0 0 0 4px rgba(212,175,55,.15);
+
+}
+
+.verify-btn{
+
+    align-self:flex-start;
+
+}
+
+.otp-hint{
+
+    font-size:13px;
+
+    color:var(--ha-muted);
+
+    line-height:1.7;
+
+}
+
+.new-value-row{
+
+    display:flex;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+}
+
+.new-value-row input{
+
+    flex:1;
+
+    min-width:200px;
+
+    padding:13px 16px;
+
+    border-radius:14px;
+
+    border:1px solid var(--ha-border);
+
+    background:#fdfcf9;
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.new-value-row input:focus{
+
+    border-color:var(--ha-gold-2);
+
+    box-shadow:0 0 0 4px rgba(212,175,55,.15);
+
+}
+
+.flow-locked-note{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    font-size:12.5px;
+
+    color:var(--ha-gold-soft);
+
+    background:rgba(212,175,55,.08);
+
+    border:1px solid rgba(212,175,55,.25);
+
+    padding:10px 14px;
+
+    border-radius:12px;
+
+}
+
+/* ===========================
+    DANGER ZONE
+=========================== */
+
+.danger-section .account-card,
+.danger-card{
+
+    background:#fff8f7;
+
+}
+
+.danger-card{
+
+    display:flex;
+
+    gap:24px;
+
+    border:1px solid rgba(229,57,53,.25);
+
+    border-radius:28px;
+
+    padding:36px;
+
+    box-shadow:0 20px 45px rgba(229,57,53,.06);
+
+}
+
+.danger-card-icon{
+
+    width:56px;
+
+    height:56px;
+
+    border-radius:16px;
+
+    background:rgba(229,57,53,.1);
+
+    color:var(--ha-danger);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+}
+
+.danger-card-content h4{
+
+    font-size:19px;
+
+    color:var(--ha-ink);
+
+    margin-bottom:8px;
+
+    font-family:"Cormorant Garamond",serif;
+
+}
+
+.danger-card-content p{
+
+    color:var(--ha-muted);
+
+    font-size:14px;
+
+    line-height:1.8;
+
+    max-width:620px;
+
+    margin-bottom:20px;
+
+}
+
+.danger-checkbox{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:14px;
+
+    color:#444;
+
+    font-weight:600;
+
+    margin-bottom:22px;
+
+    cursor:pointer;
+
+}
+
+.danger-checkbox input{
+
+    width:18px;
+
+    height:18px;
+
+    accent-color:var(--ha-danger);
+
+    cursor:pointer;
+
+}
+
+.danger-confirm-row{
+
+    display:flex;
+
+    gap:14px;
+
+    flex-wrap:wrap;
+
+}
+
+.danger-confirm-row input{
+
+    flex:1;
+
+    min-width:220px;
+
+    padding:13px 18px;
+
+    border-radius:14px;
+
+    border:1px solid var(--ha-border);
+
+    background:#fff;
+
+    font-size:14px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.danger-confirm-row input:disabled{
+
+    background:#f3f3f3;
+
+    cursor:not-allowed;
+
+}
+
+.danger-confirm-row input:focus{
+
+    border-color:var(--ha-danger);
+
+    box-shadow:0 0 0 4px rgba(229,57,53,.12);
+
+}
+
+.danger-btn{
+
+    height:50px;
+
+    padding:0 26px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:var(--ha-danger);
+
+    color:#fff;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-weight:700;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:0 15px 30px rgba(229,57,53,.2);
+
+}
+
+.danger-btn:hover:not(:disabled){
+
+    transform:translateY(-3px);
+
+    box-shadow:0 20px 40px rgba(229,57,53,.3);
+
+}
+
+.danger-btn:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+/* ===================================================
+                ANIMATIONS
+=================================================== */
+
+@keyframes accGlow{
+
+    0%{ transform:scale(1); opacity:.45; }
+    50%{ transform:scale(1.15); opacity:.75; }
+    100%{ transform:scale(1); opacity:.45; }
+
+}
+
+@keyframes accFadeUp{
+
+    from{ opacity:0; transform:translateY(50px); }
+    to{ opacity:1; transform:translateY(0); }
+
+}
+
+@keyframes accSpin{
+
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(360deg); }
+
+}
+
+@keyframes accRipple{
+
+    from{ opacity:1; }
+    to{ opacity:0; }
+
+}
+
+button,
+input,
+textarea,
+.overview-card,
+.verify-card,
+.gold-btn,
+.outline-btn,
+.ghost-btn,
+.danger-btn{
+
+    transition:all .35s ease;
+
+}
+
+/* ===================================================
+                RESPONSIVE
+=================================================== */
+
+@media(max-width:1200px){
+
+    .overview-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:992px){
+
+    .account-page{
+
+        padding:70px 5% 100px;
+
+    }
+
+    .account-hero-content h1{
+
+        font-size:46px;
+
+    }
+
+    .account-section-header h2{
+
+        font-size:30px;
+
+    }
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .verification-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .account-hero{
+
+        min-height:52vh;
+
+        padding:70px 20px;
+
+    }
+
+    .account-hero-content h1{
+
+        font-size:36px;
+
+    }
+
+    .account-hero-content p{
+
+        font-size:15.5px;
+
+    }
+
+    .overview-grid{
+
+        grid-template-columns:1fr;
+
+        margin-top:-50px;
+
+    }
+
+    .account-card{
+
+        padding:26px;
+
+    }
+
+    .avatar-block{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .form-actions{
+
+        flex-direction:column-reverse;
+
+    }
+
+    .form-actions .gold-btn,
+    .form-actions .outline-btn{
+
+        width:100%;
+
+    }
+
+    .field-static{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .danger-card{
+
+        flex-direction:column;
+
+    }
+
+    .otp-row{
+
+        flex-direction:column;
+
+    }
+
+    .new-value-row{
+
+        flex-direction:column;
+
+    }
+
+    .danger-confirm-row{
+
+        flex-direction:column;
+
+    }
+
+    .danger-confirm-row .danger-btn{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .account-hero-content span{
+
+        font-size:11px;
+
+        letter-spacing:2px;
+
+    }
+
+    .account-hero-content h1{
+
+        font-size:30px;
+
+    }
+
+    .account-section-header h2{
+
+        font-size:26px;
+
+    }
+
+}

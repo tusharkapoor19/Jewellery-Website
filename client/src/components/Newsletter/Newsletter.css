@@ -1,0 +1,179 @@
+.home-newsletter{
+    padding:100px 8%;
+    background: var(--bg);
+}
+
+.home-newsletter-container{
+
+    max-width:950px;
+
+    margin:auto;
+
+    background: var(--bg);
+
+    border-radius:32px;
+
+    padding:80px 60px;
+
+    text-align:center;
+
+    box-shadow: 0 20px 50px rgba(0,0,0,.08);
+
+    border: 1px solid #C9A14A;
+}
+
+.newsletter-tag{
+
+    color:#d4af37;
+
+    letter-spacing:5px;
+
+    text-transform:uppercase;
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+.home-newsletter-container h2{
+
+    margin:18px 0;
+
+    font-size:56px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    color:#1f1f1f;
+
+    line-height:1.1;
+}
+
+.home-newsletter-container p{
+
+    max-width:620px;
+
+    margin:0 auto 40px;
+
+    color:#666;
+
+    line-height:1.8;
+
+    font-size:17px;
+}
+
+.newsletter-form{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+}
+
+.newsletter-form input{
+
+    width:420px;
+
+    height:60px;
+
+    border:1px solid #ddd;
+
+    border-radius:50px;
+
+    padding:0 24px;
+
+    outline:none;
+
+    font-size:16px;
+
+    transition:.3s;
+}
+
+.newsletter-form input:focus{
+
+    border-color:#d4af37;
+
+    box-shadow:0 0 0 4px rgba(212,175,55,.15);
+}
+
+.newsletter-form button{
+
+    height:60px;
+
+    padding:0 32px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:#d4af37;
+
+    color:#111;
+
+    font-weight:700;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.newsletter-form button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 25px rgba(212,175,55,.35);
+}
+
+.home-newsletter-container small{
+
+    display:block;
+
+    margin-top:24px;
+
+    color:#888;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.home-newsletter{
+
+padding:70px 5%;
+
+}
+
+.home-newsletter-container{
+
+padding:55px 25px;
+
+}
+
+.home-newsletter-container h2{
+
+font-size:38px;
+
+}
+
+.newsletter-form{
+
+flex-direction:column;
+
+}
+
+.newsletter-form input,
+.newsletter-form button{
+
+width:100%;
+
+}
+
+}

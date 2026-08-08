@@ -1,0 +1,237 @@
+const paymentService = require("../service/payment_svc");
+
+/* -------------------------------- */
+/* Create Payment Order             */
+/* -------------------------------- */
+
+const createPayment = async (req, res, next) => {
+
+    try {
+
+        const userID = req.user.id;
+
+        const { orderID } = req.body;
+
+        const token = req.headers.authorization;
+
+        const result = await paymentService.createPayment(
+
+            userID,
+
+            orderID,
+
+            token
+
+        );
+
+        return res.status(201).json({
+
+            success: true,
+
+            message: "Payment order created successfully.",
+
+            payment: result.payment,
+
+            razorpayOrder: result.razorpayOrder
+
+        });
+
+    }
+
+    catch (error) {
+
+        next(error);
+
+    }
+
+};
+
+/* -------------------------------- */
+/* Verify Payment                   */
+/* -------------------------------- */
+
+const verifyPayment = async (req, res, next) => {
+
+    try {
+
+        const payment = await paymentService.verifyPayment(
+
+            req.body
+
+        );
+
+        return res.status(200).json({
+
+            success: true,
+
+            message: "Payment verified successfully.",
+
+            payment
+
+        });
+
+    }
+
+    catch (error) {
+
+        next(error);
+
+    }
+
+};
+
+/* -------------------------------- */
+/* Get Payment By Payment ID        */
+/* -------------------------------- */
+
+const getPaymentByID = async (req, res, next) => {
+
+    try {
+
+        const { paymentID } = req.params;
+
+        const payment = await paymentService.getPaymentByID(
+
+            paymentID
+
+        );
+
+        return res.status(200).json({
+
+            success: true,
+
+            payment
+
+        });
+
+    }
+
+    catch (error) {
+
+        next(error);
+
+    }
+
+};
+
+/* -------------------------------- */
+/* Get Logged In User Payments      */
+/* -------------------------------- */
+
+const getMyPayments = async (req, res, next) => {
+
+    try {
+
+        const payments = await paymentService.getMyPayments(
+
+            req.user.id
+
+        );
+
+        return res.status(200).json({
+
+            success: true,
+
+            payments
+
+        });
+
+    }
+
+    catch (error) {
+
+        next(error);
+
+    }
+
+};
+
+/* -------------------------------- */
+/* Get Payment By Order ID          */
+/* -------------------------------- */
+
+const getPaymentByOrderID = async (req, res, next) => {
+
+    try {
+
+        const { orderID } = req.params;
+
+        const payment = await paymentService.getPaymentByOrderID(
+
+            orderID
+
+        );
+
+        return res.status(200).json({
+
+            success: true,
+
+            payment
+
+        });
+
+    }
+
+    catch (error) {
+
+        next(error);
+
+    }
+
+};
+
+/* -------------------------------- */
+/* Refund Payment                   */
+/* -------------------------------- */
+
+const refundPayment = async (req, res, next) => {
+
+    try {
+
+        /* Route:
+           /internal/refund/:orderID
+        */
+
+        const { orderID } = req.params;
+
+        const payment = await paymentService.refundPayment(
+
+            orderID
+
+        );
+
+        return res.status(200).json({
+
+            success: true,
+
+            message: "Refund processed successfully.",
+
+            payment
+
+        });
+
+    }
+
+    catch (error) {
+
+        next(error);
+
+    }
+
+};
+
+module.exports = {
+
+    createPayment,
+
+    verifyPayment,
+
+    getPaymentByID,
+
+    getMyPayments,
+
+    getPaymentByOrderID,
+
+    refundPayment
+
+};
