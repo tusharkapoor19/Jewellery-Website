@@ -6,6 +6,8 @@ export interface CartItem {
 
     category: string;
 
+    metal: string;
+
     image: string;
 
     weight: number;
@@ -84,7 +86,8 @@ export interface CartContextType {
 
         productId: string,
 
-        quantity?: number
+        quantity?: number,
+        size?: string
 
     ) => Promise<void>;
 
@@ -92,13 +95,15 @@ export interface CartContextType {
 
         productId: string,
 
-        quantity: number
+        quantity: number,
+         size?: string
 
     ) => Promise<void>;
 
     removeFromCart: (
 
-        productId: string
+        productId: string,
+        size?: string
 
     ) => Promise<void>;
 

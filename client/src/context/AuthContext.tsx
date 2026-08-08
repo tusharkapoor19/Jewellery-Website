@@ -6,7 +6,9 @@ import React, {
   useState,
 } from "react";
 import { decodeJwtPayload, login as loginRequest } from "../api/auth";
-import { NAME_STORAGE_KEY, TOKEN_STORAGE_KEY, ROLE_STORAGE_KEY } from "../config";
+const TOKEN_STORAGE_KEY = "token";
+const NAME_STORAGE_KEY = "userName";
+const ROLE_STORAGE_KEY = "role";
 
 interface AuthContextValue {
   token: string | null;
@@ -34,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const login = useCallback(async (email: string, password: string) => {
     const data = await loginRequest(email, password);
-
+console.log("LOGIN RESPONSE:", data);
     const payload = decodeJwtPayload(data.token);
     const userRole = payload?.role || "customer";
 

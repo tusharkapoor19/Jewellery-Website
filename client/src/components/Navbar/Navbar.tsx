@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useWishlist } from "../../context/WishlistContext";
 import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../context/CartContext";
+import axios from "axios";
 import {
   Heart,
   ShoppingCart,
@@ -18,6 +19,8 @@ import {
   Gem,
   Crown,
   Sparkles,
+  Bell,
+  X,
 } from "lucide-react";
 
 
@@ -99,6 +102,10 @@ const Navbar = () => {
   const hasCartItems = cartCount > 0;
   const [showCartNudge, setShowCartNudge] = useState<boolean>(false);
 
+  // Notification States
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [showNotifications, setShowNotifications] = useState<boolean>(false);
+
   // Ref to the fixed navbar so we can measure its real, rendered
   // height (topbar + navbar together) and push toast notifications
   // below it instead of letting them sit behind it.
@@ -151,6 +158,48 @@ const Navbar = () => {
     };
   }, []);
 
+  // Fetch Notifications on mount or when token changes
+useEffect(() => {
+  const fetchNotifications = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) return;
+
+      const profileResponse = await axios.get(
+        "http://localhost:5005/profile/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const userId = profileResponse.data.user.id;
+
+      const response = await axios.get(
+        `http://localhost:5007/notifications/${userId}`
+      );
+
+      if (response.data.success) {
+        setNotifications(response.data.notifications);
+      }
+    } catch (error) {
+      console.error("Failed to fetch notifications", error);
+    }
+  };
+
+  // First fetch immediately
+  fetchNotifications();
+
+  // Then check every 5 seconds
+  const interval = setInterval(() => {
+    fetchNotifications();
+  }, 5000);
+
+  // Stop checking when Navbar unmounts/token changes
+  return () => clearInterval(interval);
+}, [token]);
   useEffect(() => {
     if (!hasCartItems) {
       const timer = setTimeout(() => setShowCartNudge(true), 1200);
@@ -179,6 +228,29 @@ const Navbar = () => {
     window.dispatchEvent(new Event("auth-change"));
 
     navigate("/login");
+  };
+
+  // Mark notification as read
+  const handleMarkAsRead = async (id: string) => {
+    try {
+      await axios.patch(`http://localhost:5007/notifications/${id}/read`);
+      setNotifications((prev) =>
+        prev.map((notif) => (notif._id === id ? { ...notif, isRead: true } : notif))
+      );
+    } catch (error) {
+      console.error("Failed to mark notification as read", error);
+    }
+  };
+
+  // Delete notification
+  const handleDeleteNotification = async (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    try {
+      await axios.delete(`http://localhost:5007/notifications/${id}`);
+      setNotifications((prev) => prev.filter((notif) => notif._id !== id));
+    } catch (error) {
+      console.error("Failed to delete notification", error);
+    }
   };
 
   const userIsAuthenticated = isLoggedIn && !!token;
@@ -342,19 +414,65 @@ const Navbar = () => {
 
         <Heart size={21} />
 
-        {/* {wishlistCount > 0 && (
-
-            <span className="wishlist-count">
-
-                {wishlistCount}
-
-            </span>
-
-        )} */}
-
     </Link>
 
 </div>
+
+          {/* Notification Bell */}
+          <div className="icon-wrapper notification-wrapper dropdown">
+            <div
+              className="notification-icon-btn"
+              onClick={() => setShowNotifications(!showNotifications)}
+              style={{ cursor: "pointer", position: "relative", display: "flex", alignItems: "center" }}
+            >
+              <Bell size={21} />
+              {notifications.filter((n) => !n.isRead).length > 0 && (
+                <span className="notification-badge">
+                  {notifications.filter((n) => !n.isRead).length}
+                </span>
+              )}
+            </div>
+
+            {showNotifications && (
+              <div className="notification-dropdown-menu">
+                <div className="notification-header">
+                  <h3>Notifications</h3>
+                  <button onClick={() => setShowNotifications(false)} className="close-notif-btn">
+                    <X size={16} />
+                  </button>
+                </div>
+                <div className="notification-list">
+                  {notifications.length === 0 ? (
+                    <p className="no-notifications">No Notifications</p>
+                  ) : (
+                    notifications.map((notif) => (
+                      <div
+                        key={notif._id}
+                        className={`notification-item ${notif.isRead ? "read" : "unread"}`}
+                        onClick={() => handleMarkAsRead(notif._id)}
+                      >
+                        <div className="notification-content">
+                          <h4>{notif.title}</h4>
+                          <p>{notif.message}</p>
+                          <span className="notification-time">
+                            {new Date(notif.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                        <button
+                          className="delete-notif-btn"
+                          onClick={(e) => handleDeleteNotification(e, notif._id)}
+                          title="Delete notification"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Cart */}
           <div className="icon-wrapper cart-wrapper">
             <Link to="/cart" aria-label="Cart">

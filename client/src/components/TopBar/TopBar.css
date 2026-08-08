@@ -101,3 +101,32 @@
         display:none;
     }
 }
+.topbar-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.topbar-item svg{
+    width:14px;
+    height:14px;
+    stroke-width:2;
+    flex-shrink:0;
+}
+
+.topbar-link{
+    text-decoration:none;
+    color:inherit;
+}
+
+.topbar-link:hover{
+    color:#c9a227;
+}
+
+.gold-rate svg{
+    color:#D4AF37;
+}
+
+.silver-rate svg{
+    color:#BFC5CE;
+}

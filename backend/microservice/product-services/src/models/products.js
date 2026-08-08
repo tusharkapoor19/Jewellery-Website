@@ -63,11 +63,30 @@ const productSchema = new mongoose.Schema(
 
     certification: {
         type:String
-    }
+    },
+    // ================= Size =================
+    sizeType: {
+        type: String,
+        enum: [
+            "None",
+            "Ring",
+            "Bangle",
+            "Bracelet",
+            "Chain",
+            "Anklet"
+        ],
+        default: "None"
+    },
+
+    availableSizes: [
+        {
+            type: String
+        }
+    ]
 
 },
 {
-    timestamps:true
+    timestamps: true
 });
 
 module.exports = mongoose.model("products", productSchema);

@@ -28,7 +28,10 @@ import { useCart } from "../../context/CartContext";
 import { useAddress } from "../../context/AddressContext";
 
 import { Address } from "../../types/address";
-import { calculatePricing } from "../../utils/pricing";
+import {
+    calculatePricing,
+    getDynamicPrice
+} from "../../utils/pricing";
 
 import orderService from "../../services/orderService";
 
@@ -222,8 +225,10 @@ const Checkout: React.FC = () => {
                 item.weight,
             quantity:
                 item.quantity,
-            price:
-                item.price
+            price: getDynamicPrice(
+    item.price,
+    item.metal
+)
         })
     );
 

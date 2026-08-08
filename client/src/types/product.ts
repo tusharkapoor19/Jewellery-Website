@@ -1,23 +1,41 @@
 export interface Product {
-  _id: string;
-  productID: string;
 
-  name: string;
-  description: string;
+    _id: string;
 
-  price: number;
-  weight: number;
-  stock: number;
+    productID: string;
 
-  category: string;
-  collection: string;
-  metal: string;
+    name: string;
 
-  image: string;
-  images?: string[];
+    description: string;
 
-  certification?: string;
+    price: number;
 
-  createdAt?: string;
-  updatedAt?: string;
+    weight: number;
+
+    stock: number;
+
+    category: string;
+
+    collection: string;
+
+    metal: string;
+
+    image: string;
+
+    images?: string[];
+
+    certification?: string;
+
+    // ================= Size =================
+
+    sizeType: string;
+
+    availableSizes: string[];
+
+    // =======================================
+
+    createdAt?: string;
+
+    updatedAt?: string;
+
 }

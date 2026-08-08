@@ -103,9 +103,42 @@ const verifyPayment = async (paymentData) => {                                  
 
         razorpay_signature;
 
+    // updated for notification service
     await payment.save();
 
-    return payment;
+console.log("Payment Object:");
+console.log(payment);
+
+console.log("UserID:", payment.userID);
+
+const notificationData = {
+    userId: String(payment.userID),
+    title: "Payment Successful",
+    message: `Your payment of ₹${payment.amount} was successful.`
+};
+
+console.log("Notification Data:");
+console.log(notificationData);
+try {
+
+    await axios.post(
+        "http://localhost:5007/notifications",
+        {
+            userId: payment.userID,
+            title: "Payment Successful 💳",
+            message: `Your payment of ₹${payment.amount} was completed successfully.`
+        }
+    );
+
+    console.log("Payment Notification Created");
+
+} catch (err) {
+
+    console.log("Notification Error:", err.message);
+
+}
+
+return payment;
 
 };
 

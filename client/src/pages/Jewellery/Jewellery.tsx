@@ -42,6 +42,7 @@ const Jewellery = () => {
     // Ref to the filter/products section - used for smooth scroll
     // instead of hash-based navigation.
     const filterRef = useRef<HTMLElement | null>(null);
+    const requestIdRef = useRef(0);
 
     const metals = [
 
@@ -137,12 +138,13 @@ const Jewellery = () => {
 
             });
 
-        }, 250);
+        }, 700);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.state]);
 
     const loadProducts = async () => {
+        const requestId = ++requestIdRef.current;
 
         try {
 
@@ -185,7 +187,9 @@ const Jewellery = () => {
 
             }
 
-            setProducts(data);
+            if (requestId === requestIdRef.current) {
+    setProducts(data);
+}
 
         }
 
@@ -196,10 +200,10 @@ const Jewellery = () => {
         }
 
         finally {
-
-            setLoading(false);
-
-        }
+    if (requestId === requestIdRef.current) {
+        setLoading(false);
+    }
+}
 
     };
 

@@ -5,8 +5,10 @@ import toast from "react-hot-toast";
 import productService from "../../services/productService";
 import { Product } from "../../types";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import { calculatePricing } from "../../utils/pricing";
-
+import {
+  calculatePricing,
+  getDynamicPrice
+} from "../../utils/pricing";
 import {
   ShoppingBag,
   ShieldCheck,
@@ -77,17 +79,33 @@ const Cart: React.FC = () => {
 
   const pricing = calculatePricing(cartItems, selectedCoupon, giftWrap);
 
-  const increaseQuantity = (productId: string, currentQuantity: number) => {
+  const increaseQuantity = (
+    productId: string,
+    currentQuantity: number,
+    size: string = ""
+) => {
     if (updateQuantity) {
-      updateQuantity(productId, currentQuantity + 1);
+        updateQuantity(
+            productId,
+            currentQuantity + 1,
+            size
+        );
     }
-  };
+};
 
-  const decreaseQuantity = (productId: string, currentQuantity: number) => {
+  const decreaseQuantity = (
+    productId: string,
+    currentQuantity: number,
+    size: string = ""
+) => {
     if (currentQuantity > 1 && updateQuantity) {
-      updateQuantity(productId, currentQuantity - 1);
+        updateQuantity(
+            productId,
+            currentQuantity - 1,
+            size
+        );
     }
-  };
+};
 
   const applyCoupon = () => {
     const enteredCode = couponCode.trim().toUpperCase();
@@ -153,15 +171,18 @@ const Cart: React.FC = () => {
     }
   };
 
-  const handleRemoveFromCart = async (productId: string) => {
+  const handleRemoveFromCart = async (
+    productId: string,
+    size: string = ""
+) => {
     try {
-      await removeFromCart(productId);
-      await refreshCart();
-      toast.success("Removed From Cart");
+        await removeFromCart(productId, size);
+        await refreshCart();
+        toast.success("Removed From Cart");
     } catch (error: any) {
-      toast.error(error.message || "Failed To Remove Product");
+        toast.error(error.message || "Failed To Remove Product");
     }
-  };
+};
 
   return (
     <>
@@ -218,17 +239,30 @@ const Cart: React.FC = () => {
 
                       <div className="item-details">
                         <h3>{item.name}</h3>
-                        <p className="item-meta">
-                          {item.category} &bull; {item.weight}g
-                        </p>
+                       <p className="item-meta">
+  {item.category} &bull; {item.weight}g
+</p>
+
+{item.size && (
+  <p className="item-size">
+    Size: {item.size}
+  </p>
+)}
                         <div className="item-price-row">
-                          ₹{item.price.toLocaleString("en-IN")}
+                          ₹{getDynamicPrice(
+  item.price,
+  item.metal
+).toLocaleString("en-IN")}
                         </div>
 
                         <div className="quantity-controls">
                           <button
                             onClick={() =>
-                              decreaseQuantity(item.productId, item.quantity)
+                              decreaseQuantity(
+    item.productId,
+    item.quantity,
+    item.size || ""
+  )
                             }
                             aria-label="Decrease Quantity"
                           >
@@ -239,7 +273,11 @@ const Cart: React.FC = () => {
 
                           <button
                             onClick={() =>
-                              increaseQuantity(item.productId, item.quantity)
+                               increaseQuantity(
+    item.productId,
+    item.quantity,
+    item.size || ""
+  )
                             }
                             aria-label="Increase Quantity"
                           >
@@ -248,7 +286,10 @@ const Cart: React.FC = () => {
                         </div>
 
                         <div className="item-total">
-                          ₹{(item.price * item.quantity).toLocaleString("en-IN")}
+                          ₹{(
+  getDynamicPrice(item.price, item.metal) *
+  item.quantity
+).toLocaleString("en-IN")}
                         </div>
 
                         <div className="cart-actions">
@@ -260,7 +301,12 @@ const Cart: React.FC = () => {
                           </button>
 
                           <button
-                            onClick={() => handleRemoveFromCart(item.productId)}
+                            onClick={() =>
+    handleRemoveFromCart(
+        item.productId,
+        item.size || ""
+    )
+}
                           >
                             <Trash2 size={16} />
                             Remove
