@@ -8,6 +8,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import CookieConsent from "./components/CookieConsent/CookieConsent";
 import "./App.css"
 
+
 import TopBar from './components/TopBar/TopBar';
 import Navbar from "./components/Navbar/Navbar";
 
