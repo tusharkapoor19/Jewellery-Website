@@ -46,6 +46,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
 import orderService from "../../services/orderService";
+import productService from "../../services/productService";
 
 /* ==========================================================
    Interfaces
@@ -146,47 +147,89 @@ useEffect(() => {
 
 }, [location.state]);
     const fetchOrder = async (
+    orderID: string
+) => {
 
-        orderID: string
+    try {
 
-    ) => {
+        setLoading(true);
 
-        try {
+        const response =
+            await orderService.getOrder(orderID);
 
-            setLoading(true);
+        const orderData = response.order;
 
-            const response =
-    await orderService.getOrder(
-        orderID
-    );
+        const productsWithImages =
+            await Promise.all(
 
-            setOrder(
+                orderData.products.map(
+                    async (product: Product) => {
 
-                response.order
+                        // Image already available
+                        if (product.image) {
+                            return product;
+                        }
+
+                        try {
+
+                            const productData =
+                                await productService.getProductById(
+                                    product.productID
+                                );
+
+                            return {
+                                ...product,
+
+                                image:
+                                    productData?.image ||
+                                    productData?.images?.[0] ||
+                                    ""
+                            };
+
+                        } catch (error) {
+
+                            console.error(
+                                `Failed to fetch image for ${product.productID}`,
+                                error
+                            );
+
+                            return product;
+                        }
+
+                    }
+                )
 
             );
 
-        }
+        setOrder({
+            ...orderData,
+            products: productsWithImages
+        });
 
-        catch {
+    }
 
-            toast.error(
+    catch (error) {
 
-                "Unable to find this order."
+        console.error(
+            "Track Order Error:",
+            error
+        );
 
-            );
+        toast.error(
+            "Unable to find this order."
+        );
 
-            setOrder(null);
+        setOrder(null);
 
-        }
+    }
 
-        finally {
+    finally {
 
-            setLoading(false);
+        setLoading(false);
 
-        }
+    }
 
-    };
+};
 
     /* ======================================================
        Search

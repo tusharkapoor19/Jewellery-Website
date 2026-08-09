@@ -1,7 +1,7 @@
 const Cart = require ("../models/cart.js");
 const Product = require("../models/product.js");
 
-const addProductToCart = async (userId, productId, quantity = 1) => {
+const addProductToCart = async (userId, productId, quantity = 1, size = "") => {
 
     const product = await Product.findOne({
         productID: productId
@@ -10,8 +10,22 @@ const addProductToCart = async (userId, productId, quantity = 1) => {
     if (!product) {
         throw new Error("Product not found");
     }
+    if (product.stock <= 0) {
+
+    throw new Error(
+        "Product is out of stock"
+    );
+
+}
     if (quantity <= 0) {
     throw new Error("Quantity must be greater than 0");
+}
+if (quantity > product.stock) {
+
+    throw new Error(
+        "Requested quantity exceeds available stock"
+    );
+
 }
 
     let cart = await Cart.findOne({
@@ -29,8 +43,12 @@ const addProductToCart = async (userId, productId, quantity = 1) => {
     }
 
     const existingProduct = cart.items.find(
-        (item) => item.productId === productId
-    );
+
+    (item) =>
+
+        String(item.productId) === String(productId) &&
+String(item.size || "").trim() === String(size || "").trim()
+);
 
     if (existingProduct) {
 
@@ -38,10 +56,15 @@ const addProductToCart = async (userId, productId, quantity = 1) => {
 
     } else {
 
-        cart.items.push({
-            productId,
-            quantity
-        });
+       cart.items.push({
+
+    productId,
+
+    quantity,
+
+    size
+
+});
 
     }
 
@@ -59,7 +82,8 @@ const addProductToCart = async (userId, productId, quantity = 1) => {
 const updateCartQuantity = async (
     userId,
     productId,
-    quantity
+    quantity,
+    size = ""
 ) => {
 
     const product = await Product.findOne({
@@ -74,13 +98,31 @@ const updateCartQuantity = async (
         userId
     });
 
+    if (quantity < 1) {
+
+    throw new Error(
+        "Quantity must be at least 1"
+    );
+
+}
+
+if (quantity > product.stock) {
+
+    throw new Error(
+        "Requested quantity exceeds available stock"
+    );
+
+}
+
     if (!cart) {
         throw new Error("Cart not found");
     }
 
-    const cartItem = cart.items.find(
-        (item) => item.productId === productId
-    );
+  const cartItem = cart.items.find(
+    (item) =>
+        String(item.productId).trim() === String(productId).trim() &&
+        String(item.size || "").trim() === String(size || "").trim()
+);
 
     if (!cartItem) {
         throw new Error(
@@ -93,10 +135,13 @@ const updateCartQuantity = async (
         cart.totalValue -=
             product.price * cartItem.quantity;
 
-        cart.items = cart.items.filter(
-            (item) =>
-                item.productId !== productId
-        );
+      cart.items = cart.items.filter(
+    (item) =>
+        !(
+            String(item.productId).trim() === String(productId).trim() &&
+            String(item.size || "").trim() === String(size || "").trim()
+        )
+);
 
     }
 
@@ -125,8 +170,13 @@ const updateCartQuantity = async (
 
 };
 const removeProductFromCart = async (
+
     userId,
-    productId
+
+    productId,
+
+    size = ""
+
 ) => {
 
     const product = await Product.findOne({
@@ -146,8 +196,10 @@ const removeProductFromCart = async (
     }
 
     const cartItem = cart.items.find(
-        (item) => item.productId === productId
-    );
+    (item) =>
+        String(item.productId).trim() === String(productId).trim() &&
+        String(item.size || "").trim() === String(size || "").trim()
+);
 
     if (!cartItem) {
         throw new Error(
@@ -162,10 +214,19 @@ const removeProductFromCart = async (
         cart.totalValue = 0;
     }
 
-    cart.items = cart.items.filter(
-        (item) =>
-            item.productId !== productId
-    );
+   cart.items = cart.items.filter(
+
+(item)=>
+
+!(
+
+item.productId===productId &&
+
+item.size===size
+
+)
+
+);
 
     await cart.save();
 
@@ -204,26 +265,29 @@ const getCart = async (userId) => {
         );
 
         if (!product) return null;
+return {
 
-        return {
+    productId: product.productID,
 
-            productId: product.productID,
+    name: product.name,
 
-            name: product.name,
+    category: product.category,
 
-            category: product.category,
+    metal: product.metal,
 
-            image: product.image,
+    image: product.image,
 
-            weight: product.weight,
+    weight: product.weight,
 
-            price: product.price,
+    price: product.price,
 
-            quantity: item.quantity,
+    quantity: item.quantity,
 
-            value: product.price * item.quantity
+    size: item.size,
 
-        };
+    value: product.price * item.quantity
+
+};
 
     }).filter(Boolean);
 

@@ -9,7 +9,6 @@ class CartService {
         const token = localStorage.getItem("token");
 
         return {
-
             "Content-Type": "application/json",
 
             Authorization: `Bearer ${token}`
@@ -52,13 +51,14 @@ class CartService {
 
     }
 
-    async addToCart(
+        async addToCart(
 
-        productId: string,
+            productId: string,
 
-        quantity: number = 1
+            quantity: number = 1,
+            size: string = ""
 
-    ) {
+        ) {
 
         const response = await fetch(
 
@@ -72,7 +72,8 @@ class CartService {
 
                 body: JSON.stringify({
 
-                    quantity
+                    quantity,
+                    size
 
                 })
 
@@ -98,13 +99,15 @@ class CartService {
 
     }
 
-    async updateQuantity(
+   async updateQuantity(
 
-        productId: string,
+    productId: string,
 
-        quantity: number
+    quantity: number,
 
-    ) {
+    size: string = ""
+
+) {
 
         const response = await fetch(
 
@@ -118,7 +121,8 @@ class CartService {
 
                 body: JSON.stringify({
 
-                    quantity
+                    quantity,
+                    size
 
                 })
 
@@ -146,23 +150,30 @@ class CartService {
 
     async removeFromCart(
 
-        productId: string
+        productId: string,
+          size: string = ""
 
     ) {
 
-        const response = await fetch(
+       const response = await fetch(
 
-            `${BASE_URL}/remove/${productId}`,
+    `${BASE_URL}/remove/${productId}`,
 
-            {
+    {
 
-                method: "DELETE",
+        method: "DELETE",
 
-                headers: this.getHeaders()
+        headers: this.getHeaders(),
 
-            }
+        body: JSON.stringify({
 
-        );
+            size
+
+        })
+
+    }
+
+);
 
         const data = await response.json();
 

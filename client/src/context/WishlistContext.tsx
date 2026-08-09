@@ -6,6 +6,7 @@ import {
     ReactNode
 } from "react";
 
+import axios from "axios";
 import wishlistService from "../services/wishlistService";
 import { WishlistItem } from "../types/wishlist";
 
@@ -24,7 +25,6 @@ interface WishlistContextType {
     addToWishlist: (productId: string) => Promise<void>;
 
     removeFromWishlist: (productId: string) => Promise<void>;
-
 }
 
 const WishlistContext = createContext<WishlistContextType | undefined>(
@@ -40,112 +40,158 @@ export const WishlistProvider = ({
     const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
 
     const [loading, setLoading] = useState(false);
+
     const refreshWishlist = async () => {
 
-    const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token");
 
-    if (!token) {
+        if (!token) {
 
-        setWishlist([]);
+            setWishlist([]);
 
-        return;
+            return;
 
-    }
+        }
 
-    try {
+        try {
 
-        setLoading(true);
+            setLoading(true);
 
-        const data = await wishlistService.getWishlist();
+            const data = await wishlistService.getWishlist();
 
-console.log("Wishlist API Response:", data);
+            console.log("Wishlist API Response:", data);
 
-setWishlist(data);
+            setWishlist(data);
 
-        setWishlist(data);
+        }
 
-    }
+        catch (error) {
 
-    catch (error) {
+            console.error(error);
 
-        console.error(error);
+            setWishlist([]);
 
-        setWishlist([]);
+        }
 
-    }
+        finally {
 
-    finally {
+            setLoading(false);
 
-        setLoading(false);
+        }
 
-    }
+    };
 
-};
-useEffect(() => {
+    useEffect(() => {
 
-    refreshWishlist();
+        refreshWishlist();
 
-}, []);
-const isWishlisted = (productId: string) => {
+    }, []);
 
-    return wishlist.some(
+    const isWishlisted = (productId: string) => {
 
-        item => item.productId === productId
+        return wishlist.some(
+
+            item => item.productId === productId
+
+        );
+
+    };
+
+    const addToWishlist = async (
+        productId: string
+    ) => {
+
+        await wishlistService.addToWishlist(
+            productId
+        );
+
+        await refreshWishlist();
+
+        // ==========================
+        // CREATE NOTIFICATION
+        // ==========================
+        try {
+
+            const token = localStorage.getItem("token");
+
+            if (!token) return;
+
+            const profileResponse = await axios.get(
+                "http://localhost:5005/profile/profile",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            const userId = profileResponse.data.user.id;
+
+            await axios.post(
+                "http://localhost:5007/notifications",
+                {
+                    userId,
+                    title: "Wishlist Updated ❤️",
+                    message: "Product added to your wishlist successfully."
+                }
+            );
+
+            console.log("Wishlist Notification Created");
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Wishlist Notification Error:",
+                error
+            );
+
+        }
+
+    };
+
+    const removeFromWishlist = async (
+        productId: string
+    ) => {
+
+        await wishlistService.removeFromWishlist(
+            productId
+        );
+
+        await refreshWishlist();
+
+    };
+
+    return (
+
+        <WishlistContext.Provider
+
+            value={{
+
+                wishlist,
+
+                loading,
+
+                wishlistCount: wishlist.length,
+
+                refreshWishlist,
+
+                isWishlisted,
+
+                addToWishlist,
+
+                removeFromWishlist
+
+            }}
+
+        >
+
+            {children}
+
+        </WishlistContext.Provider>
 
     );
-
-};
-const addToWishlist = async (
-    productId: string
-) => {
-
-    await wishlistService.addToWishlist(
-        productId
-    );
-
-    await refreshWishlist();
-
-};
-const removeFromWishlist = async (
-    productId: string
-) => {
-
-    await wishlistService.removeFromWishlist(
-        productId
-    );
-
-    await refreshWishlist();
-
-};
-return (
-
-    <WishlistContext.Provider
-
-        value={{
-
-            wishlist,
-
-            loading,
-
-            wishlistCount: wishlist.length,
-
-            refreshWishlist,
-
-            isWishlisted,
-
-            addToWishlist,
-
-            removeFromWishlist
-
-        }}
-
-    >
-
-        {children}
-
-    </WishlistContext.Provider>
-
-);
 
 };
 

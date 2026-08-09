@@ -55,7 +55,63 @@ const ProductCard = ({
     // double-click). state = drives the disabled/spinner look on the button.
     const isAddingRef = useRef(false);
     const [isAdding, setIsAdding] = useState(false);
+
+// Base rates used while products were seeded
+const BASE_GOLD_RATE = 9000;
+const BASE_SILVER_RATE = 110;
+
+// Live rates from TopBar
+const goldRate = Number(
+    localStorage.getItem("goldRate")
+) || BASE_GOLD_RATE;
+
+const silverRate = Number(
+    localStorage.getItem("silverRate")
+) || BASE_SILVER_RATE;
+
+// Dynamic Price
+const getDynamicPrice = () => {
+
+    const metal = product.metal.toLowerCase();
+
+    // Gold Jewellery
+    if (
+        metal === "gold" ||
+        metal === "white gold" ||
+        metal === "rose gold"
+    ) {
+
+        return Math.round(
+
+            product.price *
+
+            (goldRate / BASE_GOLD_RATE)
+
+        );
+
+    }
+
+    // Silver Jewellery
+    if (metal === "silver") {
+
+        return Math.round(
+
+            product.price *
+
+            (silverRate / BASE_SILVER_RATE)
+
+        );
+
+    }
+
+    // Platinum & Others
+    return product.price;
+
+};
+
+
 const handleAddToCart = async () => {
+
 
     const token = localStorage.getItem("token");
 
@@ -68,6 +124,15 @@ const handleAddToCart = async () => {
         return;
 
     }
+
+
+    if (product.stock <= 0) {
+
+    toast.error("This product is currently out of stock.");
+
+    return;
+
+}
 
     if (isAddingRef.current) return;
 
@@ -332,7 +397,7 @@ const handleAddToCart = async () => {
 
                     <h2>
 
-                        ₹ {product.price.toLocaleString()}
+                        ₹ {getDynamicPrice().toLocaleString()}
 
                     </h2>
 
@@ -343,10 +408,16 @@ const handleAddToCart = async () => {
                           <button
     className="cart-button"
     onClick={handleAddToCart}
-    disabled={isAdding}
+    disabled={isAdding || product.stock <= 0}
 >
     <ShoppingBag size={18}/>
-    {isAdding ? "Adding..." : "Add To Cart"}
+    {
+    product.stock <= 0
+        ? "Out Of Stock"
+        : isAdding
+        ? "Adding..."
+        : "Add To Cart"
+}
 </button>
 
                     <button

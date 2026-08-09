@@ -38,6 +38,7 @@ const Collections = () => {
     // Ref to the filter/products section - used for smooth scroll
     // instead of hash-based navigation.
     const filterRef = useRef<HTMLElement | null>(null);
+    const requestIdRef = useRef(0);
 
     const collections = [
 
@@ -96,13 +97,13 @@ const Collections = () => {
 
             });
 
-        }, 250);
+        }, 700);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.state]);
 
     const loadProducts = async () => {
-
+ const requestId = ++requestIdRef.current;
         try {
 
             setLoading(true);
@@ -129,7 +130,9 @@ const Collections = () => {
 
             }
 
-            setProducts(data);
+            if (requestId === requestIdRef.current) {
+    setProducts(data);
+}
 
         }
 
@@ -140,11 +143,10 @@ const Collections = () => {
         }
 
         finally {
-
-            setLoading(false);
-
-        }
-
+    if (requestId === requestIdRef.current) {
+        setLoading(false);
+    }
+}
     };
 
     const handleNewsletter = () => {

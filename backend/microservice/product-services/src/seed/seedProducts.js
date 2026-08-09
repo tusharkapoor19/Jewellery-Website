@@ -4,7 +4,7 @@ const Product = require("../models/products");
 const products = require("./products");
 
 require("dotenv").config();
-
+console.log("MONGO_URI =", process.env.MONGO_URI);
 async function seedProducts() {
 
     try {

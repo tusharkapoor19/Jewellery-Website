@@ -44,19 +44,15 @@ const ProductDetails: React.FC = () => {
 
   // Consuming existing WishlistContext
   const { isWishlisted, addToWishlist, removeFromWishlist } = useWishlist();
- const {
+  const { addToCart, refreshCart } = useCart();
 
-    addToCart,
-
-    refreshCart
-
-} = useCart();
   // Local Component State
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
+  const [selectedSize, setSelectedSize] = useState("");
   const [activeTab, setActiveTab] = useState<string>("description");
 
   // UI Interactive States
@@ -72,6 +68,10 @@ const ProductDetails: React.FC = () => {
     try {
       setLoading(true);
       const data = await productService.getProductById(productID);
+      
+      // DEBUG STEP 3: Check data fetched from service
+      console.log("3. PRODUCT DETAILS - Data fetched from service:", data);
+      
       setProduct(data);
 
       if (data?.image) {
@@ -132,101 +132,82 @@ const ProductDetails: React.FC = () => {
 
   // Frontend Placeholders
   const handleAddToCart = useCallback(
-
     async () => {
-
-        const token =
-
-            localStorage.getItem("token");
-
-        if (!token) {
-
-            toast.error(
-
-                "Please login first"
-
-            );
-
-            navigate("/login");
-
-            return;
-
-        }
-
-        if (!product) return;
-
-        try {
-
-            await addToCart(
-
-                product.productID,
-
-                quantity
-
-            );
-
-            await refreshCart();
-
-            toast.success(
-
-                `${quantity} item(s) added to your Shopping Bag`
-
-            );
-
-        }
-
-        catch (error: any) {
-
-            toast.error(
-
-                error.message ||
-
-                "Failed to add product"
-
-            );
-
-        }
-
-    },
-
-    [
-
-        product,
-
-        quantity,
-
-        addToCart,
-
-        refreshCart,
-
-        navigate
-
-    ]
-
-);
-
-  const handleBuyNow = useCallback(() => {
-    if (!product) return;
-
-    const token = localStorage.getItem("token");
-
-    if (!token) {
+      const token = localStorage.getItem("token");
+      if (!token) {
         toast.error("Please login first");
         navigate("/login");
         return;
-    }
+      }
+
+      if (!product) return;
+      
+      if (product.sizeType !== "None" && !selectedSize) {
+        toast.error("Please select a size");
+        return;
+      }
+
+      if (product.stock <= 0) {
+        toast.error("This product is currently out of stock.");
+        return;
+      }
+
+      try {
+        await addToCart(product.productID, quantity, selectedSize);
+        await refreshCart();
+        toast.success(`${quantity} item(s) added to your Shopping Bag`);
+      } catch (error: any) {
+        toast.error(error.message || "Failed to add product");
+      }
+    },
+    [product, quantity, selectedSize, addToCart, refreshCart, navigate]
+  );
+const handleBuyNow = useCallback(async () => {
+  if (!product) return;
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    toast.error("Please login first");
+    navigate("/login");
+    return;
+  }
+
+  if (product.sizeType !== "None" && !selectedSize) {
+    toast.error("Please select a size");
+    return;
+  }
+
+  if (product.stock <= 0) {
+    toast.error("This product is currently out of stock.");
+    return;
+  }
+
+  try {
+    await addToCart(
+      product.productID,
+      quantity,
+      selectedSize
+    );
+
+    await refreshCart();
 
     toast.success("Redirecting to Checkout...");
 
-    navigate("/checkout", {
-        state: {
-            buyNow: true,
-            product,
-            quantity,
-        },
-    });
-
-}, [product, quantity, navigate]);
+    navigate("/checkout");
+  } catch (error: any) {
+    toast.error(
+      error.message || "Failed to proceed to checkout"
+    );
+  }
+}, [
+  product,
+  quantity,
+  selectedSize,
+  addToCart,
+  refreshCart,
+  navigate
+]);
 
   const handlePincodeCheck = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -276,12 +257,10 @@ const ProductDetails: React.FC = () => {
     }
   }, [product?.name]);
 
-  const handleImageError = (
-  e: React.SyntheticEvent<HTMLImageElement>
-) => {
-  e.currentTarget.onerror = null;
-  e.currentTarget.src = "/images/products/placeholder.jpg";
-};
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = "/images/products/placeholder.jpg";
+  };
 
   const handleQuantityDecrease = () => {
     setQuantity((prev) => Math.max(1, prev - 1));
@@ -341,8 +320,33 @@ const ProductDetails: React.FC = () => {
     );
   }
 
+  // DEBUG STEP 4: Component State Inspection Logs
+  console.log("4. COMPONENT STATE - Current product state:", product);
+  console.log("4. COMPONENT STATE - sizeType value:", product?.sizeType);
+  console.log("4. COMPONENT STATE - availableSizes value:", product?.availableSizes);
+
   const allImages = product.images && product.images.length > 0 ? product.images : [product.image];
-  const calculatedOriginalPrice = Math.round(product.price * 1.15);
+
+  // ================= Dynamic Pricing =================
+  const BASE_GOLD_RATE = 9000;
+  const BASE_SILVER_RATE = 110;
+
+  const goldRate = Number(localStorage.getItem("goldRate")) || BASE_GOLD_RATE;
+  const silverRate = Number(localStorage.getItem("silverRate")) || BASE_SILVER_RATE;
+
+  const getDynamicPrice = () => {
+    const metal = product.metal?.toLowerCase() || "";
+    if (metal === "gold" || metal === "white gold" || metal === "rose gold") {
+      return Math.round(product.price * (goldRate / BASE_GOLD_RATE));
+    }
+    if (metal === "silver") {
+      return Math.round(product.price * (silverRate / BASE_SILVER_RATE));
+    }
+    return product.price;
+  };
+
+  const dynamicPrice = getDynamicPrice();
+  const calculatedOriginalPrice = Math.round(dynamicPrice * 1.15);
 
   return (
     <>
@@ -457,7 +461,7 @@ const ProductDetails: React.FC = () => {
               <div className="price-card">
                 <div className="price-row">
                   <span className="currency">₹</span>
-                  <span className="price-val">{product.price.toLocaleString("en-IN")}</span>
+                  <span className="price-val">{dynamicPrice.toLocaleString("en-IN")}</span>
                 </div>
                 <div className="price-meta">
                   <span className="original">₹{calculatedOriginalPrice.toLocaleString("en-IN")}</span>
@@ -508,6 +512,56 @@ const ProductDetails: React.FC = () => {
                 </div>
               </div>
 
+              {/* SIZE SELECTOR WITH DEBUG STEP 5 LOGS */}
+              {(() => {
+                console.log("5. JSX CONDITION EVALUATION:", {
+                  sizeType: product?.sizeType,
+                  isNotNone: product?.sizeType !== "None",
+                  hasSizes: Boolean(product?.availableSizes),
+                  length: product?.availableSizes?.length,
+                  willRender: product?.sizeType !== "None" && product?.availableSizes && product?.availableSizes.length > 0
+                });
+                return null;
+              })()}
+
+              {
+                product.sizeType !== "None" &&
+                product.availableSizes &&
+                product.availableSizes.length > 0 && (
+
+                  <div className="size-selector">
+                    <h4 className="size-title">
+                      {
+                        product.sizeType === "Ring"
+                          ? "Select Ring Size"
+                          : product.sizeType === "Bangle"
+                          ? "Select Bangle Size"
+                          : product.sizeType === "Bracelet"
+                          ? "Select Bracelet Size"
+                          : "Select Length"
+                      }
+                    </h4>
+
+                    <div className="size-options">
+                      {product.availableSizes.map((size) => (
+                        <button
+                          key={size}
+                          type="button"
+                          className={
+                            selectedSize === size
+                              ? "size-btn active"
+                              : "size-btn"
+                          }
+                          onClick={() => setSelectedSize(size)}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )
+              }
+
               {/* PRIMARY HIGH-LUXURY ACTIONS */}
               <div className="action-buttons-group">
                 <button
@@ -528,15 +582,19 @@ const ProductDetails: React.FC = () => {
                   type="button"
                   className="cart-action-btn"
                   onClick={handleAddToCart}
+                  disabled={product.stock <= 0}
                 >
                   <ShoppingBag size={18} />
-                  <span>Add To Bag</span>
+                  <span>
+                    {product.stock > 0 ? "Add To Bag" : "Out Of Stock"}
+                  </span>
                 </button>
 
                 <button
                   type="button"
                   className="buy-action-btn"
                   onClick={handleBuyNow}
+                  disabled={product.stock <= 0}
                 >
                   <span>Buy Now</span>
                 </button>
@@ -673,7 +731,7 @@ const ProductDetails: React.FC = () => {
                 <div className="tab-pane">
                   <h3 className="pane-title"> Shipping & Returns</h3>
                   <p className="pane-desc">
-                    Every shipment is fully insured in transit and delivered via best logistics available . Adult signature and OTP verification are required at delivery.
+                    Every shipment is fully insured in transit and delivered via best logistics available. Adult signature and OTP verification are required at delivery.
                   </p>
                 </div>
               )}

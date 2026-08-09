@@ -1,5 +1,5 @@
-const profileService = require("../service/profileService.js")
-
+const profileService = require("../service/profileService.js");
+const axios = require("axios");
 
 // Update Name
 const updateName = async (req, res) => {
@@ -12,6 +12,26 @@ const updateName = async (req, res) => {
 
         const result = await profileService.updateName(userId, name);
 
+        // ==========================
+        // CREATE NOTIFICATION
+        // ==========================
+        try {
+
+            await axios.post(
+                "http://localhost:5007/notifications",
+                {
+                    userId,
+                    title: "Profile Updated 👤",
+                    message: "Your profile name has been updated successfully."
+                }
+            );
+
+        } catch (err) {
+
+            console.log("Notification Error:", err.message);
+
+        }
+
         res.status(200).json(result);
 
     } catch (error) {
@@ -23,7 +43,6 @@ const updateName = async (req, res) => {
     }
 
 };
-
 
 // Update Address
 const updateAddress = async (req, res) => {
@@ -36,6 +55,26 @@ const updateAddress = async (req, res) => {
 
         const result = await profileService.updateAddress(userId, address);
 
+        // ==========================
+        // CREATE NOTIFICATION
+        // ==========================
+        try {
+
+            await axios.post(
+                "http://localhost:5007/notifications",
+                {
+                    userId,
+                    title: "Address Updated 📍",
+                    message: "Your delivery address has been updated successfully."
+                }
+            );
+
+        } catch (err) {
+
+            console.log("Notification Error:", err.message);
+
+        }
+
         res.status(200).json(result);
 
     } catch (error) {
@@ -48,8 +87,7 @@ const updateAddress = async (req, res) => {
 
 };
 
-
-// get address
+// Get Address
 const getAddress = async (req, res) => {
 
     try {
@@ -69,7 +107,6 @@ const getAddress = async (req, res) => {
     }
 
 };
-
 
 // Update Password
 const updatePassword = async (req, res) => {
@@ -98,7 +135,6 @@ const updatePassword = async (req, res) => {
 
 };
 
-
 // Update Email
 const updateEmail = async (req, res) => {
 
@@ -108,7 +144,10 @@ const updateEmail = async (req, res) => {
 
         const { email } = req.body;
 
-        const result = await profileService.updateEmail(userId, email);
+        const result = await profileService.updateEmail(
+            userId,
+            email
+        );
 
         res.status(200).json(result);
 
@@ -122,8 +161,7 @@ const updateEmail = async (req, res) => {
 
 };
 
-
-// update phn
+// Update Phone
 const updatePhone = async (req, res) => {
 
     try {
@@ -132,7 +170,10 @@ const updatePhone = async (req, res) => {
 
         const { phone } = req.body;
 
-        const result = await profileService.updatePhone(userId, phone);
+        const result = await profileService.updatePhone(
+            userId,
+            phone
+        );
 
         res.status(200).json(result);
 
@@ -146,8 +187,7 @@ const updatePhone = async (req, res) => {
 
 };
 
-
-// delete user
+// Delete User
 const deleteUser = async (req, res) => {
 
     try {
@@ -167,6 +207,8 @@ const deleteUser = async (req, res) => {
     }
 
 };
+
+// Get Profile
 const getProfile = async (req, res) => {
 
     try {
@@ -187,7 +229,7 @@ const getProfile = async (req, res) => {
 
 };
 
-module.exports= {
+module.exports = {
     updateName,
     updateAddress,
     getAddress,

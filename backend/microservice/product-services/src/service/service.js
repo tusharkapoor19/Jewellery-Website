@@ -21,12 +21,11 @@ const addProduct = async (productData) => {                                     
     } = productData;
 
 
-    const lastProduct = await Product.findOne({ productID: /^HIR\d+$/ })
-        .sort({ productID: -1 })   // lexicographic works since digits are zero-padded & fixed-width
-        .collation({ locale: "en_US", numericOrdering: true });
+    const lastProduct = await Product.findOne()
+        .sort({ createdAt:-1 });
 
 
-    let productID = "HIR001";
+    let productID = "PRD001";
 
     if(!name || !category || !collection || !metal || !price || !weight){
 
@@ -57,10 +56,15 @@ const addProduct = async (productData) => {                                     
         throw error;
     }
 
-    if (lastProduct) {
-        const match = lastProduct.productID.match(/(\d+)$/);
-        const lastNumber = match ? parseInt(match[1]) : 0;
-        productID = `HIR${String(lastNumber + 1).padStart(3, "0")}`;
+    if(lastProduct){
+
+        const lastNumber = parseInt(
+            lastProduct.productID.replace("PRD","")
+        );
+
+        productID =
+        `PRD${String(lastNumber+1).padStart(3,"0")}`;
+
     }
 
     const existingProduct = await Product.findOne({

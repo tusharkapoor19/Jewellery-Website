@@ -14,6 +14,7 @@ import orderService from "../../services/orderService";
 import { motion } from "framer-motion";
 
 import toast from "react-hot-toast";
+import jsPDF from "jspdf";
 
 import {
 
@@ -64,23 +65,18 @@ import {
 import TopBar from "../../components/TopBar/TopBar";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-
+import productService from "../../services/productService";
 /* ==========================================================
    Interfaces
 ========================================================== */
 
 interface Product {
-
     productID: string;
-
     name: string;
-
     image?: string;
-
+    images?: string[];
     quantity: number;
-
     price: number;
-
 }
 
 interface ShippingAddress {
@@ -184,66 +180,112 @@ const [loading, setLoading] =
             }
 
             const data = response.order;
+            console.log("ORDER SUCCESS DATA:", data);
+            const subtotal =
+    Number(data.subtotal ?? 0);
 
-            setOrder({
+const shippingCharge =
+    Number(data.shippingCharge ?? 0);
 
-                orderID: data.orderID,
+const discount =
+    Number(data.discount ?? 0);
 
-                products: data.products,
+const gst =
+    Number(data.gst ?? 0);
 
-                shippingAddress: {
+const totalAmount =
+    Number(data.totalAmount ?? 0);
 
-                    fullName:
-                        data.shippingAddress.fullName,
+/* ==========================================
+   Fetch actual product images
+========================================== */
 
-                    phone:
-                        data.shippingAddress.phone,
+const productsWithImages = await Promise.all(
+    data.products.map(async (product: Product) => {
+        // If order already contains image, keep it
+        if (product.image) {
+            return product;
+        }
 
-                    address:
-                        data.shippingAddress.addressLine1,
+        try {
+            const productData =
+                await productService.getProductById(
+                    product.productID
+                );
 
-                    landmark:
-                        data.shippingAddress.addressLine2 || "",
+            return {
+                ...product,
+                image:
+                    productData?.image ||
+                    productData?.images?.[0] ||
+                    ""
+            };
+        } catch (error) {
+            console.error(
+                `Failed to fetch image for ${product.productID}`,
+                error
+            );
 
-                    city:
-                        data.shippingAddress.city,
+            return product;
+        }
+    })
+);
 
-                    state:
-                        data.shippingAddress.state,
+setOrder({
+    orderID: data.orderID,
 
-                    country:
-                        data.shippingAddress.country,
+    products: productsWithImages,
 
-                    pincode:
-                        data.shippingAddress.postalCode
+    shippingAddress: {
+        fullName:
+            data.shippingAddress.fullName,
 
-                },
+        phone:
+            data.shippingAddress.phone,
 
-                deliveryMethod:
-                    data.deliveryMethod,
+        address:
+            data.shippingAddress.addressLine1,
 
-                subtotal:
-                    data.subtotal,
+        landmark:
+            data.shippingAddress.addressLine2 || "",
 
-                shippingCharge:
-                    data.shippingCharge,
+        city:
+            data.shippingAddress.city,
 
-                discount:
-                    data.discount,
+        state:
+            data.shippingAddress.state,
 
-                gst:
-                    data.gst,
+        country:
+            data.shippingAddress.country,
 
-                totalAmount:
-                    data.totalAmount,
+        pincode:
+            data.shippingAddress.postalCode
+    },
 
-                orderStatus:
-                    data.orderStatus,
+    deliveryMethod:
+        data.deliveryMethod,
 
-                createdAt:
-                    data.createdAt
+    subtotal:
+    subtotal,
 
-            });
+shippingCharge:
+    shippingCharge,
+
+discount:
+    discount,
+
+gst:
+    gst,
+
+totalAmount:
+    totalAmount,
+
+    orderStatus:
+        data.orderStatus,
+
+    createdAt:
+        data.createdAt
+});
 
         }
 
@@ -369,11 +411,305 @@ const [loading, setLoading] =
 
     const downloadInvoice = () => {
 
-        toast.success(
+        if (!order) {
+            toast.error("Order details are not available.");
+            return;
+        }
 
-            "Invoice download will be available after backend integration."
+        try {
 
-        );
+            const doc = new jsPDF();
+
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const margin = 18;
+            let y = 20;
+
+            const addLine = () => {
+                doc.setDrawColor(210, 180, 100);
+                doc.line(margin, y, pageWidth - margin, y);
+                y += 8;
+            };
+
+            // ==========================
+            // HEADER
+            // ==========================
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(25);
+            doc.setTextColor(180, 135, 35);
+            doc.text("HIRANYA", margin, y);
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(9);
+            doc.setTextColor(90, 90, 90);
+            doc.text("CRAFTED FOR LUXURY", margin, y + 7);
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(18);
+            doc.setTextColor(35, 35, 35);
+            doc.text("INVOICE", pageWidth - margin - 35, y);
+
+            y += 18;
+            addLine();
+
+            // ==========================
+            // ORDER DETAILS
+            // ==========================
+
+            doc.setFontSize(10);
+            doc.setTextColor(60, 60, 60);
+
+            doc.setFont("helvetica", "bold");
+            doc.text("Order ID", margin, y);
+            doc.setFont("helvetica", "normal");
+            doc.text(order.orderID, margin + 30, y);
+
+            doc.setFont("helvetica", "bold");
+            doc.text("Order Date", pageWidth / 2, y);
+            doc.setFont("helvetica", "normal");
+            doc.text(
+                new Date(order.createdAt).toLocaleDateString("en-IN"),
+                pageWidth / 2 + 25,
+                y
+            );
+
+            y += 8;
+
+            doc.setFont("helvetica", "bold");
+            doc.text("Status", margin, y);
+            doc.setFont("helvetica", "normal");
+            doc.text(order.orderStatus || "Confirmed", margin + 30, y);
+
+            doc.setFont("helvetica", "bold");
+            doc.text("Delivery", pageWidth / 2, y);
+            doc.setFont("helvetica", "normal");
+            doc.text(
+                order.deliveryMethod || "Standard Delivery",
+                pageWidth / 2 + 25,
+                y
+            );
+
+            y += 14;
+            addLine();
+
+            // ==========================
+            // DELIVERY ADDRESS
+            // ==========================
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(12);
+            doc.setTextColor(180, 135, 35);
+            doc.text("DELIVERY ADDRESS", margin, y);
+
+            y += 7;
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(10);
+            doc.setTextColor(35, 35, 35);
+            doc.text(order.shippingAddress.fullName || "", margin, y);
+
+            y += 5;
+            doc.setFont("helvetica", "normal");
+
+            const addressLines = [
+                order.shippingAddress.address,
+                order.shippingAddress.landmark,
+                `${order.shippingAddress.city}, ${order.shippingAddress.state}`,
+                `${order.shippingAddress.country} - ${order.shippingAddress.pincode}`,
+                `Phone: ${order.shippingAddress.phone}`
+            ].filter(Boolean);
+
+            addressLines.forEach((line) => {
+                const wrapped = doc.splitTextToSize(line, 85);
+                doc.text(wrapped, margin, y);
+                y += 5 * wrapped.length;
+            });
+
+            y += 7;
+            addLine();
+
+            // ==========================
+            // PRODUCTS
+            // ==========================
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(12);
+            doc.setTextColor(180, 135, 35);
+            doc.text("ORDERED JEWELLERY", margin, y);
+
+            y += 8;
+
+            const itemX = margin;
+            const qtyX = pageWidth - 82;
+            const priceX = pageWidth - 58;
+            const totalX = pageWidth - margin;
+
+            doc.setFillColor(245, 240, 228);
+            doc.rect(
+                margin,
+                y - 5,
+                pageWidth - margin * 2,
+                10,
+                "F"
+            );
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(9);
+            doc.setTextColor(45, 45, 45);
+
+            doc.text("PRODUCT", itemX, y);
+            doc.text("QTY", qtyX, y);
+            doc.text("PRICE", priceX, y);
+            doc.text("TOTAL", totalX, y, { align: "right" });
+
+            y += 9;
+            doc.setFont("helvetica", "normal");
+
+            order.products.forEach((product) => {
+
+                if (y > pageHeight - 65) {
+                    doc.addPage();
+                    y = 20;
+                }
+
+                const productName = doc.splitTextToSize(
+                    product.name,
+                    85
+                );
+
+                doc.text(productName, itemX, y);
+                doc.text(String(product.quantity), qtyX, y);
+                doc.text(
+                    `INR ${product.price.toLocaleString("en-IN")}`,
+                    priceX,
+                    y
+                );
+                doc.text(
+                    `INR ${(product.price * product.quantity).toLocaleString("en-IN")}`,
+                    totalX,
+                    y,
+                    { align: "right" }
+                );
+
+                y += Math.max(8, productName.length * 5);
+
+                doc.setDrawColor(225, 225, 225);
+                doc.line(
+                    margin,
+                    y - 3,
+                    pageWidth - margin,
+                    y - 3
+                );
+            });
+
+            y += 6;
+
+            // ==========================
+            // SUMMARY
+            // ==========================
+
+            const summaryX = pageWidth - 78;
+            const valueX = pageWidth - margin;
+
+            const addSummaryRow = (
+                label: string,
+                value: string,
+                bold = false
+            ) => {
+
+                doc.setFont(
+                    "helvetica",
+                    bold ? "bold" : "normal"
+                );
+                doc.setFontSize(bold ? 11 : 9);
+                doc.setTextColor(45, 45, 45);
+
+                doc.text(label, summaryX, y);
+                doc.text(value, valueX, y, {
+                    align: "right"
+                });
+
+                y += bold ? 8 : 6;
+            };
+
+            addSummaryRow(
+                "Subtotal",
+                `INR ${(order.subtotal || 0).toLocaleString("en-IN")}`
+            );
+
+            addSummaryRow(
+                "Shipping",
+                `INR ${(order.shippingCharge || 0).toLocaleString("en-IN")}`
+            );
+
+            addSummaryRow(
+                "GST",
+                `INR ${(order.gst || 0).toLocaleString("en-IN")}`
+            );
+
+            addSummaryRow(
+                "Discount",
+                `- INR ${(order.discount || 0).toLocaleString("en-IN")}`
+            );
+
+            y += 2;
+
+            doc.setDrawColor(180, 135, 35);
+            doc.line(summaryX, y, valueX, y);
+
+            y += 7;
+
+            addSummaryRow(
+                "GRAND TOTAL",
+                `INR ${(order.totalAmount || 0).toLocaleString("en-IN")}`,
+                true
+            );
+
+            // ==========================
+            // FOOTER
+            // ==========================
+
+            const footerY = pageHeight - 25;
+
+            doc.setDrawColor(220, 220, 220);
+            doc.line(
+                margin,
+                footerY - 7,
+                pageWidth - margin,
+                footerY - 7
+            );
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(9);
+            doc.setTextColor(180, 135, 35);
+            doc.text(
+                "Thank you for choosing HIRANYA.",
+                margin,
+                footerY
+            );
+
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(100, 100, 100);
+            doc.text(
+                "Premium jewellery crafted with authenticity and timeless elegance.",
+                margin,
+                footerY + 6
+            );
+
+            doc.save(`HIRANYA-Invoice-${order.orderID}.pdf`);
+
+            toast.success("Invoice downloaded successfully.");
+
+        } catch (error) {
+
+            console.error("Invoice generation error:", error);
+
+            toast.error(
+                "Unable to generate invoice. Please try again."
+            );
+
+        }
 
     };
 

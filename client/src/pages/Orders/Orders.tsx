@@ -14,6 +14,9 @@ import { motion } from "framer-motion";
 
 import toast from "react-hot-toast";
 
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+
 import {
 
     ArrowRight,
@@ -53,6 +56,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
 import orderService from "../../services/orderService";
+import productService from "../../services/productService";
 
 /* ==========================================================
    Interfaces
@@ -68,8 +72,8 @@ interface Product {
 
     quantity: number;
 
-    price: number;
-
+     price: number;
+       size?: string;
 }
 
 interface ShippingAddress {
@@ -164,38 +168,97 @@ const MyOrders: React.FC = () => {
 
     const fetchOrders = async () => {
 
-        try {
+    try {
 
-            setLoading(true);
+        setLoading(true);
 
-            const response =
-                await orderService.getMyOrders();
+        const response =
+            await orderService.getMyOrders();
 
-            setOrders(
+        const ordersData = response.orders || [];
 
-                response.orders || []
+        const ordersWithImages = await Promise.all(
 
-            );
+            ordersData.map(async (order: Order) => {
 
-        }
+                const productsWithImages =
+                    await Promise.all(
 
-        catch {
+                        order.products.map(
+                            async (product: Product) => {
 
-            toast.error(
+                                // Agar image already hai
+                                // to wahi use karo
+                                if (product.image) {
+                                    return product;
+                                }
 
-                "Unable to load your orders."
+                                try {
 
-            );
+                                    const productData =
+                                        await productService.getProductById(
+                                            product.productID
+                                        );
 
-        }
+                                    return {
+                                        ...product,
 
-        finally {
+                                        image:
+                                            productData?.image ||
+                                            productData?.images?.[0] ||
+                                            ""
+                                    };
 
-            setLoading(false);
+                                }
 
-        }
+                                catch (error) {
 
-    };
+                                    console.error(
+                                        `Failed to fetch image for ${product.productID}`,
+                                        error
+                                    );
+
+                                    return product;
+                                }
+
+                            }
+                        )
+
+                    );
+
+                return {
+                    ...order,
+                    products: productsWithImages
+                };
+
+            })
+
+        );
+
+        setOrders(ordersWithImages);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "My Orders Error:",
+            error
+        );
+
+        toast.error(
+            "Unable to load your orders."
+        );
+
+    }
+
+    finally {
+
+        setLoading(false);
+
+    }
+
+};
 
     /* ======================================================
        Helpers
@@ -378,16 +441,369 @@ const MyOrders: React.FC = () => {
         );
 
     };
+    const invoiceCurrency = (amount: number) =>
+    `Rs. ${Number(amount || 0).toLocaleString("en-IN")}`;
+    
+const downloadInvoice = (order: Order) => {
+    try {
+        const doc = new jsPDF();
 
-    const downloadInvoice = () => {
+        // ==========================================
+        // COLORS
+        // ==========================================
 
-        toast.success(
+        const gold: [number, number, number] = [166, 126, 42];
+        const dark: [number, number, number] = [35, 35, 35];
+        const lightGold: [number, number, number] = [245, 239, 222];
+        const grey: [number, number, number] = [105, 105, 105];
 
-            "Invoice download will be available soon."
+        // ==========================================
+        // HEADER
+        // ==========================================
 
+        doc.setFillColor(...lightGold);
+        doc.rect(0, 0, 210, 42, "F");
+
+        doc.setTextColor(...gold);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(25);
+        doc.text("HIRANYA", 18, 22);
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.text(
+            "CRAFTED FOR LUXURY",
+            19,
+            30
         );
 
-    };
+        doc.setTextColor(...dark);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(19);
+        doc.text("INVOICE", 145, 19);
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+
+        doc.text(
+            `Order ID: ${order.orderID}`,
+            145,
+            27
+        );
+
+        doc.text(
+            `Date: ${formatDate(order.createdAt)}`,
+            145,
+            34
+        );
+
+        // ==========================================
+        // ORDER STATUS
+        // ==========================================
+
+        doc.setTextColor(...gold);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(9);
+
+        doc.text(
+            `STATUS: ${order.orderStatus.toUpperCase()}`,
+            18,
+            52
+        );
+
+        doc.text(
+            `DELIVERY: ${order.deliveryMethod.toUpperCase()}`,
+            130,
+            52
+        );
+
+        // ==========================================
+        // BILL / DELIVERY ADDRESS
+        // ==========================================
+
+        doc.setDrawColor(...gold);
+        doc.line(18, 58, 192, 58);
+
+        doc.setTextColor(...gold);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(11);
+
+        doc.text(
+            "DELIVERY ADDRESS",
+            18,
+            69
+        );
+
+        doc.setTextColor(...dark);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+
+        doc.text(
+            order.shippingAddress.fullName || "",
+            18,
+            78
+        );
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+
+        doc.text(
+            order.shippingAddress.phone || "",
+            18,
+            85
+        );
+
+        doc.text(
+            order.shippingAddress.address || "",
+            18,
+            92
+        );
+
+        doc.text(
+            `${order.shippingAddress.city}, ${order.shippingAddress.state}`,
+            18,
+            99
+        );
+
+        doc.text(
+            `${order.shippingAddress.country} - ${order.shippingAddress.pincode}`,
+            18,
+            106
+        );
+
+        // ==========================================
+        // PRODUCTS
+        // ==========================================
+
+        doc.setTextColor(...gold);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(11);
+
+        doc.text(
+            "ORDERED JEWELLERY",
+            18,
+            119
+        );
+
+        autoTable(doc, {
+            startY: 125,
+
+            head: [[
+                "PRODUCT",
+                "SIZE",
+                "QTY",
+                "PRICE",
+                "TOTAL"
+            ]],
+
+            body: order.products.map((product) => [
+                product.name,
+                product.size || "—",
+                String(product.quantity),
+               invoiceCurrency(product.price),
+invoiceCurrency(
+    product.price * product.quantity
+)
+            ]),
+
+            theme: "grid",
+
+            styles: {
+                fontSize: 9,
+                cellPadding: 4,
+                textColor: dark
+            },
+
+            headStyles: {
+                fillColor: gold,
+                textColor: [255, 255, 255],
+                fontStyle: "bold",
+                halign: "center"
+            },
+
+            
+
+
+            columnStyles: {
+    0: {
+        cellWidth: 68
+    },
+    1: {
+        cellWidth: 22,
+        halign: "center"
+    },
+    2: {
+        cellWidth: 16,
+        halign: "center"
+    },
+    3: {
+        cellWidth: 34,
+        halign: "right"
+    },
+    4: {
+        cellWidth: 34,
+        halign: "right"
+    }
+},
+
+            alternateRowStyles: {
+                fillColor: [250, 248, 243]
+            }
+        });
+
+        // ==========================================
+        // SUMMARY
+        // ==========================================
+
+        const finalY =
+            (doc as any).lastAutoTable.finalY + 16;
+
+        doc.setDrawColor(...gold);
+        doc.line(115, finalY - 6, 192, finalY - 6);
+
+        doc.setTextColor(...grey);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+
+        doc.text(
+            "Subtotal",
+            125,
+            finalY
+        );
+
+       doc.text(
+    invoiceCurrency(order.subtotal),
+    192,
+    finalY,
+    { align: "right" }
+);
+
+        doc.text(
+            "Shipping",
+            125,
+            finalY + 9
+        );
+
+        doc.text(
+            invoiceCurrency(order.shippingCharge),
+            192,
+            finalY + 9,
+            { align: "right" }
+        );
+
+        doc.text(
+            "Discount",
+            125,
+            finalY + 18
+        );
+
+        doc.text(
+            `-${invoiceCurrency(order.discount)}`,
+            192,
+            finalY + 18,
+            { align: "right" }
+        );
+
+        doc.text(
+            "GST",
+            125,
+            finalY + 27
+        );
+
+        doc.text(
+            invoiceCurrency(order.gst),
+            192,
+            finalY + 27,
+            { align: "right" }
+        );
+
+        // ==========================================
+        // GRAND TOTAL
+        // ==========================================
+
+        doc.setDrawColor(...gold);
+        doc.line(115, finalY + 35, 192, finalY + 35);
+
+        doc.setTextColor(...dark);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(13);
+
+        doc.text(
+            "GRAND TOTAL",
+            125,
+            finalY + 48
+        );
+
+        doc.setTextColor(...gold);
+        doc.setFontSize(16);
+
+        doc.text(
+            invoiceCurrency(order.totalAmount),
+            192,
+            finalY + 48,
+            { align: "right" }
+        );
+
+        // ==========================================
+        // FOOTER
+        // ==========================================
+
+        doc.setFillColor(...lightGold);
+        doc.rect(
+            0,
+            270,
+            210,
+            27,
+            "F"
+        );
+
+        doc.setTextColor(...gold);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+
+        doc.text(
+            "THANK YOU FOR CHOOSING HIRANYA",
+            105,
+            281,
+            { align: "center" }
+        );
+
+        doc.setTextColor(...grey);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(8);
+
+        doc.text(
+            "Every masterpiece selected today becomes part of your story.",
+            105,
+            288,
+            { align: "center" }
+        );
+
+        // ==========================================
+        // SAVE
+        // ==========================================
+
+        doc.save(
+            `HIRANYA-Invoice-${order.orderID}.pdf`
+        );
+
+        toast.success(
+            "Invoice downloaded successfully!"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Invoice generation error:",
+            error
+        );
+
+        toast.error(
+            "Unable to generate invoice."
+        );
+    }
+};
+
 
     if (loading) {
 
@@ -1064,10 +1480,9 @@ const MyOrders: React.FC = () => {
 
                                         className="myorder-secondary"
 
-                                        onClick={
+                                        onClick={() =>
 
-                                            downloadInvoice
-
+                                             downloadInvoice(order)
                                         }
 
                                     >
