@@ -38,3 +38,13 @@ export interface Product {
   certification?: string;
   createdAt: string;
 }
+
+export type UserRole = "customer" | "admin";
+
+export interface Customer {
+  id: string; // backend Mongo _id
+  name: string;
+  email: string;
+  phone: string;
+  role: UserRole;
+}

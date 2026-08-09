@@ -42,6 +42,15 @@ const updateUser = async (id, data) => {
     user.phone = data.phone || user.phone;
     user.address = data.address || user.address;
 
+    if (data.role) {
+        if (!["customer", "admin"].includes(data.role)) {
+            const error = new Error("Invalid role");
+            error.statusCode = 400;
+            throw error;
+        }
+        user.role = data.role;
+    }
+
     await user.save();
 
     return user;

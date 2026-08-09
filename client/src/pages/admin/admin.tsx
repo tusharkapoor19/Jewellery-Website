@@ -3,29 +3,45 @@ import { Navigate } from "react-router-dom";
 import Sidebar, { View } from "../../components/admin/Sidebar";
 import PendingOrders from "../../components/admin/PendingOrders";
 import Catalogue from "../../components/admin/Catalogue";
+import Customers from "../../components/admin/Customers";
 import { useAuth } from "../../context/AuthContext";
-import { orderToUi, productToUi } from "../../api/adapters";
+import { orderToUi, productToUi, userToUi } from "../../api/adapters";
 import { fetchOrders, updateOrderStatus as updateOrderStatusApi } from "../../api/orders";
-import { addProduct as addProductApi, fetchProducts, NewProductPayload } from "../../api/products";
+import {
+  addProduct as addProductApi,
+  deleteProduct as deleteProductApi,
+  fetchProducts,
+  NewProductPayload,
+} from "../../api/products";
+import {
+  deleteUser as deleteUserApi,
+  fetchUsers,
+  updateUserRole as updateUserRoleApi,
+} from "../../api/users";
 import { ApiError } from "../../api/client";
-import { OrderItem, OrderStatus, Product } from "../../types/types";
- 
+import { Customer, OrderItem, OrderStatus, Product, UserRole } from "../../types/types";
+
 const ADMIN_VIEW_STORAGE_KEY = "hiranya_admin_view";
 
 const getInitialView = (): View => {
   const stored = window.localStorage.getItem(ADMIN_VIEW_STORAGE_KEY);
-  return stored === "catalogue" || stored === "orders" ? stored : "orders";
+  return stored === "catalogue" || stored === "orders" || stored === "customers"
+    ? stored
+    : "orders";
 };
 
 const Dashboard: React.FC = () => {
   const { name, logout } = useAuth();
   const [view, setView] = useState<View>(getInitialView);
-   const handleNavigate = (nextView: View) => {
-     setView(nextView);
+
+  const handleNavigate = (nextView: View) => {
+    setView(nextView);
     window.localStorage.setItem(ADMIN_VIEW_STORAGE_KEY, nextView);
   };
+
   const [orders, setOrders] = useState<OrderItem[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
 
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
@@ -34,12 +50,14 @@ const Dashboard: React.FC = () => {
     setLoading(true);
     setLoadError("");
     try {
-      const [apiOrders, apiProducts] = await Promise.all([
+      const [apiOrders, apiProducts, apiUsers] = await Promise.all([
         fetchOrders(),
         fetchProducts(),
+        fetchUsers(),
       ]);
       setOrders(apiOrders.map(orderToUi));
       setProducts(apiProducts.map(productToUi));
+      setCustomers(apiUsers.map(userToUi));
     } catch (error) {
       if (error instanceof ApiError && error.status === 401) {
         logout();
@@ -83,6 +101,23 @@ const Dashboard: React.FC = () => {
     setProducts((prev) => [productToUi(created), ...prev]);
   };
 
+  const handleDeleteProduct = async (productID: string) => {
+    await deleteProductApi(productID);
+    setProducts((prev) => prev.filter((p) => p.id !== productID));
+  };
+
+  const handleChangeUserRole = async (id: string, role: UserRole) => {
+    const updated = await updateUserRoleApi(id, role);
+    setCustomers((prev) =>
+      prev.map((c) => (c.id === id ? userToUi(updated) : c))
+    );
+  };
+
+  const handleDeleteCustomer = async (id: string) => {
+    await deleteUserApi(id);
+    setCustomers((prev) => prev.filter((c) => c.id !== id));
+  };
+
   const pendingCount = orders.filter((o) => o.status === "pending").length;
 
   return (
@@ -111,8 +146,18 @@ const Dashboard: React.FC = () => {
           </div>
         ) : view === "orders" ? (
           <PendingOrders orders={orders} onUpdateStatus={handleUpdateStatus} />
+        ) : view === "catalogue" ? (
+          <Catalogue
+            products={products}
+            onAddProduct={handleAddProduct}
+            onDeleteProduct={handleDeleteProduct}
+          />
         ) : (
-          <Catalogue products={products} onAddProduct={handleAddProduct} />
+          <Customers
+            customers={customers}
+            onChangeRole={handleChangeUserRole}
+            onDeleteCustomer={handleDeleteCustomer}
+          />
         )}
       </main>
     </div>

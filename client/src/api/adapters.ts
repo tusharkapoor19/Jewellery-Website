@@ -1,6 +1,7 @@
 import { ApiOrder, ApiOrderStatus } from "./orders";
 import { ApiProduct } from "./products";
-import { OrderItem, OrderStatus, Product, ProductCategory } from "../types/types";
+import { ApiUser } from "./users";
+import { Customer, OrderItem, OrderStatus, Product, ProductCategory } from "../types/types";
 import { PRODUCT_IMAGE_BASE } from "../config";
 
 const placeholderImage =
@@ -61,3 +62,11 @@ export const orderToUi = (order: ApiOrder): OrderItem => {
     extraItemsCount: Math.max(order.products.length - 1, 0),
   };
 };
+
+export const userToUi = (user: ApiUser): Customer => ({
+  id: user._id,
+  name: user.name,
+  email: user.email,
+  phone: user.phone || "—",
+  role: user.role,
+});

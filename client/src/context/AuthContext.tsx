@@ -41,6 +41,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
     localStorage.setItem(NAME_STORAGE_KEY, data.name || "");
     localStorage.setItem(ROLE_STORAGE_KEY, userRole);
+
+    // Keep the storefront Navbar (which reads a separate legacy key set)
+    // in sync, so a customer logging in here also shows as logged-in there.
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("userName", data.name || "");
+    localStorage.setItem("isLoggedIn", "true");
+    window.dispatchEvent(new Event("auth-change"));
+
     setToken(data.token);
     setName(data.name || "");
     setRole(userRole);
@@ -52,6 +60,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.removeItem(TOKEN_STORAGE_KEY);
     localStorage.removeItem(NAME_STORAGE_KEY);
     localStorage.removeItem(ROLE_STORAGE_KEY);
+    localStorage.removeItem("token");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("isLoggedIn");
+    window.dispatchEvent(new Event("auth-change"));
     setToken(null);
     setName(null);
     setRole(null);

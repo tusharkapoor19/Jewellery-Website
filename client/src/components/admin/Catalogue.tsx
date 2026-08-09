@@ -5,6 +5,7 @@ import { NewProductPayload, uploadProductImage } from "../../api/products";
 interface CatalogueProps {
   products: Product[];
   onAddProduct: (payload: NewProductPayload) => Promise<void>;
+  onDeleteProduct: (productID: string) => Promise<void>;
 }
 
 const categories: ProductCategory[] = [
@@ -47,12 +48,37 @@ const emptyForm: FormState = {
   image: "",
 };
 
-const Catalogue: React.FC<CatalogueProps> = ({ products, onAddProduct }) => {
+const Catalogue: React.FC<CatalogueProps> = ({ products, onAddProduct, onDeleteProduct }) => {
   const [form, setForm] = useState<FormState>(emptyForm);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [toast, setToast] = useState<string>("");
   const [submitError, setSubmitError] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
+
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmTarget, setConfirmTarget] = useState<Product | null>(null);
+  const [deleteError, setDeleteError] = useState("");
+
+  const requestDelete = (product: Product) => {
+    setDeleteError("");
+    setConfirmTarget(product);
+  };
+
+  const cancelDelete = () => setConfirmTarget(null);
+
+  const confirmDelete = async () => {
+    if (!confirmTarget) return;
+    const productID = confirmTarget.id;
+    setDeletingId(productID);
+    try {
+      await onDeleteProduct(productID);
+      setConfirmTarget(null);
+    } catch (err) {
+      setDeleteError(err instanceof Error ? err.message : "Failed to delete product");
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   const handleChange = (field: keyof FormState, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -305,12 +331,51 @@ const Catalogue: React.FC<CatalogueProps> = ({ products, onAddProduct }) => {
                       {product.stock} in stock
                     </span>
                   </div>
+                  <button
+                    type="button"
+                    className="product-card-delete"
+                    disabled={deletingId === product.id}
+                    onClick={() => requestDelete(product)}
+                  >
+                    {deletingId === product.id ? "Deleting..." : "Delete"}
+                  </button>
                 </div>
               </article>
             ))
           )}
         </div>
       </div>
+
+      {confirmTarget && (
+        <div className="modal-overlay" onClick={cancelDelete}>
+          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+            <h3>Delete this product?</h3>
+            <p>
+              <strong>{confirmTarget.name}</strong> ({confirmTarget.id}) will be removed from
+              the catalogue. This cannot be undone.
+            </p>
+            {deleteError && <p className="modal-error">{deleteError}</p>}
+            <div className="modal-actions">
+              <button
+                type="button"
+                className="modal-btn-cancel"
+                onClick={cancelDelete}
+                disabled={deletingId === confirmTarget.id}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="modal-btn-delete"
+                onClick={confirmDelete}
+                disabled={deletingId === confirmTarget.id}
+              >
+                {deletingId === confirmTarget.id ? "Deleting..." : "Yes, delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

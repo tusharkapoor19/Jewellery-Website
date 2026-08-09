@@ -18,7 +18,8 @@ export const ORDER_API_BASE =
   process.env.REACT_APP_ORDER_API_URL || "http://localhost:5003/orders";
 
   
-  // Key used to persist the admin JWT + name in localStorage between reloads.
-  export const TOKEN_STORAGE_KEY = "hiranya_admin_token";
-  export const NAME_STORAGE_KEY = "hiranya_admin_name";
-  export const ROLE_STORAGE_KEY = "hiranya_role";
+// Key used to persist the admin JWT + name in localStorage between reloads.
+export const TOKEN_STORAGE_KEY = "hiranya_admin_token";
+export const NAME_STORAGE_KEY = "hiranya_admin_name";
+export const ROLE_STORAGE_KEY = "hiranya_role";
+export const USER_API_BASE = process.env.REACT_APP_USER_API_URL || "http://localhost:5005/admin";

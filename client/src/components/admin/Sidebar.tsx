@@ -1,6 +1,6 @@
 import React from "react";
 
-export type View = "orders" | "catalogue";
+export type View = "orders" | "catalogue" | "customers";
 
 interface SidebarProps {
   active: View;
@@ -61,6 +61,20 @@ const Sidebar: React.FC<SidebarProps> = ({
             </svg>
           </span>
           Catalogue
+        </button>
+        <button
+          className={`nav-item ${active === "customers" ? "nav-item--active" : ""}`}
+          onClick={() => onNavigate("customers")}
+        >
+          <span className="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18">
+              <circle cx="9" cy="8" r="3.2" fill="none" stroke="currentColor" strokeWidth="1.4" />
+              <path d="M3.5 20 C3.5 15.5 6 13.5 9 13.5 C12 13.5 14.5 15.5 14.5 20" fill="none" stroke="currentColor" strokeWidth="1.4" />
+              <circle cx="17" cy="9" r="2.4" fill="none" stroke="currentColor" strokeWidth="1.4" />
+              <path d="M14.7 13.8 C17 13.3 20.5 14.8 20.5 19.2" fill="none" stroke="currentColor" strokeWidth="1.4" />
+            </svg>
+          </span>
+          Customers
         </button>
       </nav>
 
