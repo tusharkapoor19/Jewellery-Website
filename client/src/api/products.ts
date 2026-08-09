@@ -122,3 +122,26 @@ export const deleteProduct = async (productID: string): Promise<void> => {
     { method: "DELETE" }
   );
 };
+
+// All fields optional — only send what changed.
+export type UpdateProductPayload = Partial<NewProductPayload>;
+
+interface UpdateProductResponse {
+  message: string;
+  product: ApiProduct;
+}
+
+// PATCH /update/:productID - protected by authMiddleware + adminMiddleware
+export const updateProduct = async (
+  productID: string,
+  payload: UpdateProductPayload
+): Promise<ApiProduct> => {
+  const data = await apiRequest<UpdateProductResponse>(
+    `${PRODUCT_API_BASE}/update/${productID}`,
+    {
+      method: "PATCH",
+      body: payload,
+    }
+  );
+  return data.product;
+};

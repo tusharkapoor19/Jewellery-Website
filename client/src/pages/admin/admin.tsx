@@ -12,6 +12,8 @@ import {
   deleteProduct as deleteProductApi,
   fetchProducts,
   NewProductPayload,
+  updateProduct as updateProductApi,
+  UpdateProductPayload,
 } from "../../api/products";
 import {
   deleteUser as deleteUserApi,
@@ -101,6 +103,16 @@ const Dashboard: React.FC = () => {
     setProducts((prev) => [productToUi(created), ...prev]);
   };
 
+  const handleUpdateProduct = async (
+    productID: string,
+    payload: UpdateProductPayload
+  ) => {
+    const updated = await updateProductApi(productID, payload);
+    setProducts((prev) =>
+      prev.map((p) => (p.id === productID ? productToUi(updated) : p))
+    );
+  };
+
   const handleDeleteProduct = async (productID: string) => {
     await deleteProductApi(productID);
     setProducts((prev) => prev.filter((p) => p.id !== productID));
@@ -150,6 +162,7 @@ const Dashboard: React.FC = () => {
           <Catalogue
             products={products}
             onAddProduct={handleAddProduct}
+            onUpdateProduct={handleUpdateProduct}
             onDeleteProduct={handleDeleteProduct}
           />
         ) : (

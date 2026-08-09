@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { Product, ProductCategory } from "../../types/types";
-import { NewProductPayload, uploadProductImage } from "../../api/products";
+import {
+  NewProductPayload,
+  UpdateProductPayload,
+  uploadProductImage,
+} from "../../api/products";
 
 interface CatalogueProps {
   products: Product[];
   onAddProduct: (payload: NewProductPayload) => Promise<void>;
+  onUpdateProduct: (
+    productID: string,
+    payload: UpdateProductPayload
+  ) => Promise<void>;
   onDeleteProduct: (productID: string) => Promise<void>;
 }
 
@@ -48,16 +56,52 @@ const emptyForm: FormState = {
   image: "",
 };
 
-const Catalogue: React.FC<CatalogueProps> = ({ products, onAddProduct, onDeleteProduct }) => {
+const Catalogue: React.FC<CatalogueProps> = ({
+  products,
+  onAddProduct,
+  onUpdateProduct,
+  onDeleteProduct,
+}) => {
   const [form, setForm] = useState<FormState>(emptyForm);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [toast, setToast] = useState<string>("");
   const [submitError, setSubmitError] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
 
+  // When set, the form is editing this product instead of creating a new one.
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [confirmTarget, setConfirmTarget] = useState<Product | null>(null);
   const [deleteError, setDeleteError] = useState("");
+
+  const startEdit = (product: Product) => {
+    setSubmitError("");
+    setErrors({});
+    setEditingProduct(product);
+    setForm({
+      name: product.name,
+      category: product.category,
+      collection: product.collection,
+      metal: product.metal,
+      description: product.description,
+      price: String(product.price),
+      weight: String(product.weight),
+      stock: String(product.stock),
+      image: product.image || "",
+    });
+    // Scroll the form into view for smaller screens where the grid stacks.
+    window.setTimeout(() => {
+      document.getElementById("name")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
+  };
+
+  const cancelEdit = () => {
+    setEditingProduct(null);
+    setForm(emptyForm);
+    setErrors({});
+    setSubmitError("");
+  };
 
   const requestDelete = (product: Product) => {
     setDeleteError("");
@@ -73,6 +117,7 @@ const Catalogue: React.FC<CatalogueProps> = ({ products, onAddProduct, onDeleteP
     try {
       await onDeleteProduct(productID);
       setConfirmTarget(null);
+      if (editingProduct?.id === productID) cancelEdit();
     } catch (err) {
       setDeleteError(err instanceof Error ? err.message : "Failed to delete product");
     } finally {
@@ -133,13 +178,23 @@ const Catalogue: React.FC<CatalogueProps> = ({ products, onAddProduct, onDeleteP
 
     setSubmitting(true);
     try {
-      await onAddProduct(payload);
+      if (editingProduct) {
+        await onUpdateProduct(editingProduct.id, payload);
+        setToast(`"${payload.name}" updated`);
+        setEditingProduct(null);
+      } else {
+        await onAddProduct(payload);
+        setToast(`"${payload.name}" added to catalogue`);
+      }
       setForm(emptyForm);
-      setToast(`"${payload.name}" added to catalogue`);
       window.setTimeout(() => setToast(""), 3000);
     } catch (error) {
       setSubmitError(
-        error instanceof Error ? error.message : "Failed to add product"
+        error instanceof Error
+          ? error.message
+          : editingProduct
+          ? "Failed to update product"
+          : "Failed to add product"
       );
     } finally {
       setSubmitting(false);
@@ -164,7 +219,19 @@ const Catalogue: React.FC<CatalogueProps> = ({ products, onAddProduct, onDeleteP
 
       <div className="catalogue-layout">
         <form className="product-form" onSubmit={handleSubmit} noValidate>
-          <h3>Add a product</h3>
+          <div className="product-form-heading">
+            <h3>{editingProduct ? `Edit "${editingProduct.name}"` : "Add a product"}</h3>
+            {editingProduct && (
+              <button
+                type="button"
+                className="product-form-cancel-link"
+                onClick={cancelEdit}
+                disabled={submitting}
+              >
+                Cancel
+              </button>
+            )}
+          </div>
 
           <div className="field">
             <label htmlFor="name">Product name</label>
@@ -296,7 +363,13 @@ const Catalogue: React.FC<CatalogueProps> = ({ products, onAddProduct, onDeleteP
           {submitError && <div className="banner banner--error">{submitError}</div>}
 
           <button type="submit" className="btn btn-primary btn-full" disabled={submitting}>
-            {submitting ? "Adding…" : "Add to catalogue"}
+            {submitting
+              ? editingProduct
+                ? "Saving…"
+                : "Adding…"
+              : editingProduct
+              ? "Save changes"
+              : "Add to catalogue"}
           </button>
 
           {toast && <div className="toast">{toast}</div>}
@@ -310,7 +383,10 @@ const Catalogue: React.FC<CatalogueProps> = ({ products, onAddProduct, onDeleteP
             </div>
           ) : (
             products.map((product) => (
-              <article className="product-card" key={product.id}>
+              <article
+                className={`product-card${editingProduct?.id === product.id ? " product-card--editing" : ""}`}
+                key={product.id}
+              >
                 <img
                   src={product.image}
                   alt={product.name}
@@ -331,14 +407,23 @@ const Catalogue: React.FC<CatalogueProps> = ({ products, onAddProduct, onDeleteP
                       {product.stock} in stock
                     </span>
                   </div>
-                  <button
-                    type="button"
-                    className="product-card-delete"
-                    disabled={deletingId === product.id}
-                    onClick={() => requestDelete(product)}
-                  >
-                    {deletingId === product.id ? "Deleting..." : "Delete"}
-                  </button>
+                  <div className="product-card-actions">
+                    <button
+                      type="button"
+                      className="product-card-edit"
+                      onClick={() => startEdit(product)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      className="product-card-delete"
+                      disabled={deletingId === product.id}
+                      onClick={() => requestDelete(product)}
+                    >
+                      {deletingId === product.id ? "Deleting..." : "Delete"}
+                    </button>
+                  </div>
                 </div>
               </article>
             ))
