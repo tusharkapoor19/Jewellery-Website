@@ -3,6 +3,7 @@ import { Customer, UserRole } from "../../types/types";
 
 interface CustomersProps {
   customers: Customer[];
+  currentUserId: string | null;
   onChangeRole: (id: string, role: UserRole) => Promise<void>;
   onDeleteCustomer: (id: string) => Promise<void>;
 }
@@ -15,6 +16,7 @@ const filters: { label: string; value: UserRole | "all" }[] = [
 
 const Customers: React.FC<CustomersProps> = ({
   customers,
+  currentUserId,
   onChangeRole,
   onDeleteCustomer,
 }) => {
@@ -127,6 +129,7 @@ const Customers: React.FC<CustomersProps> = ({
         <div className="customer-list">
           {visibleCustomers.map((customer) => {
             const isBusy = busyId === customer.id;
+            const isSelf = customer.id === currentUserId;
             return (
               <article className="customer-card" key={customer.id}>
                 <div className="customer-card-main">
@@ -134,7 +137,10 @@ const Customers: React.FC<CustomersProps> = ({
                     {customer.name.charAt(0).toUpperCase()}
                   </span>
                   <div className="customer-card-info">
-                    <h4>{customer.name}</h4>
+                    <h4>
+                      {customer.name}
+                      {isSelf && <span className="you-badge"> (You)</span>}
+                    </h4>
                     <p>{customer.email}</p>
                     <p>{customer.phone}</p>
                   </div>
@@ -152,7 +158,8 @@ const Customers: React.FC<CustomersProps> = ({
                   <button
                     type="button"
                     className="btn-outline"
-                    disabled={isBusy}
+                    disabled={isBusy || isSelf}
+                    title={isSelf ? "You can't change your own admin access" : undefined}
                     onClick={() => handleToggleRole(customer)}
                   >
                     {isBusy && busyAction === "role"
@@ -165,7 +172,8 @@ const Customers: React.FC<CustomersProps> = ({
                   <button
                     type="button"
                     className="product-card-delete"
-                    disabled={isBusy}
+                    disabled={isBusy || isSelf}
+                    title={isSelf ? "You can't delete your own account" : undefined}
                     onClick={() => requestDelete(customer)}
                   >
                     {isBusy && busyAction === "delete" ? "Deleting..." : "Delete"}

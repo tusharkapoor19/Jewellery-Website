@@ -43,6 +43,16 @@ const updateUser = async (req, res, next) => {
 
     try {
 
+        if (
+            req.params.id === req.user.id &&
+            req.body.role &&
+            req.body.role !== "admin"
+        ) {
+            const error = new Error("You cannot remove your own admin access");
+            error.statusCode = 400;
+            throw error;
+        }
+
         const user = await adminService.updateUser(
             req.params.id,
             req.body
@@ -65,6 +75,12 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
 
     try {
+
+        if (req.params.id === req.user.id) {
+            const error = new Error("You cannot delete your own account");
+            error.statusCode = 400;
+            throw error;
+        }
 
         await adminService.deleteUser(req.params.id);
 

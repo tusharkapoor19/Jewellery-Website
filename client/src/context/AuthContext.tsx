@@ -14,6 +14,7 @@ interface AuthContextValue {
   token: string | null;
   name: string | null;
   role: string | null;
+  id: string | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<string>;
   logout: () => void;
@@ -33,12 +34,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [role, setRole] = useState<string | null>(() =>
     localStorage.getItem(ROLE_STORAGE_KEY)
   );
+  const [id, setId] = useState<string | null>(() => {
+    const existingToken = localStorage.getItem(TOKEN_STORAGE_KEY);
+    if (!existingToken) return null;
+    return decodeJwtPayload(existingToken)?.id || null;
+  });
 
   const login = useCallback(async (email: string, password: string) => {
     const data = await loginRequest(email, password);
-console.log("LOGIN RESPONSE:", data);
+
     const payload = decodeJwtPayload(data.token);
     const userRole = payload?.role || "customer";
+    const userId = payload?.id || null;
 
     localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
     localStorage.setItem(NAME_STORAGE_KEY, data.name || "");
@@ -54,6 +61,7 @@ console.log("LOGIN RESPONSE:", data);
     setToken(data.token);
     setName(data.name || "");
     setRole(userRole);
+    setId(userId);
 
     return userRole;
   }, []);
@@ -69,6 +77,7 @@ console.log("LOGIN RESPONSE:", data);
     setToken(null);
     setName(null);
     setRole(null);
+    setId(null);
   }, []);
 
   const value = useMemo(
@@ -76,11 +85,12 @@ console.log("LOGIN RESPONSE:", data);
       token,
       name,
       role,
+      id,
       isAuthenticated: Boolean(token),
       login,
       logout,
     }),
-    [token, name, role, login, logout]
+    [token, name, role, id, login, logout]
   );
 
   return <AuthContext.Provider value = {value}>{children}</AuthContext.Provider>;

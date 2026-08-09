@@ -238,6 +238,29 @@ const verifyLogOtp = async (otpData) => {                                       
   };
 };
 
+const createadmin = async (body, requester) => {                                     // PROMOTE TO ADMIN
+  const email = body.email && body.email.toLowerCase();
+
+  if (!email) {
+    const error = new Error("Email is required");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    const error = new Error("User not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  user.role = "admin";
+  await user.save();
+
+  return user;
+};
+
 module.exports = {                                                                          // EXPORTS
   signup,
   login,
@@ -246,4 +269,5 @@ module.exports = {                                                              
   verifyOtp,
   sendLogOtp,
   verifyLogOtp,
+  createadmin,
 };

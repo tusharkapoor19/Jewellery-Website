@@ -31,7 +31,7 @@ const getInitialView = (): View => {
 };
 
 const Dashboard: React.FC = () => {
-  const { name, logout } = useAuth();
+  const { name, id, logout } = useAuth();
   const [view, setView] = useState<View>(getInitialView);
 
   const handleNavigate = (nextView: View) => {
@@ -59,7 +59,7 @@ const Dashboard: React.FC = () => {
       setProducts(apiProducts.map(productToUi));
       setCustomers(apiUsers.map(userToUi));
     } catch (error) {
-      if (error instanceof ApiError && error.status === 401) {
+      if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
         logout();
         return;
       }
@@ -86,7 +86,7 @@ const Dashboard: React.FC = () => {
       await updateOrderStatusApi(id, backendStatus);
     } catch (error) {
       await loadData();
-      if (error instanceof ApiError && error.status === 401) {
+      if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
         logout();
         return;
       }
@@ -155,6 +155,7 @@ const Dashboard: React.FC = () => {
         ) : (
           <Customers
             customers={customers}
+            currentUserId={id}
             onChangeRole={handleChangeUserRole}
             onDeleteCustomer={handleDeleteCustomer}
           />
@@ -165,8 +166,12 @@ const Dashboard: React.FC = () => {
 };
 
 const Admin: React.FC = () => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Dashboard /> : <Navigate to="/login" replace />;
+  const { isAuthenticated, role } = useAuth();
+  return isAuthenticated && role === "admin" ? (
+    <Dashboard />
+  ) : (
+    <Navigate to="/login" replace />
+  );
 };
 
 export default Admin;
