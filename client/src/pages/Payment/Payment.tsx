@@ -39,7 +39,8 @@ import Footer from "../../components/Footer/Footer";
 
 import orderService from "../../services/orderService";
 import paymentService from "../../services/paymentService";
-
+import productService from "../../services/productService";
+import { useCart } from "../../context/CartContext";
 declare global {
   interface Window {
     Razorpay: new (
@@ -147,6 +148,9 @@ interface VerifyPaymentPayload {
 const Payment = () => {
   const navigate = useNavigate();
 
+  const { refreshCart } = useCart();
+
+
   const location = useLocation();
 
 const orderID = location.state?.orderID;
@@ -211,7 +215,36 @@ console.log(
   "ORDER OBJECT",
   JSON.stringify(response.order, null, 2)
 );
-      setOrder(response.order);
+      const orderData = response.order;
+
+const productsWithImages = await Promise.all(
+  orderData.products.map(async (product: ProductItem) => {
+    try {
+      const productData =
+        await productService.getProductById(product.productID);
+
+      return {
+        ...product,
+        image:
+          productData?.image ||
+          productData?.images?.[0] ||
+          ""
+      };
+    } catch (error) {
+      console.error(
+        `Failed to load image for ${product.productID}`,
+        error
+      );
+
+      return product;
+    }
+  })
+);
+
+setOrder({
+  ...orderData,
+  products: productsWithImages
+});
     } catch (error) {
       const message =
         error instanceof Error
@@ -248,6 +281,7 @@ console.log(
         }
 
         toast.success("Payment successful.");
+        await refreshCart();
 
        navigate("/order-success", {
     replace: true,

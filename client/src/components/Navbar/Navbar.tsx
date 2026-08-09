@@ -483,16 +483,21 @@ useEffect(() => {
             </Link>
 
             {!hasCartItems && showCartNudge && (
-              <div className="cart-popup-nudge">
-                <span>Your cart is empty😔</span>
-                <button
-                  className="close-nudge"
-                  onClick={() => setShowCartNudge(false)}
-                >
-                  &times;
-                </button>
-              </div>
-            )}
+  <div
+    className="cart-popup-nudge"
+    onMouseEnter={() => setShowCartNudge(false)}
+  >
+    <span>Your cart is empty</span>
+
+    <button
+      className="close-nudge"
+      onClick={() => setShowCartNudge(false)}
+      aria-label="Close cart notification"
+    >
+      <X size={14} />
+    </button>
+  </div>
+)}
           </div>
 
           {/* Profile Dropdown */}

@@ -1,14 +1,17 @@
 {
   "name": "notification-service",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "HIRANYA Notification Service",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "hiranya",
+    "notification-service",
+    "jewellery"
+  ],
+  "author": "Dhruv Chhabra",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.18.1",
@@ -17,7 +20,9 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.8.0",
-    "nodemailer": "^9.0.5",
+    "nodemailer": "^9.0.5"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.14"
   }
 }

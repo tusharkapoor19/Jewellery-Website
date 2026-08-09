@@ -65,23 +65,18 @@ import {
 import TopBar from "../../components/TopBar/TopBar";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-
+import productService from "../../services/productService";
 /* ==========================================================
    Interfaces
 ========================================================== */
 
 interface Product {
-
     productID: string;
-
     name: string;
-
     image?: string;
-
+    images?: string[];
     quantity: number;
-
     price: number;
-
 }
 
 interface ShippingAddress {
@@ -185,66 +180,112 @@ const [loading, setLoading] =
             }
 
             const data = response.order;
+            console.log("ORDER SUCCESS DATA:", data);
+            const subtotal =
+    Number(data.subtotal ?? 0);
 
-            setOrder({
+const shippingCharge =
+    Number(data.shippingCharge ?? 0);
 
-                orderID: data.orderID,
+const discount =
+    Number(data.discount ?? 0);
 
-                products: data.products,
+const gst =
+    Number(data.gst ?? 0);
 
-                shippingAddress: {
+const totalAmount =
+    Number(data.totalAmount ?? 0);
 
-                    fullName:
-                        data.shippingAddress.fullName,
+/* ==========================================
+   Fetch actual product images
+========================================== */
 
-                    phone:
-                        data.shippingAddress.phone,
+const productsWithImages = await Promise.all(
+    data.products.map(async (product: Product) => {
+        // If order already contains image, keep it
+        if (product.image) {
+            return product;
+        }
 
-                    address:
-                        data.shippingAddress.addressLine1,
+        try {
+            const productData =
+                await productService.getProductById(
+                    product.productID
+                );
 
-                    landmark:
-                        data.shippingAddress.addressLine2 || "",
+            return {
+                ...product,
+                image:
+                    productData?.image ||
+                    productData?.images?.[0] ||
+                    ""
+            };
+        } catch (error) {
+            console.error(
+                `Failed to fetch image for ${product.productID}`,
+                error
+            );
 
-                    city:
-                        data.shippingAddress.city,
+            return product;
+        }
+    })
+);
 
-                    state:
-                        data.shippingAddress.state,
+setOrder({
+    orderID: data.orderID,
 
-                    country:
-                        data.shippingAddress.country,
+    products: productsWithImages,
 
-                    pincode:
-                        data.shippingAddress.postalCode
+    shippingAddress: {
+        fullName:
+            data.shippingAddress.fullName,
 
-                },
+        phone:
+            data.shippingAddress.phone,
 
-                deliveryMethod:
-                    data.deliveryMethod,
+        address:
+            data.shippingAddress.addressLine1,
 
-                subtotal:
-                    data.subtotal,
+        landmark:
+            data.shippingAddress.addressLine2 || "",
 
-                shippingCharge:
-                    data.shippingCharge,
+        city:
+            data.shippingAddress.city,
 
-                discount:
-                    data.discount,
+        state:
+            data.shippingAddress.state,
 
-                gst:
-                    data.gst,
+        country:
+            data.shippingAddress.country,
 
-                totalAmount:
-                    data.totalAmount,
+        pincode:
+            data.shippingAddress.postalCode
+    },
 
-                orderStatus:
-                    data.orderStatus,
+    deliveryMethod:
+        data.deliveryMethod,
 
-                createdAt:
-                    data.createdAt
+    subtotal:
+    subtotal,
 
-            });
+shippingCharge:
+    shippingCharge,
+
+discount:
+    discount,
+
+gst:
+    gst,
+
+totalAmount:
+    totalAmount,
+
+    orderStatus:
+        data.orderStatus,
+
+    createdAt:
+        data.createdAt
+});
 
         }
 

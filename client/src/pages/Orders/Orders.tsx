@@ -56,6 +56,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
 import orderService from "../../services/orderService";
+import productService from "../../services/productService";
 
 /* ==========================================================
    Interfaces
@@ -167,38 +168,97 @@ const MyOrders: React.FC = () => {
 
     const fetchOrders = async () => {
 
-        try {
+    try {
 
-            setLoading(true);
+        setLoading(true);
 
-            const response =
-                await orderService.getMyOrders();
+        const response =
+            await orderService.getMyOrders();
 
-            setOrders(
+        const ordersData = response.orders || [];
 
-                response.orders || []
+        const ordersWithImages = await Promise.all(
 
-            );
+            ordersData.map(async (order: Order) => {
 
-        }
+                const productsWithImages =
+                    await Promise.all(
 
-        catch {
+                        order.products.map(
+                            async (product: Product) => {
 
-            toast.error(
+                                // Agar image already hai
+                                // to wahi use karo
+                                if (product.image) {
+                                    return product;
+                                }
 
-                "Unable to load your orders."
+                                try {
 
-            );
+                                    const productData =
+                                        await productService.getProductById(
+                                            product.productID
+                                        );
 
-        }
+                                    return {
+                                        ...product,
 
-        finally {
+                                        image:
+                                            productData?.image ||
+                                            productData?.images?.[0] ||
+                                            ""
+                                    };
 
-            setLoading(false);
+                                }
 
-        }
+                                catch (error) {
 
-    };
+                                    console.error(
+                                        `Failed to fetch image for ${product.productID}`,
+                                        error
+                                    );
+
+                                    return product;
+                                }
+
+                            }
+                        )
+
+                    );
+
+                return {
+                    ...order,
+                    products: productsWithImages
+                };
+
+            })
+
+        );
+
+        setOrders(ordersWithImages);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "My Orders Error:",
+            error
+        );
+
+        toast.error(
+            "Unable to load your orders."
+        );
+
+    }
+
+    finally {
+
+        setLoading(false);
+
+    }
+
+};
 
     /* ======================================================
        Helpers
