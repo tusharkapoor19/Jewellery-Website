@@ -17,64 +17,10 @@ export interface PricingResult {
 
 }
 
-const BASE_GOLD_RATE = 9000;
-const BASE_SILVER_RATE = 110;
-
-export const getDynamicPrice = (
-    price: number,
-    metal: string
-) => {
-
-    const goldRate =
-        Number(localStorage.getItem("goldRate")) ||
-        BASE_GOLD_RATE;
-
-    const silverRate =
-        Number(localStorage.getItem("silverRate")) ||
-        BASE_SILVER_RATE;
-
-    const currentMetal =
-        metal.toLowerCase();
-
-    if (
-
-        currentMetal === "gold" ||
-
-        currentMetal === "white gold" ||
-
-        currentMetal === "rose gold"
-
-    ) {
-
-        return Math.round(
-
-            price *
-
-            (goldRate / BASE_GOLD_RATE)
-
-        );
-
-    }
-
-    if (
-
-        currentMetal === "silver"
-
-    ) {
-
-        return Math.round(
-
-            price *
-
-            (silverRate / BASE_SILVER_RATE)
-
-        );
-
-    }
-
-    return price;
-
-};
+// NOTE: cart items already carry a live, formula-based price computed by the
+// backend (see user-services/cartService.js) from the product's weight/metal
+// and the current gold/silver rate — so there's no client-side rescaling
+// here anymore. `item.price` is the final, correct per-unit price.
 
 
 export const calculatePricing = (
@@ -93,19 +39,11 @@ export const calculatePricing = (
 
     (sum, item) => {
 
-        const dynamicPrice = getDynamicPrice(
-
-            item.price,
-
-            item.metal
-
-        );
-
         return (
 
             sum +
 
-            dynamicPrice *
+            item.price *
 
             item.quantity
 

@@ -9,6 +9,7 @@ import Footer from "../../components/Footer/Footer";
 import ProductGrid from "../../components/ProductGrid/ProductGrid";
 import productService from "../../services/productService";
 import { Product } from "../../types/product";
+import { computeLivePrice } from "../../utils/metalPricing";
 
 import { useWishlist } from "../../context/WishlistContext";
 import { useCart } from "../../context/CartContext";
@@ -328,24 +329,8 @@ const handleBuyNow = useCallback(async () => {
   const allImages = product.images && product.images.length > 0 ? product.images : [product.image];
 
   // ================= Dynamic Pricing =================
-  const BASE_GOLD_RATE = 9000;
-  const BASE_SILVER_RATE = 110;
-
-  const goldRate = Number(localStorage.getItem("goldRate")) || BASE_GOLD_RATE;
-  const silverRate = Number(localStorage.getItem("silverRate")) || BASE_SILVER_RATE;
-
-  const getDynamicPrice = () => {
-    const metal = product.metal?.toLowerCase() || "";
-    if (metal === "gold" || metal === "white gold" || metal === "rose gold") {
-      return Math.round(product.price * (goldRate / BASE_GOLD_RATE));
-    }
-    if (metal === "silver") {
-      return Math.round(product.price * (silverRate / BASE_SILVER_RATE));
-    }
-    return product.price;
-  };
-
-  const dynamicPrice = getDynamicPrice();
+  // Live, formula-based price: (live rate/gram * weight) + making charge/gram.
+  const dynamicPrice = computeLivePrice(product.metal, product.weight);
   const calculatedOriginalPrice = Math.round(dynamicPrice * 1.15);
 
   return (

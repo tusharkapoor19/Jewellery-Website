@@ -33,10 +33,9 @@ const productSchema = new mongoose.Schema(
         required: true
     },
 
-    price: {
-        type: Number,
-        required: true
-    },
+    // NOTE: price is intentionally NOT stored anymore.
+    // It is computed on-the-fly from live gold/silver rates + weight/metal —
+    // see utils/liveRates.js. Kept in sync with product-services' schema.
 
     weight: {
         type: Number,

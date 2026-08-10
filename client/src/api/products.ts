@@ -10,6 +10,8 @@ export interface ApiProduct {
   metal: string;
   name: string;
   description: string;
+  // Computed live by the backend from weight + metal + current gold/silver
+  // rate on every request — not stored in the DB. Never send this back.
   price: number;
   weight: number;
   stock: number;
@@ -25,7 +27,6 @@ export interface NewProductPayload {
   collection: string;
   metal: string;
   description: string;
-  price: number;
   weight: number;
   stock: number;
   image?: string;

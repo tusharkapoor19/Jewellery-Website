@@ -12,6 +12,7 @@ import {
 
 import { Product } from "../../types/product";
 import { useWishlist } from "../../context/WishlistContext";
+import { computeLivePrice } from "../../utils/metalPricing";
 
 import { toast } from "react-hot-toast";
 
@@ -56,58 +57,9 @@ const ProductCard = ({
     const isAddingRef = useRef(false);
     const [isAdding, setIsAdding] = useState(false);
 
-// Base rates used while products were seeded
-const BASE_GOLD_RATE = 9000;
-const BASE_SILVER_RATE = 110;
-
-// Live rates from TopBar
-const goldRate = Number(
-    localStorage.getItem("goldRate")
-) || BASE_GOLD_RATE;
-
-const silverRate = Number(
-    localStorage.getItem("silverRate")
-) || BASE_SILVER_RATE;
-
-// Dynamic Price
-const getDynamicPrice = () => {
-
-    const metal = product.metal.toLowerCase();
-
-    // Gold Jewellery
-    if (
-        metal === "gold" ||
-        metal === "white gold" ||
-        metal === "rose gold"
-    ) {
-
-        return Math.round(
-
-            product.price *
-
-            (goldRate / BASE_GOLD_RATE)
-
-        );
-
-    }
-
-    // Silver Jewellery
-    if (metal === "silver") {
-
-        return Math.round(
-
-            product.price *
-
-            (silverRate / BASE_SILVER_RATE)
-
-        );
-
-    }
-
-    // Platinum & Others
-    return product.price;
-
-};
+// Live, formula-based price: (live rate/gram * weight) + making charge/gram.
+// See utils/metalPricing.ts for the exact formula.
+const getDynamicPrice = () => computeLivePrice(product.metal, product.weight);
 
 
 const handleAddToCart = async () => {
@@ -405,20 +357,20 @@ const handleAddToCart = async () => {
 
                 <div className="card-actions">
 
-                          <button
-    className="cart-button"
-    onClick={handleAddToCart}
-    disabled={isAdding || product.stock <= 0}
->
-    <ShoppingBag size={18}/>
-    {
-    product.stock <= 0
-        ? "Out Of Stock"
-        : isAdding
-        ? "Adding..."
-        : "Add To Cart"
-}
-</button>
+                    <button
+                        className="cart-button"
+                        onClick={handleAddToCart}
+                        disabled={isAdding || product.stock <= 0}
+                    >
+                        <ShoppingBag size={18}/>
+                        {
+                            product.stock <= 0
+                                ? "Out Of Stock"
+                                : isAdding
+                                ? "Adding..."
+                                : "Add To Cart"
+                        }
+                    </button>
 
                     <button
 

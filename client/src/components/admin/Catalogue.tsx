@@ -38,7 +38,6 @@ interface FormState {
   collection: string;
   metal: string;
   description: string;
-  price: string;
   weight: string;
   stock: string;
   image: string;
@@ -50,7 +49,6 @@ const emptyForm: FormState = {
   collection: "",
   metal: "",
   description: "",
-  price: "",
   weight: "",
   stock: "",
   image: "",
@@ -85,7 +83,6 @@ const Catalogue: React.FC<CatalogueProps> = ({
       collection: product.collection,
       metal: product.metal,
       description: product.description,
-      price: String(product.price),
       weight: String(product.weight),
       stock: String(product.stock),
       image: product.image || "",
@@ -136,7 +133,6 @@ const Catalogue: React.FC<CatalogueProps> = ({
     if (!form.collection.trim()) nextErrors.collection = "Collection is required";
     if (!form.metal.trim()) nextErrors.metal = "Metal is required";
     if (!form.description.trim()) nextErrors.description = "Description is required";
-    if (!form.price || Number(form.price) <= 0) nextErrors.price = "Enter a valid price";
     if (!form.weight || Number(form.weight) <= 0) nextErrors.weight = "Enter a valid weight";
     if (!form.stock || Number(form.stock) <= 0) nextErrors.stock = "Enter a valid stock count";
     setErrors(nextErrors);
@@ -170,7 +166,6 @@ const Catalogue: React.FC<CatalogueProps> = ({
       collection: form.collection.trim(),
       metal: form.metal.trim(),
       description: form.description.trim(),
-      price: Number(form.price),
       weight: Number(form.weight),
       stock: Number(form.stock),
       image: form.image.trim() || undefined,
@@ -276,19 +271,6 @@ const Catalogue: React.FC<CatalogueProps> = ({
 
           <div className="field-row">
             <div className="field">
-              <label htmlFor="price">Price (INR)</label>
-              <input
-                id="price"
-                type="number"
-                min={0}
-                placeholder="25000"
-                value={form.price}
-                onChange={(e) => handleChange("price", e.target.value)}
-              />
-              {errors.price && <span className="field-error">{errors.price}</span>}
-            </div>
-
-            <div className="field">
               <label htmlFor="stock">Stock quantity</label>
               <input
                 id="stock"
@@ -299,20 +281,6 @@ const Catalogue: React.FC<CatalogueProps> = ({
                 onChange={(e) => handleChange("stock", e.target.value)}
               />
               {errors.stock && <span className="field-error">{errors.stock}</span>}
-            </div>
-          </div>
-
-          <div className="field-row">
-            <div className="field">
-              <label htmlFor="metal">Metal</label>
-              <input
-                id="metal"
-                type="text"
-                placeholder="18K Gold"
-                value={form.metal}
-                onChange={(e) => handleChange("metal", e.target.value)}
-              />
-              {errors.metal && <span className="field-error">{errors.metal}</span>}
             </div>
 
             <div className="field">
@@ -328,6 +296,22 @@ const Catalogue: React.FC<CatalogueProps> = ({
               />
               {errors.weight && <span className="field-error">{errors.weight}</span>}
             </div>
+          </div>
+
+          <div className="field">
+            <label htmlFor="metal">Metal</label>
+            <input
+              id="metal"
+              type="text"
+              placeholder="18K Gold"
+              value={form.metal}
+              onChange={(e) => handleChange("metal", e.target.value)}
+            />
+            {errors.metal && <span className="field-error">{errors.metal}</span>}
+            <span className="field-hint">
+              Price is calculated automatically from the live gold/silver rate and weight —
+              use "Gold", "White Gold", "Rose Gold", or "Silver" for accurate pricing.
+            </span>
           </div>
 
           <div className="field">

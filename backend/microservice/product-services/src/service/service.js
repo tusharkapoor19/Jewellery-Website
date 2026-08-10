@@ -1,6 +1,33 @@
 const Product = require("../models/products");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { fetchLiveRates, computeMetalPrice } = require("../utils/liveRates");
+
+// Attaches a live, computed `price` field (metal/weight based) to a single
+// product document without persisting it to the DB.
+const attachLivePrice = (product, rates) => {
+
+    const plain =
+        typeof product.toObject === "function"
+            ? product.toObject()
+            : product;
+
+    return {
+        ...plain,
+        price: computeMetalPrice(plain.metal, plain.weight, rates)
+    };
+
+};
+
+// Same as above but for an array of products — fetches the live rate once
+// and reuses it for every product instead of hitting the rate API per item.
+const attachLivePriceToMany = async (products) => {
+
+    const rates = await fetchLiveRates();
+
+    return products.map((product) => attachLivePrice(product, rates));
+
+};
 
 
 
@@ -12,7 +39,6 @@ const addProduct = async (productData) => {                                     
         collection,
         metal,
         description,
-        price,
         weight,
         stock,
         image,
@@ -28,16 +54,9 @@ const addProduct = async (productData) => {                                     
 
     let productID = "HIR001";
 
-    if(!name || !category || !collection || !metal || !price || !weight){
+    if(!name || !category || !collection || !metal || !weight){
 
         const error = new Error("All fields are required");
-        error.statusCode = 400;
-        throw error;
-    }
-
-    if(price <= 0){
-
-        const error = new Error("Price must be greater than 0");
         error.statusCode = 400;
         throw error;
     }
@@ -85,7 +104,6 @@ const addProduct = async (productData) => {                                     
         collection,
         metal,
         description,
-        price,
         weight,
         stock,
         image,
@@ -95,7 +113,7 @@ const addProduct = async (productData) => {                                     
 
     return {
         message:"Product added successfully",
-        product
+        product: attachLivePrice(product, await fetchLiveRates())
     };
 };
 
@@ -132,11 +150,13 @@ const getallprodd = async(filters={})=>{                                        
     const products = await Product.find(query)
     .sort({createdAt:-1});
 
+    const productsWithPrice = await attachLivePriceToMany(products);
+
     return {
 
-        totalproducts:products.length,
+        totalproducts:productsWithPrice.length,
 
-        products
+        products: productsWithPrice
 
     };
 
@@ -160,13 +180,9 @@ const updateProduct = async (productID, updateData) => {                        
 
 
 
-    if(updateData.price && updateData.price <= 0){
-
-        const error = new Error("Price must be greater than 0");
-        error.statusCode = 400;
-        throw error;
-
-    }
+    // Price is never stored/updated directly — always computed live from
+    // weight + metal. Strip it out defensively in case a client still sends it.
+    delete updateData.price;
 
 
     if(updateData.weight && updateData.weight <= 0){
@@ -187,7 +203,7 @@ const updateProduct = async (productID, updateData) => {                        
 
     return {
         message:"Product updated successfully",
-        product
+        product: attachLivePrice(product, await fetchLiveRates())
     };
 
 };
@@ -238,7 +254,7 @@ const getProductByID = async(productID)=>{                                      
         throw error;
     }
 
-    return product;
+    return attachLivePrice(product, await fetchLiveRates());
 
 };
 
@@ -251,9 +267,11 @@ const searchProduct = async(name)=>{                                            
         }
     });
 
+    const productsWithPrice = await attachLivePriceToMany(products);
+
     return {
-        totalproducts:products.length,
-        products
+        totalproducts:productsWithPrice.length,
+        products: productsWithPrice
     };
 
 };
@@ -268,9 +286,11 @@ const getProductByCategory = async(category)=>{                                 
         category:category
     });
 
+    const productsWithPrice = await attachLivePriceToMany(products);
+
     return {
-        totalproducts:products.length,
-        products
+        totalproducts:productsWithPrice.length,
+        products: productsWithPrice
     };
 };
 

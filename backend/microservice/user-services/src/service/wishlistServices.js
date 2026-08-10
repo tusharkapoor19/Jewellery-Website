@@ -1,5 +1,6 @@
 const Wishlist = require("../models/wishlist.js");
 const Product = require("../models/product.js");
+const { fetchLiveRates, computeMetalPrice } = require("../utils/liveRates.js");
 
 const addProductToWishlist = async (userId, productId) => {
 
@@ -67,6 +68,8 @@ const getWishlist = async (userId) => {
 
     const wishlistItems = [];
 
+    const rates = await fetchLiveRates();
+
     for (const item of wishlist.items) {
 
         console.log("Searching Product:", item.productId);
@@ -85,7 +88,7 @@ const getWishlist = async (userId) => {
                 category: product.category,
                 image: product.image,
                 weight: product.weight,
-                price: product.price
+                price: computeMetalPrice(product.metal, product.weight, rates)
             });
 
         }

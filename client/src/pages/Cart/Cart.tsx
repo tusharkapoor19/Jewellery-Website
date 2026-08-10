@@ -6,8 +6,7 @@ import productService from "../../services/productService";
 import { Product } from "../../types";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import {
-  calculatePricing,
-  getDynamicPrice
+  calculatePricing
 } from "../../utils/pricing";
 import {
   ShoppingBag,
@@ -249,10 +248,7 @@ const Cart: React.FC = () => {
   </p>
 )}
                         <div className="item-price-row">
-                          ₹{getDynamicPrice(
-  item.price,
-  item.metal
-).toLocaleString("en-IN")}
+                          ₹{item.price.toLocaleString("en-IN")}
                         </div>
 
                         <div className="quantity-controls">
@@ -287,7 +283,7 @@ const Cart: React.FC = () => {
 
                         <div className="item-total">
                           ₹{(
-  getDynamicPrice(item.price, item.metal) *
+  item.price *
   item.quantity
 ).toLocaleString("en-IN")}
                         </div>

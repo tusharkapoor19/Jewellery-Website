@@ -1,43 +1,17 @@
-const BASE_GOLD_RATE = 9000;
-const BASE_SILVER_RATE = 110;
+import { computeLivePrice } from "./metalPricing";
 
+// Live, formula-based price: (live rate/gram * weight) + making charge/gram.
+// See utils/metalPricing.ts for the exact formula and constants.
 export const calculateDynamicPrice = (
     product: any,
     goldRate: number,
     silverRate: number
 ) => {
 
-    if (!goldRate || !silverRate) {
-        return product.price;
-    }
-
-    // GOLD
-    if (
-        product.metal?.toLowerCase() === "gold" ||
-        product.metal?.toLowerCase() === "white gold" ||
-        product.metal?.toLowerCase() === "rose gold"
-    ) {
-
-        return Math.round(
-            product.price *
-            (goldRate / BASE_GOLD_RATE)
-        );
-
-    }
-
-    // SILVER
-    if (
-        product.metal?.toLowerCase() === "silver"
-    ) {
-
-        return Math.round(
-            product.price *
-            (silverRate / BASE_SILVER_RATE)
-        );
-
-    }
-
-    // Platinum / Others
-    return product.price;
+    return computeLivePrice(
+        product?.metal,
+        product?.weight,
+        { goldRate, silverRate }
+    );
 
 };

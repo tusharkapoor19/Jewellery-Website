@@ -1,5 +1,6 @@
 const Cart = require ("../models/cart.js");
 const Product = require("../models/product.js");
+const { fetchLiveRates, computeMetalPrice } = require("../utils/liveRates.js");
 
 const addProductToCart = async (userId, productId, quantity = 1, size = "") => {
 
@@ -27,6 +28,9 @@ if (quantity > product.stock) {
     );
 
 }
+
+    const rates = await fetchLiveRates();
+    const price = computeMetalPrice(product.metal, product.weight, rates);
 
     let cart = await Cart.findOne({
         userId
@@ -68,7 +72,7 @@ String(item.size || "").trim() === String(size || "").trim()
 
     }
 
-    cart.totalValue += product.price * quantity;
+    cart.totalValue += price * quantity;
 
     if (cart.totalValue < 0) {
         cart.totalValue = 0;
@@ -130,10 +134,13 @@ if (quantity > product.stock) {
         );
     }
 
+    const rates = await fetchLiveRates();
+    const price = computeMetalPrice(product.metal, product.weight, rates);
+
     if (quantity < 1) {
 
         cart.totalValue -=
-            product.price * cartItem.quantity;
+            price * cartItem.quantity;
 
       cart.items = cart.items.filter(
     (item) =>
@@ -153,7 +160,7 @@ if (quantity > product.stock) {
         cartItem.quantity = quantity;
 
         cart.totalValue +=
-            product.price *
+            price *
             quantityDifference;
 
     }
@@ -207,8 +214,11 @@ const removeProductFromCart = async (
         );
     }
 
+    const rates = await fetchLiveRates();
+    const price = computeMetalPrice(product.metal, product.weight, rates);
+
     cart.totalValue -=
-        product.price * cartItem.quantity;
+        price * cartItem.quantity;
 
     if (cart.totalValue < 0) {
         cart.totalValue = 0;
@@ -258,6 +268,8 @@ const getCart = async (userId) => {
         }
     });
 
+    const rates = await fetchLiveRates();
+
     const cartItems = cart.items.map((item) => {
 
         const product = products.find(
@@ -265,6 +277,9 @@ const getCart = async (userId) => {
         );
 
         if (!product) return null;
+
+        const price = computeMetalPrice(product.metal, product.weight, rates);
+
 return {
 
     productId: product.productID,
@@ -279,13 +294,13 @@ return {
 
     weight: product.weight,
 
-    price: product.price,
+    price,
 
     quantity: item.quantity,
 
     size: item.size,
 
-    value: product.price * item.quantity
+    value: price * item.quantity
 
 };
 
