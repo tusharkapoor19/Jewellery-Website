@@ -463,45 +463,6 @@ useEffect(() => {
                 Search
             ========================================================== */}
 
-            <section className="track-search-section">
-
-                <div className="track-search-box">
-
-                    <Search size={18}/>
-
-                    <input
-
-                        type="text"
-
-                        placeholder="Enter Order ID"
-
-                        value={searchID}
-
-                        onChange={(e)=>
-
-                            setSearchID(
-
-                                e.target.value
-
-                            )
-
-                        }
-
-                    />
-
-                    <button
-
-                        onClick={searchOrder}
-
-                    >
-
-                        Search
-
-                    </button>
-
-                </div>
-
-            </section>
 
             {
 
