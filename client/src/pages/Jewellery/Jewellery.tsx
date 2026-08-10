@@ -279,7 +279,7 @@ const Jewellery = () => {
 
                 <div className="hero-glow"></div>
 
-                <div className="hero-content">
+                <div className="hero-content"  style={{marginTop: 80}}>
 
                     <span>
 
