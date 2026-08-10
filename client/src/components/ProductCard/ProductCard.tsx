@@ -357,20 +357,20 @@ const handleAddToCart = async () => {
 
                 <div className="card-actions">
 
-                    <button
-                        className="cart-button"
-                        onClick={handleAddToCart}
-                        disabled={isAdding || product.stock <= 0}
-                    >
-                        <ShoppingBag size={18}/>
-                        {
-                            product.stock <= 0
-                                ? "Out Of Stock"
-                                : isAdding
-                                ? "Adding..."
-                                : "Add To Cart"
-                        }
-                    </button>
+                          <button
+    className="cart-button"
+    onClick={handleAddToCart}
+    disabled={isAdding || product.stock <= 0}
+>
+    <ShoppingBag size={18}/>
+    {
+    product.stock <= 0
+        ? "Out Of Stock"
+        : isAdding
+        ? "Adding..."
+        : "Add To Cart"
+}
+</button>
 
                     <button
 
