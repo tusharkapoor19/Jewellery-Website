@@ -51,7 +51,8 @@
 /* Live Rates */
 
 .gold-rate,
-.silver-rate{
+.silver-rate,
+.platinum-rate{
     display:flex;
     align-items:center;
     gap:6px;
@@ -85,7 +86,8 @@
 
 @media (max-width:1200px){
     .gold-rate,
-    .silver-rate{
+    .silver-rate,
+    .platinum-rate{
         display:none;
     }
 }
@@ -128,5 +130,9 @@
 }
 
 .silver-rate svg{
+    color:#9a9c9f;
+}
+
+.platinum-rate svg{
     color:#BFC5CE;
 }
