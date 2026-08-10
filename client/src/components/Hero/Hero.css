@@ -347,3 +347,932 @@ body.light .hero-secondary-btn{
 body.light .hero-secondary-btn:hover{
     color:#fff;
 }
+
+/* =========================================================
+   HIRANYA — HIGH LUXURY JEWELLERY HERO FRAME
+   Editorial / Premium Jewellery Brand Look
+========================================================= */
+
+.hero-right {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Soft ambient light behind the artwork */
+.hero-right::before {
+  content: "";
+  position: absolute;
+
+  width: 75%;
+  height: 75%;
+
+  background: rgba(202, 164, 82, 0.10);
+
+  filter: blur(75px);
+  border-radius: 50%;
+
+  z-index: 0;
+}
+
+
+/* =========================================================
+   FRAME
+========================================================= */
+
+.hero-card {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 650px;
+  height: 430px;
+
+  padding: 7px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  border: 1px solid rgba(188, 145, 55, 0.45);
+
+  border-radius: 24px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 22px 55px rgba(42, 32, 20, 0.13),
+    0 5px 18px rgba(42, 32, 20, 0.07);
+
+  transition:
+    transform 0.5s cubic-bezier(.2,.75,.2,1),
+    box-shadow 0.5s ease,
+    border-color 0.5s ease;
+}
+
+
+/* Extremely subtle inner edge */
+.hero-card::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 3px;
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+
+  border-radius: 21px;
+
+  pointer-events: none;
+
+  z-index: 5;
+}
+
+
+/* No visible decorative clutter */
+.hero-card::after {
+  display: none;
+}
+
+
+.hero-card:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(188, 145, 55, 0.65);
+
+  box-shadow:
+    0 30px 70px rgba(42, 32, 20, 0.16),
+    0 8px 22px rgba(42, 32, 20, 0.08);
+}
+
+
+/* =========================================================
+   SWIPER
+========================================================= */
+
+.heroSwiper {
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+}
+
+
+.heroSwiper .swiper-slide {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+}
+
+
+/* =========================================================
+   ARTWORK
+========================================================= */
+
+.hero-image,
+.hero-video {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: contain;
+  object-position: center;
+
+  border-radius: 18px;
+
+  background: transparent;
+
+  transition:
+    transform 1.2s cubic-bezier(.2,.7,.2,1),
+    filter 0.8s ease;
+}
+
+
+/* Almost invisible cinematic movement */
+.heroSwiper .swiper-slide-active .hero-image,
+.heroSwiper .swiper-slide-active .hero-video {
+  transform: scale(1.012);
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.heroSwiper .swiper-button-prev,
+.heroSwiper .swiper-button-next {
+  width: 38px;
+  height: 38px;
+
+  margin-top: -19px;
+
+  border-radius: 50%;
+
+  color: rgba(255, 255, 255, 0.95);
+
+  background: rgba(20, 17, 13, 0.28);
+
+  border: 1px solid rgba(255, 255, 255, 0.48);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  opacity: 0;
+
+  transition:
+    opacity 0.35s ease,
+    transform 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+
+/* Show arrows when interacting with frame */
+.hero-card:hover .swiper-button-prev,
+.hero-card:hover .swiper-button-next {
+  opacity: 1;
+}
+
+
+.heroSwiper .swiper-button-prev {
+  left: 18px;
+}
+
+.heroSwiper .swiper-button-next {
+  right: 18px;
+}
+
+
+.heroSwiper .swiper-button-prev::after,
+.heroSwiper .swiper-button-next::after {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+.heroSwiper .swiper-button-prev:hover,
+.heroSwiper .swiper-button-next:hover {
+  background: rgba(185, 145, 61, 0.88);
+
+  border-color: rgba(255, 255, 255, 0.7);
+
+  transform: scale(1.08);
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.heroSwiper .swiper-pagination {
+  bottom: 13px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 4px;
+}
+
+
+.heroSwiper .swiper-pagination-bullet {
+  width: 5px;
+  height: 5px;
+
+  margin: 0 !important;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.8);
+
+  opacity: 0.55;
+
+  transition:
+    width 0.35s ease,
+    opacity 0.35s ease,
+    background 0.35s ease;
+}
+
+
+.heroSwiper .swiper-pagination-bullet-active {
+  width: 18px;
+
+  border-radius: 10px;
+
+  background: #c9a34e;
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   LIGHT MODE
+========================================================= */
+
+body.light .hero-card {
+  background: rgba(255, 255, 255, 0.78);
+
+  border-color: rgba(188, 145, 55, 0.40);
+
+  box-shadow:
+    0 22px 55px rgba(42, 32, 20, 0.11),
+    0 5px 18px rgba(42, 32, 20, 0.05);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 992px) {
+
+  .hero-card {
+    height: 400px;
+    padding: 6px;
+    border-radius: 22px;
+  }
+
+  .heroSwiper,
+  .heroSwiper .swiper-slide,
+  .hero-image,
+  .hero-video {
+    border-radius: 17px;
+  }
+}
+
+
+@media (max-width: 768px) {
+
+  .hero-card {
+    height: 320px;
+    padding: 5px;
+    border-radius: 20px;
+  }
+
+  .heroSwiper,
+  .heroSwiper .swiper-slide,
+  .hero-image,
+  .hero-video {
+    border-radius: 15px;
+  }
+
+  .heroSwiper .swiper-button-prev,
+  .heroSwiper .swiper-button-next {
+    opacity: 1;
+
+    width: 34px;
+    height: 34px;
+
+    margin-top: -17px;
+  }
+
+  .heroSwiper .swiper-button-prev {
+    left: 12px;
+  }
+
+  .heroSwiper .swiper-button-next {
+    right: 12px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .hero-card {
+    height: 250px;
+    padding: 4px;
+    border-radius: 17px;
+  }
+
+  .heroSwiper,
+  .heroSwiper .swiper-slide,
+  .hero-image,
+  .hero-video {
+    border-radius: 13px;
+  }
+}
+/* =========================================================
+   VIDEO SLIDES — MATCH IMAGE FRAME PERFECTLY
+========================================================= */
+
+.heroSwiper .swiper-slide video.hero-video {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+
+  border-radius: 18px;
+
+  background: #111;
+
+  margin: 0;
+  padding: 0;
+
+  max-width: none;
+  max-height: none;
+}
+
+
+/* Remove any extra spacing from video slide */
+.heroSwiper .swiper-slide:has(.hero-video) {
+  padding: 0;
+  margin: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+/* Make video occupy the complete artwork area */
+.heroSwiper .swiper-slide:has(.hero-video) .hero-video {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* Active video — same subtle cinematic zoom */
+.heroSwiper .swiper-slide-active .hero-video {
+  transform: scale(1.012);
+}
+
+
+/* =========================================================
+   VIDEO RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .heroSwiper .swiper-slide:has(.hero-video) .hero-video {
+    border-radius: 15px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .heroSwiper .swiper-slide:has(.hero-video) .hero-video {
+    border-radius: 13px;
+  }
+
+}
+/* =========================================================
+   FINAL — ULTRA PREMIUM / NEAR FRAMELESS HERO
+========================================================= */
+
+.hero-card {
+  padding: 3px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  border: 1px solid rgba(190, 145, 55, 0.28);
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 25px 65px rgba(35, 27, 18, 0.12),
+    0 5px 20px rgba(35, 27, 18, 0.05);
+
+  transition:
+    transform 0.45s cubic-bezier(.2,.75,.2,1),
+    box-shadow 0.45s ease;
+}
+
+.hero-card::before {
+  display: none;
+}
+
+.hero-card:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(190, 145, 55, 0.42);
+
+  box-shadow:
+    0 32px 78px rgba(35, 27, 18, 0.15),
+    0 8px 25px rgba(35, 27, 18, 0.06);
+}
+
+
+/* Artwork sits almost directly inside the frame */
+
+.heroSwiper {
+  border-radius: 19px;
+}
+
+.heroSwiper .swiper-slide {
+  border-radius: 19px;
+}
+
+.hero-image,
+.hero-video {
+  border-radius: 19px;
+}
+
+
+/* More elegant arrows */
+
+.heroSwiper .swiper-button-prev,
+.heroSwiper .swiper-button-next {
+  width: 36px;
+  height: 36px;
+
+  margin-top: -18px;
+
+  background: rgba(15, 13, 11, 0.25);
+
+  border: 1px solid rgba(255, 255, 255, 0.42);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.heroSwiper .swiper-button-prev::after,
+.heroSwiper .swiper-button-next::after {
+  font-size: 12px;
+}
+
+
+/* Cleaner pagination */
+
+.heroSwiper .swiper-pagination {
+  bottom: 10px;
+}
+
+.heroSwiper .swiper-pagination-bullet {
+  width: 4px;
+  height: 4px;
+}
+
+.heroSwiper .swiper-pagination-bullet-active {
+  width: 16px;
+}
+/* =========================================================
+   HIRANYA — VISIBLE GOLDEN EDGE REFLECTION
+========================================================= */
+
+.hero-card {
+  position: relative;
+
+  border: 1px solid rgba(201, 164, 83, 0.65);
+
+  box-shadow:
+    0 25px 60px rgba(35, 27, 18, 0.13),
+    0 0 0 1px rgba(255, 214, 130, 0.18),
+    0 0 18px rgba(201, 164, 83, 0.10);
+
+  overflow: visible;
+}
+
+
+/* GOLDEN REFLECTION LINE */
+.hero-card::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -1px;
+
+  border-radius: inherit;
+
+  border: 2px solid rgba(210, 171, 88, 0.55);
+
+  pointer-events: none;
+
+  z-index: 20;
+
+  box-shadow:
+    0 0 4px rgba(220, 180, 90, 0.45),
+    inset 0 0 4px rgba(220, 180, 90, 0.18);
+
+  animation: hiranyaBorderGlow 4s ease-in-out infinite;
+}
+
+
+/* MOVING GOLDEN HIGHLIGHT */
+.hero-card::after {
+  content: "";
+
+  position: absolute;
+
+  top: -2px;
+  left: -20%;
+
+  width: 38%;
+  height: 3px;
+
+  border-radius: 20px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 232, 165, 0.35),
+    rgba(255, 244, 196, 1),
+    rgba(255, 232, 165, 0.35),
+    transparent
+  );
+
+  filter: blur(0.5px);
+
+  box-shadow:
+    0 0 8px rgba(255, 211, 105, 0.8),
+    0 0 18px rgba(255, 201, 80, 0.45);
+
+  pointer-events: none;
+
+  z-index: 21;
+
+  animation: hiranyaGoldSweep 5s linear infinite;
+}
+
+
+/* =========================================================
+   GOLD BORDER GLOW
+========================================================= */
+
+@keyframes hiranyaBorderGlow {
+
+  0% {
+    border-color: rgba(201, 164, 83, 0.45);
+
+    box-shadow:
+      0 0 3px rgba(220, 180, 90, 0.25),
+      inset 0 0 3px rgba(220, 180, 90, 0.10);
+  }
+
+  50% {
+    border-color: rgba(255, 211, 105, 0.90);
+
+    box-shadow:
+      0 0 8px rgba(220, 180, 90, 0.55),
+      0 0 18px rgba(220, 180, 90, 0.22),
+      inset 0 0 5px rgba(220, 180, 90, 0.18);
+  }
+
+  100% {
+    border-color: rgba(201, 164, 83, 0.45);
+
+    box-shadow:
+      0 0 3px rgba(220, 180, 90, 0.25),
+      inset 0 0 3px rgba(220, 180, 90, 0.10);
+  }
+}
+
+
+/* =========================================================
+   MOVING LIGHT REFLECTION
+========================================================= */
+
+@keyframes hiranyaGoldSweep {
+
+  0% {
+    left: -25%;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+/* =========================================================
+   HIRANYA — TRUE FRAMELESS HERO
+   Final override
+========================================================= */
+
+.hero-card {
+  position: relative;
+
+  width: 100%;
+  max-width: 650px;
+
+  height: 430px;
+
+  padding: 0 !important;
+
+  background: transparent !important;
+
+  border: 1px solid rgba(202, 164, 82, 0.55) !important;
+
+  border-radius: 22px;
+
+  overflow: hidden !important;
+
+  box-shadow:
+    0 25px 55px rgba(35, 27, 18, 0.14),
+    0 0 12px rgba(202, 164, 82, 0.08);
+
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+
+/* REMOVE ALL OLD DECORATIVE FRAME LAYERS */
+
+.hero-card::before,
+.hero-card::after {
+  display: none !important;
+  content: none !important;
+}
+
+
+/* =========================================================
+   SWIPER — FULL EDGE TO EDGE
+========================================================= */
+
+.heroSwiper {
+  width: 100% !important;
+  height: 100% !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  border-radius: 21px;
+
+  overflow: hidden !important;
+}
+
+
+.heroSwiper .swiper-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+
+.heroSwiper .swiper-slide {
+  width: 100% !important;
+  height: 100% !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  display: block !important;
+
+  border-radius: 21px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   IMAGES — EDGE TO EDGE
+========================================================= */
+
+.hero-image {
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  object-fit: cover !important;
+  object-position: center;
+
+  border: none !important;
+
+  border-radius: 21px;
+
+  background: transparent !important;
+}
+
+
+/* =========================================================
+   VIDEOS — SAME FRAME
+========================================================= */
+
+.hero-video {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  object-fit: cover !important;
+  object-position: center;
+
+  border: none !important;
+
+  border-radius: 21px;
+
+  background: #111 !important;
+}
+
+
+/* =========================================================
+   SUBTLE GOLDEN EDGE
+========================================================= */
+
+.hero-card {
+  box-shadow:
+    0 25px 60px rgba(35, 27, 18, 0.14),
+    0 0 0 1px rgba(220, 180, 90, 0.12),
+    0 0 18px rgba(220, 180, 90, 0.08);
+}
+
+
+/* Elegant hover lift */
+
+.hero-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 32px 70px rgba(35, 27, 18, 0.17),
+    0 0 0 1px rgba(220, 180, 90, 0.22),
+    0 0 22px rgba(220, 180, 90, 0.10);
+}
+
+
+/* =========================================================
+   ARROWS
+========================================================= */
+
+.heroSwiper .swiper-button-prev,
+.heroSwiper .swiper-button-next {
+  width: 38px;
+  height: 38px;
+
+  margin-top: -19px;
+
+  border-radius: 50%;
+
+  color: white;
+
+  background: rgba(20, 16, 12, 0.28);
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  z-index: 20;
+}
+
+.heroSwiper .swiper-button-prev::after,
+.heroSwiper .swiper-button-next::after {
+  font-size: 13px;
+}
+
+.heroSwiper .swiper-button-prev {
+  left: 16px;
+}
+
+.heroSwiper .swiper-button-next {
+  right: 16px;
+}
+
+.heroSwiper .swiper-button-prev:hover,
+.heroSwiper .swiper-button-next:hover {
+  background: rgba(198, 158, 73, 0.9);
+
+  border-color: rgba(255, 255, 255, 0.75);
+
+  transform: scale(1.08);
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.heroSwiper .swiper-pagination {
+  bottom: 12px;
+}
+
+.heroSwiper .swiper-pagination-bullet {
+  width: 5px;
+  height: 5px;
+
+  margin: 0 3px !important;
+
+  background: rgba(255, 255, 255, 0.8);
+
+  opacity: 0.55;
+}
+
+.heroSwiper .swiper-pagination-bullet-active {
+  width: 20px;
+
+  border-radius: 10px;
+
+  background: #d0aa58;
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 992px) {
+
+  .hero-card {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .hero-card {
+    height: 320px;
+    border-radius: 19px;
+  }
+
+  .heroSwiper,
+  .heroSwiper .swiper-slide,
+  .hero-image,
+  .hero-video {
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .hero-card {
+    height: 250px;
+    border-radius: 16px;
+  }
+
+  .heroSwiper,
+  .heroSwiper .swiper-slide,
+  .hero-image,
+  .hero-video {
+    border-radius: 15px;
+  }
+}

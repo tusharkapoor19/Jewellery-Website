@@ -35,7 +35,7 @@ const slides = [
 
 const Hero = () => {
   const navigate = useNavigate();
-  
+
   return (
     <section className="hero">
 
@@ -61,17 +61,24 @@ const Hero = () => {
 
           <div className="hero-buttons">
 
-            <button className="hero-primary-btn" onClick={() => navigate("/collections")}>
+            <button
+              className="hero-primary-btn"
+              onClick={() => navigate("/collections")}
+            >
               Explore Collection
             </button>
 
-            <button className="hero-secondary-btn" onClick={() => navigate("/try-on")}>
+            <button
+              className="hero-secondary-btn"
+              onClick={() => navigate("/try-on")}
+            >
               Virtual Try-On
             </button>
 
           </div>
 
         </div>
+
 
         <div className="hero-right">
 
@@ -87,13 +94,16 @@ const Hero = () => {
               }}
               speed={900}
               loop
+              slidesPerView={1}
+              spaceBetween={0}
               className="heroSwiper"
             >
 
               {slides.map((item, index) => (
 
                 <SwiperSlide key={index}>
-                                    {item.type === "image" ? (
+
+                  {item.type === "image" ? (
 
                     <img
                       src={item.src}
