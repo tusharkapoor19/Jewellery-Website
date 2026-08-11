@@ -1,9 +1,7 @@
-const User = require("../models/users.js")
-const nodemail = require("nodemailer")
-const twilio = require("twilio")
-const dotenv = require("dotenv")
-const path = require("path")
-const { fileURLToPath } = require("url")
+const User = require("../models/users.js");
+const nodemail = require("nodemailer");
+const twilio = require("twilio");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
@@ -13,10 +11,12 @@ const client = twilio(
 );
 
 
-// send sms
-const sendOTP = async ({to, message}) => {
-    try {
+// =====================================================
+// SEND SMS
+// =====================================================
 
+const sendOTP = async ({ to, message }) => {
+    try {
         const response = await client.messages.create({
             body: message,
             from: process.env.TWILIO_PHONE_NUMBER,
@@ -39,8 +39,11 @@ const sendOTP = async ({to, message}) => {
 };
 
 
-// send phn otp
-const sendPhoneOtp = async (userId) => {
+// =====================================================
+// SEND PHONE OTP
+// =====================================================
+
+const sendPhoneOtp = async (userId, newPhone) => {
 
     const user = await User.findById(userId);
 
@@ -48,24 +51,36 @@ const sendPhoneOtp = async (userId) => {
         throw new Error("User not found");
     }
 
-    if (!user.phone) {
-        throw new Error("Phone number not found");
+    if (!newPhone) {
+        throw new Error("Phone number is required");
     }
 
-    let phone = user.phone.toString().trim();
-
     // Remove spaces, dashes etc.
-    phone = phone.replace(/\D/g, "");
+    let phone = newPhone.toString().trim().replace(/\D/g, "");
+
+    // Allow +91XXXXXXXXXX as well as 10 digit number
+    if (phone.startsWith("91") && phone.length === 12) {
+        phone = phone.substring(2);
+    }
 
     // Validate Indian mobile number
     if (!/^[6-9]\d{9}$/.test(phone)) {
-        throw new Error("Invalid mobile number");
+        throw new Error("Enter a valid Indian mobile number");
     }
 
-    // Convert to E.164 for Twilio
-    phone = `+91${phone}`;
+    // Check if phone already belongs to another user
+    const existingPhone = await User.findOne({
+        phone: phone,
+        _id: { $ne: userId },
+    });
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    if (existingPhone) {
+        throw new Error("Phone number already registered");
+    }
+
+    const otp = Math.floor(
+        100000 + Math.random() * 900000
+    ).toString();
 
     user.otp = otp;
     user.otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
@@ -74,8 +89,8 @@ const sendPhoneOtp = async (userId) => {
     await user.save();
 
     const sms = await sendOTP({
-        to: phone,
-        message: `Your HIRANYA verification OTP is ${otp}. It is valid for 5 minutes.`
+        to: `+91${phone}`,
+        message: `Your HIRANYA verification OTP is ${otp}. It is valid for 5 minutes.`,
     });
 
     if (!sms.success) {
@@ -83,90 +98,24 @@ const sendPhoneOtp = async (userId) => {
     }
 
     console.log("=================================");
-    console.log("SMS SENT TO :", phone);
+    console.log("PHONE OTP");
+    console.log("USER :", userId);
+    console.log("PHONE :", phone);
     console.log("OTP :", otp);
-    console.log("Twilio :", sms);
     console.log("=================================");
 
     return {
         success: true,
-        message: "OTP sent successfully"
+        message: "OTP sent successfully",
     };
 };
 
 
-// send email
-const sendmail = async (maildata) => {
-    let { receiver, otp } = maildata;
+// =====================================================
+// VERIFY PHONE OTP + UPDATE PHONE
+// =====================================================
 
-    const transporter = nodemail.createTransport({
-        service: "gmail",
-        auth: {
-            user: process.env.EMAIL,
-            pass: process.env.EMAIL_PASS,
-        }
-    })
-
-    const mailop = {
-        from: process.env.EMAIL,
-        to: receiver,
-        subject: "welcome email,",
-
-        html: `
-            <h2>Jewellery Store</h2>
-
-             <p>Your OTP to Change Email is:</p>
-
-            <h1>${otp}</h1>
-
-             <p>Valid for 5 minutes.</p>
-             `
-    };
-
-
-    let mailsend = await transporter.sendMail(mailop)
-    return {
-        message: "OTP sent successfully"
-    }
-
-}
-
-
-// send email otp
-const sendEmailOtp = async (userId) => {
-
-    console.log("Recieved: ", userId)
-    const user = await User.findById(userId);
-    console.log(user)
-    if (!user) {
-        const error = new Error("User not Found");
-        error.statusCode = 404;
-        throw error;
-    }
-    
-    const email = user.email
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
-    user.otp = otp;
-    user.otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
-    user.isOtpVerified = false;
-
-    await user.save();
-
-
-    await sendmail({
-        receiver: email,
-        otp: otp
-    });
-
-    return {
-        message: "OTP sent successfully"
-    };
-};
-
-
-// verify phn otp
-const verifyPhoneOtp = async (userId, otp) => {
+const verifyPhoneOtp = async (userId, otp, newPhone) => {
 
     const user = await User.findById(userId);
 
@@ -174,7 +123,7 @@ const verifyPhoneOtp = async (userId, otp) => {
         throw new Error("User not found");
     }
 
-    if (user.otpExpiry < new Date()) {
+    if (!user.otpExpiry || user.otpExpiry < new Date()) {
         throw new Error("OTP expired");
     }
 
@@ -182,58 +131,209 @@ const verifyPhoneOtp = async (userId, otp) => {
         throw new Error("Invalid OTP");
     }
 
-    user.isOtpVerified = true;
+    if (!newPhone) {
+        throw new Error("Phone number is required");
+    }
 
-    user.logotp = user.otp;
+    let phone = newPhone.toString().trim().replace(/\D/g, "");
 
+    if (phone.startsWith("91") && phone.length === 12) {
+        phone = phone.substring(2);
+    }
+
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+        throw new Error("Invalid mobile number");
+    }
+
+    // Check again before saving
+    const existingPhone = await User.findOne({
+        phone: phone,
+        _id: { $ne: userId },
+    });
+
+    if (existingPhone) {
+        throw new Error("Phone number already registered");
+    }
+
+    user.phone = phone;
     user.otp = null;
     user.otpExpiry = null;
+    user.isOtpVerified = true;
 
     await user.save();
 
     return {
         success: true,
-        message: "OTP verified successfully"
+        message: "Phone number updated successfully",
+        phone: user.phone,
     };
-
 };
 
 
-// verify Email otp
-const verifyEmailOtp = async (userId, otp) => {
+// =====================================================
+// SEND EMAIL
+// =====================================================
+
+const sendmail = async (maildata) => {
+
+    const { receiver, otp } = maildata;
+
+    const transporter = nodemail.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.EMAIL_PASS,
+        },
+    });
+
+    const mailop = {
+        from: process.env.EMAIL,
+        to: receiver,
+        subject: "HIRANYA Jewellery - Email Verification",
+
+        html: `
+            <h2>HIRANYA Jewellery</h2>
+
+            <p>Your OTP to update your email is:</p>
+
+            <h1>${otp}</h1>
+
+            <p>Valid for 5 minutes.</p>
+        `,
+    };
+
+    await transporter.sendMail(mailop);
+
+    return {
+        message: "OTP sent successfully",
+    };
+};
+
+
+// =====================================================
+// SEND EMAIL OTP
+// =====================================================
+
+const sendEmailOtp = async (userId, newEmail) => {
 
     const user = await User.findById(userId);
 
     if (!user) {
-        const error = new Error("User not found");
-        error.statusCode = 404;
-        throw error;
+        throw new Error("User not found");
     }
 
-    if (user.otpExpiry < new Date()) {
-        const error = new Error("OTP Expired");
-        error.statusCode = 400;
-        throw error;
+    if (!newEmail) {
+        throw new Error("New email is required");
+    }
+
+    const email = newEmail.toLowerCase().trim();
+
+    // Validate email
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        throw new Error("Enter a valid email address");
+    }
+
+    // Check whether email already belongs to another user
+    const existingUser = await User.findOne({
+        email,
+        _id: { $ne: userId },
+    });
+
+    if (existingUser) {
+        throw new Error("Email already registered");
+    }
+
+    const otp = Math.floor(
+        100000 + Math.random() * 900000
+    ).toString();
+
+    user.otp = otp;
+    user.otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
+    user.isOtpVerified = false;
+
+    await user.save();
+
+    await sendmail({
+        receiver: email,
+        otp,
+    });
+
+    console.log("=================================");
+    console.log("EMAIL OTP");
+    console.log("USER :", userId);
+    console.log("NEW EMAIL :", email);
+    console.log("OTP :", otp);
+    console.log("=================================");
+
+    return {
+        success: true,
+        message: "OTP sent successfully",
+    };
+};
+
+
+// =====================================================
+// VERIFY EMAIL OTP + UPDATE EMAIL
+// =====================================================
+
+const verifyEmailOtp = async (userId, otp, newEmail) => {
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    if (!user.otpExpiry || user.otpExpiry < new Date()) {
+        throw new Error("OTP expired");
     }
 
     if (user.otp !== otp) {
-        const error = new Error("Invalid OTP");
-        error.statusCode = 400;
-        throw error;
+        throw new Error("Invalid OTP");
     }
 
+    if (!newEmail) {
+        throw new Error("New email is required");
+    }
+
+    const email = newEmail.toLowerCase().trim();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        throw new Error("Invalid email address");
+    }
+
+    // Check again before update
+    const existingUser = await User.findOne({
+        email,
+        _id: { $ne: userId },
+    });
+
+    if (existingUser) {
+        throw new Error("Email already registered");
+    }
+
+    user.email = email;
+    user.otp = null;
+    user.otpExpiry = null;
     user.isOtpVerified = true;
 
     await user.save();
 
     return {
-        message: "OTP verified successfully"
+        success: true,
+        message: "Email updated successfully",
+        email: user.email,
     };
 };
 
-module.exports= {
+
+// =====================================================
+// EXPORTS
+// =====================================================
+
+module.exports = {
     sendPhoneOtp,
-    sendEmailOtp,
     verifyPhoneOtp,
-    verifyEmailOtp
+    sendEmailOtp,
+    verifyEmailOtp,
 };

@@ -15,12 +15,14 @@ import {
 const TOKEN_STORAGE_KEY = "token";
 const NAME_STORAGE_KEY = "userName";
 const ROLE_STORAGE_KEY = "role";
+const PROVIDER_STORAGE_KEY = "authProvider";
 
 interface AuthContextValue {
   token: string | null;
   name: string | null;
   role: string | null;
   id: string | null;
+  authProvider: "local" | "google" | null;
   isAuthenticated: boolean;
 
   login: (email: string, password: string) => Promise<string>;
@@ -46,6 +48,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.getItem(ROLE_STORAGE_KEY)
   );
 
+  const [authProvider, setAuthProvider] = useState<
+    "local" | "google" | null
+  >(() => {
+    const provider = localStorage.getItem(PROVIDER_STORAGE_KEY);
+
+    if (provider === "google" || provider === "local") {
+      return provider;
+    }
+
+    return null;
+  });
+
   const [id, setId] = useState<string | null>(() => {
     const existingToken = localStorage.getItem(TOKEN_STORAGE_KEY);
 
@@ -54,9 +68,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     return decodeJwtPayload(existingToken)?.id || null;
   });
 
-  // COMMON FUNCTION TO SAVE LOGIN DATA
+  // =====================================================
+  // SAVE LOGIN DATA
+  // =====================================================
+
   const saveLoginData = useCallback(
-    (data: { token: string; name: string }) => {
+    (
+      data: { token: string; name: string },
+      provider: "local" | "google"
+    ) => {
       const payload = decodeJwtPayload(data.token);
 
       const userRole = payload?.role || "customer";
@@ -66,6 +86,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       localStorage.setItem(TOKEN_STORAGE_KEY, data.token);
       localStorage.setItem(NAME_STORAGE_KEY, data.name || "");
       localStorage.setItem(ROLE_STORAGE_KEY, userRole);
+
+      // Store authentication provider
+      localStorage.setItem(PROVIDER_STORAGE_KEY, provider);
 
       // Storefront legacy keys
       localStorage.setItem("token", data.token);
@@ -80,37 +103,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setName(data.name || "");
       setRole(userRole);
       setId(userId);
+      setAuthProvider(provider);
 
       return userRole;
     },
     []
   );
 
-  // NORMAL LOGIN
+  // =====================================================
+  // NORMAL EMAIL/PASSWORD LOGIN
+  // =====================================================
+
   const login = useCallback(
     async (email: string, password: string) => {
       const data = await loginRequest(email, password);
 
-      return saveLoginData(data);
+      return saveLoginData(data, "local");
     },
     [saveLoginData]
   );
 
+  // =====================================================
   // GOOGLE LOGIN
+  // =====================================================
+
   const googleLogin = useCallback(
     async (credential: string) => {
       const data = await googleLoginRequest(credential);
 
-      return saveLoginData(data);
+      return saveLoginData(data, "google");
     },
     [saveLoginData]
   );
 
+  // =====================================================
   // LOGOUT
+  // =====================================================
+
   const logout = useCallback(() => {
     localStorage.removeItem(TOKEN_STORAGE_KEY);
     localStorage.removeItem(NAME_STORAGE_KEY);
     localStorage.removeItem(ROLE_STORAGE_KEY);
+    localStorage.removeItem(PROVIDER_STORAGE_KEY);
 
     localStorage.removeItem("token");
     localStorage.removeItem("userName");
@@ -122,7 +156,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setName(null);
     setRole(null);
     setId(null);
+    setAuthProvider(null);
   }, []);
+
+  // =====================================================
+  // CONTEXT VALUE
+  // =====================================================
 
   const value = useMemo(
     () => ({
@@ -130,12 +169,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       name,
       role,
       id,
+      authProvider,
       isAuthenticated: Boolean(token),
       login,
       googleLogin,
       logout,
     }),
-    [token, name, role, id, login, googleLogin, logout]
+    [
+      token,
+      name,
+      role,
+      id,
+      authProvider,
+      login,
+      googleLogin,
+      logout,
+    ]
   );
 
   return (
@@ -144,6 +193,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     </AuthContext.Provider>
   );
 };
+
+// =====================================================
+// useAuth
+// =====================================================
 
 export const useAuth = (): AuthContextValue => {
   const ctx = useContext(AuthContext);

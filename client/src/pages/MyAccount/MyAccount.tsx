@@ -34,6 +34,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
 import { useAddress } from "../../context/AddressContext";
+import { useAuth } from "../../context/AuthContext";
 
 import "./MyAccount.css";
 
@@ -48,9 +49,9 @@ import "./MyAccount.css";
     PATCH   /profile/password         { currentPassword, newPassword }
     DELETE  /profile/delete
     POST    /profile/send-email-otp
-    POST    /profile/verify-email-otp { otp }
+    POST    /profile/verify-email-otp { otp, newEmail }
     POST    /profile/send-phone-otp
-    POST    /profile/verify-phone-otp { otp }
+    POST    /profile/verify-phone-otp { otp, newPhone }
 
     GET /profile/profile is the single source of truth
     for name / email / phone. Address management is handled
@@ -134,39 +135,32 @@ const api = {
             newPassword,
         }),
 
-    sendEmailOtp: () =>
-        apiRequest<{ message: string }>("/send-email-otp", "POST"),
-
-    verifyEmailOtp: (otp: string) =>
-        apiRequest<{ message: string }>("/verify-email-otp", "POST", {
-            otp,
-        }),
-
-    updateEmail: (email: string) =>
-        apiRequest<{ message: string; email: string }>(
-            "/email",
-            "PATCH",
-            { email }
+    sendEmailOtp: (newEmail: string) =>
+        apiRequest<{ message: string }>(
+            "/send-email-otp",
+            "POST",
+            { newEmail }
         ),
 
-    sendPhoneOtp: () =>
+    verifyEmailOtp: (otp: string, newEmail: string) =>
+        apiRequest<{ message: string }>(
+            "/verify-email-otp",
+            "POST",
+            { otp, newEmail }
+        ),
+
+    sendPhoneOtp: (newPhone: string) =>
         apiRequest<{ success: boolean; message: string }>(
             "/send-phone-otp",
-            "POST"
+            "POST",
+            { newPhone }
         ),
 
-    verifyPhoneOtp: (otp: string) =>
+    verifyPhoneOtp: (otp: string, newPhone: string) =>
         apiRequest<{ success: boolean; message: string }>(
             "/verify-phone-otp",
             "POST",
-            { otp }
-        ),
-
-    updatePhone: (phone: string) =>
-        apiRequest<{ success: boolean; message: string }>(
-            "/phone",
-            "PATCH",
-            { phone }
+            { otp, newPhone }
         ),
 
     deleteAccount: () =>
@@ -278,6 +272,7 @@ type ContactKind = "email" | "phone";
 const MyAccount = () => {
 
     const navigate = useNavigate();
+    const { authProvider } = useAuth();
     const { addresses, loading: addressLoading, refreshAddresses } = useAddress();
 
     /* ---------- Refs for smooth scroll ---------- */
@@ -462,6 +457,12 @@ const MyAccount = () => {
 
     /* ===================================================
         EMAIL / PHONE VERIFICATION + UPDATE
+
+        Email:
+        New email -> OTP sent to current email -> verify -> saved
+
+        Phone:
+        New phone -> OTP sent to new phone -> verify -> saved
     =================================================== */
 
     const [pendingFlow, setPendingFlow] = useState<ContactKind | null>(null);
@@ -475,7 +476,6 @@ const MyAccount = () => {
     const [emailTimer, setEmailTimer] = useState(0);
     const [newEmail, setNewEmail] = useState("");
     const [newEmailError, setNewEmailError] = useState("");
-    const [emailSaving, setEmailSaving] = useState(false);
 
     // Phone flow
     const [phoneStep, setPhoneStep] = useState<OtpFlowStep>("idle");
@@ -486,21 +486,24 @@ const MyAccount = () => {
     const [phoneTimer, setPhoneTimer] = useState(0);
     const [newPhone, setNewPhone] = useState("");
     const [newPhoneError, setNewPhoneError] = useState("");
-    const [phoneSaving, setPhoneSaving] = useState(false);
 
     useEffect(() => {
         if (emailTimer <= 0) return;
+
         const interval = setInterval(() => {
             setEmailTimer((prev) => (prev > 0 ? prev - 1 : 0));
         }, 1000);
+
         return () => clearInterval(interval);
     }, [emailTimer]);
 
     useEffect(() => {
         if (phoneTimer <= 0) return;
+
         const interval = setInterval(() => {
             setPhoneTimer((prev) => (prev > 0 ? prev - 1 : 0));
         }, 1000);
+
         return () => clearInterval(interval);
     }, [phoneTimer]);
 
@@ -511,7 +514,10 @@ const MyAccount = () => {
         setNewEmail("");
         setNewEmailError("");
         setEmailTimer(0);
-        if (pendingFlow === "email") setPendingFlow(null);
+
+        if (pendingFlow === "email") {
+            setPendingFlow(null);
+        }
     };
 
     const resetPhoneFlow = () => {
@@ -521,27 +527,56 @@ const MyAccount = () => {
         setNewPhone("");
         setNewPhoneError("");
         setPhoneTimer(0);
-        if (pendingFlow === "phone") setPendingFlow(null);
+
+        if (pendingFlow === "phone") {
+            setPendingFlow(null);
+        }
     };
+
+    /* ---------------- EMAIL ---------------- */
 
     const sendEmailOtp = async () => {
         if (emailSending || emailTimer > 0) return;
+
         if (pendingFlow === "phone") {
             toast.error(
                 "Finish or cancel your phone update first — verification is shared."
             );
             return;
         }
+
+        const error = validateEmail(newEmail);
+        setNewEmailError(error);
+
+        if (error) return;
+
+        const trimmedEmail = newEmail.trim().toLowerCase();
+
+        if (
+            profile.email &&
+            trimmedEmail === profile.email.trim().toLowerCase()
+        ) {
+            setNewEmailError(
+                "New email must be different from your current email."
+            );
+            return;
+        }
+
         try {
             setEmailSending(true);
-            await api.sendEmailOtp();
+
+            await api.sendEmailOtp(trimmedEmail);
+
             setEmailStep("sent");
             setEmailTimer(30);
             setPendingFlow("email");
-            toast.success("OTP sent to your registered email.");
+
+            toast.success("OTP sent to your current email address.");
         } catch (err) {
             toast.error(
-                err instanceof Error ? err.message : "Failed to send email OTP."
+                err instanceof Error
+                    ? err.message
+                    : "Failed to send email OTP."
             );
         } finally {
             setEmailSending(false);
@@ -551,15 +586,23 @@ const MyAccount = () => {
     const verifyEmailOtp = async () => {
         const error = validateOtp(emailOtp);
         setEmailOtpError(error);
+
         if (error) return;
 
         try {
             setEmailVerifying(true);
-            await api.verifyEmailOtp(emailOtp.trim());
-            setEmailStep("verified");
-            toast.success("Email verified. Enter your new email below.");
+
+            await api.verifyEmailOtp(
+                emailOtp.trim(),
+                newEmail.trim().toLowerCase()
+            );
+            await fetchProfile();
+
+            toast.success("Email updated successfully.");
+            resetEmailFlow();
         } catch (err) {
             setEmailOtpError("");
+
             toast.error(
                 err instanceof Error ? err.message : "Incorrect OTP."
             );
@@ -568,46 +611,47 @@ const MyAccount = () => {
         }
     };
 
-    const submitNewEmail = async () => {
-        const error = validateEmail(newEmail);
-        setNewEmailError(error);
-        if (error) return;
-
-        const trimmedEmail = newEmail.trim().toLowerCase();
-
-        try {
-            setEmailSaving(true);
-            await api.updateEmail(trimmedEmail);
-            await fetchProfile();
-            toast.success("Email updated successfully.");
-            resetEmailFlow();
-        } catch (err) {
-            toast.error(
-                err instanceof Error ? err.message : "Could not update email."
-            );
-        } finally {
-            setEmailSaving(false);
-        }
-    };
+    /* ---------------- PHONE ---------------- */
 
     const sendPhoneOtp = async () => {
         if (phoneSending || phoneTimer > 0) return;
+
         if (pendingFlow === "email") {
             toast.error(
                 "Finish or cancel your email update first — verification is shared."
             );
             return;
         }
+
+        const error = validatePhone(newPhone);
+        setNewPhoneError(error);
+
+        if (error) return;
+
+        const trimmedPhone = newPhone.trim();
+
+        if (profile.phone && trimmedPhone === profile.phone.trim()) {
+            setNewPhoneError(
+                "New phone number must be different from your current number."
+            );
+            return;
+        }
+
         try {
             setPhoneSending(true);
-            await api.sendPhoneOtp();
+
+            await api.sendPhoneOtp(trimmedPhone);
+
             setPhoneStep("sent");
             setPhoneTimer(30);
             setPendingFlow("phone");
-            toast.success("OTP sent to your registered phone.");
+
+            toast.success("OTP sent to your new phone number.");
         } catch (err) {
             toast.error(
-                err instanceof Error ? err.message : "Failed to send phone OTP."
+                err instanceof Error
+                    ? err.message
+                    : "Failed to send phone OTP."
             );
         } finally {
             setPhoneSending(false);
@@ -617,42 +661,28 @@ const MyAccount = () => {
     const verifyPhoneOtp = async () => {
         const error = validateOtp(phoneOtp);
         setPhoneOtpError(error);
+
         if (error) return;
 
         try {
             setPhoneVerifying(true);
-            await api.verifyPhoneOtp(phoneOtp.trim());
-            setPhoneStep("verified");
-            toast.success("Phone verified. Enter your new number below.");
+
+            await api.verifyPhoneOtp(
+                phoneOtp.trim(),
+                newPhone.trim()
+            );
+            await fetchProfile();
+
+            toast.success("Phone number updated successfully.");
+            resetPhoneFlow();
         } catch (err) {
             setPhoneOtpError("");
+
             toast.error(
                 err instanceof Error ? err.message : "Incorrect OTP."
             );
         } finally {
             setPhoneVerifying(false);
-        }
-    };
-
-    const submitNewPhone = async () => {
-        const error = validatePhone(newPhone);
-        setNewPhoneError(error);
-        if (error) return;
-
-        const trimmedPhone = newPhone.trim();
-
-        try {
-            setPhoneSaving(true);
-            await api.updatePhone(trimmedPhone);
-            await fetchProfile();
-            toast.success("Phone number updated successfully.");
-            resetPhoneFlow();
-        } catch (err) {
-            toast.error(
-                err instanceof Error ? err.message : "Could not update phone."
-            );
-        } finally {
-            setPhoneSaving(false);
         }
     };
 
@@ -776,14 +806,16 @@ const MyAccount = () => {
                         <ChevronRight size={16} className="overview-arrow" />
                     </button>
 
-                    <button className="overview-card" onClick={() => scrollTo(securityRef)}>
-                        <div className="overview-icon">
-                            <LockKeyhole size={26} />
-                        </div>
-                        <h3>Security</h3>
-                        <p>Update your account password</p>
-                        <ChevronRight size={16} className="overview-arrow" />
-                    </button>
+                    {authProvider === "local" && (
+                        <button className="overview-card" onClick={() => scrollTo(securityRef)}>
+                            <div className="overview-icon">
+                                <LockKeyhole size={26} />
+                            </div>
+                            <h3>Security</h3>
+                            <p>Update your account password</p>
+                            <ChevronRight size={16} className="overview-arrow" />
+                        </button>
+                    )}
 
                     <button className="overview-card" onClick={() => scrollTo(verificationRef)}>
                         <div className="overview-icon">
@@ -908,7 +940,7 @@ const MyAccount = () => {
                                                 className="field-change-btn"
                                                 onClick={() => scrollTo(verificationRef)}
                                             >
-                                                Change
+                                                {profile.phone ? "Change" : "Add Phone"}
                                             </button>
                                         </div>
                                     </div>
@@ -1037,7 +1069,8 @@ const MyAccount = () => {
                         SECURITY
                 ========================================= */}
 
-                <section className="account-section" ref={securityRef}>
+                {authProvider === "local" && (
+                    <section className="account-section" ref={securityRef}>
 
                     <div className="account-section-header">
                         <div>
@@ -1179,7 +1212,8 @@ const MyAccount = () => {
 
                     </div>
 
-                </section>
+                    </section>
+                )}
 
                 {/* =========================================
                         VERIFICATION
@@ -1215,16 +1249,35 @@ const MyAccount = () => {
                                 {pendingFlow === "phone" && emailStep === "idle" && (
                                     <span className="flow-locked-note">
                                         <Lock size={14} />
-                                        Finish your phone update first — verification is shared.
+                                        Finish or cancel your phone update first.
                                     </span>
                                 )}
 
                                 {emailStep === "idle" && (
                                     <>
                                         <p className="otp-hint">
-                                            We'll send a one-time code to your registered
-                                            email to confirm it's you.
+                                            Enter your new email address. We'll send
+                                            a verification code to your current email.
                                         </p>
+
+                                        <div className="new-value-row">
+                                            <input
+                                                type="email"
+                                                placeholder="New email address"
+                                                value={newEmail}
+                                                onChange={(e) => {
+                                                    setNewEmail(e.target.value);
+                                                    if (newEmailError) setNewEmailError("");
+                                                }}
+                                            />
+                                        </div>
+
+                                        {newEmailError && (
+                                            <span className="field-error">
+                                                <CircleAlert size={12} /> {newEmailError}
+                                            </span>
+                                        )}
+
                                         <button
                                             className="gold-btn verify-btn"
                                             onClick={sendEmailOtp}
@@ -1247,90 +1300,71 @@ const MyAccount = () => {
 
                                 {emailStep === "sent" && (
                                     <>
+                                        <p className="otp-hint">
+                                            We've sent a 6-digit OTP to your current email address.
+                                        </p>
+
                                         <div className="otp-row">
                                             <input
                                                 type="text"
+                                                inputMode="numeric"
                                                 maxLength={6}
                                                 placeholder="Enter 6-digit OTP"
                                                 value={emailOtp}
                                                 onChange={(e) =>
-                                                    setEmailOtp(e.target.value.replace(/[^0-9]/g, ""))
+                                                    setEmailOtp(
+                                                        e.target.value.replace(/[^0-9]/g, "")
+                                                    )
                                                 }
                                             />
+
                                             <button
                                                 className="outline-btn"
                                                 onClick={sendEmailOtp}
                                                 disabled={emailSending || emailTimer > 0}
                                             >
-                                                {emailTimer > 0 ? `Resend in ${emailTimer}s` : "Resend"}
+                                                {emailTimer > 0
+                                                    ? `Resend in ${emailTimer}s`
+                                                    : "Resend"}
                                             </button>
                                         </div>
+
                                         {emailOtpError && (
                                             <span className="field-error">
                                                 <CircleAlert size={12} /> {emailOtpError}
                                             </span>
                                         )}
-                                        <button
-                                            className="gold-btn verify-btn"
-                                            onClick={verifyEmailOtp}
-                                            disabled={emailVerifying}
-                                        >
-                                            {emailVerifying ? (
-                                                <>
-                                                    <LoaderCircle size={16} className="spin" />
-                                                    Verifying...
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <CircleCheckBig size={16} />
-                                                    Verify OTP
-                                                </>
-                                            )}
-                                        </button>
-                                    </>
-                                )}
 
-                                {emailStep === "verified" && (
-                                    <>
-                                        <p className="otp-hint">
-                                            Verified. Enter the new email address you'd
-                                            like to use.
-                                        </p>
-                                        <div className="new-value-row">
-                                            <input
-                                                type="email"
-                                                placeholder="New email address"
-                                                value={newEmail}
-                                                onChange={(e) => setNewEmail(e.target.value)}
-                                            />
-                                        </div>
-                                        {newEmailError && (
-                                            <span className="field-error">
-                                                <CircleAlert size={12} /> {newEmailError}
-                                            </span>
-                                        )}
-                                        <div className="form-actions" style={{ marginTop: 0, paddingTop: 0, borderTop: "none" }}>
+                                        <div
+                                            className="form-actions"
+                                            style={{
+                                                marginTop: 0,
+                                                paddingTop: 0,
+                                                borderTop: "none",
+                                            }}
+                                        >
                                             <button
                                                 className="outline-btn"
                                                 onClick={resetEmailFlow}
-                                                disabled={emailSaving}
+                                                disabled={emailVerifying}
                                             >
                                                 Cancel
                                             </button>
+
                                             <button
                                                 className="gold-btn"
-                                                onClick={submitNewEmail}
-                                                disabled={emailSaving}
+                                                onClick={verifyEmailOtp}
+                                                disabled={emailVerifying}
                                             >
-                                                {emailSaving ? (
+                                                {emailVerifying ? (
                                                     <>
                                                         <LoaderCircle size={16} className="spin" />
-                                                        Saving...
+                                                        Verifying...
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <Save size={16} />
-                                                        Save Email
+                                                        <CircleCheckBig size={16} />
+                                                        Verify & Update
                                                     </>
                                                 )}
                                             </button>
@@ -1361,16 +1395,39 @@ const MyAccount = () => {
                                 {pendingFlow === "email" && phoneStep === "idle" && (
                                     <span className="flow-locked-note">
                                         <Lock size={14} />
-                                        Finish your email update first — verification is shared.
+                                        Finish or cancel your email update first.
                                     </span>
                                 )}
 
                                 {phoneStep === "idle" && (
                                     <>
                                         <p className="otp-hint">
-                                            We'll send a one-time code to your registered
-                                            phone to confirm it's you.
+                                            Enter your new 10-digit phone number.
+                                            We'll send the verification OTP to it.
                                         </p>
+
+                                        <div className="new-value-row">
+                                            <input
+                                                type="tel"
+                                                inputMode="numeric"
+                                                maxLength={10}
+                                                placeholder="New 10-digit phone number"
+                                                value={newPhone}
+                                                onChange={(e) => {
+                                                    setNewPhone(
+                                                        e.target.value.replace(/[^0-9]/g, "")
+                                                    );
+                                                    if (newPhoneError) setNewPhoneError("");
+                                                }}
+                                            />
+                                        </div>
+
+                                        {newPhoneError && (
+                                            <span className="field-error">
+                                                <CircleAlert size={12} /> {newPhoneError}
+                                            </span>
+                                        )}
+
                                         <button
                                             className="gold-btn verify-btn"
                                             onClick={sendPhoneOtp}
@@ -1393,93 +1450,71 @@ const MyAccount = () => {
 
                                 {phoneStep === "sent" && (
                                     <>
+                                        <p className="otp-hint">
+                                            We've sent a 6-digit OTP to your new phone number.
+                                        </p>
+
                                         <div className="otp-row">
                                             <input
                                                 type="text"
+                                                inputMode="numeric"
                                                 maxLength={6}
                                                 placeholder="Enter 6-digit OTP"
                                                 value={phoneOtp}
                                                 onChange={(e) =>
-                                                    setPhoneOtp(e.target.value.replace(/[^0-9]/g, ""))
+                                                    setPhoneOtp(
+                                                        e.target.value.replace(/[^0-9]/g, "")
+                                                    )
                                                 }
                                             />
+
                                             <button
                                                 className="outline-btn"
                                                 onClick={sendPhoneOtp}
                                                 disabled={phoneSending || phoneTimer > 0}
                                             >
-                                                {phoneTimer > 0 ? `Resend in ${phoneTimer}s` : "Resend"}
+                                                {phoneTimer > 0
+                                                    ? `Resend in ${phoneTimer}s`
+                                                    : "Resend"}
                                             </button>
                                         </div>
+
                                         {phoneOtpError && (
                                             <span className="field-error">
                                                 <CircleAlert size={12} /> {phoneOtpError}
                                             </span>
                                         )}
-                                        <button
-                                            className="gold-btn verify-btn"
-                                            onClick={verifyPhoneOtp}
-                                            disabled={phoneVerifying}
-                                        >
-                                            {phoneVerifying ? (
-                                                <>
-                                                    <LoaderCircle size={16} className="spin" />
-                                                    Verifying...
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <CircleCheckBig size={16} />
-                                                    Verify OTP
-                                                </>
-                                            )}
-                                        </button>
-                                    </>
-                                )}
 
-                                {phoneStep === "verified" && (
-                                    <>
-                                        <p className="otp-hint">
-                                            Verified. Enter the new phone number you'd
-                                            like to use.
-                                        </p>
-                                        <div className="new-value-row">
-                                            <input
-                                                type="tel"
-                                                maxLength={10}
-                                                placeholder="New 10-digit phone number"
-                                                value={newPhone}
-                                                onChange={(e) =>
-                                                    setNewPhone(e.target.value.replace(/[^0-9]/g, ""))
-                                                }
-                                            />
-                                        </div>
-                                        {newPhoneError && (
-                                            <span className="field-error">
-                                                <CircleAlert size={12} /> {newPhoneError}
-                                            </span>
-                                        )}
-                                        <div className="form-actions" style={{ marginTop: 0, paddingTop: 0, borderTop: "none" }}>
+                                        <div
+                                            className="form-actions"
+                                            style={{
+                                                marginTop: 0,
+                                                paddingTop: 0,
+                                                borderTop: "none",
+                                            }}
+                                        >
                                             <button
                                                 className="outline-btn"
                                                 onClick={resetPhoneFlow}
-                                                disabled={phoneSaving}
+                                                disabled={phoneVerifying}
                                             >
                                                 Cancel
                                             </button>
+
                                             <button
                                                 className="gold-btn"
-                                                onClick={submitNewPhone}
-                                                disabled={phoneSaving}
+                                                onClick={verifyPhoneOtp}
+                                                disabled={phoneVerifying}
                                             >
-                                                {phoneSaving ? (
+                                                {phoneVerifying ? (
                                                     <>
                                                         <LoaderCircle size={16} className="spin" />
-                                                        Saving...
+                                                        Verifying...
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <Save size={16} />
-                                                        Save Phone
+                                                        <CircleCheckBig size={16} />
+                                                        Verify & Update
                                                     </>
                                                 )}
                                             </button>

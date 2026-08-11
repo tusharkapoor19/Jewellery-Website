@@ -1,79 +1,106 @@
 const otpService = require("../service/otpService.js");
 
+// =====================================================
+// SEND PHONE OTP
+// =====================================================
 
-// send phn otp
 const sendPhoneOtp = async (req, res) => {
-
     try {
+        const { newPhone } = req.body;
 
         const result = await otpService.sendPhoneOtp(
-            req.user.id
-        )
+            req.user.id,
+            newPhone
+        );
+
         res.status(200).json(result);
 
     } catch (error) {
         res.status(400).json({
             success: false,
             message: error.message
-        })
+        });
     }
-}
+};
 
 
-// send email OTP
-const sendEmailOtp = async (req, res, next) => {
-    
-    try {
-        // const {userId} = req.body
+// =====================================================
+// VERIFY PHONE OTP
+// =====================================================
 
-        const result = await otpService.sendEmailOtp(req.user.id);
-
-        res.status(200).json(result);
-
-    } catch (error) {
-        next(error);
-    }
-}
-
-
-// verify phn otp
 const verifyPhoneOtp = async (req, res) => {
-
     try {
-        const { otp } = req.body;
+        const { otp, newPhone } = req.body;
 
         const result = await otpService.verifyPhoneOtp(
             req.user.id,
-            otp
-        )
-        res.status(200).json(result);
-    } catch (error) {
+            otp,
+            newPhone
+        );
 
+        res.status(200).json(result);
+
+    } catch (error) {
         res.status(400).json({
             success: false,
             message: error.message
-        })
+        });
     }
-}
+};
 
 
-// verify email OTP
-const verifyEmailOtp = async (req, res, next) => {
+// =====================================================
+// SEND EMAIL OTP
+// =====================================================
+
+const sendEmailOtp = async (req, res) => {
     try {
-        const {otp} = req.body
-        const result = await otpService.verifyEmailOtp(req.user.id, otp);
+        const { newEmail } = req.body;
+
+        const result = await otpService.sendEmailOtp(
+            req.user.id,
+            newEmail
+        );
 
         res.status(200).json(result);
 
     } catch (error) {
-        next(error);
+        res.status(400).json({
+            success: false,
+            message: error.message
+        });
     }
+};
 
-}
 
-module.exports= {
+// =====================================================
+// VERIFY EMAIL OTP
+// =====================================================
+
+const verifyEmailOtp = async (req, res) => {
+    try {
+        const { otp, newEmail } = req.body;
+
+        const result = await otpService.verifyEmailOtp(
+            req.user.id,
+            otp,
+            newEmail
+        );
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+
+module.exports = {
     sendPhoneOtp,
-    sendEmailOtp,
     verifyPhoneOtp,
+    sendEmailOtp,
     verifyEmailOtp
-}
+};
