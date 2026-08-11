@@ -14,15 +14,15 @@ const userSchema = new mongoose.Schema({
 
   password: {
     type: String,
-    required: true,
+    required: false,
   },
 
   phone: {
     type: String,
   },
-  address:{
-    type:String,
-    // required:true,
+
+  address: {
+    type: String,
   },
 
   role: {
@@ -30,6 +30,20 @@ const userSchema = new mongoose.Schema({
     enum: ["customer", "admin"],
     default: "customer",
   },
+
+  // Google Login
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
+
+  authProvider: {
+    type: String,
+    enum: ["local", "google"],
+    default: "local",
+  },
+
   otp: {
     type: String,
   },
@@ -37,7 +51,6 @@ const userSchema = new mongoose.Schema({
   logotp: {
     type: String,
   },
-
 
   otpExpiry: {
     type: Date,

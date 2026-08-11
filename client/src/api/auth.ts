@@ -9,10 +9,7 @@ interface LoginResponse {
 
 /**
  * Decodes a JWT payload without verifying the signature.
- * This is only used client-side to read `role` for UI purposes
- * (e.g. showing a friendly error if a non-admin account logs in).
- * The backend is the source of truth for authorization - adminMiddleware
- * on each service re-checks role on every request.
+ * This is only used client-side to read role/id for UI purposes.
  */
 export const decodeJwtPayload = (
   token: string
@@ -26,9 +23,18 @@ export const decodeJwtPayload = (
   }
 };
 
+// NORMAL LOGIN
 export const login = (email: string, password: string) =>
   apiRequest<LoginResponse>(`${AUTH_API_BASE}/login`, {
     method: "POST",
     body: { email, password },
+    auth: false,
+  });
+
+// GOOGLE LOGIN
+export const googleLogin = (credential: string) =>
+  apiRequest<LoginResponse>(`${AUTH_API_BASE}/google-login`, {
+    method: "POST",
+    body: { credential },
     auth: false,
   });

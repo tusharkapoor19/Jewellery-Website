@@ -1140,3 +1140,93 @@ transform:scale(1);
 
 
 }
+
+/* ============================= */
+/* OR DIVIDER */
+/* ============================= */
+
+.login-divider {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 22px 0;
+    color: #999;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e6d9bd;
+}
+
+.login-divider span {
+    padding: 0 5px;
+    color: #999;
+}
+/* ============================= */
+/* GOOGLE LOGIN */
+/* ============================= */
+
+.google-login-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.google-login-btn {
+    width: auto !important;
+    max-width: 400px !important;
+    display: block !important;
+}
+
+
+/* ============================= */
+/* OR DIVIDER */
+/* ============================= */
+
+.login-divider {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 22px 0;
+
+    color: #999;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e6d9bd;
+}
+
+.login-divider span {
+    padding: 0 5px;
+    color: #999;
+}
+
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
+
+@media (max-width: 480px) {
+
+    .google-login-btn {
+        max-width: 100% !important;
+    }
+
+}
