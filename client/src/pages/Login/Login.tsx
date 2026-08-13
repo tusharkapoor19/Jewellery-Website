@@ -81,7 +81,7 @@ const Login = () => {
         {
           theme: "outline",
           size: "large",
-          width: 400,
+          width: 360,
           text: "continue_with",
           shape: "rectangular",
           logo_alignment: "left",
@@ -286,33 +286,6 @@ const Login = () => {
 
 
             {/* ================================= */}
-            {/* GOOGLE LOGIN */}
-            {/* ================================= */}
-
-            <div className="google-login-wrapper">
-
-              <div
-                ref={googleButtonRef}
-                className="google-login-btn"
-              ></div>
-
-            </div>
-
-
-            {/* ================================= */}
-            {/* OR DIVIDER */}
-            {/* ================================= */}
-
-            <div className="login-divider">
-
-              <span>
-                OR
-              </span>
-
-            </div>
-
-
-            {/* ================================= */}
             {/* NORMAL LOGIN FORM */}
             {/* ================================= */}
 
@@ -455,6 +428,23 @@ const Login = () => {
               </p>
 
             </form>
+
+            {/* ================================= */}
+            {/* GOOGLE LOGIN — LAST */}
+            {/* ================================= */}
+
+            <div className="login-divider">
+              <span>
+                OR
+              </span>
+            </div>
+
+            <div className="google-login-wrapper">
+              <div
+                ref={googleButtonRef}
+                className="google-login-btn"
+              ></div>
+            </div>
 
           </div>
 
