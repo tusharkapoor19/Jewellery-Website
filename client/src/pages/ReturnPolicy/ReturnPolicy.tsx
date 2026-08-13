@@ -4,6 +4,11 @@ import TopBar from "../../components/TopBar/TopBar";
 import Navbar from "../../components/Navbar/Navbar";
 import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "../../components/Footer/Footer";
+import {
+  Diamond,
+  RefreshCw,
+  Handshake,
+} from "lucide-react";
 
 const ReturnPolicy = () => {
   return (
@@ -34,7 +39,7 @@ const ReturnPolicy = () => {
 
           <div className="return-card">
 
-            <div className="return-icon">💎</div>
+            <div className="return-icon"><Diamond size={30} strokeWidth={1.6} /></div>
 
             <h3>Quality Assured</h3>
 
@@ -47,7 +52,7 @@ const ReturnPolicy = () => {
 
           <div className="return-card">
 
-            <div className="return-icon">🔄</div>
+            <div className="return-icon"><RefreshCw size={30} strokeWidth={1.6} /></div>
 
             <h3>Easy Replacement</h3>
 
@@ -60,7 +65,7 @@ const ReturnPolicy = () => {
 
           <div className="return-card">
 
-            <div className="return-icon">🤝</div>
+            <div className="return-icon"><Handshake size={30} strokeWidth={1.6} /></div>
 
             <h3>Dedicated Support</h3>
 

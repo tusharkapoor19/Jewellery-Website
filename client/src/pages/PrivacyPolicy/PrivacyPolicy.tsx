@@ -5,6 +5,12 @@ import Navbar from "../../components/Navbar/Navbar";
 import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "../../components/Footer/Footer";
 
+import {
+  LockKeyhole,
+  ShieldCheck,
+  Handshake,
+} from "lucide-react";
+
 const PrivacyPolicy = () => {
   return (
     <>
@@ -34,7 +40,12 @@ const PrivacyPolicy = () => {
 
           <div className="privacy-card">
 
-            <div className="privacy-icon">🔒</div>
+            <div className="privacy-icon">
+              <LockKeyhole
+                size={30}
+                strokeWidth={1.6}
+              />
+            </div>
 
             <h3>Secure Data</h3>
 
@@ -47,7 +58,12 @@ const PrivacyPolicy = () => {
 
           <div className="privacy-card">
 
-            <div className="privacy-icon">🛡️</div>
+            <div className="privacy-icon">
+              <ShieldCheck
+                size={30}
+                strokeWidth={1.6}
+              />
+            </div>
 
             <h3>Privacy First</h3>
 
@@ -60,7 +76,12 @@ const PrivacyPolicy = () => {
 
           <div className="privacy-card">
 
-            <div className="privacy-icon">🤝</div>
+            <div className="privacy-icon">
+              <Handshake
+                size={30}
+                strokeWidth={1.6}
+              />
+            </div>
 
             <h3>Transparent Practices</h3>
 
@@ -134,7 +155,8 @@ const PrivacyPolicy = () => {
             </p>
 
           </section>
-                    <section className="privacy-section">
+
+          <section className="privacy-section">
 
             <h2>5. Information Sharing</h2>
 
@@ -189,7 +211,8 @@ const PrivacyPolicy = () => {
             </p>
 
           </section>
-                    <section className="privacy-section">
+
+          <section className="privacy-section">
 
             <h2>9. Children's Privacy</h2>
 

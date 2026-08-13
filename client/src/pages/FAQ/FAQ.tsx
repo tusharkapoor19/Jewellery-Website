@@ -5,6 +5,19 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import hero from "../../assets/faq/hero.jpg";
 import { useState } from "react";
+import {
+    Gem,
+    Truck,
+    Diamond,
+    RotateCcw,
+    Minus,
+    Plus,
+    Check,
+    Phone,
+    Mail,
+    MapPin,
+    ArrowRight,
+} from "lucide-react";
 import careBanner from "../../assets/faq/care-banner.jpg";
 import cta from "../../assets/faq/cta.jpg";
 
@@ -144,7 +157,7 @@ const FAQ = () => {
 
                 <div className="category-icon">
 
-                    💍
+                    <Gem size={30} strokeWidth={1.6} />
 
                 </div>
 
@@ -168,7 +181,7 @@ const FAQ = () => {
 
                 <div className="category-icon">
 
-                    🚚
+                    <Truck size={30} strokeWidth={1.6} />
 
                 </div>
 
@@ -192,7 +205,7 @@ const FAQ = () => {
 
                 <div className="category-icon">
 
-                    💎
+                    <Diamond size={30} strokeWidth={1.6} />
 
                 </div>
 
@@ -216,7 +229,7 @@ const FAQ = () => {
 
                 <div className="category-icon">
 
-                    ↩
+                    <RotateCcw size={30} strokeWidth={1.6} />
 
                 </div>
 
@@ -296,7 +309,11 @@ const FAQ = () => {
 
                         <span className="faq-icon">
 
-                            {openIndex === index ? "−" : "+"}
+                            {openIndex === index ? (
+                                <Minus size={18} strokeWidth={1.8} />
+                            ) : (
+                                <Plus size={18} strokeWidth={1.8} />
+                            )}
 
                         </span>
 
@@ -368,13 +385,13 @@ const FAQ = () => {
 
                 <ul>
 
-                    <li>✔ Store jewellery separately in soft pouches.</li>
+                    <li><Check size={16} strokeWidth={1.8} /> Store jewellery separately in soft pouches.</li>
 
-                    <li>✔ Avoid perfumes and harsh chemicals.</li>
+                    <li><Check size={16} strokeWidth={1.8} /> Avoid perfumes and harsh chemicals.</li>
 
-                    <li>✔ Clean gently using a microfiber cloth.</li>
+                    <li><Check size={16} strokeWidth={1.8} /> Clean gently using a microfiber cloth.</li>
 
-                    <li>✔ Schedule professional polishing annually.</li>
+                    <li><Check size={16} strokeWidth={1.8} /> Schedule professional polishing annually.</li>
 
                 </ul>
 
@@ -429,7 +446,7 @@ const FAQ = () => {
 
                 <div className="help-icon">
 
-                    📞
+                    <Phone size={28} strokeWidth={1.7} />
 
                 </div>
 
@@ -458,7 +475,7 @@ const FAQ = () => {
 
                 <div className="help-icon">
 
-                    ✉
+                    <Mail size={28} strokeWidth={1.7} />
 
                 </div>
 
@@ -487,7 +504,7 @@ const FAQ = () => {
 
                 <div className="help-icon">
 
-                    📍
+                    <MapPin size={28} strokeWidth={1.7} />
 
                 </div>
 
@@ -506,7 +523,7 @@ const FAQ = () => {
 
                 <a href="/store-locator">
 
-                    Find A Store →
+                    Find A Store <ArrowRight size={16} strokeWidth={1.8} />
 
                 </a>
 

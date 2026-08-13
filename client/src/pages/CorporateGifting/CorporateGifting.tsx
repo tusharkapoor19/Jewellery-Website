@@ -5,6 +5,18 @@ import TopBar from "../../components/TopBar/TopBar";
 import Navbar from "../../components/Navbar/Navbar";
 import Newsletter from "../../components/Newsletter/Newsletter";
 import Footer from "../../components/Footer/Footer";
+import {
+    Gem,
+    Gift,
+    Handshake,
+    ArrowRight,
+    Check,
+    Package,
+    Truck,
+    Building2,
+    CreditCard,
+    ShieldCheck,
+} from "lucide-react";
 
 import hero from "../../assets/corporate/hero.jpg";
 import executive from "../../assets/corporate/executive.jpg";
@@ -358,7 +370,7 @@ const CorporateGifting = () => {
                                     onClick={() => scrollToId("quote-form")}
                                 >
 
-                                    Enquire Now →
+                                    Enquire Now <ArrowRight size={16} strokeWidth={1.8} aria-hidden="true" />
 
                                 </button>
 
@@ -398,7 +410,7 @@ const CorporateGifting = () => {
                                     onClick={() => scrollToId("quote-form")}
                                 >
 
-                                    Enquire Now →
+                                    Enquire Now <ArrowRight size={16} strokeWidth={1.8} aria-hidden="true" />
 
                                 </button>
 
@@ -446,9 +458,7 @@ const CorporateGifting = () => {
                         <div className="cg-why-card">
 
                             <div className="cg-icon">
-
-                                💎
-
+                                <Gem size={30} strokeWidth={1.6} />
                             </div>
 
                             <h3>
@@ -470,9 +480,7 @@ const CorporateGifting = () => {
                         <div className="cg-why-card">
 
                             <div className="cg-icon">
-
-                                🎁
-
+                                <Gift size={30} strokeWidth={1.6} />
                             </div>
 
                             <h3>
@@ -494,9 +502,7 @@ const CorporateGifting = () => {
                         <div className="cg-why-card">
 
                             <div className="cg-icon">
-
-                                🤝
-
+                                <Handshake size={30} strokeWidth={1.6} />
                             </div>
 
                             <h3>
@@ -759,41 +765,17 @@ const CorporateGifting = () => {
 
                         <ul>
 
-                            <li>
+                            <li><Package size={17} strokeWidth={1.7} /> Attractive Bulk Pricing</li>
 
-                                Attractive Bulk Pricing
+                            <li><ShieldCheck size={17} strokeWidth={1.7} /> BIS Hallmarked Jewellery</li>
 
-                            </li>
+                            <li><Gift size={17} strokeWidth={1.7} /> Luxury Gift Packaging</li>
 
-                            <li>
+                            <li><Truck size={17} strokeWidth={1.7} /> PAN India Delivery</li>
 
-                                BIS Hallmarked Jewellery
+                            <li><Building2 size={17} strokeWidth={1.7} /> Dedicated Relationship Manager</li>
 
-                            </li>
-
-                            <li>
-
-                                Luxury Gift Packaging
-
-                            </li>
-
-                            <li>
-
-                                PAN India Delivery
-
-                            </li>
-
-                            <li>
-
-                                Dedicated Relationship Manager
-
-                            </li>
-
-                            <li>
-
-                                Secure Payment Options
-
-                            </li>
+                            <li><CreditCard size={17} strokeWidth={1.7} /> Secure Payment Options</li>
 
                         </ul>
 
@@ -896,7 +878,7 @@ const CorporateGifting = () => {
 
                         <div className="cg-form-success">
 
-                            <div className="cg-success-icon">✓</div>
+                            <div className="cg-success-icon"><Check size={28} strokeWidth={2} /></div>
 
                             <h3>We've Received Your Message</h3>
 
