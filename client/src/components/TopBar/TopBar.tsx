@@ -10,6 +10,12 @@ import {
 
 import "./TopBar.css";
 
+const TROY_OUNCE_TO_GRAM = 31.1035;
+
+const GOLD_PREMIUM = 15.3;
+const SILVER_PREMIUM = 27.6;
+const PLATINUM_PREMIUM = 15.3;
+
 const TopBar = () => {
   const [gold24, setGold24] = useState("--");
   const [silver, setSilver] = useState("--");
@@ -18,76 +24,107 @@ const TopBar = () => {
   useEffect(() => {
     const fetchRates = async () => {
       try {
-        // Gold, Silver & Platinum Price (USD per Troy Ounce)
-        const goldRes = await fetch(
-          "https://api.gold-api.com/price/XAU"
-        );
+        const [
+          goldResponse,
+          silverResponse,
+          platinumResponse,
+          currencyResponse,
+        ] = await Promise.all([
+          fetch("https://api.gold-api.com/price/XAU"),
+          fetch("https://api.gold-api.com/price/XAG"),
+          fetch("https://api.gold-api.com/price/XPT"),
+          fetch("https://open.er-api.com/v6/latest/USD"),
+        ]);
 
-        const silverRes = await fetch(
-          "https://api.gold-api.com/price/XAG"
-        );
+        if (
+          !goldResponse.ok ||
+          !silverResponse.ok ||
+          !platinumResponse.ok ||
+          !currencyResponse.ok
+        ) {
+          throw new Error("Unable to fetch metal prices");
+        }
 
-        const platinumRes = await fetch(
-          "https://api.gold-api.com/price/XPT"
-        );
+        const [
+          goldData,
+          silverData,
+          platinumData,
+          currencyData,
+        ] = await Promise.all([
+          goldResponse.json(),
+          silverResponse.json(),
+          platinumResponse.json(),
+          currencyResponse.json(),
+        ]);
 
-        // USD -> INR Exchange Rate
-        const currencyRes = await fetch(
-          "https://open.er-api.com/v6/latest/USD"
-        );
+        const usdToInr = Number(currencyData?.rates?.INR);
 
-        const goldData = await goldRes.json();
-        const silverData = await silverRes.json();
-        const platinumData = await platinumRes.json();
-        const currencyData = await currencyRes.json();
+        if (!usdToInr) {
+          throw new Error("USD to INR rate unavailable");
+        }
 
-        const usdToInr = currencyData.rates.INR;
+        /* ================================
+           USD / TROY OUNCE → INR / GRAM
+        ================================= */
 
-        // Troy Ounce → Gram
-        const goldPerGramReal =
-          (goldData.price * usdToInr) / 31.1035;
+        const goldSpot =
+          (Number(goldData.price) * usdToInr) /
+          TROY_OUNCE_TO_GRAM;
 
-       const silverPerGramReal =
-    (silverData.price * usdToInr) / 31.1035;
+        const silverSpot =
+          (Number(silverData.price) * usdToInr) /
+          TROY_OUNCE_TO_GRAM;
 
-        const platinumPerGramReal =
-          (platinumData.price * usdToInr) / 31.1035;
+        const platinumSpot =
+          (Number(platinumData.price) * usdToInr) /
+          TROY_OUNCE_TO_GRAM;
 
-        // India Approximation
-        const goldPerGram =
-          goldPerGramReal +
-          (goldPerGramReal * 3.91) / 100;
+        /* ================================
+           INDIA MARKET ADJUSTMENT
+        ================================= */
 
-        const silverPerGram =
-          silverPerGramReal +
-          (silverPerGramReal * 11.4) / 100;
+        const goldRate =
+          goldSpot * (1 + GOLD_PREMIUM / 100);
 
-        // Same India premium as gold — platinum jewellery is priced the
-        // same way gold is (no separate premium data available).
-        const platinumPerGram =
-          platinumPerGramReal +
-          (platinumPerGramReal * 3.91) / 100;
+        const silverRate =
+          silverSpot * (1 + SILVER_PREMIUM / 100);
 
-        setGold24(goldPerGram.toFixed(2));
-        setSilver((silverPerGram * 1000).toFixed(2));
-        setPlatinum(platinumPerGram.toFixed(2));
+        const platinumRate =
+          platinumSpot * (1 + PLATINUM_PREMIUM / 100);
+
+        /* ================================
+           DISPLAY
+        ================================= */
+
+        setGold24(goldRate.toFixed(2));
+
+        // Silver → ₹ / KG
+        setSilver((silverRate * 1000).toFixed(2));
+
+        // Platinum → ₹ / GRAM
+        setPlatinum(platinumRate.toFixed(2));
+
+        /* ================================
+           STORE RATES
+        ================================= */
 
         localStorage.setItem(
-    "goldRate",
-    goldPerGram.toString()
-);
+          "goldRate",
+          goldRate.toString()
+        );
 
-localStorage.setItem(
-    "silverRate",
-    silverPerGram.toString()
-);
+        localStorage.setItem(
+          "silverRate",
+          silverRate.toString()
+        );
 
-localStorage.setItem(
-    "platinumRate",
-    platinumPerGram.toString()
-);
+        localStorage.setItem(
+          "platinumRate",
+          platinumRate.toString()
+        );
+
       } catch (error) {
-        console.error("Error fetching rates:", error);
+        console.error("Metal price error:", error);
       }
     };
 
@@ -106,20 +143,23 @@ localStorage.setItem(
 
       <div className="topbar-container">
 
-        {/* Left */}
+        {/* LEFT */}
+        <div className="topbar-left">
 
-        <div className="topbar-left topbar-item">
+          <div className="topbar-item shipping-item">
 
-          <Truck size={14} />
+            <Truck size={14} />
 
-          <span>
-            FREE INSURED SHIPPING ON ALL ORDERS
-          </span>
+            <span>
+              FREE INSURED SHIPPING ON ALL ORDERS
+            </span>
+
+          </div>
 
         </div>
 
-        {/* Center */}
 
+        {/* CENTER */}
         <div className="topbar-center">
 
           <div className="topbar-item">
@@ -132,15 +172,17 @@ localStorage.setItem(
 
           </div>
 
-          <span>|</span>
+          <span className="separator">|</span>
 
-          <span>
+          <span className="certified">
             CERTIFIED JEWELLERY
           </span>
 
-          <span>|</span>
+          <span className="separator">|</span>
 
-          <div className="topbar-item gold-rate">
+
+          {/* GOLD */}
+          <div className="topbar-item metal gold-rate">
 
             <Coins size={14} />
 
@@ -150,9 +192,11 @@ localStorage.setItem(
 
           </div>
 
-          <span>|</span>
+          <span className="separator">|</span>
 
-          <div className="topbar-item silver-rate">
+
+          {/* SILVER */}
+          <div className="topbar-item metal silver-rate">
 
             <Coins size={14} />
 
@@ -162,9 +206,11 @@ localStorage.setItem(
 
           </div>
 
-          <span>|</span>
+          <span className="separator">|</span>
 
-          <div className="topbar-item platinum-rate">
+
+          {/* PLATINUM */}
+          <div className="topbar-item metal platinum-rate">
 
             <Coins size={14} />
 
@@ -176,13 +222,13 @@ localStorage.setItem(
 
         </div>
 
-        {/* Right */}
 
+        {/* RIGHT */}
         <div className="topbar-right">
 
           <Link
             to="/store-locator"
-            className="topbar-item topbar-link"
+            className="topbar-item store-link"
           >
 
             <MapPin size={14} />
@@ -193,7 +239,8 @@ localStorage.setItem(
 
           </Link>
 
-          <div className="topbar-item">
+
+          <div className="topbar-item track-item">
 
             <PackageSearch size={14} />
 

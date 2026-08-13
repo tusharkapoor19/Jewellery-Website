@@ -1,138 +1,591 @@
+/* =========================================================
+   HIRANYA — PREMIUM GLOWING TOP BAR
+========================================================= */
+
 .topbar {
     position: fixed;
     top: 0;
     left: 0;
+
     width: 100%;
+    height: 40px;
+
     z-index: 10000;
-    background: #f8f5ef;
-    color: #222;
-    font-size: 12px;
-    border-bottom: 1px solid #e5dfd2;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 253, 248, 0.98) 0%,
+            rgba(248, 245, 239, 0.96) 100%
+        );
+
+    color: #26231e;
+
+    border-bottom: 1px solid rgba(201, 161, 74, 0.28);
+
+    /* Soft luxury glow */
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.95) inset,
+        0 2px 12px rgba(180, 140, 45, 0.08),
+        0 5px 25px rgba(180, 140, 45, 0.045);
+
+    overflow: hidden;
+
+    font-family: inherit;
 }
+
+
+/* =========================================================
+   TOP GOLDEN LIGHT
+========================================================= */
+
+.topbar::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -20%;
+
+    width: 45%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(212, 175, 55, 0.75),
+            transparent
+        );
+
+    filter: blur(0.5px);
+
+    animation: topbarShimmer 7s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+@keyframes topbarShimmer {
+
+    0% {
+        transform: translateX(-20%);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateX(280%);
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
 
 .topbar-container {
-    max-width: 1400px;
-    margin: auto;
-    padding: 8px 20px;
+    width: 100%;
+    height: 100%;
+
+    max-width: 1900px;
+
+    margin: 0 auto;
+
+    padding: 0 24px;
+
+    box-sizing: border-box;
 
     display: flex;
+
+    align-items: center;
+
     justify-content: space-between;
-    align-items: center;
+
+    gap: 20px;
 }
 
-.topbar-left,
-.topbar-center,
-.topbar-right {
+
+/* =========================================================
+   LEFT
+========================================================= */
+
+.topbar-left {
+    flex: 0 0 auto;
+
     display: flex;
+
     align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
+
+    min-width: 0;
 }
 
-.topbar-center{
+
+/* =========================================================
+   CENTER
+========================================================= */
+
+.topbar-center {
     flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
     justify-content: center;
+
+    gap: 13px;
+
+    overflow: hidden;
 }
 
-.topbar-right span,
-.topbar-left span,
-.topbar-center span {
-    cursor: pointer;
-    transition: 0.3s;
+
+/* =========================================================
+   RIGHT
+========================================================= */
+
+.topbar-right {
+    flex: 0 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   COMMON ITEM
+========================================================= */
+
+.topbar-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
     white-space: nowrap;
+
+    min-width: 0;
 }
 
-.topbar-right span:hover,
-.topbar-left span:hover,
-.topbar-center span:hover {
-    color: #c9a14a;
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+.topbar-item span,
+.topbar-center > span {
+
+    font-size: 12px;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    transition:
+        color 0.25s ease,
+        text-shadow 0.25s ease;
 }
 
-/* Live Rates */
 
-.gold-rate,
-.silver-rate,
-.platinum-rate{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    color:#c9a14a;
-    font-weight:600;
+/* =========================================================
+   ICONS
+========================================================= */
+
+.topbar-item svg {
+
+    width: 14px;
+    height: 14px;
+
+    flex-shrink: 0;
+
+    stroke-width: 1.85;
+
+    transition:
+        transform 0.25s ease,
+        filter 0.25s ease,
+        color 0.25s ease;
 }
 
-.live-dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#00c853;
-    box-shadow:0 0 8px #00c853;
-    animation:pulse 1.5s infinite;
+
+/* =========================================================
+   SHIPPING
+========================================================= */
+
+.shipping-item {
+
+    color: #292621;
+
 }
 
-@keyframes pulse{
-    0%{
-        transform:scale(1);
-        opacity:1;
+.shipping-item svg {
+
+    color: #39342d;
+
+}
+
+
+/* =========================================================
+   HALLMARK / CERTIFIED
+========================================================= */
+
+.certified {
+
+    color: #2c2924;
+
+}
+
+
+/* =========================================================
+   SEPARATOR
+========================================================= */
+
+.separator {
+
+    color: rgba(120, 110, 95, 0.55);
+
+    font-size: 12px !important;
+
+    -webkit-user-select: none; /* Safari 3+, iOS 3+ */
+    user-select: none;
+
+}
+
+
+/* =========================================================
+   METAL RATES
+========================================================= */
+
+.metal {
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition:
+        transform 0.25s ease,
+        filter 0.25s ease;
+}
+
+
+/* =========================================================
+   GOLD
+========================================================= */
+
+.gold-rate {
+
+    color: #b8871e;
+
+    text-shadow:
+        0 0 10px rgba(201, 162, 74, 0.12);
+}
+
+.gold-rate svg {
+
+    color: #d4af37;
+
+    filter:
+        drop-shadow(
+            0 0 4px rgba(212, 175, 55, 0.35)
+        );
+}
+
+
+/* =========================================================
+   SILVER
+========================================================= */
+
+.silver-rate {
+
+    color: #74777b;
+
+}
+
+.silver-rate svg {
+
+    color: #9ca0a5;
+
+    filter:
+        drop-shadow(
+            0 0 4px rgba(160, 165, 172, 0.3)
+        );
+}
+
+
+/* =========================================================
+   PLATINUM
+========================================================= */
+
+.platinum-rate {
+
+    color: #707780;
+
+}
+
+.platinum-rate svg {
+
+    color: #b5bcc5;
+
+    filter:
+        drop-shadow(
+            0 0 4px rgba(185, 195, 205, 0.4)
+        );
+}
+
+
+/* =========================================================
+   RATE HOVER
+========================================================= */
+
+.metal:hover {
+
+    transform: translateY(-1px);
+
+}
+
+.gold-rate:hover {
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(212, 175, 55, 0.28)
+        );
+}
+
+.silver-rate:hover {
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(160, 165, 175, 0.2)
+        );
+}
+
+.platinum-rate:hover {
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(180, 190, 205, 0.25)
+        );
+}
+
+
+/* =========================================================
+   STORE LINK
+========================================================= */
+
+.store-link {
+
+    color: #292621;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        color 0.25s ease,
+        text-shadow 0.25s ease;
+}
+
+.store-link:hover {
+
+    color: #b48722;
+
+    text-shadow:
+        0 0 9px rgba(201, 162, 74, 0.18);
+}
+
+.store-link:hover svg {
+
+    transform:
+        translateY(-1px)
+        scale(1.04);
+
+    filter:
+        drop-shadow(
+            0 0 5px rgba(201, 162, 74, 0.35)
+        );
+}
+
+
+/* =========================================================
+   TRACK ORDER
+========================================================= */
+
+.track-item {
+
+    color: #292621;
+
+}
+
+.track-item:hover {
+
+    color: #b48722;
+
+}
+
+.track-item:hover svg {
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================================
+   SUBTLE ICON POLISH
+========================================================= */
+
+.shipping-item:hover svg,
+.topbar-center .topbar-item:hover svg {
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================================
+   1600px+
+========================================================= */
+
+@media (min-width: 1600px) {
+
+    .topbar-container {
+
+        padding-left: 30px;
+        padding-right: 30px;
+
     }
-    50%{
-        transform:scale(1.4);
-        opacity:.6;
+
+    .topbar-center {
+
+        gap: 15px;
+
     }
-    100%{
-        transform:scale(1);
-        opacity:1;
+
+    .topbar-right {
+
+        gap: 24px;
+
     }
+
 }
 
-@media (max-width:1200px){
+
+/* =========================================================
+   1400px
+========================================================= */
+
+@media (max-width: 1400px) {
+
+    .topbar-container {
+
+        padding-left: 18px;
+        padding-right: 18px;
+
+        gap: 12px;
+
+    }
+
+    .topbar-center {
+
+        gap: 9px;
+
+    }
+
+    .topbar-right {
+
+        gap: 13px;
+
+    }
+
+    .topbar-item span,
+    .topbar-center > span {
+
+        font-size: 11px;
+
+    }
+
+}
+
+
+/* =========================================================
+   1200px
+========================================================= */
+
+@media (max-width: 1200px) {
+
     .gold-rate,
     .silver-rate,
-    .platinum-rate{
-        display:none;
+    .platinum-rate {
+
+        display: none;
+
     }
-}
 
-@media (max-width:992px){
-    .topbar-center{
-        display:none;
+    .topbar-center {
+
+        gap: 10px;
+
     }
+
 }
 
-@media (max-width:768px){
-    .topbar{
-        display:none;
+
+/* =========================================================
+   992px
+========================================================= */
+
+@media (max-width: 992px) {
+
+    .topbar-center {
+
+        display: none;
+
     }
-}
-.topbar-item{
-    display:flex;
-    align-items:center;
-    gap:6px;
+
+    .topbar-container {
+
+        justify-content: space-between;
+
+    }
+
+    .topbar-right {
+
+        gap: 15px;
+
+    }
+
 }
 
-.topbar-item svg{
-    width:14px;
-    height:14px;
-    stroke-width:2;
-    flex-shrink:0;
-}
 
-.topbar-link{
-    text-decoration:none;
-    color:inherit;
-}
+/* =========================================================
+   MOBILE
+========================================================= */
 
-.topbar-link:hover{
-    color:#c9a227;
-}
+@media (max-width: 768px) {
 
-.gold-rate svg{
-    color:#D4AF37;
-}
+    .topbar {
 
-.silver-rate svg{
-    color:#9a9c9f;
-}
+        display: none;
 
-.platinum-rate svg{
-    color:#BFC5CE;
+    }
+
 }
