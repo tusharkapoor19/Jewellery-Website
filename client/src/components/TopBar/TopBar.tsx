@@ -66,7 +66,6 @@ const TopBar = () => {
         /* ================================
            USD / TROY OUNCE → INR / GRAM
         ================================= */
-
         const goldSpot =
           (Number(goldData.price) * usdToInr) /
           TROY_OUNCE_TO_GRAM;
