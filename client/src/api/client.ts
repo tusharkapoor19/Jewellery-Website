@@ -1,4 +1,4 @@
-import { TOKEN_STORAGE_KEY } from "../config";
+import { TOKEN_STORAGE_KEY, NAME_STORAGE_KEY, ROLE_STORAGE_KEY } from "../config";
 
 export class ApiError extends Error {
   status: number;
@@ -57,7 +57,16 @@ export async function apiRequest<T>(
 
   if (!response.ok) {
     if (response.status === 401) {
+      // The token is missing/expired/invalid server-side. Clear every
+      // auth key (not just the token) and tell the rest of the app
+      // (AuthContext) so `isAuthenticated` flips to false immediately -
+      // otherwise pages like /admin keep rendering as "logged in" using
+      // stale React state while every request silently 401s.
       localStorage.removeItem(TOKEN_STORAGE_KEY);
+      localStorage.removeItem(NAME_STORAGE_KEY);
+      localStorage.removeItem(ROLE_STORAGE_KEY);
+      localStorage.removeItem("isLoggedIn");
+      window.dispatchEvent(new Event("auth-change"));
     }
     const message =
       (data && (data.message || data.error)) ||

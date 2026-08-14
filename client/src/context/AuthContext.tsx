@@ -2,6 +2,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -67,6 +68,49 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
     return decodeJwtPayload(existingToken)?.id || null;
   });
+
+  // =====================================================
+  // RE-SYNC STATE ON auth-change / expiry
+  // =====================================================
+  // `login`/`logout`/api/client.ts's 401 handler all write directly to
+  // localStorage and fire "auth-change", but until now nothing here was
+  // listening: React state (token/role/id/isAuthenticated) stayed stale,
+  // so e.g. the admin dashboard kept rendering as "logged in" after the
+  // token expired or was cleared, while every API call 401'd underneath.
+  const syncFromStorage = useCallback(() => {
+    const storedToken = localStorage.getItem(TOKEN_STORAGE_KEY);
+    const payload = storedToken ? decodeJwtPayload(storedToken) : null;
+
+    // A token whose own `exp` claim has already passed is treated as gone,
+    // even if something forgot to remove it from localStorage.
+    const isExpired = payload?.exp ? payload.exp * 1000 < Date.now() : false;
+    const validToken = storedToken && !isExpired ? storedToken : null;
+
+    if (!validToken && storedToken) {
+      localStorage.removeItem(TOKEN_STORAGE_KEY);
+      localStorage.removeItem(NAME_STORAGE_KEY);
+      localStorage.removeItem(ROLE_STORAGE_KEY);
+      localStorage.removeItem("isLoggedIn");
+    }
+
+    setToken(validToken);
+    setName(validToken ? localStorage.getItem(NAME_STORAGE_KEY) : null);
+    setRole(validToken ? localStorage.getItem(ROLE_STORAGE_KEY) : null);
+    setId(validToken ? payload?.id || null : null);
+  }, []);
+
+  useEffect(() => {
+    // Catch a token that already expired before this tab even loaded.
+    syncFromStorage();
+
+    window.addEventListener("auth-change", syncFromStorage);
+    // Keeps multiple tabs in sync if login/logout happens in another tab.
+    window.addEventListener("storage", syncFromStorage);
+    return () => {
+      window.removeEventListener("auth-change", syncFromStorage);
+      window.removeEventListener("storage", syncFromStorage);
+    };
+  }, [syncFromStorage]);
 
   // =====================================================
   // SAVE LOGIN DATA

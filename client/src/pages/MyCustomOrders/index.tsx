@@ -9,7 +9,8 @@ import PrimaryButton from '../../components/Buttons/PrimaryButton'
 import GhostButton from '../../components/Buttons/GhostButton'
 import { formatINR } from '../../data/prices'
 import { isValidEmail } from '../../utils/validators'
-import { getDesignsByEmail, getMessages, sendCustomerMessage } from '../../services/api/designs'
+import { getDesignsByEmail, getDesignsByUserId, getMessages, sendCustomerMessage } from '../../services/api/designs'
+import { useAuth } from '../../context/AuthContext'
 import type { ChatMessage, CustomDesignRecord } from '../../types'
 
 const EMAIL_STORAGE_KEY = 'hiranya_custom_orders_email'
@@ -172,13 +173,19 @@ function OrderCard({ design }: { design: CustomDesignRecord }) {
 }
 
 export default function MyCustomOrders() {
+  // Logged-in customers are looked up by their account's userId (reliable,
+  // tied to their account). Guests (not logged in) fall back to the email
+  // form, matched against `customer.email` on the request.
+  const { id: authUserId, isAuthenticated } = useAuth()
+
   const [email, setEmail] = useState(() => localStorage.getItem(EMAIL_STORAGE_KEY) || '')
   const [submittedEmail, setSubmittedEmail] = useState('')
   const [designs, setDesigns] = useState<CustomDesignRecord[] | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const lookup = async (lookupEmail: string) => {
+
+const lookupByEmail = async (lookupEmail: string) => {
     if (!isValidEmail(lookupEmail)) {
       setError('Enter a valid email address.')
       return
@@ -198,14 +205,35 @@ export default function MyCustomOrders() {
     }
   }
 
+  const lookupByUserId = async (userId: string) => {
+    setError('')
+    setLoading(true)
+    try {
+      const results = await getDesignsByUserId(userId)
+      setDesigns(results)
+    } catch {
+      setError('Something went wrong while fetching your orders. Please try again.')
+      setDesigns(null)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
-    if (email) lookup(email)
+    if (isAuthenticated && authUserId) {
+      // Logged in: fetch this account's orders straight away, no email
+      // form needed.
+      lookupByUserId(authUserId)
+    } else if (email) {
+      // Guest with a previously-used email saved in this browser.
+      lookupByEmail(email)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isAuthenticated, authUserId])
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    lookup(email)
+    lookupByEmail(email)
   }
 
   return (
@@ -220,30 +248,42 @@ export default function MyCustomOrders() {
               Your custom orders
             </h1>
             <p className="mt-4 max-w-xl text-ivory-dim/60">
-              Enter the email you used when submitting a custom design request to see its status, our notes, and
-              chat with our design team.
+              {isAuthenticated
+              ? 'Here are the custom design requests linked to your account, their status, our notes, and the chat with our design team.'
+              : 'Enter the email you used when submitting a custom design request to see its status, our notes, and chat with our design team.'}
             </p>
           </FadeIn>
 
-          <form onSubmit={handleSubmit} className="flex max-w-lg flex-col gap-3 sm:flex-row">
-            <input
-              type="email"
-              className="w-full rounded-xl border border-line bg-ink-soft px-4 py-3 text-sm text-ivory placeholder:text-ivory-dim/30 focus:border-gold outline-none transition-colors"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <PrimaryButton type="submit" disabled={loading} className="whitespace-nowrap">
-              {loading ? 'Searching…' : 'Find my orders'}
-            </PrimaryButton>
-          </form>
-          {error && <p className="mt-2 text-sm text-rose">{error}</p>}
+        {!isAuthenticated && (
+          <>
+            <form onSubmit={handleSubmit} className="flex max-w-lg flex-col gap-3 sm:flex-row">
+              <input
+                type="email"
+                className="w-full rounded-xl border border-line bg-ink-soft px-4 py-3 text-sm text-ivory placeholder:text-ivory-dim/30 focus:border-gold outline-none transition-colors"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <PrimaryButton type="submit" disabled={loading} className="whitespace-nowrap">
+                {loading ? 'Searching…' : 'Find my orders'}
+              </PrimaryButton>
+            </form>
+            {error && <p className="mt-2 text-sm text-rose">{error}</p>}
+          </>
+        )}
+        {isAuthenticated && error && <p className="mt-2 text-sm text-rose">{error}</p>}
 
           <div className="mt-10 space-y-6">
             {designs !== null && designs.length === 0 && !loading && (
               <div className="rounded-2xl border border-line bg-ink-soft p-8 text-center">
                 <p className="text-ivory-dim/60">
-                  No custom design requests found for <span className="text-ivory">{submittedEmail}</span>.
+                  {isAuthenticated
+                  ? 'No custom design requests found for your account yet.'
+                  : (
+                    <>
+                      No custom design requests found for <span className="text-ivory">{submittedEmail}</span>.
+                    </>
+                  )}
                 </p>
               </div>
             )}

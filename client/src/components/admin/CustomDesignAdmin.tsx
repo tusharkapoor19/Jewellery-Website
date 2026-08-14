@@ -7,6 +7,7 @@ import {
   updateAdminDesign,
   DesignSummary,
 } from "../../api/adminCustomDesign";
+import { ApiError } from "../../api/client";
 import type { ChatMessage, CustomDesignRecord } from "../../types";
 
 const ORDER_STATUSES = [
@@ -254,7 +255,23 @@ const CustomDesignAdmin: React.FC<CustomDesignAdminProps> = ({ onPendingCountCha
         onPendingCountChange?.(stats.pending);
         setSelectedId((prev) => (prev && page.designs.some((d) => d._id === prev) ? prev : page.designs[0]?._id || null));
       })
-      .catch(() => setError("Could not load custom design requests."))
+      .catch((err) => {
+        // Surface the real backend message (e.g. "Access denied. No token
+        // provided." vs "jwt expired" vs "Admin access only") instead of a
+        // generic string, so a 401/403 here is actually diagnosable instead
+        // of just saying "could not load".
+        if (err instanceof ApiError) {
+          if (err.status === 401) {
+            setError("Your admin session has expired or is invalid. Please sign in again.");
+          } else if (err.status === 403) {
+            setError("This account does not have admin access.");
+          } else {
+            setError(`Could not load custom design requests: ${err.message}`);
+          }
+        } else {
+          setError("Could not load custom design requests.");
+        }
+      })
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter, search]);

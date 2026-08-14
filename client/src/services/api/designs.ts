@@ -51,6 +51,20 @@ export async function getDesignsByEmail(email: string): Promise<CustomDesignReco
   }
 }
 
+// Looks up a customer's own past custom-design requests by their account's
+// userId (from the JWT via useAuth().id) — this is the primary lookup used
+// by the "My Custom Orders" page whenever the customer is logged in, since
+// it ties results to their account instead of the email they typed in.
+export async function getDesignsByUserId(userId: string): Promise<CustomDesignRecord[]> {
+  try {
+    const response = await axios.get(API_URL, { params: { userId, limit: 50 } });
+    return response.data?.data?.designs ?? [];
+  } catch (error: any) {
+    console.error("❌ Failed to fetch designs by userId:", error);
+    throw error;
+  }
+}
+
 export async function getDesignById(id: string): Promise<CustomDesignRecord> {
   const response = await axios.get(`${API_URL}/${id}`);
   return response.data?.data;
