@@ -18,6 +18,8 @@ export const validateCustomDesign = (req, res, next) => {
 
   const jewelleryType = body.jewellery?.type || body.jewellery;
   const material = body.jewellery?.material || body.material;
+  const purity = body.jewellery?.purity || body.purity;
+  const budgetMax = body.budget?.max ?? body.budget;
 
   const errors = [];
 
@@ -26,6 +28,10 @@ export const validateCustomDesign = (req, res, next) => {
   if (!phone) errors.push("customer phone is required");
   if (!jewelleryType) errors.push("jewellery type is required");
   if (!material) errors.push("jewellery material is required");
+  if (!purity) errors.push("jewellery purity is required");
+  if (budgetMax === undefined || budgetMax === null || budgetMax === "") {
+    errors.push("budget is required");
+  }
 
   if (email && !/^\S+@\S+\.\S+$/.test(email)) {
     errors.push("customer email is invalid");

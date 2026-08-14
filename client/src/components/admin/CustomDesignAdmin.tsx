@@ -12,9 +12,9 @@ import type { ChatMessage, CustomDesignRecord } from "../../types";
 const ORDER_STATUSES = [
   "Pending",
   "Design Review",
-  "Quotation Sent",
   "Approved",
   "In Production",
+  "Ready",
   "Completed",
   "Cancelled",
 ];
@@ -155,12 +155,12 @@ function DesignDetail({
 
         <div className="cd-spec-grid">
           <div>
-            <p className="cd-spec-label">Purity</p>
-            <p className="cd-spec-value">{design.jewellery?.purity || "—"}</p>
+            <p className="cd-spec-label">Order ID</p>
+            <p className="cd-spec-value">{design.customOrderId || "—"}</p>
           </div>
           <div>
-            <p className="cd-spec-label">Weight</p>
-            <p className="cd-spec-value">{design.jewellery?.weight ? `${design.jewellery.weight} g` : "—"}</p>
+            <p className="cd-spec-label">Purity</p>
+            <p className="cd-spec-value">{design.jewellery?.purity || "—"}</p>
           </div>
           <div>
             <p className="cd-spec-label">Estimated total</p>
@@ -361,7 +361,10 @@ const CustomDesignAdmin: React.FC<CustomDesignAdminProps> = ({ onPendingCountCha
                 <p className="cd-list-item-title">
                   {d.jewellery?.type || "Custom piece"} · {d.jewellery?.material || "—"}
                 </p>
-                <p className="cd-list-item-sub">{d.customer?.fullName || "Unknown customer"}</p>
+                <p className="cd-list-item-sub">
+                  {d.customOrderId ? `${d.customOrderId} · ` : ""}
+                  {d.customer?.fullName || "Unknown customer"}
+                </p>
                 <span className={`status-pill status-pill--${statusSlug(d.orderStatus)}`}>
                   {d.orderStatus || "Pending"}
                 </span>

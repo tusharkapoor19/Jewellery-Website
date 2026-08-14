@@ -17,9 +17,9 @@ const EMAIL_STORAGE_KEY = 'hiranya_custom_orders_email'
 const STATUS_STYLES: Record<string, string> = {
   Pending: 'text-ivory-dim/70 border-line',
   'Design Review': 'text-gold border-gold/40',
-  'Quotation Sent': 'text-gold-bright border-gold/40',
   Approved: 'text-emerald-bright border-emerald/60',
   'In Production': 'text-emerald-bright border-emerald/60',
+  Ready: 'text-gold-bright border-gold/40',
   Completed: 'text-emerald-bright border-emerald/60',
   Cancelled: 'text-rose border-rose/40',
 }
@@ -130,6 +130,7 @@ function OrderCard({ design }: { design: CustomDesignRecord }) {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-gold/60">
+              {design.customOrderId ? `${design.customOrderId} · ` : ''}
               {design.createdAt ? new Date(design.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : ''}
             </p>
             <h3 className="mt-1 font-display text-2xl text-ivory">

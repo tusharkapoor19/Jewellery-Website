@@ -7,6 +7,7 @@ import SimilarDesigns from '../SimilarDesigns'
 import CustomerInfoForm from '../CustomerInfo'
 import SuccessScreen from '../SuccessScreen'
 import { useDesignContext } from '../../../../context/DesignContext'
+import { useAuth } from '../../../../context/AuthContext'
 import type { CustomerInfo } from '../../../../types'
 import { isNonEmpty, isValidEmail, isValidIndianPhone } from '../../../../utils/validators'
 import { generateId } from '../../../../utils/helpers'
@@ -17,6 +18,10 @@ const emptyCustomer: CustomerInfo = { name: '', email: '', phone: '', city: '', 
 
 export default function ReviewSubmit() {
   const { selection, estimate, resetSelection } = useDesignContext()
+  // If the customer is logged in, tag the submission with their real
+  // account id so it's tied to their account instead of a guest id
+  // derived from their email on the backend.
+  const { id: authUserId } = useAuth()
   const [customer, setCustomer] = useState<CustomerInfo>(emptyCustomer)
   const [errors, setErrors] = useState<Partial<Record<keyof CustomerInfo, string>>>({})
   const [submitting, setSubmitting] = useState(false)
@@ -45,6 +50,7 @@ const handleSubmit = async () => {
       customer,
       createdAt: new Date().toISOString(),
       estimate,
+      ...(authUserId ? { userId: authUserId } : {}),
     };
 
     const result = await submitDesign(design);

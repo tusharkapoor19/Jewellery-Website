@@ -116,6 +116,10 @@ export interface SubmittedDesign extends DesignSelection {
   customer: CustomerInfo
   createdAt: string
   estimate: PriceEstimate
+  // Present when the customer is logged in (their real account id, so the
+  // backend doesn't have to fall back to a guest id derived from email).
+  // Omitted entirely for guest submissions.
+  userId?: string
 }
 
 // Shape returned by the custom-design backend (GET /custom-design-save) when
@@ -125,6 +129,10 @@ export interface SubmittedDesign extends DesignSelection {
 // dashboard's Custom Design tab.
 export interface CustomDesignRecord {
   _id: string
+  userId?: string
+  // Server-generated, human-friendly identifier (e.g. "CD00001") used to
+  // tell one custom design request apart from another.
+  customOrderId?: string
   createdAt: string
   updatedAt?: string
   customer?: { fullName?: string; email?: string; phone?: string; address?: string }
@@ -134,7 +142,6 @@ export interface CustomDesignRecord {
     purity?: string
     gemstone?: { name: string; quantity: number }[]
     style?: string
-    weight?: number
   }
   budget?: { min?: number; max?: number; estimatedPrice?: number }
   estimation?: { totalEstimatedCost?: number }

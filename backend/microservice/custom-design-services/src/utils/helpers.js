@@ -1,10 +1,11 @@
-import { MATERIAL_LABELS, JEWELLERY_LABELS, GEMSTONE_LABELS } from "./constants.js";
+import crypto from "crypto";
+import { MATERIAL_LABELS, JEWELLERY_LABELS, GEMSTONE_LABELS, CUSTOM_ORDER_ID_PREFIX, CUSTOM_ORDER_ID_PAD_LENGTH } from "./constants.js";
 
 /**
  * The current frontend (src/services/api/designs.ts) posts a fairly flat
  * "SubmittedDesign" object:
  * {
- *   id, createdAt,
+ *   id, createdAt, userId?,
  *   customer: { name, email, phone, city, notes },
  *   jewellery, material, purity, gemstones: [{ id, quantity }], style, budget,
  *   referenceImage, weight,
@@ -18,14 +19,23 @@ import { MATERIAL_LABELS, JEWELLERY_LABELS, GEMSTONE_LABELS } from "./constants.
  * This helper converts the flat frontend payload into that nested shape.
  * If the request body is already sent in the nested schema shape
  * (customer.fullName, jewellery.type, etc.), it is used as-is.
+ *
+ * Note: `orderStatus` / `adminNotes` are intentionally NOT read from the
+ * incoming body here — this mapper feeds the public, unauthenticated
+ * "create" endpoint, and a submitter should never be able to set their own
+ * order status or leave themselves an "admin" note. Those fields are only
+ * ever changed through the admin-only update routes.
  */
 export const mapFrontendPayloadToSchema = (body = {}) => {
-  // Already in the nested schema shape -> pass through untouched.
+  // Already in the nested schema shape -> pass through untouched (still
+  // strip orderStatus/adminNotes for the same reason as above).
   if (body.customer?.fullName || body.jewellery?.type) {
-    return body;
+    const { orderStatus, adminNotes, ...rest } = body;
+    return rest;
   }
 
   const {
+    userId,
     customer = {},
     jewellery,
     material,
@@ -36,10 +46,7 @@ export const mapFrontendPayloadToSchema = (body = {}) => {
     style,
     budget,
     referenceImage,
-    weight,
     estimate = {},
-    adminNotes,
-    orderStatus,
   } = body;
 
   // Multi-gemstone shape: [{ id: 'diamond', quantity: 4 }, { id: 'pearl', quantity: 5 }]
@@ -57,6 +64,7 @@ export const mapFrontendPayloadToSchema = (body = {}) => {
   }
 
   return {
+    userId: userId || undefined,
     customer: {
       fullName: customer.name,
       email: customer.email,
@@ -68,7 +76,6 @@ export const mapFrontendPayloadToSchema = (body = {}) => {
       material: MATERIAL_LABELS[material] || material,
       purity: purity || undefined,
       gemstone: gemstoneList,
-      weight: weight || undefined,
       style: style || undefined,
     },
     budget: {
@@ -78,20 +85,52 @@ export const mapFrontendPayloadToSchema = (body = {}) => {
     },
     design: {
       description: customer.notes || undefined,
-      referenceImages: referenceImage
-        ? [{ imageUrl: referenceImage, publicId: undefined }]
-        : [],
+      referenceImages: referenceImage ? [referenceImage] : [],
     },
     estimation: {
-      estimatedWeight: weight || undefined,
       makingCharge: estimate.makingCharges || undefined,
       stoneCost: estimate.gemstoneCost || undefined,
       metalCost: estimate.metalCost || undefined,
       totalEstimatedCost: estimate.total || undefined,
     },
-    orderStatus: orderStatus || "Pending",
-    adminNotes: adminNotes || undefined,
   };
+};
+
+// Stable pseudo-identifier for a guest (not-logged-in) submitter, derived
+// from their email so the same guest always maps to the same userId across
+// multiple submissions, without requiring an account. Used as a fallback
+// when the client doesn't send a real, logged-in userId.
+export const generateGuestUserId = (email = "") => {
+  const hash = crypto
+    .createHash("sha1")
+    .update(String(email).trim().toLowerCase())
+    .digest("hex")
+    .slice(0, 12);
+  return `guest_${hash}`;
+};
+
+// Generates the next sequential, human-friendly customOrderId (e.g.
+// "CD00001", "CD00002", ...) by looking at the highest one currently
+// stored. Takes the CustomDesign model as a parameter (rather than
+// importing it directly) to avoid a circular import between
+// models/CustomDesign.js and this file.
+export const generateCustomOrderId = async (CustomDesignModel) => {
+  const idPattern = new RegExp(`^${CUSTOM_ORDER_ID_PREFIX}(\\d+)$`);
+
+  const lastDesign = await CustomDesignModel.findOne({
+    customOrderId: idPattern,
+  })
+    .sort({ customOrderId: -1 })
+    .select("customOrderId")
+    .lean();
+
+  let nextNumber = 1;
+  if (lastDesign?.customOrderId) {
+    const match = lastDesign.customOrderId.match(idPattern);
+    if (match) nextNumber = parseInt(match[1], 10) + 1;
+  }
+
+  return `${CUSTOM_ORDER_ID_PREFIX}${String(nextNumber).padStart(CUSTOM_ORDER_ID_PAD_LENGTH, "0")}`;
 };
 
 // Standard success/error response shapes so every controller responds consistently.

@@ -1,6 +1,12 @@
 import CustomDesign from "../models/CustomDesign.js";
-import { ORDER_STATUSES } from "../utils/constants.js";
-import { mapFrontendPayloadToSchema, sendSuccess, sendError } from "../utils/helpers.js";
+import { ORDER_STATUSES, IN_PROGRESS_STATUSES } from "../utils/constants.js";
+import {
+  mapFrontendPayloadToSchema,
+  generateGuestUserId,
+  generateCustomOrderId,
+  sendSuccess,
+  sendError,
+} from "../utils/helpers.js";
 
 // @desc    Create/store a new custom design submission
 // @route   POST /custom-design-save
@@ -8,7 +14,33 @@ import { mapFrontendPayloadToSchema, sendSuccess, sendError } from "../utils/hel
 export const createCustomDesign = async (req, res, next) => {
   try {
     const payload = mapFrontendPayloadToSchema(req.body);
-    const design = await CustomDesign.create(payload);
+
+    // Every request must be tied to a userId. If the submitter is logged
+    // in, the frontend sends their real account id; otherwise fall back to
+    // a stable, email-derived guest id so the record can still be saved.
+    if (!payload.userId) {
+      payload.userId = generateGuestUserId(payload.customer?.email);
+    }
+
+    // customOrderId is always generated server-side, never trusted from the
+    // client, so every submission gets a unique, sequential identifier
+    // (e.g. "CD00001") to tell requests apart. Retry a few times in the
+    // rare case of a race with another simultaneous submission hitting the
+    // unique index.
+    let design;
+    let attempts = 0;
+    while (!design) {
+      attempts += 1;
+      payload.customOrderId = await generateCustomOrderId(CustomDesign);
+      try {
+        design = await CustomDesign.create(payload);
+      } catch (error) {
+        const isDuplicateOrderId =
+          error.code === 11000 && error.keyPattern?.customOrderId;
+        if (!isDuplicateOrderId || attempts >= 5) throw error;
+      }
+    }
+
     return sendSuccess(res, 201, design, "Design saved successfully");
   } catch (error) {
     next(error);
@@ -19,16 +51,17 @@ export const createCustomDesign = async (req, res, next) => {
 //          Used both by customers (filtered by their own `email`, e.g. the
 //          "My Custom Orders" page) and by the admin dashboard's Custom
 //          Design tab (unfiltered / filtered by status + free-text search).
-// @route   GET /custom-design-save?orderStatus=Pending&email=...&search=...&page=1&limit=20
+// @route   GET /custom-design-save?orderStatus=Pending&email=...&userId=...&search=...&page=1&limit=20
 // @access  Public
 export const getAllCustomDesigns = async (req, res, next) => {
   try {
-    const { orderStatus, paymentStatus, email, search, page = 1, limit = 20 } = req.query;
+    const { orderStatus, paymentStatus, email, userId, search, page = 1, limit = 20 } = req.query;
 
     const filter = {};
     if (orderStatus) filter.orderStatus = orderStatus;
     if (paymentStatus) filter["payment.paymentStatus"] = paymentStatus;
     if (email) filter["customer.email"] = email.toLowerCase();
+    if (userId) filter.userId = userId;
 
     if (search) {
       const re = new RegExp(search.trim(), "i");
@@ -36,6 +69,7 @@ export const getAllCustomDesigns = async (req, res, next) => {
         { "customer.fullName": re },
         { "customer.email": re },
         { "customer.phone": re },
+        { customOrderId: re },
       ];
     }
 
@@ -68,9 +102,7 @@ export const getDesignSummary = async (req, res, next) => {
     const [total, pending, inProgress, completed] = await Promise.all([
       CustomDesign.countDocuments({}),
       CustomDesign.countDocuments({ orderStatus: "Pending" }),
-      CustomDesign.countDocuments({
-        orderStatus: { $in: ["Design Review", "Quotation Sent", "Approved", "In Production"] },
-      }),
+      CustomDesign.countDocuments({ orderStatus: { $in: IN_PROGRESS_STATUSES } }),
       CustomDesign.countDocuments({ orderStatus: "Completed" }),
     ]);
 
