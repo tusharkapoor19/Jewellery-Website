@@ -1,0 +1,20 @@
+/* Page-specific tweaks for the "My Custom Orders" page — matches the same
+   dark ink/gold theme used across the Custom Design flow. */
+
+.mco-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-line);
+}
+
+.mco-chat-scroll {
+  max-height: 320px;
+  overflow-y: auto;
+}

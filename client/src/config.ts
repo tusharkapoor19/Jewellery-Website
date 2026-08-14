@@ -17,6 +17,14 @@ export const PRODUCT_IMAGE_BASE =
 export const ORDER_API_BASE =
   process.env.REACT_APP_ORDER_API_URL || "http://localhost:5003/orders";
 
+// custom-design-services -> PORT 5006. Handles the whole Custom Design
+// feature: customers submitting/viewing their own requests + chat, and
+// (via the same admin JWT used everywhere else in the dashboard) the
+// admin Custom Design tab's request list, status/notes updates and chat
+// replies. There is no separate custom-design admin service or login.
+export const CUSTOM_DESIGN_API_BASE =
+  process.env.REACT_APP_CUSTOM_DESIGN_API_URL || "http://localhost:5006/custom-design-save";
+
   
 // Key used to persist the admin JWT + name in localStorage between reloads.
 // NOTE: this must match the key AuthContext.tsx actually writes to

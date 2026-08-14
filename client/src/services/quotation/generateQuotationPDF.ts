@@ -4,7 +4,7 @@ import type { DesignSelection, PriceEstimate, CustomerInfo } from '../../types'
 import { formatINR } from '../../data/prices'
 import { getJewelleryById } from '../../data/jewellery'
 import { getMaterialById, getPurityById } from '../../data/materials'
-import { getGemstoneById } from '../../data/gemstones'
+import { describeGemstoneSelection } from '../../utils/gemstonePrice'
 import { getStyleById } from '../../data/styles'
 
 const GOLD: [number, number, number] = [162, 130, 74]
@@ -50,7 +50,7 @@ export function generateQuotationPDF(
   const jewellery = selection.jewellery ? getJewelleryById(selection.jewellery) : undefined
   const material = selection.material ? getMaterialById(selection.material) : undefined
   const purity = selection.purity ? getPurityById(selection.purity) : undefined
-  const gem = selection.gemstone ? getGemstoneById(selection.gemstone) : undefined
+  const gemstoneSummary = describeGemstoneSelection(selection.gemstones)
   const style = selection.style ? getStyleById(selection.style) : undefined
 
   autoTable(doc, {
@@ -60,8 +60,7 @@ export function generateQuotationPDF(
       ['Jewellery type', jewellery?.name ?? '—'],
       ['Material', material?.name ?? '—'],
       ['Purity', purity?.label ?? '—'],
-      ['Gemstone', gem?.name ?? '—'],
-      ['Carat weight', selection.carat ? `${selection.carat} ct` : '—'],
+      ['Gemstones', gemstoneSummary || 'No stone'],
       ['Style', style?.name ?? '—'],
       ['Estimated metal weight', `${selection.weight || '—'} g`],
       ['Customer budget', formatINR(selection.budget)],

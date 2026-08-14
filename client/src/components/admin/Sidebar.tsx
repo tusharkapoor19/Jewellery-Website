@@ -1,11 +1,12 @@
 import React from "react";
 
-export type View = "orders" | "catalogue" | "customers";
+export type View = "orders" | "catalogue" | "customers" | "customDesign";
 
 interface SidebarProps {
   active: View;
   onNavigate: (view: View) => void;
   pendingCount: number;
+  pendingCustomDesignCount?: number;
   adminName: string;
   onLogout: () => void;
 }
@@ -14,6 +15,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   active,
   onNavigate,
   pendingCount,
+  pendingCustomDesignCount = 0,
   adminName,
   onLogout,
 }) => {
@@ -75,6 +77,19 @@ const Sidebar: React.FC<SidebarProps> = ({
             </svg>
           </span>
           Customers
+        </button>
+
+        <button
+          className={`nav-item ${active === "customDesign" ? "nav-item--active" : ""}`}
+          onClick={() => onNavigate("customDesign")}
+        >
+          <span className="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18">
+              <path d="M12 2 L14.5 8.5 L21 9 L16 13.2 L17.6 20 L12 16.3 L6.4 20 L8 13.2 L3 9 L9.5 8.5 Z" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+            </svg>
+          </span>
+          Custom Design
+          {pendingCustomDesignCount > 0 && <span className="nav-badge">{pendingCustomDesignCount}</span>}
         </button>
       </nav>
 

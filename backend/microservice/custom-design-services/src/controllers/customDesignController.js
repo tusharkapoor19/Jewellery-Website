@@ -1,9 +1,10 @@
 import CustomDesign from "../models/CustomDesign.js";
+import { ORDER_STATUSES } from "../utils/constants.js";
 import { mapFrontendPayloadToSchema, sendSuccess, sendError } from "../utils/helpers.js";
 
 // @desc    Create/store a new custom design submission
-// @route   POST /api/designs
-// @access  Public
+// @route   POST /custom-design-save
+// @access  Public (guest checkout - no login required to submit a request)
 export const createCustomDesign = async (req, res, next) => {
   try {
     const payload = mapFrontendPayloadToSchema(req.body);
@@ -14,17 +15,29 @@ export const createCustomDesign = async (req, res, next) => {
   }
 };
 
-// @desc    Get all custom design submissions (with basic filtering + pagination)
-// @route   GET /api/designs?orderStatus=Pending&page=1&limit=20
-// @access  Public (lock this down with auth in production)
+// @desc    Get custom design submissions (with basic filtering + pagination).
+//          Used both by customers (filtered by their own `email`, e.g. the
+//          "My Custom Orders" page) and by the admin dashboard's Custom
+//          Design tab (unfiltered / filtered by status + free-text search).
+// @route   GET /custom-design-save?orderStatus=Pending&email=...&search=...&page=1&limit=20
+// @access  Public
 export const getAllCustomDesigns = async (req, res, next) => {
   try {
-    const { orderStatus, paymentStatus, email, page = 1, limit = 20 } = req.query;
+    const { orderStatus, paymentStatus, email, search, page = 1, limit = 20 } = req.query;
 
     const filter = {};
     if (orderStatus) filter.orderStatus = orderStatus;
     if (paymentStatus) filter["payment.paymentStatus"] = paymentStatus;
     if (email) filter["customer.email"] = email.toLowerCase();
+
+    if (search) {
+      const re = new RegExp(search.trim(), "i");
+      filter.$or = [
+        { "customer.fullName": re },
+        { "customer.email": re },
+        { "customer.phone": re },
+      ];
+    }
 
     const skip = (Number(page) - 1) * Number(limit);
 
@@ -47,9 +60,29 @@ export const getAllCustomDesigns = async (req, res, next) => {
   }
 };
 
+// @desc    Summary counts for the admin dashboard's Custom Design tab
+// @route   GET /custom-design-save/stats/summary
+// @access  Private (admin)
+export const getDesignSummary = async (req, res, next) => {
+  try {
+    const [total, pending, inProgress, completed] = await Promise.all([
+      CustomDesign.countDocuments({}),
+      CustomDesign.countDocuments({ orderStatus: "Pending" }),
+      CustomDesign.countDocuments({
+        orderStatus: { $in: ["Design Review", "Quotation Sent", "Approved", "In Production"] },
+      }),
+      CustomDesign.countDocuments({ orderStatus: "Completed" }),
+    ]);
+
+    return sendSuccess(res, 200, { total, pending, inProgress, completed });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Get a single custom design by id
-// @route   GET /api/designs/:id
-// @access  Public
+// @route   GET /custom-design-save/:id
+// @access  Public (customer looks up their own request by id)
 export const getCustomDesignById = async (req, res, next) => {
   try {
     const design = await CustomDesign.findById(req.params.id);
@@ -60,14 +93,25 @@ export const getCustomDesignById = async (req, res, next) => {
   }
 };
 
-// @desc    Update a custom design (e.g. admin edits, estimation updates)
-// @route   PUT /api/designs/:id
+// @desc    Update a custom design (admin edits, e.g. order status + notes)
+// @route   PUT /custom-design-save/:id
+// @route   PATCH /custom-design-save/:id
 // @access  Private (admin)
 export const updateCustomDesign = async (req, res, next) => {
   try {
+    const allowed = ["orderStatus", "adminNotes", "estimation", "budget", "payment"];
+    const updates = {};
+    for (const key of allowed) {
+      if (req.body[key] !== undefined) updates[key] = req.body[key];
+    }
+
+    if (updates.orderStatus && !ORDER_STATUSES.includes(updates.orderStatus)) {
+      return sendError(res, 400, "Invalid orderStatus");
+    }
+
     const design = await CustomDesign.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body },
+      { $set: updates },
       { new: true, runValidators: true }
     );
     if (!design) return sendError(res, 404, "Design not found");
@@ -78,12 +122,13 @@ export const updateCustomDesign = async (req, res, next) => {
 };
 
 // @desc    Update only the order status of a design
-// @route   PATCH /api/designs/:id/status
+// @route   PATCH /custom-design-save/:id/status
 // @access  Private (admin)
 export const updateOrderStatus = async (req, res, next) => {
   try {
     const { orderStatus } = req.body;
     if (!orderStatus) return sendError(res, 400, "orderStatus is required");
+    if (!ORDER_STATUSES.includes(orderStatus)) return sendError(res, 400, "Invalid orderStatus");
 
     const design = await CustomDesign.findByIdAndUpdate(
       req.params.id,
@@ -98,13 +143,68 @@ export const updateOrderStatus = async (req, res, next) => {
 };
 
 // @desc    Delete a custom design
-// @route   DELETE /api/designs/:id
+// @route   DELETE /custom-design-save/:id
 // @access  Private (admin)
 export const deleteCustomDesign = async (req, res, next) => {
   try {
     const design = await CustomDesign.findByIdAndDelete(req.params.id);
     if (!design) return sendError(res, 404, "Design not found");
     return sendSuccess(res, 200, { id: req.params.id }, "Design deleted successfully");
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get the chat thread for a custom design request
+// @route   GET /custom-design-save/:id/messages
+// @access  Public (customer views their own thread by design id; admin uses it too)
+export const getMessages = async (req, res, next) => {
+  try {
+    const design = await CustomDesign.findById(req.params.id).select("messages");
+    if (!design) return sendError(res, 404, "Design not found");
+    return sendSuccess(res, 200, design.messages || []);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Customer sends a chat message about their custom design request
+// @route   POST /custom-design-save/:id/messages
+// @access  Public
+export const addCustomerMessage = async (req, res, next) => {
+  try {
+    const { text } = req.body;
+    if (!text || !text.trim()) return sendError(res, 400, "Message text is required");
+
+    const design = await CustomDesign.findByIdAndUpdate(
+      req.params.id,
+      { $push: { messages: { sender: "customer", text: text.trim() } } },
+      { new: true, runValidators: true }
+    ).select("messages");
+
+    if (!design) return sendError(res, 404, "Design not found");
+    return sendSuccess(res, 201, design.messages, "Message sent");
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Admin replies to a customer's custom design chat thread
+// @route   POST /custom-design-save/:id/messages/admin
+// @access  Private (admin)
+export const addAdminMessage = async (req, res, next) => {
+  try {
+    const { text } = req.body;
+    if (!text || !text.trim()) return sendError(res, 400, "Message text is required");
+
+    const design = await CustomDesign.findByIdAndUpdate(
+      req.params.id,
+      { $push: { messages: { sender: "admin", text: text.trim() } } },
+      { new: true, runValidators: true }
+    ).select("messages");
+
+    if (!design) return sendError(res, 404, "Design not found");
+    return sendSuccess(res, 201, design.messages, "Reply sent");
   } catch (error) {
     next(error);
   }

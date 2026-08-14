@@ -26,3 +26,17 @@ export const JEWELLERY_LABELS = {
   bracelet: "Bracelet",
   bangle: "Bangle",
 };
+
+// Maps gemstone ids used by the frontend (src/data/gemstones.ts) to the
+// friendlier display names stored in jewellery.gemstone[].name
+export const GEMSTONE_LABELS = {
+  none: "No Stone",
+  diamond: "Diamond",
+  ruby: "Ruby",
+  emerald: "Emerald",
+  sapphire: "Sapphire",
+  pearl: "Pearl",
+  polki: "Polki (Uncut Diamond)",
+};
+
+export const CHAT_SENDERS = ["customer", "admin"];

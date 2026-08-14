@@ -2,23 +2,58 @@ import express from "express";
 import {
   createCustomDesign,
   getAllCustomDesigns,
+  getDesignSummary,
   getCustomDesignById,
   updateCustomDesign,
   updateOrderStatus,
   deleteCustomDesign,
+  getMessages,
+  addCustomerMessage,
+  addAdminMessage,
 } from "../controllers/customDesignController.js";
 import { validateCustomDesign, validateObjectId } from "../middleware/validation.js";
+import authMiddleware from "../middleware/authMidd.js";
+import adminMiddleware from "../middleware/adminMidd.js";
 
 const router = express.Router();
 
+// Public: customer submits a design (no login required) / lists designs
+// (used by the customer's "My Custom Orders" page filtered by their email,
+// and by the admin dashboard's Custom Design tab, which sends its request
+// with the admin's Bearer token attached - harmless here since this route
+// itself doesn't require it).
 router.route("/").post(validateCustomDesign, createCustomDesign).get(getAllCustomDesigns);
+
+// Admin-only: summary counts for the Custom Design tab's stat cards.
+router.get("/stats/summary", authMiddleware, adminMiddleware, getDesignSummary);
 
 router
   .route("/:id")
   .get(validateObjectId, getCustomDesignById)
-  .put(validateObjectId, updateCustomDesign)
-  .delete(validateObjectId, deleteCustomDesign);
+  .put(validateObjectId, authMiddleware, adminMiddleware, updateCustomDesign)
+  .patch(validateObjectId, authMiddleware, adminMiddleware, updateCustomDesign)
+  .delete(validateObjectId, authMiddleware, adminMiddleware, deleteCustomDesign);
 
-router.patch("/:id/status", validateObjectId, updateOrderStatus);
+router.patch(
+  "/:id/status",
+  validateObjectId,
+  authMiddleware,
+  adminMiddleware,
+  updateOrderStatus
+);
+
+// Chat between customer and admin about a specific design request.
+router
+  .route("/:id/messages")
+  .get(validateObjectId, getMessages)
+  .post(validateObjectId, addCustomerMessage);
+
+router.post(
+  "/:id/messages/admin",
+  validateObjectId,
+  authMiddleware,
+  adminMiddleware,
+  addAdminMessage
+);
 
 export default router;

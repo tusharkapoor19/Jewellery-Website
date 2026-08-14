@@ -43,6 +43,9 @@ const customDesignSchema = new mongoose.Schema(
         type: String,
         // 14K,18K,22K
       },
+      // Multiple gemstones can be attached to a single piece, each with the
+      // specific number of stones the customer wants (e.g. Diamond x4,
+      // Pearl x5).
       gemstone: [
         {
           name: String,
@@ -130,6 +133,28 @@ const customDesignSchema = new mongoose.Schema(
     adminNotes: {
       type: String,
     },
+    // Chat thread between the customer and admin about this specific
+    // custom design request. Powers the "My Custom Orders" chat on the
+    // customer side and the Custom Design tab reply box in the admin
+    // dashboard.
+    messages: [
+      {
+        sender: {
+          type: String,
+          enum: ["customer", "admin"],
+          required: true,
+        },
+        text: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

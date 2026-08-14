@@ -54,6 +54,9 @@ export default function Home() {
                   <a href="#process">
                     <GhostButton>See how it works</GhostButton>
                   </a>
+                  <Link to="/my-custom-orders">
+                    <GhostButton>View my orders</GhostButton>
+                  </Link>
                 </div>
                 <div className="mt-14 grid grid-cols-3 gap-6 max-w-md">
                   {TRUST.map((t) => (

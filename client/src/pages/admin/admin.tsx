@@ -4,6 +4,7 @@ import Sidebar, { View } from "../../components/admin/Sidebar";
 import PendingOrders from "../../components/admin/PendingOrders";
 import Catalogue from "../../components/admin/Catalogue";
 import Customers from "../../components/admin/Customers";
+import CustomDesignAdmin from "../../components/admin/CustomDesignAdmin";
 import { useAuth } from "../../context/AuthContext";
 import { orderToUi, productToUi, userToUi } from "../../api/adapters";
 import { fetchOrders, updateOrderStatus as updateOrderStatusApi } from "../../api/orders";
@@ -27,7 +28,10 @@ const ADMIN_VIEW_STORAGE_KEY = "hiranya_admin_view";
 
 const getInitialView = (): View => {
   const stored = window.localStorage.getItem(ADMIN_VIEW_STORAGE_KEY);
-  return stored === "catalogue" || stored === "orders" || stored === "customers"
+  return stored === "catalogue" ||
+    stored === "orders" ||
+    stored === "customers" ||
+    stored === "customDesign"
     ? stored
     : "orders";
 };
@@ -131,6 +135,7 @@ const Dashboard: React.FC = () => {
   };
 
   const pendingCount = orders.filter((o) => o.status === "pending").length;
+  const [customDesignPendingCount, setCustomDesignPendingCount] = useState(0);
 
   return (
     <div className="admin-shell">
@@ -138,6 +143,7 @@ const Dashboard: React.FC = () => {
         active={view}
         onNavigate={handleNavigate}
         pendingCount={pendingCount}
+        pendingCustomDesignCount={customDesignPendingCount}
         adminName={name || "Store Admin"}
         onLogout={logout}
       />
@@ -151,7 +157,9 @@ const Dashboard: React.FC = () => {
           </div>
         )}
 
-        {loading ? (
+        {view === "customDesign" ? (
+          <CustomDesignAdmin onPendingCountChange={setCustomDesignPendingCount} />
+        ) : loading ? (
           <div className="empty-state">
             <p>Loading…</p>
             <span>Fetching the latest orders and catalogue.</span>

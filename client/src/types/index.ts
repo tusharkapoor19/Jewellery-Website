@@ -41,6 +41,19 @@ export interface Gemstone {
   color: string
 }
 
+// A single gemstone chosen by the customer along with how many stones of
+// that type they want (e.g. { id: 'diamond', quantity: 4 }).
+export interface SelectedGemstone {
+  id: GemstoneId
+  quantity: number
+}
+
+export interface ChatMessage {
+  sender: 'customer' | 'admin'
+  text: string
+  createdAt: string
+}
+
 export type StyleId = 'traditional' | 'modern' | 'minimalist' | 'antique' | 'fusion' | 'temple'
 
 export interface Style {
@@ -54,8 +67,9 @@ export interface DesignSelection {
   jewellery: JewelleryId | null
   material: MaterialId | null
   purity: string | null
-  gemstone: GemstoneId | null
-  carat: number
+  // Multiple gemstones, each with a specific quantity of stones
+  // (e.g. Diamond x4, Pearl x5). Empty array = plain metal piece.
+  gemstones: SelectedGemstone[]
   style: StyleId | null
   budget: number
   referenceImage: string | null
@@ -102,4 +116,29 @@ export interface SubmittedDesign extends DesignSelection {
   customer: CustomerInfo
   createdAt: string
   estimate: PriceEstimate
+}
+
+// Shape returned by the custom-design backend (GET /custom-design-save) when
+// listing custom design requests — looser than SubmittedDesign since it
+// comes back in the nested Mongo schema shape, not the flat frontend one.
+// Used by both the customer "My Custom Orders" page and the admin
+// dashboard's Custom Design tab.
+export interface CustomDesignRecord {
+  _id: string
+  createdAt: string
+  updatedAt?: string
+  customer?: { fullName?: string; email?: string; phone?: string; address?: string }
+  jewellery?: {
+    type?: string
+    material?: string
+    purity?: string
+    gemstone?: { name: string; quantity: number }[]
+    style?: string
+    weight?: number
+  }
+  budget?: { min?: number; max?: number; estimatedPrice?: number }
+  estimation?: { totalEstimatedCost?: number }
+  orderStatus?: string
+  adminNotes?: string
+  messages?: ChatMessage[]
 }

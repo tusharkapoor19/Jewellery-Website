@@ -1265,3 +1265,252 @@ textarea {
   font-weight: 600;
   color: var(--gold-700, #8a6a1e);
 }
+
+/* =====================================
+   Admin · Custom Design tab
+   Same panel/stat-card/field/status-pill language as the rest of the
+   admin dashboard (Orders/Catalogue/Customers) - additive only, nothing
+   above this block is modified.
+===================================== */
+
+.cd-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.cd-list {
+  background: #fff;
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: calc(100vh - 260px);
+  overflow-y: auto;
+  position: sticky;
+  top: 40px;
+}
+
+.cd-list-item {
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.cd-list-item:hover {
+  background: #fbf9f4;
+}
+
+.cd-list-item--active {
+  border-color: var(--gold-500);
+  background: rgba(199, 162, 74, 0.08);
+}
+
+.cd-list-item-title {
+  margin: 0 0 3px;
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--gold-dim);
+}
+
+.cd-list-item-sub {
+  margin: 0 0 6px;
+  font-size: 12.5px;
+  color: var(--charcoal-soft);
+}
+
+.cd-detail-card {
+  background: #fff;
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 20px;
+}
+
+.cd-detail-card h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  margin: 0 0 4px;
+  color: var(--gold-dim);
+}
+
+.cd-detail-sub {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--charcoal-soft);
+}
+
+.cd-spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.cd-spec-label {
+  margin: 0 0 3px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold-500);
+}
+
+.cd-spec-value {
+  margin: 0;
+  font-size: 14px;
+  color: var(--charcoal);
+  font-weight: 600;
+}
+
+.cd-gem-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.cd-gem-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--amber-100);
+  color: var(--amber-600);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.cd-save-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.cd-save-msg {
+  font-size: 13px;
+  color: var(--charcoal-soft);
+}
+
+.cd-chat-scroll {
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.cd-chat-empty {
+  color: var(--charcoal-soft);
+  font-size: 13.5px;
+}
+
+.cd-chat-row {
+  display: flex;
+}
+
+.cd-chat-row--admin {
+  justify-content: flex-end;
+}
+
+.cd-chat-bubble {
+  max-width: 80%;
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-panel-alt);
+}
+
+.cd-chat-bubble--admin {
+  background: rgba(199, 162, 74, 0.12);
+  border-color: rgba(199, 162, 74, 0.35);
+}
+
+.cd-chat-sender {
+  margin: 0 0 3px;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold-500);
+}
+
+.cd-chat-text {
+  margin: 0;
+  white-space: pre-wrap;
+  color: var(--charcoal);
+}
+
+.cd-chat-time {
+  margin: 4px 0 0;
+  font-size: 10.5px;
+  color: var(--charcoal-soft);
+}
+
+.cd-chat-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.cd-chat-input {
+  flex: 1;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 13.5px;
+  outline: none;
+  background: var(--bg-deep);
+  color: var(--charcoal);
+}
+
+.cd-chat-input:focus {
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 3px rgba(199, 162, 74, 0.18);
+}
+
+.status-pill--design-review,
+.status-pill--quotation-sent {
+  background: var(--amber-100);
+  color: var(--amber-600);
+}
+
+.status-pill--in-production {
+  background: var(--gold-soft);
+  color: var(--gold-dim);
+}
+
+.status-pill--completed {
+  background: var(--green-100);
+  color: var(--green-600);
+}
+
+.status-pill--cancelled {
+  background: var(--rose-100);
+  color: var(--rose-600);
+}
+
+@media (max-width: 1080px) {
+  .cd-layout {
+    grid-template-columns: 1fr;
+  }
+  .cd-list {
+    position: static;
+    max-height: none;
+  }
+}

@@ -32,15 +32,15 @@ export async function estimateFromImage(
   const range = category.maxWeight - category.minWeight
   const weight = Math.round((category.minWeight + range * (0.3 + analysis.complexityScore / 250)) * 10) / 10
 
-  // Sparkle score nudges an implied gemstone carat.
+  // Sparkle score nudges an implied gemstone quantity (small accent stones).
   const impliedCarat = Math.round((analysis.sparkleScore / 100) * 1.2 * 10) / 10
+  const impliedQuantity = Math.max(1, Math.round(impliedCarat * 4))
 
   const syntheticSelection: DesignSelection = {
     jewellery: category.id,
     material: material.id,
     purity: selection.purity ?? (material.id === 'gold' ? 'gold-22k' : 'platinum-950'),
-    gemstone: impliedCarat > 0.15 ? 'diamond' : 'none',
-    carat: impliedCarat,
+    gemstones: impliedCarat > 0.15 ? [{ id: 'diamond', quantity: impliedQuantity }] : [],
     style: selection.style ?? (analysis.complexityScore > 60 ? 'traditional' : 'modern'),
     budget: selection.budget,
     referenceImage: dataUrl,

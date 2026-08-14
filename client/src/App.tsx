@@ -48,6 +48,7 @@ const Checkout = React.lazy (() => import("./pages/Checkout/Checkout"))
 const Payment = React.lazy (() => import("./pages/Payment/Payment"))
 const HomeCD = React.lazy (() => import('./pages/Home-CD/index'))
 const CustomDesign = React.lazy (() => import('./pages/CustomDesign'))
+const MyCustomOrders = React.lazy (() => import('./pages/MyCustomOrders'))
 
 
 const BrandStory = React.lazy (() => import("./pages/BrandStory/BrandStory"))
@@ -506,6 +507,20 @@ const TryOn = React.lazy (() => import("./pages/TryOn/TryOn"))
                         </Suspense>
                     }
 
+                />
+
+                <Route
+                    path="/my-custom-orders"
+                    element={
+                        <Suspense fallback={
+                            <>
+                                <TopBar />
+                                <Navbar />
+                            </>
+                        } >
+                            <MyCustomOrders />
+                        </Suspense>
+                    }
                 />
 
                 <Route

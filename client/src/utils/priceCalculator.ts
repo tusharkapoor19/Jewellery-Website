@@ -3,7 +3,7 @@ import { getJewelleryById } from '../data/jewellery'
 import { getStyleById } from '../data/styles'
 import { GST_RATE, WASTAGE_RATE } from '../data/prices'
 import { getEffectiveRate } from './metalRates'
-import { calculateGemstoneCost } from './gemstonePrice'
+import { calculateGemstonesCost, describeGemstoneSelection } from './gemstonePrice'
 import { estimateWeight } from './estimateWeight'
 
 /**
@@ -26,7 +26,7 @@ export function calculatePriceEstimate(selection: DesignSelection): PriceEstimat
 
   const makingCharges = jewellery ? Math.round(jewellery.makingChargePerGram * weight) : 0
 
-  const gemstoneCost = calculateGemstoneCost(selection.gemstone ?? 'none', selection.carat || 0)
+  const gemstoneCost = calculateGemstonesCost(selection.gemstones)
 
   const subtotal = metalCost + makingCharges + gemstoneCost
   const styleMultiplier = style ? style.priceMultiplier : 1
@@ -39,7 +39,11 @@ export function calculatePriceEstimate(selection: DesignSelection): PriceEstimat
   const breakdown: PriceBreakdownItem[] = [
     { label: 'Metal cost', value: metalCost, detail: `${weight}g @ ${rate.toLocaleString('en-IN')}/g incl. wastage` },
     { label: 'Making charges', value: makingCharges, detail: jewellery ? `${jewellery.makingChargePerGram.toLocaleString('en-IN')}/g` : undefined },
-    { label: 'Gemstone cost', value: gemstoneCost, detail: selection.carat ? `${selection.carat} carat` : undefined },
+    {
+      label: 'Gemstone cost',
+      value: gemstoneCost,
+      detail: selection.gemstones?.length ? describeGemstoneSelection(selection.gemstones) : undefined,
+    },
     { label: 'Style & craftsmanship', value: styleMarkup, detail: style ? style.name : undefined },
     { label: 'GST (3%)', value: gst },
   ]
