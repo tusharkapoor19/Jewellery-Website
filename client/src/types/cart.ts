@@ -107,6 +107,6 @@ export interface CartContextType {
 
     ) => Promise<void>;
 
-    clearCart: () => void;
+    clearCart: () => Promise<void>;
 
 }

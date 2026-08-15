@@ -40,6 +40,12 @@ router.delete(
     cartController.removeProductFromCart
 );
 
+router.delete(
+    "/clear",
+    authMidd,
+    cartController.clearCart
+);
+
 router.get(
     "/get",
     authMidd,

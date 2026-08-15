@@ -251,6 +251,53 @@ class CartService {
 
     }
 
+
+    /* =====================================================
+       CLEAR CART
+       Called after an order has been successfully placed
+       and paid for, so purchased items don't linger in
+       the cart.
+    ===================================================== */
+
+    async clearCart() {
+
+        const response =
+            await fetch(
+
+                `${BASE_URL}/clear`,
+
+                {
+
+                    method: "DELETE",
+
+                    headers:
+                        this.getHeaders()
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.message ||
+                "Failed to clear cart"
+
+            );
+
+        }
+
+
+        return data;
+
+    }
+
 }
 
 

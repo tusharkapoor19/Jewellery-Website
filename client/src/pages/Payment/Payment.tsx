@@ -148,7 +148,7 @@ interface VerifyPaymentPayload {
 const Payment = () => {
   const navigate = useNavigate();
 
-  const { refreshCart } = useCart();
+  const { clearCart } = useCart();
 
 
   const location = useLocation();
@@ -281,7 +281,14 @@ setOrder({
         }
 
         toast.success("Payment successful.");
-        await refreshCart();
+
+        /*
+         * Order paid for successfully — the purchased
+         * items no longer belong in the cart. Clear it
+         * on the backend (not just local state) so it
+         * doesn't reappear on the next cart refresh/poll.
+         */
+        await clearCart();
 
        navigate("/order-success", {
     replace: true,
@@ -304,7 +311,7 @@ setOrder({
         setProcessingPayment(false);
       }
     },
-    [navigate]
+    [navigate, clearCart]
   );
     const initializePayment = useCallback(async () => {
     if (!order) {
@@ -373,11 +380,39 @@ setOrder({
         },
 
         modal: {
-          ondismiss: () => {
+          ondismiss: async () => {
+            /*
+             * If verification for a completed payment is
+             * already underway (rare race between the
+             * handler firing and the modal closing), don't
+             * cancel the order out from under it.
+             */
+            if (paymentVerifiedRef.current) {
+              return;
+            }
+
             paymentStartedRef.current = false;
             setProcessingPayment(false);
 
             toast("Payment cancelled.");
+
+            /*
+             * The order was created (as "Pending") before
+             * payment started. Since the payment was
+             * cancelled/abandoned, cancel that order now so
+             * it doesn't linger and look like a placed
+             * order — this also restores the reserved
+             * stock. The cart is untouched, so the product
+             * remains in it.
+             */
+            try {
+              await orderService.cancelOrder(order.orderID);
+            } catch (cancelError) {
+              console.error(
+                "Failed to auto-cancel order after payment dismissal:",
+                cancelError
+              );
+            }
           },
         },
 

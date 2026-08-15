@@ -499,6 +499,54 @@ const removeProductFromCart = async (
 
 
 /* =========================================================
+   CLEAR CART
+   Empties the cart after an order has been placed/paid for
+   so already-ordered items don't linger in the cart.
+========================================================= */
+
+const clearCart = async (
+    userId
+) => {
+
+    const cart =
+        await Cart.findOne({
+            userId
+        });
+
+
+    if (!cart) {
+
+        return {
+
+            cartItems: [],
+
+            cartValue: 0
+
+        };
+
+    }
+
+
+    cart.items = [];
+
+    cart.totalValue = 0;
+
+
+    await cart.save();
+
+
+    return {
+
+        cartItems: [],
+
+        cartValue: 0
+
+    };
+
+};
+
+
+/* =========================================================
    GET CART
 ========================================================= */
 
@@ -664,6 +712,8 @@ module.exports = {
     updateCartQuantity,
 
     removeProductFromCart,
+
+    clearCart,
 
     getCart
 

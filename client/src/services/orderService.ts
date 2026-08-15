@@ -123,6 +123,45 @@ const orderService = {
 
     },
 
+    /*
+     * Cancels a still-Pending order — used when a payment
+     * attempt is cancelled/dismissed before completion, so
+     * the order doesn't linger as if it were placed and the
+     * reserved stock is restored.
+     */
+    cancelOrder: async (orderID: string) => {
+
+        try {
+
+            const response = await axios.patch(
+
+                `${API}/${orderID}/cancel`,
+
+                {},
+
+                {
+
+                    headers: getHeaders()
+
+                }
+
+            );
+
+            return response.data;
+
+        }
+
+        catch (error: any) {
+
+            console.error("CANCEL ORDER FAILED");
+            console.error(error);
+
+            throw error;
+
+        }
+
+    },
+
     getMyOrders: async () => {
 
         try {

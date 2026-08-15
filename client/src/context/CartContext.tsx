@@ -223,9 +223,27 @@ export const CartProvider = ({
 
     /* =====================================================
        CLEAR CART
+       Persists the clear on the backend (so items don't
+       reappear on the next refresh/poll) and then syncs
+       local state.
     ===================================================== */
 
-    const clearCart = () => {
+    const clearCart = async () => {
+
+        try {
+
+            await cartService.clearCart();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "CLEAR CART ERROR:",
+                error
+            );
+
+        }
 
         setCartItems([]);
 
