@@ -1,5 +1,36 @@
 import crypto from "crypto";
+import axios from "axios";
 import { MATERIAL_LABELS, JEWELLERY_LABELS, GEMSTONE_LABELS, CUSTOM_ORDER_ID_PREFIX, CUSTOM_ORDER_ID_PAD_LENGTH } from "./constants.js";
+
+// notification-service base URL. Mirrors the same "service-to-service,
+// fire-and-forget" pattern payment_service already uses to create
+// notifications (see payment_service/src/service/payment_svc.js).
+const NOTIFICATION_SERVICE_URL =
+  process.env.NOTIFICATION_SERVICE_URL || "http://localhost:5007/notifications";
+
+// A design's userId is only a real account id (safe to notify) when it's a
+// 24-char Mongo ObjectId hex string. Guest submissions get a
+// `guest_<hash>` id (see generateGuestUserId below) and have no account to
+// notify.
+const isRealUserId = (userId) => /^[a-fA-F0-9]{24}$/.test(String(userId || ""));
+
+// Fire-and-forget notification to the customer who owns a custom design
+// request. Never throws - a notification-service hiccup should never break
+// the admin action (status update / chat reply) that triggered it.
+export const notifyCustomer = async (userId, title, message) => {
+  if (!isRealUserId(userId)) return;
+
+  try {
+    await axios.post(NOTIFICATION_SERVICE_URL, {
+      userId,
+      title,
+      message,
+      type: "CUSTOM_DESIGN",
+    });
+  } catch (error) {
+    console.log("Custom Design Notification Error:", error.message);
+  }
+};
 
 /**
  * The current frontend (src/services/api/designs.ts) posts a fairly flat

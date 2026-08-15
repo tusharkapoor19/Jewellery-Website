@@ -153,6 +153,9 @@ const Navbar = () => {
   const [showNotifications, setShowNotifications] =
     useState<boolean>(false);
 
+  const [notifUserId, setNotifUserId] =
+    useState<string | null>(null);
+
   // ====================================================
   // NAVBAR REF
   // ====================================================
@@ -273,6 +276,8 @@ const Navbar = () => {
         const userId =
           profileResponse.data.user.id;
 
+        setNotifUserId(userId);
+
         const response =
           await axios.get(
             `http://localhost:5007/notifications/${userId}`
@@ -385,29 +390,26 @@ const Navbar = () => {
   };
 
   // ====================================================
-  // DELETE NOTIFICATION
+  // MARK ALL NOTIFICATIONS AS READ
   // ====================================================
 
-  const handleDeleteNotification = async (
-    e: React.MouseEvent,
-    id: string
-  ) => {
-    e.stopPropagation();
+  const handleMarkAllAsRead = async () => {
+    if (!notifUserId) return;
 
     try {
-      await axios.delete(
-        `http://localhost:5007/notifications/${id}`
+      await axios.patch(
+        `http://localhost:5007/notifications/${notifUserId}/read-all`
       );
 
       setNotifications((prev) =>
-        prev.filter(
-          (notif) =>
-            notif._id !== id
-        )
+        prev.map((notif) => ({
+          ...notif,
+          isRead: true,
+        }))
       );
     } catch (error) {
       console.error(
-        "Failed to delete notification",
+        "Failed to mark all notifications as read",
         error
       );
     }
@@ -810,17 +812,17 @@ const Navbar = () => {
                   Notifications
                 </h3>
 
-                <button
-                  onClick={() =>
-                    setShowNotifications(
-                      false
-                    )
-                  }
-                  className="close-notif-btn"
-                  aria-label="Close notifications"
-                >
-                  <X size={16} />
-                </button>
+                {notifications.filter(
+                  (n) => !n.isRead
+                ).length > 0 && (
+                  <button
+                    onClick={handleMarkAllAsRead}
+                    className="mark-all-read-btn"
+                    aria-label="Mark all notifications as read"
+                  >
+                    Mark as read
+                  </button>
+                )}
 
               </div>
 
@@ -872,20 +874,6 @@ const Navbar = () => {
                           </span>
 
                         </div>
-
-                        <button
-                          className="delete-notif-btn"
-                          onClick={(e) =>
-                            handleDeleteNotification(
-                              e,
-                              notif._id
-                            )
-                          }
-                          title="Delete notification"
-                          aria-label="Delete notification"
-                        >
-                          <X size={14} />
-                        </button>
 
                       </div>
                     )

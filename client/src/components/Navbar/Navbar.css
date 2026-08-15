@@ -983,18 +983,20 @@
     font-family:"Cormorant Garamond",serif;
 }
 
-.close-notif-btn{
+.mark-all-read-btn{
     background:none;
     border:none;
     cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#666;
+    padding:0;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--gold,#C8A24D);
+    white-space:nowrap;
 }
 
-.close-notif-btn:hover{
-    color:#000;
+.mark-all-read-btn:hover{
+    color:#a5822f;
+    text-decoration:underline;
 }
 
 .notification-list{
@@ -1050,25 +1052,6 @@
     margin-top:8px;
     font-size:11px;
     color:#999;
-}
-
-.delete-notif-btn{
-    width:28px;
-    height:28px;
-    border:none;
-    border-radius:50%;
-    background:transparent;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#888;
-    transition:.25s;
-}
-
-.delete-notif-btn:hover{
-    background:#ffe8e8;
-    color:#d32f2f;
 }
 
 .no-notifications{

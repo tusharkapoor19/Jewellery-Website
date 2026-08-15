@@ -6,6 +6,7 @@ import {
   generateCustomOrderId,
   sendSuccess,
   sendError,
+  notifyCustomer,
 } from "../utils/helpers.js";
 
 // @desc    Create/store a new custom design submission
@@ -157,12 +158,27 @@ export const updateCustomDesign = async (req, res, next) => {
       return sendError(res, 400, "Invalid orderStatus");
     }
 
+    const previousStatus = updates.orderStatus
+      ? (await CustomDesign.findById(req.params.id).select("orderStatus"))?.orderStatus
+      : undefined;
+
     const design = await CustomDesign.findByIdAndUpdate(
       req.params.id,
       { $set: updates },
       { new: true, runValidators: true }
     );
     if (!design) return sendError(res, 404, "Design not found");
+
+    // Let the customer know their custom order moved forward (e.g.
+    // Pending -> Approved), but only when the status actually changed.
+    if (updates.orderStatus && updates.orderStatus !== previousStatus) {
+      notifyCustomer(
+        design.userId,
+        "Custom Design Update",
+        `Your custom design order ${design.customOrderId} status has been updated to "${design.orderStatus}".`
+      );
+    }
+
     return sendSuccess(res, 200, design, "Design updated successfully");
   } catch (error) {
     next(error);
@@ -184,6 +200,13 @@ export const updateOrderStatus = async (req, res, next) => {
       { new: true, runValidators: true }
     );
     if (!design) return sendError(res, 404, "Design not found");
+
+    notifyCustomer(
+      design.userId,
+      "Custom Design Update",
+      `Your custom design order ${design.customOrderId} status has been updated to "${design.orderStatus}".`
+    );
+
     return sendSuccess(res, 200, design, "Order status updated");
   } catch (error) {
     next(error);
@@ -249,9 +272,16 @@ export const addAdminMessage = async (req, res, next) => {
       req.params.id,
       { $push: { messages: { sender: "admin", text: text.trim() } } },
       { new: true, runValidators: true }
-    ).select("messages");
+    ).select("messages userId customOrderId");
 
     if (!design) return sendError(res, 404, "Design not found");
+
+    notifyCustomer(
+      design.userId,
+      "New Message on Your Custom Design",
+      `You have a new message from our team about your custom design order ${design.customOrderId}.`
+    );
+
     return sendSuccess(res, 201, design.messages, "Reply sent");
   } catch (error) {
     next(error);
