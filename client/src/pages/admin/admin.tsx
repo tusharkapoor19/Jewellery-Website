@@ -11,9 +11,9 @@ import Customers from "../../components/admin/Customers";
 import CustomDesignAdmin from "../../components/admin/CustomDesignAdmin";
 
 import { useAuth } from "../../context/AuthContext";
-<<<<<<< HEAD
 
 import {
+  offerToUi,
   orderToUi,
   productToUi,
   userToUi,
@@ -24,10 +24,6 @@ import {
   updateOrderStatus as updateOrderStatusApi,
 } from "../../api/orders";
 
-=======
-import { offerToUi, orderToUi, productToUi, userToUi } from "../../api/adapters";
-import { fetchOrders, updateOrderStatus as updateOrderStatusApi } from "../../api/orders";
->>>>>>> 5f8e294 (offers)
 import {
   addProduct as addProductApi,
   deleteProduct as deleteProductApi,
@@ -42,18 +38,7 @@ import {
   fetchUsers,
   updateUserRole as updateUserRoleApi,
 } from "../../api/users";
-<<<<<<< HEAD
 
-import { ApiError } from "../../api/client";
-
-import {
-  Customer,
-  OrderItem,
-  OrderStatus,
-  Product,
-  UserRole,
-} from "../../types/types";
-=======
 import {
   addOffer as addOfferApi,
   deleteOffer as deleteOfferApi,
@@ -62,9 +47,17 @@ import {
   updateOffer as updateOfferApi,
   UpdateOfferPayload,
 } from "../../api/offers";
+
 import { ApiError } from "../../api/client";
-import { Customer, Offer, OrderItem, OrderStatus, Product, UserRole } from "../../types/types";
->>>>>>> 5f8e294 (offers)
+
+import {
+  Customer,
+  Offer,
+  OrderItem,
+  OrderStatus,
+  Product,
+  UserRole,
+} from "../../types/types";
 
 const ADMIN_VIEW_STORAGE_KEY = "hiranya_admin_view";
 
@@ -73,21 +66,10 @@ const NOTIFICATION_SERVICE_URL =
   "http://localhost:5006";
 
 const getInitialView = (): View => {
-<<<<<<< HEAD
   const stored = window.localStorage.getItem(ADMIN_VIEW_STORAGE_KEY);
   return stored === "analytics" ||
     stored === "catalogue" ||
-<<<<<<< HEAD
-=======
-  const stored = window.localStorage.getItem(
-    ADMIN_VIEW_STORAGE_KEY
-  );
-
-  return stored === "catalogue" ||
->>>>>>> c49b6c8 (Update project changes)
-=======
     stored === "offers" ||
->>>>>>> 5f8e294 (offers)
     stored === "orders" ||
     stored === "customers" ||
     stored === "customDesign"
@@ -109,6 +91,9 @@ const Dashboard: React.FC = () => {
 
   const [customers, setCustomers] =
     useState<Customer[]>([]);
+
+  const [offers, setOffers] =
+    useState<Offer[]>([]);
 
   /*
    * Keeps the backend userID for every order.
@@ -144,42 +129,28 @@ const Dashboard: React.FC = () => {
     );
   };
 
-<<<<<<< HEAD
   /*
    * ============================================================
    * Load Dashboard Data
    * ============================================================
    */
-=======
-  const [orders, setOrders] = useState<OrderItem[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [customers, setCustomers] = useState<Customer[]>([]);
-  const [offers, setOffers] = useState<Offer[]>([]);
-
-  const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState("");
->>>>>>> 5f8e294 (offers)
 
   const loadData = useCallback(async () => {
     setLoading(true);
     setLoadError("");
 
     try {
-<<<<<<< HEAD
       const [
         apiOrders,
         apiProducts,
         apiUsers,
+        apiOffers,
       ] = await Promise.all([
-=======
-      const [apiOrders, apiProducts, apiUsers, apiOffers] = await Promise.all([
->>>>>>> 5f8e294 (offers)
         fetchOrders(),
         fetchProducts(),
         fetchUsers(),
         fetchAllOffers(),
       ]);
-<<<<<<< HEAD
 
       /*
        * Store backend userID separately.
@@ -220,12 +191,10 @@ const Dashboard: React.FC = () => {
       setCustomers(
         apiUsers.map(userToUi)
       );
-=======
-      setOrders(apiOrders.map(orderToUi));
-      setProducts(apiProducts.map(productToUi));
-      setCustomers(apiUsers.map(userToUi));
-      setOffers(apiOffers.map(offerToUi));
->>>>>>> 5f8e294 (offers)
+
+      setOffers(
+        apiOffers.map(offerToUi)
+      );
     } catch (error) {
       if (
         error instanceof ApiError &&
@@ -484,7 +453,6 @@ const Dashboard: React.FC = () => {
     );
   };
 
-<<<<<<< HEAD
   const handleDeleteCustomer = async (
     customerId: string
   ) => {
@@ -494,6 +462,56 @@ const Dashboard: React.FC = () => {
       prev.filter(
         (customer) =>
           customer.id !== customerId
+      )
+    );
+  };
+
+  /*
+   * ============================================================
+   * OFFERS
+   * ============================================================
+   */
+
+  const handleAddOffer = async (
+    payload: NewOfferPayload
+  ) => {
+    const created =
+      await addOfferApi(payload);
+
+    setOffers((prev) => [
+      offerToUi(created),
+      ...prev,
+    ]);
+  };
+
+  const handleUpdateOffer = async (
+    offerId: string,
+    payload: UpdateOfferPayload
+  ) => {
+    const updated =
+      await updateOfferApi(
+        offerId,
+        payload
+      );
+
+    setOffers((prev) =>
+      prev.map((offer) =>
+        offer.id === offerId
+          ? offerToUi(updated)
+          : offer
+      )
+    );
+  };
+
+  const handleDeleteOffer = async (
+    offerId: string
+  ) => {
+    await deleteOfferApi(offerId);
+
+    setOffers((prev) =>
+      prev.filter(
+        (offer) =>
+          offer.id !== offerId
       )
     );
   };
@@ -510,31 +528,17 @@ const Dashboard: React.FC = () => {
         order.status === "pending"
     ).length;
 
+  const activeOfferCount =
+    offers.filter(
+      (offer) =>
+        offer.isActive
+    ).length;
+
   /*
    * ============================================================
    * DASHBOARD
    * ============================================================
    */
-=======
-  const handleAddOffer = async (payload: NewOfferPayload) => {
-    const created = await addOfferApi(payload);
-    setOffers((prev) => [offerToUi(created), ...prev]);
-  };
-
-  const handleUpdateOffer = async (id: string, payload: UpdateOfferPayload) => {
-    const updated = await updateOfferApi(id, payload);
-    setOffers((prev) => prev.map((o) => (o.id === id ? offerToUi(updated) : o)));
-  };
-
-  const handleDeleteOffer = async (id: string) => {
-    await deleteOfferApi(id);
-    setOffers((prev) => prev.filter((o) => o.id !== id));
-  };
-
-  const pendingCount = orders.filter((o) => o.status === "pending").length;
-  const activeOfferCount = offers.filter((o) => o.isActive).length;
-  const [customDesignPendingCount, setCustomDesignPendingCount] = useState(0);
->>>>>>> 5f8e294 (offers)
 
   return (
     <div className="admin-shell">
@@ -543,18 +547,13 @@ const Dashboard: React.FC = () => {
         active={view}
         onNavigate={handleNavigate}
         pendingCount={pendingCount}
-<<<<<<< HEAD
         pendingCustomDesignCount={
           customDesignPendingCount
         }
+        activeOfferCount={activeOfferCount}
         adminName={
           name || "Store Admin"
         }
-=======
-        pendingCustomDesignCount={customDesignPendingCount}
-        activeOfferCount={activeOfferCount}
-        adminName={name || "Store Admin"}
->>>>>>> 5f8e294 (offers)
         onLogout={logout}
       />
 
@@ -584,19 +583,13 @@ const Dashboard: React.FC = () => {
          */}
 
         {view === "customDesign" ? (
-<<<<<<< HEAD
-          <CustomDesignAdmin onPendingCountChange={setCustomDesignPendingCount} />
-        ) : view === "analytics" ? (
-          <Analytics onUnauthorized={logout} />
-=======
-
           <CustomDesignAdmin
             onPendingCountChange={
               setCustomDesignPendingCount
             }
           />
-
->>>>>>> c49b6c8 (Update project changes)
+        ) : view === "analytics" ? (
+          <Analytics onUnauthorized={logout} />
         ) : loading ? (
 
           /*
@@ -652,17 +645,22 @@ const Dashboard: React.FC = () => {
               handleDeleteProduct
             }
           />
-<<<<<<< HEAD
 
-=======
         ) : view === "offers" ? (
+
+          /*
+           * ====================================================
+           * OFFERS
+           * ====================================================
+           */
+
           <OffersAdmin
             offers={offers}
             onAddOffer={handleAddOffer}
             onUpdateOffer={handleUpdateOffer}
             onDeleteOffer={handleDeleteOffer}
           />
->>>>>>> 5f8e294 (offers)
+
         ) : (
 
           /*
