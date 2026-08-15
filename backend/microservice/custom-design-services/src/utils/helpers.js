@@ -43,6 +43,7 @@ export const mapFrontendPayloadToSchema = (body = {}) => {
     gemstones,
     gemstone,
     carat,
+    gemstonePurity,
     style,
     budget,
     referenceImage,
@@ -76,6 +77,7 @@ export const mapFrontendPayloadToSchema = (body = {}) => {
       material: MATERIAL_LABELS[material] || material,
       purity: purity || undefined,
       gemstone: gemstoneList,
+      gemstonePurity: typeof gemstonePurity === "number" ? gemstonePurity : undefined,
       style: style || undefined,
     },
     budget: {

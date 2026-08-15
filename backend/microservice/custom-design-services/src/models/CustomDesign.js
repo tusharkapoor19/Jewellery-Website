@@ -68,6 +68,15 @@ const customDesignSchema = new mongoose.Schema(
           },
         },
       ],
+      // Quality/clarity grade (0-100) applied across the selected
+      // gemstones — mirrors the metal `purity` field above, but for
+      // stones. See client PuritySelector-style slider in GemstoneSelector.
+      gemstonePurity: {
+        type: Number,
+        min: 0,
+        max: 100,
+        default: 50,
+      },
       style: {
         type: String,
         default: "",

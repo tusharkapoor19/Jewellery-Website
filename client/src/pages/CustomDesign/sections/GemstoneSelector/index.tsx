@@ -10,6 +10,7 @@ const MAX_QTY = 50
 export default function GemstoneSelector() {
   const { selection, updateSelection } = useDesignContext()
   const selectedGemstones = selection.gemstones ?? []
+  const gemstonePurity = selection.gemstonePurity ?? 50
 
   const findQuantity = (id: GemstoneId) => selectedGemstones.find((g) => g.id === id)?.quantity ?? 0
 
@@ -138,6 +139,32 @@ export default function GemstoneSelector() {
             {selectedGemstones
               .map((g) => `${gemstones.find((gem) => gem.id === g.id)?.name ?? g.id} × ${g.quantity}`)
               .join(', ')}
+          </p>
+        </div>
+      )}
+
+      {!isStoneless && (
+        <div className="mt-4 max-w-xl rounded-2xl border border-line bg-ink-soft p-6">
+          <div className="flex items-baseline justify-between">
+            <span className="text-ivory-dim/60 text-sm">Gemstone purity / quality grade</span>
+            <span className="font-mono text-3xl text-gold-bright">{Math.round(gemstonePurity)}%</span>
+          </div>
+          <input
+            type="range"
+            min={0}
+            max={100}
+            step={1}
+            value={gemstonePurity}
+            onChange={(e) => updateSelection({ gemstonePurity: parseInt(e.target.value, 10) })}
+            className="mt-4 w-full accent-[#C9A667]"
+          />
+          <div className="mt-1 flex justify-between text-[10px] font-mono text-ivory-dim/40">
+            <span>Commercial (0%)</span>
+            <span>Flawless (100%)</span>
+          </div>
+          <p className="mt-4 text-xs text-ivory-dim/50">
+            Sets where within each stone's price range (e.g. Diamond ₹45,000–2,50,000/carat) your stones fall —
+            higher clarity/quality costs more per carat.
           </p>
         </div>
       )}

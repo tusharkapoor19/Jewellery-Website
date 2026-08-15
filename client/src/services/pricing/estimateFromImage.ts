@@ -41,6 +41,7 @@ export async function estimateFromImage(
     material: material.id,
     purity: selection.purity ?? (material.id === 'gold' ? 'gold-22k' : 'platinum-950'),
     gemstones: impliedCarat > 0.15 ? [{ id: 'diamond', quantity: impliedQuantity }] : [],
+    gemstonePurity: selection.gemstonePurity ?? 50,
     style: selection.style ?? (analysis.complexityScore > 60 ? 'traditional' : 'modern'),
     budget: selection.budget,
     referenceImage: dataUrl,

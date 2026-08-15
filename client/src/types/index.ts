@@ -70,6 +70,12 @@ export interface DesignSelection {
   // Multiple gemstones, each with a specific quantity of stones
   // (e.g. Diamond x4, Pearl x5). Empty array = plain metal piece.
   gemstones: SelectedGemstone[]
+  // Quality/clarity grade for the chosen gemstones, 0-100, applied across
+  // all selected stones (0 = commercial/included grade, priced at the
+  // bottom of each gem's pricePerCarat range; 100 = flawless/premium
+  // grade, priced at the top of the range). Mirrors metal `purity` as a
+  // "purity" slider for stones. Defaults to 50 (mid-range).
+  gemstonePurity: number
   style: StyleId | null
   budget: number
   referenceImage: string | null
@@ -141,10 +147,14 @@ export interface CustomDesignRecord {
     material?: string
     purity?: string
     gemstone?: { name: string; quantity: number }[]
+    gemstonePurity?: number
     style?: string
   }
   budget?: { min?: number; max?: number; estimatedPrice?: number }
-  estimation?: { totalEstimatedCost?: number }
+  estimation?: { totalEstimatedCost?: number; makingCharge?: number; stoneCost?: number; metalCost?: number }
+  // Reference photo(s) the customer uploaded, plus any free-text notes —
+  // see design/ImageUploader and services/upload/uploadReferenceImage.ts.
+  design?: { description?: string; referenceImages?: string[] }
   orderStatus?: string
   adminNotes?: string
   messages?: ChatMessage[]

@@ -47,6 +47,22 @@ export const createCustomDesign = async (req, res, next) => {
   }
 };
 
+// @desc    Upload a reference photo for a custom design request and get
+//          back its hosted URL. Mirrors the shape the admin catalogue's
+//          product image upload expects (multipart field name "image",
+//          JSON response with a `url`), so the same client-side upload
+//          function/pattern works for both. Public — a guest browsing the
+//          Custom Design flow hasn't logged in yet when they attach a photo.
+// @route   POST /custom-design-save/upload-image
+// @access  Public
+export const uploadDesignReferenceImage = async (req, res) => {
+  if (!req.file) {
+    return sendError(res, 400, "No image file was uploaded");
+  }
+  const url = `${req.protocol}://${req.get("host")}/uploads/images/${req.file.filename}`;
+  return sendSuccess(res, 201, { url }, "Image uploaded successfully");
+};
+
 // @desc    Get custom design submissions (with basic filtering + pagination).
 //          Used both by customers (filtered by their own `email`, e.g. the
 //          "My Custom Orders" page) and by the admin dashboard's Custom

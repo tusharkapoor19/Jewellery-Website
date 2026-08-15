@@ -32,6 +32,12 @@ export const errorHandler = (err, req, res, next) => {
     message = `Duplicate value for field: ${field}`;
   }
 
+  // Multer upload errors (file too large, wrong field name) and our own
+  // fileFilter rejection message — see middleware/upload.js
+  if (err.name === "MulterError" || err.message === "Only JPG, PNG or WEBP images are allowed") {
+    statusCode = 400;
+  }
+
   console.error(err.stack);
 
   res.status(statusCode).json({

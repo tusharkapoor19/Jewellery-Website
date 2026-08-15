@@ -3,7 +3,7 @@ import SectionHeading from '../../../../components/Common/SectionHeading'
 import FadeIn from '../../../../components/Animations/FadeIn'
 import Dropzone from '../../../../components/Upload/Dropzone'
 import { useDesignContext } from '../../../../context/DesignContext'
-import { uploadImage } from '../../../../services/cloudinary/uploadImage'
+import { uploadReferenceImage } from '../../../../services/upload/uploadReferenceImage'
 
 export default function ImageUploader() {
   const { selection, updateSelection } = useDesignContext()
@@ -14,7 +14,7 @@ export default function ImageUploader() {
     setBusy(true)
     setError(null)
     try {
-      const url = await uploadImage(file)
+      const url = await uploadReferenceImage(file)
       updateSelection({ referenceImage: url })
     } catch {
       setError('Upload failed. Please try again.')

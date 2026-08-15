@@ -1587,6 +1587,27 @@ textarea {
   font-weight: 700;
 }
 
+.cd-ref-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.cd-ref-image {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.15s ease;
+}
+
+.cd-ref-image:hover {
+  transform: scale(1.03);
+}
+
 .cd-save-row {
   display: flex;
   align-items: center;

@@ -26,7 +26,7 @@ export function calculatePriceEstimate(selection: DesignSelection): PriceEstimat
 
   const makingCharges = jewellery ? Math.round(jewellery.makingChargePerGram * weight) : 0
 
-  const gemstoneCost = calculateGemstonesCost(selection.gemstones)
+  const gemstoneCost = calculateGemstonesCost(selection.gemstones, selection.gemstonePurity)
 
   const subtotal = metalCost + makingCharges + gemstoneCost
   const styleMultiplier = style ? style.priceMultiplier : 1
@@ -42,7 +42,9 @@ export function calculatePriceEstimate(selection: DesignSelection): PriceEstimat
     {
       label: 'Gemstone cost',
       value: gemstoneCost,
-      detail: selection.gemstones?.length ? describeGemstoneSelection(selection.gemstones) : undefined,
+      detail: selection.gemstones?.length
+        ? `${describeGemstoneSelection(selection.gemstones)} · ${Math.round(selection.gemstonePurity ?? 50)}% quality grade`
+        : undefined,
     },
     { label: 'Style & craftsmanship', value: styleMarkup, detail: style ? style.name : undefined },
     { label: 'GST (3%)', value: gst },

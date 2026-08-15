@@ -3,9 +3,11 @@ import OptionCard from '../../../../components/Cards/OptionCard'
 import FadeIn from '../../../../components/Animations/FadeIn'
 import { useDesignContext } from '../../../../context/DesignContext'
 import { materials, getPuritiesForMaterial } from '../../../../data/materials'
+import { getCachedRatePerGram, useLiveMetalRates } from '../../../../services/pricing/liveMetalRates'
 
 export default function MaterialSelector() {
   const { selection, updateSelection } = useDesignContext()
+  const { loading } = useLiveMetalRates()
 
   return (
     <FadeIn>
@@ -16,7 +18,7 @@ export default function MaterialSelector() {
             key={m.id}
             title={m.name}
             swatch={m.color}
-            description={`from ₹${m.ratePerGram.toLocaleString('en-IN')}/g`}
+            description={loading ? 'Loading live rate…' : `from ₹${Math.round(getCachedRatePerGram(m.id)).toLocaleString('en-IN')}/g`}
             selected={selection.material === m.id}
             onClick={() => {
               const firstPurity = getPuritiesForMaterial(m.id)[0]

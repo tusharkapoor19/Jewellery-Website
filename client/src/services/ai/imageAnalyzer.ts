@@ -82,6 +82,15 @@ export async function analyzeImage(dataUrl: string): Promise<VisualAnalysis> {
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image()
+    // Reference photos can now come back as a real hosted URL from
+    // custom-design-services' /upload-image endpoint (not just a same-
+    // origin base64 data URL) — request it CORS-enabled so canvas pixel
+    // reads below (getImageData) don't throw a "tainted canvas" error.
+    // The backend already sends Access-Control-Allow-Origin via its
+    // global cors() middleware, which also covers the static file route.
+    if (!src.startsWith('data:')) {
+      img.crossOrigin = 'anonymous'
+    }
     img.onload = () => resolve(img)
     img.onerror = () => reject(new Error('Could not load image'))
     img.src = src

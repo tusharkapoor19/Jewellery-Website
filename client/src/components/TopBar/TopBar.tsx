@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Truck,
@@ -8,134 +7,19 @@ import {
   Coins,
 } from "lucide-react";
 
+import { useLiveMetalRates } from "../../services/pricing/liveMetalRates";
 import "./TopBar.css";
 
-const TROY_OUNCE_TO_GRAM = 31.1035;
-
-const GOLD_PREMIUM = 14.9;
-const SILVER_PREMIUM = 18.46;
-const PLATINUM_PREMIUM = 14;
-
+// Rate fetching itself lives in services/pricing/liveMetalRates.ts, shared
+// with the Custom Design configurator (Material/Purity steps, cost
+// breakdown, AI estimator) so every live price shown across the app comes
+// from the exact same feed and never drifts apart between pages.
 const TopBar = () => {
-  const [gold24, setGold24] = useState("--");
-  const [silver, setSilver] = useState("--");
-  const [platinum, setPlatinum] = useState("--");
+  const { rates, loading } = useLiveMetalRates();
 
-  useEffect(() => {
-    const fetchRates = async () => {
-      try {
-        const [
-          goldResponse,
-          silverResponse,
-          platinumResponse,
-          currencyResponse,
-        ] = await Promise.all([
-          fetch("https://api.gold-api.com/price/XAU"),
-          fetch("https://api.gold-api.com/price/XAG"),
-          fetch("https://api.gold-api.com/price/XPT"),
-          fetch("https://open.er-api.com/v6/latest/USD"),
-        ]);
-
-        if (
-          !goldResponse.ok ||
-          !silverResponse.ok ||
-          !platinumResponse.ok ||
-          !currencyResponse.ok
-        ) {
-          throw new Error("Unable to fetch metal prices");
-        }
-
-        const [
-          goldData,
-          silverData,
-          platinumData,
-          currencyData,
-        ] = await Promise.all([
-          goldResponse.json(),
-          silverResponse.json(),
-          platinumResponse.json(),
-          currencyResponse.json(),
-        ]);
-
-        const usdToInr = Number(currencyData?.rates?.INR);
-
-        if (!usdToInr) {
-          throw new Error("USD to INR rate unavailable");
-        }
-
-        /* ================================
-           USD / TROY OUNCE → INR / GRAM
-        ================================= */
-        const goldSpot =
-          (Number(goldData.price) * usdToInr) /
-          TROY_OUNCE_TO_GRAM;
-
-        const silverSpot =
-          (Number(silverData.price) * usdToInr) /
-          TROY_OUNCE_TO_GRAM;
-
-        const platinumSpot =
-          (Number(platinumData.price) * usdToInr) /
-          TROY_OUNCE_TO_GRAM;
-
-        /* ================================
-           INDIA MARKET ADJUSTMENT
-        ================================= */
-
-        const goldRate =
-          goldSpot * (1 + GOLD_PREMIUM / 100);
-
-        const silverRate =
-          silverSpot * (1 + SILVER_PREMIUM / 100);
-
-        const platinumRate =
-          platinumSpot * (1 + PLATINUM_PREMIUM / 100);
-
-        /* ================================
-           DISPLAY
-        ================================= */
-
-        setGold24(goldRate.toFixed(2));
-
-        // Silver → ₹ / KG
-        setSilver((silverRate * 1000).toFixed(2));
-
-        // Platinum → ₹ / GRAM
-        setPlatinum(platinumRate.toFixed(2));
-
-        /* ================================
-           STORE RATES
-        ================================= */
-
-        localStorage.setItem(
-          "goldRate",
-          goldRate.toString()
-        );
-
-        localStorage.setItem(
-          "silverRate",
-          silverRate.toString()
-        );
-
-        localStorage.setItem(
-          "platinumRate",
-          platinumRate.toString()
-        );
-
-      } catch (error) {
-        console.error("Metal price error:", error);
-      }
-    };
-
-    fetchRates();
-
-    const interval = setInterval(
-      fetchRates,
-      60000
-    );
-
-    return () => clearInterval(interval);
-  }, []);
+  const gold24 = loading ? "--" : rates.gold.toFixed(2);
+  const silver = loading ? "--" : (rates.silver * 1000).toFixed(2); // ₹/kg
+  const platinum = loading ? "--" : rates.platinum.toFixed(2); // ₹/g
 
   return (
     <div className="topbar">

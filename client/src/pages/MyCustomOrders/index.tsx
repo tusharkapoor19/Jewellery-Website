@@ -123,33 +123,52 @@ function ChatThread({ designId }: { designId: string }) {
 function OrderCard({ design }: { design: CustomDesignRecord }) {
   const [open, setOpen] = useState(false)
   const gemstones = design.jewellery?.gemstone || []
-  const total = design.estimation?.totalEstimatedCost ?? design.budget?.estimatedPrice
+  // Shown as two distinct numbers rather than one merged "estimated total":
+  // what our AI/pricing engine estimated the piece at, versus the max
+  // budget the customer told us when submitting (Budget step slider).
+  const aiEstimation = design.estimation?.totalEstimatedCost
+  const maxBudget = design.budget?.max
+  const referenceImage = design.design?.referenceImages?.[0]
 
   return (
     <FadeIn>
       <div className="rounded-2xl border border-line bg-ink-soft p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-gold/60">
-              {design.customOrderId ? `${design.customOrderId} · ` : ''}
-              {design.createdAt ? new Date(design.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : ''}
-            </p>
-            <h3 className="mt-1 font-display text-2xl text-ivory">
-              {design.jewellery?.type || 'Custom piece'} · {design.jewellery?.material || '—'}
-            </h3>
-            {gemstones.length > 0 && (
-              <p className="mt-1 text-sm text-ivory-dim/60">
-                {gemstones.map((g) => `${g.name} x${g.quantity}`).join(', ')}
-              </p>
+          <div className="flex gap-4">
+            {referenceImage && (
+              <img
+                src={referenceImage}
+                alt="Your reference photo"
+                className="h-16 w-16 flex-shrink-0 rounded-xl border border-line object-cover"
+              />
             )}
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-gold/60">
+                {design.customOrderId ? `${design.customOrderId} · ` : ''}
+                {design.createdAt ? new Date(design.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : ''}
+              </p>
+              <h3 className="mt-1 font-display text-2xl text-ivory">
+                {design.jewellery?.type || 'Custom piece'} · {design.jewellery?.material || '—'}
+              </h3>
+              {gemstones.length > 0 && (
+                <p className="mt-1 text-sm text-ivory-dim/60">
+                  {gemstones.map((g) => `${g.name} x${g.quantity}`).join(', ')}
+                </p>
+              )}
+            </div>
           </div>
           <StatusPill status={design.orderStatus} />
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-6 text-sm text-ivory-dim/70">
-          {typeof total === 'number' && total > 0 && (
+          {typeof aiEstimation === 'number' && aiEstimation > 0 && (
             <span>
-              Estimated total: <span className="font-mono text-gold">{formatINR(total)}</span>
+              AI Estimation: <span className="font-mono text-gold">{formatINR(aiEstimation)}</span>
+            </span>
+          )}
+          {typeof maxBudget === 'number' && maxBudget > 0 && (
+            <span>
+              Your budget: <span className="font-mono text-gold">{formatINR(maxBudget)}</span>
             </span>
           )}
           {design.jewellery?.purity && <span>Purity: {design.jewellery.purity}</span>}

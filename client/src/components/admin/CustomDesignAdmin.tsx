@@ -142,7 +142,15 @@ function DesignDetail({
   };
 
   const gemstones = design.jewellery?.gemstone || [];
-  const total = design.estimation?.totalEstimatedCost ?? design.budget?.estimatedPrice ?? 0;
+  // AI Estimation (what our own calculator/AI estimator priced the design
+  // at) and Max Customer Budget (the ceiling the customer told us they'd
+  // spend, via the Budget step's slider) are two different, independently
+  // meaningful numbers — shown separately rather than collapsed into one
+  // "estimated total", so the admin can see at a glance whether the piece
+  // is over or under what the customer said they'd pay.
+  const aiEstimation = design.estimation?.totalEstimatedCost ?? 0;
+  const maxBudget = design.budget?.max ?? 0;
+  const referenceImages = design.design?.referenceImages || [];
 
   return (
     <div>
@@ -164,9 +172,19 @@ function DesignDetail({
             <p className="cd-spec-value">{design.jewellery?.purity || "—"}</p>
           </div>
           <div>
-            <p className="cd-spec-label">Estimated total</p>
-            <p className="cd-spec-value">{formatCurrency(total)}</p>
+            <p className="cd-spec-label">AI Estimation</p>
+            <p className="cd-spec-value">{aiEstimation ? formatCurrency(aiEstimation) : "—"}</p>
           </div>
+          <div>
+            <p className="cd-spec-label">Max Customer Budget</p>
+            <p className="cd-spec-value">{maxBudget ? formatCurrency(maxBudget) : "—"}</p>
+          </div>
+          {typeof design.jewellery?.gemstonePurity === "number" && gemstones.length > 0 && (
+            <div>
+              <p className="cd-spec-label">Gemstone quality</p>
+              <p className="cd-spec-value">{Math.round(design.jewellery.gemstonePurity)}%</p>
+            </div>
+          )}
           <div>
             <p className="cd-spec-label">Requested</p>
             <p className="cd-spec-value">
@@ -189,6 +207,19 @@ function DesignDetail({
                 <span className="cd-gem-tag" key={`${g.name}-${i}`}>
                   {g.name} × {g.quantity}
                 </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {referenceImages.length > 0 && (
+          <div style={{ marginTop: 16 }}>
+            <p className="cd-spec-label">Reference photo{referenceImages.length > 1 ? "s" : ""}</p>
+            <div className="cd-ref-images">
+              {referenceImages.map((src, i) => (
+                <a href={src} target="_blank" rel="noreferrer" key={i}>
+                  <img src={src} alt={`Reference ${i + 1}`} className="cd-ref-image" />
+                </a>
               ))}
             </div>
           </div>
