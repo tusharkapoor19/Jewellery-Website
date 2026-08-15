@@ -894,3 +894,151 @@
     }
 
 }
+/* ==========================================
+        COMPARE BUTTON - FINAL
+========================================== */
+
+.hiranya-image-area .compare-btn {
+    position: absolute !important;
+
+    top: 84px !important;
+    right: 20px !important;
+
+    width: 52px !important;
+    height: 52px !important;
+
+    min-width: 52px !important;
+    min-height: 52px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    border: none !important;
+    outline: none !important;
+
+    border-radius: 50% !important;
+
+    background: rgba(255, 255, 255, 0.92) !important;
+
+    color: #444 !important;
+
+    cursor: pointer !important;
+
+    z-index: 999 !important;
+
+    -webkit-backdrop-filter: blur(18px) !important;
+    backdrop-filter: blur(18px) !important;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.12) !important;
+
+    transform: none !important;
+
+    pointer-events: auto !important;
+
+    transition:
+        transform .3s ease,
+        background .3s ease,
+        color .3s ease,
+        box-shadow .3s ease !important;
+}
+
+
+/* ICON */
+
+.hiranya-image-area .compare-btn svg {
+    width: 19px !important;
+    height: 19px !important;
+
+    display: block !important;
+
+    color: #444 !important;
+
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+
+/* HOVER */
+
+.hiranya-image-area .compare-btn:hover {
+    transform: scale(1.1) !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #C8A24D,
+            #E5C979
+        ) !important;
+
+    color: #fff !important;
+
+    box-shadow:
+        0 16px 32px
+        rgba(200, 162, 77, .32) !important;
+}
+
+
+.hiranya-image-area .compare-btn:hover svg {
+    color: #fff !important;
+}
+
+
+/* SELECTED */
+
+.hiranya-image-area .compare-btn.active {
+    background:
+        linear-gradient(
+            135deg,
+            #B8891F,
+            #D4AF37
+        ) !important;
+
+    color: #fff !important;
+
+    box-shadow:
+        0 14px 30px
+        rgba(200, 162, 77, .38) !important;
+}
+
+
+.hiranya-image-area .compare-btn.active svg {
+    color: #fff !important;
+}
+
+
+/* CLICK */
+
+.hiranya-image-area .compare-btn:active {
+    transform: scale(.94) !important;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+    .hiranya-image-area .compare-btn {
+        top: 70px !important;
+        right: 14px !important;
+
+        width: 46px !important;
+        height: 46px !important;
+
+        min-width: 46px !important;
+        min-height: 46px !important;
+    }
+
+    .hiranya-image-area .compare-btn svg {
+        width: 17px !important;
+        height: 17px !important;
+    }
+
+}

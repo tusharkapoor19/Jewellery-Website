@@ -1,32 +1,46 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../context/CartContext";
+
 import {
     Heart,
     ShoppingBag,
     Eye,
     Star,
     ShieldCheck,
-    Sparkles
+    Sparkles,
+    GitCompare
 } from "lucide-react";
-
-import { Product } from "../../types/product";
-import { useWishlist } from "../../context/WishlistContext";
-import { computeLivePrice } from "../../utils/metalPricing";
 
 import { toast } from "react-hot-toast";
 
+import { useCart } from "../../context/CartContext";
+import { useWishlist } from "../../context/WishlistContext";
+import { useCompare } from "../../context/CompareContext";
+
+import { Product } from "../../types/product";
+
+import { computeLivePrice } from "../../utils/metalPricing";
+
 import "./ProductCard.css";
 
+
 interface ProductCardProps {
+
     product: Product;
+
 }
+
 
 const ProductCard = ({
     product
 }: ProductCardProps) => {
 
     const navigate = useNavigate();
+
+
+    /* =====================================================
+       WISHLIST
+    ===================================================== */
 
     const [wishlistLoading, setWishlistLoading] =
         useState(false);
@@ -37,9 +51,50 @@ const ProductCard = ({
         removeFromWishlist
     } = useWishlist();
 
-    const liked = isWishlisted(
-        product.productID
-    );
+    const liked =
+        isWishlisted(
+            product.productID
+        );
+
+
+    /* =====================================================
+       CART
+    ===================================================== */
+
+    const {
+        addToCart,
+        refreshCart
+    } = useCart();
+
+
+    const isAddingRef =
+        useRef(false);
+
+    const [isAdding, setIsAdding] =
+        useState(false);
+
+
+    /* =====================================================
+       COMPARISON
+    ===================================================== */
+
+    const {
+        compareProducts,
+        addToCompare,
+        removeFromCompare,
+        isInCompare
+    } = useCompare();
+
+
+    const comparing =
+        isInCompare(
+            product.productID
+        );
+
+
+    /* =====================================================
+       PRODUCT DETAILS
+    ===================================================== */
 
     const openProduct = () => {
 
@@ -48,76 +103,31 @@ const ProductCard = ({
         );
 
     };
-    
-    const { addToCart, refreshCart } = useCart();
-
-    // ref = instant lock that blocks a second click the moment the first
-    // one starts (state updates are not fast enough to prevent a rapid
-    // double-click). state = drives the disabled/spinner look on the button.
-    const isAddingRef = useRef(false);
-    const [isAdding, setIsAdding] = useState(false);
-
-// Live, formula-based price: (live rate/gram * weight) + making charge/gram.
-// See utils/metalPricing.ts for the exact formula.
-const getDynamicPrice = () => computeLivePrice(product.metal, product.weight);
 
 
-const handleAddToCart = async () => {
+    /* =====================================================
+       DYNAMIC PRICE
+    ===================================================== */
 
+    const getDynamicPrice = () => {
 
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-
-        toast.error("Please login first.");
-
-        navigate("/login");
-
-        return;
-
-    }
-
-
-    if (product.stock <= 0) {
-
-    toast.error("This product is currently out of stock.");
-
-    return;
-
-}
-
-    if (isAddingRef.current) return;
-
-    isAddingRef.current = true;
-    setIsAdding(true);
-
-    try {
-
-        await addToCart(product.productID);
-
-        await refreshCart();
-
-        toast.success("Added to Cart");
-
-    } catch (error: any) {
-
-        toast.error(
-            error.message || "Failed to add product"
+        return computeLivePrice(
+            product.metal,
+            product.weight
         );
 
-    } finally {
+    };
 
-        isAddingRef.current = false;
-        setIsAdding(false);
 
-    }
+    /* =====================================================
+       ADD TO CART
+    ===================================================== */
 
-};
-
-    const toggleWishlist = async () => {
+    const handleAddToCart = async () => {
 
         const token =
             localStorage.getItem("token");
+
 
         if (!token) {
 
@@ -131,17 +141,106 @@ const handleAddToCart = async () => {
 
         }
 
-        if (wishlistLoading) return;
+
+        if (product.stock <= 0) {
+
+            toast.error(
+                "This product is currently out of stock."
+            );
+
+            return;
+
+        }
+
+
+        if (isAddingRef.current) {
+
+            return;
+
+        }
+
+
+        isAddingRef.current = true;
+
+        setIsAdding(true);
+
+
+        try {
+
+            await addToCart(
+                product.productID
+            );
+
+            await refreshCart();
+
+
+            toast.success(
+                "Added to Cart"
+            );
+
+        }
+
+        catch (error: any) {
+
+            toast.error(
+                error?.message ||
+                "Failed to add product"
+            );
+
+        }
+
+        finally {
+
+            isAddingRef.current = false;
+
+            setIsAdding(false);
+
+        }
+
+    };
+
+
+    /* =====================================================
+       WISHLIST
+    ===================================================== */
+
+    const toggleWishlist = async () => {
+
+        const token =
+            localStorage.getItem("token");
+
+
+        if (!token) {
+
+            toast.error(
+                "Please login first."
+            );
+
+            navigate("/login");
+
+            return;
+
+        }
+
+
+        if (wishlistLoading) {
+
+            return;
+
+        }
+
 
         try {
 
             setWishlistLoading(true);
+
 
             if (liked) {
 
                 await removeFromWishlist(
                     product.productID
                 );
+
 
                 toast.success(
                     "Removed from Wishlist"
@@ -155,6 +254,7 @@ const handleAddToCart = async () => {
                     product.productID
                 );
 
+
                 toast.success(
                     "Added to Wishlist"
                 );
@@ -166,11 +266,8 @@ const handleAddToCart = async () => {
         catch (error: any) {
 
             toast.error(
-
-                error.message ||
-
+                error?.message ||
                 "Wishlist Error"
-
             );
 
         }
@@ -182,9 +279,69 @@ const handleAddToCart = async () => {
         }
 
     };
-        return (
+
+
+    /* =====================================================
+       COMPARE
+    ===================================================== */
+
+    const handleCompare = () => {
+
+        /* Remove if already selected */
+
+        if (comparing) {
+
+            removeFromCompare(
+                product.productID
+            );
+
+
+            toast.success(
+                "Removed from comparison"
+            );
+
+            return;
+
+        }
+
+
+        /* Maximum 4 products */
+
+        if (compareProducts.length >= 4) {
+
+            toast.error(
+                "You can compare up to 4 products."
+            );
+
+            return;
+
+        }
+
+
+        addToCompare(
+            product
+        );
+
+
+        toast.success(
+            "Added to comparison"
+        );
+
+    };
+
+
+    /* =====================================================
+       RENDER
+    ===================================================== */
+
+    return (
 
         <article className="hiranya-card">
+
+
+            {/* =================================================
+                IMAGE AREA
+            ================================================= */}
 
             <div
                 className="hiranya-image-area"
@@ -192,6 +349,9 @@ const handleAddToCart = async () => {
             >
 
                 <div className="image-overlay" />
+
+
+                {/* COLLECTION */}
 
                 <span className="collection-chip">
 
@@ -201,14 +361,19 @@ const handleAddToCart = async () => {
 
                 </span>
 
+
+                {/* WISHLIST */}
+
                 <button
-
                     type="button"
-
                     disabled={wishlistLoading}
-
-                    className={`wishlist-btn ${liked ? "active" : ""}`}
-
+                    className={
+                        `wishlist-btn ${
+                            liked
+                                ? "active"
+                                : ""
+                        }`
+                    }
                     onClick={(e) => {
 
                         e.stopPropagation();
@@ -216,41 +381,75 @@ const handleAddToCart = async () => {
                         toggleWishlist();
 
                     }}
-
+                    title="Wishlist"
                 >
 
                     <Heart
-
                         size={19}
-
-                        fill={liked ? "currentColor" : "none"}
-
+                        fill={
+                            liked
+                                ? "currentColor"
+                                : "none"
+                        }
                     />
 
                 </button>
 
+
+                {/* COMPARE */}
+
+                <button
+                    type="button"
+                    className={
+                        `compare-btn ${
+                            comparing
+                                ? "active"
+                                : ""
+                        }`
+                    }
+                    onClick={(e) => {
+
+                        e.stopPropagation();
+
+                        handleCompare();
+
+                    }}
+                    title={
+                        comparing
+                            ? "Remove from comparison"
+                            : "Add to comparison"
+                    }
+                >
+
+                    <GitCompare
+                        size={18}
+                    />
+
+                </button>
+
+
+                {/* PRODUCT IMAGE */}
+
                 <img
-
                     src={product.image}
-
                     alt={product.name}
-
                     className="hiranya-image"
-
                     loading="lazy"
-
                     onError={(e) => {
 
                         e.currentTarget.src =
                             "/images/products/placeholder.jpg";
 
                     }}
-
                 />
 
-                {
 
-                    product.stock > 0 ?
+                {/* STOCK */}
+
+                {
+                    product.stock > 0
+
+                        ?
 
                         <span className="stock-chip available">
 
@@ -265,8 +464,10 @@ const handleAddToCart = async () => {
                             Sold Out
 
                         </span>
-
                 }
+
+
+                {/* QUICK VIEW */}
 
                 <div className="quick-view">
 
@@ -278,7 +479,15 @@ const handleAddToCart = async () => {
 
             </div>
 
+
+            {/* =================================================
+                CONTENT
+            ================================================= */}
+
             <div className="hiranya-content">
+
+
+                {/* RATING */}
 
                 <div className="rating-row">
 
@@ -293,9 +502,12 @@ const handleAddToCart = async () => {
 
                     </div>
 
+
                     <div className="secure-pill">
 
-                        <ShieldCheck size={14} />
+                        <ShieldCheck
+                            size={14}
+                        />
 
                         Certified
 
@@ -303,17 +515,20 @@ const handleAddToCart = async () => {
 
                 </div>
 
+
+                {/* PRODUCT NAME */}
+
                 <h3
-
                     className="hiranya-title"
-
                     onClick={openProduct}
-
                 >
 
                     {product.name}
 
                 </h3>
+
+
+                {/* METAL / CERTIFICATION */}
 
                 <div className="meta-row">
 
@@ -323,8 +538,8 @@ const handleAddToCart = async () => {
 
                     </span>
 
-                    {
 
+                    {
                         product.certification && (
 
                             <span className="certificate-tag">
@@ -334,10 +549,12 @@ const handleAddToCart = async () => {
                             </span>
 
                         )
-
                     }
 
                 </div>
+
+
+                {/* PRICE */}
 
                 <div className="price-box">
 
@@ -347,42 +564,76 @@ const handleAddToCart = async () => {
 
                     </span>
 
+
                     <h2>
 
-                        ₹ {getDynamicPrice().toLocaleString()}
+                        ₹{" "}
+
+                        {
+                            getDynamicPrice()
+                                .toLocaleString()
+                        }
 
                     </h2>
 
                 </div>
 
+
+                {/* ACTIONS */}
+
                 <div className="card-actions">
 
-                          <button
-    className="cart-button"
-    onClick={handleAddToCart}
-    disabled={isAdding || product.stock <= 0}
->
-    <ShoppingBag size={18}/>
-    {
-    product.stock <= 0
-        ? "Out Of Stock"
-        : isAdding
-        ? "Adding..."
-        : "Add To Cart"
-}
-</button>
+
+                    {/* ADD TO CART */}
 
                     <button
-
-                        className="details-button"
-
-                        type="button"
-
-                        onClick={openProduct}
-
+                        className="cart-button"
+                        onClick={handleAddToCart}
+                        disabled={
+                            isAdding ||
+                            product.stock <= 0
+                        }
                     >
 
-                        <Eye size={18} />
+                        <ShoppingBag
+                            size={18}
+                        />
+
+
+                        {
+                            product.stock <= 0
+
+                                ?
+
+                                "Out Of Stock"
+
+                                :
+
+                                isAdding
+
+                                    ?
+
+                                    "Adding..."
+
+                                    :
+
+                                    "Add To Cart"
+                        }
+
+                    </button>
+
+
+                    {/* DETAILS */}
+
+                    <button
+                        className="details-button"
+                        type="button"
+                        onClick={openProduct}
+                    >
+
+                        <Eye
+                            size={18}
+                        />
 
                         Details
 
@@ -397,5 +648,6 @@ const handleAddToCart = async () => {
     );
 
 };
+
 
 export default ProductCard;

@@ -1,243 +1,662 @@
 const Order = require("../models/orders");
-const jwt = require("jsonwebtoken");
 const prodclient = require("../utils/prodclient");
+
 require("dotenv").config();
 
 
+/* =========================================================
+   CREATE ORDER
+========================================================= */
 
-const createorder = async (userID, orderdata) => {                                              // CREATE ORDER    
+const createorder = async (userID, orderdata) => {
 
     const { products } = orderdata;
 
 
-    if (!userID || !products || products.length === 0) {
+    if (
+        !userID ||
+        !products ||
+        products.length === 0
+    ) {
 
-        const error = new Error("User ID and products are required");
+        const error =
+            new Error(
+                "User ID and products are required"
+            );
+
         error.statusCode = 400;
+
         throw error;
+
     }
 
-    const lastOrder = await Order.findOne().sort({ createdAt: -1 });
+
+    /* -----------------------------------------------------
+       Generate Order ID
+    ----------------------------------------------------- */
+
+    const lastOrder =
+        await Order
+            .findOne()
+            .sort({
+                createdAt: -1
+            });
+
 
     let orderID = "ORD001";
 
+
     if (lastOrder) {
 
-        const lastNumber = parseInt(
-            lastOrder.orderID.replace("ORD", "")
-        );
+        const lastNumber =
+            parseInt(
+                lastOrder.orderID.replace(
+                    "ORD",
+                    ""
+                )
+            );
 
-        orderID = `ORD${String(lastNumber + 1).padStart(3, "0")}`;
+
+        orderID =
+            `ORD${String(
+                lastNumber + 1
+            ).padStart(3, "0")}`;
 
     }
+
+
+    /* -----------------------------------------------------
+       Products
+    ----------------------------------------------------- */
 
     let totalAmount = 0;
 
     const orderedProducts = [];
 
-    for (const item of products) {
 
-        const response = await prodclient.get(`/${item.productID}`);
+    for (
+        const item of products
+    ) {
 
-        const product = response.data.product;
+        const response =
+            await prodclient.get(
+                `/${item.productID}`
+            );
 
+
+        const product =
+            response.data.product;
 
 
         orderedProducts.push({
-            productID: product.productID,
-            name: product.name,
-            price: product.price,
-            quantity: item.quantity
+
+            productID:
+                product.productID,
+
+            name:
+                product.name,
+
+            price:
+                product.price,
+
+            quantity:
+                item.quantity
+
         });
-        totalAmount += product.price * item.quantity;
 
 
-        await prodclient.patch("/internal/reduce-stock", {
-            productID: product.productID,
-            quantity: item.quantity
-        });
+        totalAmount +=
+            product.price *
+            item.quantity;
+
+
+        await prodclient.patch(
+            "/internal/reduce-stock",
+            {
+                productID:
+                    product.productID,
+
+                quantity:
+                    item.quantity
+            }
+        );
+
     }
-    const order = await Order.create({
 
-    orderID,
 
-    userID,
+    /* -----------------------------------------------------
+       Create Order
+    ----------------------------------------------------- */
 
-    products: orderedProducts,
+    const order =
+        await Order.create({
 
-    shippingAddress: {
-        fullName: orderdata.shippingAddress.fullName,
-        phone: orderdata.shippingAddress.phone,
-        address: `${orderdata.shippingAddress.houseNumber}, ${orderdata.shippingAddress.street}, ${orderdata.shippingAddress.area}`,
-        landmark: orderdata.shippingAddress.landmark,
-        city: orderdata.shippingAddress.city,
-        state: orderdata.shippingAddress.state,
-        country: orderdata.shippingAddress.country || "India",
-        pincode: orderdata.shippingAddress.pincode
-    },
+            orderID,
 
-    deliveryMethod: orderdata.deliveryMethod,
+            userID,
 
-    giftBox: orderdata.giftBox,
+            products:
+                orderedProducts,
 
-    giftWrap: orderdata.giftWrap,
 
-    hideInvoice: orderdata.hideInvoice,
+            shippingAddress: {
 
-    giftMessage: orderdata.giftMessage,
+                fullName:
+                    orderdata
+                        .shippingAddress
+                        .fullName,
 
-    notes: orderdata.notes,
+                phone:
+                    orderdata
+                        .shippingAddress
+                        .phone,
 
-    subtotal: orderdata.subtotal,
+                address:
+                    `${orderdata.shippingAddress.houseNumber}, ${orderdata.shippingAddress.street}, ${orderdata.shippingAddress.area}`,
 
-    shippingCharge: orderdata.shippingCharge,
+                landmark:
+                    orderdata
+                        .shippingAddress
+                        .landmark,
 
-    discount: orderdata.discount,
+                city:
+                    orderdata
+                        .shippingAddress
+                        .city,
 
-    gst: orderdata.gst,
+                state:
+                    orderdata
+                        .shippingAddress
+                        .state,
 
-    totalAmount: orderdata.totalAmount,
+                country:
+                    orderdata
+                        .shippingAddress
+                        .country ||
+                    "India",
 
-    orderStatus: "Pending"
+                pincode:
+                    orderdata
+                        .shippingAddress
+                        .pincode
 
-});
+            },
+
+
+            deliveryMethod:
+                orderdata.deliveryMethod,
+
+
+            giftBox:
+                orderdata.giftBox,
+
+
+            giftWrap:
+                orderdata.giftWrap,
+
+
+            hideInvoice:
+                orderdata.hideInvoice,
+
+
+            giftMessage:
+                orderdata.giftMessage,
+
+
+            notes:
+                orderdata.notes,
+
+
+            subtotal:
+                orderdata.subtotal,
+
+
+            shippingCharge:
+                orderdata.shippingCharge,
+
+
+            discount:
+                orderdata.discount,
+
+
+            gst:
+                orderdata.gst,
+
+
+            totalAmount:
+                orderdata.totalAmount,
+
+
+            orderStatus:
+                "Pending"
+
+        });
+
 
     return order;
 
 };
 
 
-const gettallords = async () => {                                                                          // GET ALL ORDERS
-    const allorders = await Order.find();
+/* =========================================================
+   GET ALL ORDERS
+========================================================= */
 
-    if (allorders.length === 0) {
-        const error = new Error("no orders found");
+const gettallords = async () => {
+
+    const allorders =
+        await Order.find();
+
+
+    if (
+        allorders.length === 0
+    ) {
+
+        const error =
+            new Error(
+                "no orders found"
+            );
+
         error.statusCode = 404;
+
         throw error;
+
     }
 
+
     return {
-        totalorder: allorders.length,
+
+        totalorder:
+            allorders.length,
+
         allorders
-    };
-}
 
-
-const getorderbyid = async (orderID) => {                                                                    //<----getordertByID
-
-    const order = await Order.findOne({ orderID });
-
-    if (!order) {
-        const error = new Error("no order found");
-        error.statusCode = 404;
-        throw error;
-    }
-
-    return order
-
-}
-
-const getMyOrders = async (userID) => {                                                             // GET LOGGED IN USER ORDERS
-
-    const orders = await Order.find({ userID });
-
-    if (orders.length === 0) {
-        const error = new Error("No orders found");
-        error.statusCode = 404;
-        throw error;
-    }
-
-    return {
-        totalOrders: orders.length,
-        orders
     };
 
 };
 
-const updateOrderStatus = async (orderID, status) => {                                          // UPDATE ORDER STATUS
+
+/* =========================================================
+   GET ORDER BY ID
+========================================================= */
+
+const getorderbyid = async (
+    orderID
+) => {
+
+    console.log(
+        "\n================================"
+    );
+
+    console.log(
+        "GET ORDER BY ID"
+    );
+
+    console.log(
+        "Received Order ID:",
+        orderID
+    );
+
+    console.log(
+        "================================"
+    );
+
+
+    /* -----------------------------------------------------
+       Validate Order ID
+    ----------------------------------------------------- */
+
+    if (
+        !orderID ||
+        typeof orderID !== "string"
+    ) {
+
+        const error =
+            new Error(
+                "Order ID is required"
+            );
+
+        error.statusCode = 400;
+
+        throw error;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Clean Order ID
+    ----------------------------------------------------- */
+
+    const cleanOrderID =
+        orderID.trim();
+
+
+    console.log(
+        "Searching MongoDB for:",
+        cleanOrderID
+    );
+
+
+    /* -----------------------------------------------------
+       Find Order
+    ----------------------------------------------------- */
+
+    const order =
+        await Order.findOne({
+
+            orderID:
+                cleanOrderID
+
+        }).lean();
+
+
+    console.log(
+        "MongoDB Result:",
+        order
+            ? "ORDER FOUND"
+            : "ORDER NOT FOUND"
+    );
+
+
+    /* -----------------------------------------------------
+       Order Not Found
+    ----------------------------------------------------- */
+
+    if (!order) {
+
+        const error =
+            new Error(
+                `Order ${cleanOrderID} not found`
+            );
+
+        error.statusCode = 404;
+
+        throw error;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Return Order
+    ----------------------------------------------------- */
+
+    return order;
+
+};
+
+
+/* =========================================================
+   GET MY ORDERS
+========================================================= */
+
+const getMyOrders = async (
+    userID
+) => {
+
+    const orders =
+        await Order.find({
+            userID
+        });
+
+
+    if (
+        orders.length === 0
+    ) {
+
+        const error =
+            new Error(
+                "No orders found"
+            );
+
+        error.statusCode = 404;
+
+        throw error;
+
+    }
+
+
+    return {
+
+        totalOrders:
+            orders.length,
+
+        orders
+
+    };
+
+};
+
+
+/* =========================================================
+   UPDATE ORDER STATUS
+========================================================= */
+
+const updateOrderStatus = async (
+    orderID,
+    status
+) => {
 
     const validStatus = [
+
         "Pending",
+
         "Confirmed",
+
         "Shipped",
+
         "Delivered",
+
         "Cancelled"
+
     ];
 
-    if (!validStatus.includes(status)) {
-        const error = new Error("Invalid order status");
+
+    if (
+        !validStatus.includes(
+            status
+        )
+    ) {
+
+        const error =
+            new Error(
+                "Invalid order status"
+            );
+
         error.statusCode = 400;
+
         throw error;
+
     }
 
-    const order = await Order.findOne({ orderID });
+
+    const order =
+        await Order.findOne({
+
+            orderID
+
+        });
+
 
     if (!order) {
-        const error = new Error("Order not found");
+
+        const error =
+            new Error(
+                "Order not found"
+            );
+
         error.statusCode = 404;
+
         throw error;
+
     }
 
-    order.orderStatus = status;
+
+    order.orderStatus =
+        status;
+
 
     await order.save();
+
 
     return order;
 
 };
 
-const cancelOrder = async (orderID, userID) => {                                                // CANCEL ORDER
 
-    const order = await Order.findOne({ orderID });
+/* =========================================================
+   CANCEL ORDER
+========================================================= */
 
-    if (!order) {
-        const error = new Error("Order not found");
-        error.statusCode = 404;
-        throw error;
-    }
+const cancelOrder = async (
+    orderID,
+    userID
+) => {
 
-    if (order.userID.toString() !== userID) {
-        const error = new Error("You are not allowed to cancel this order");
-        error.statusCode = 403;
-        throw error;
-    }
-
-    if (order.orderStatus === "Shipped" || order.orderStatus === "Delivered") {
-        const error = new Error("This order can no longer be cancelled");
-        error.statusCode = 400;
-        throw error;
-    }
-    if (order.orderStatus === "Cancelled") {
-        const error = new Error("Order is already cancelled");
-        error.statusCode = 400;
-        throw error;
-    }
-
-    for (const item of order.products) {
-
-        await prodclient.patch("/internal/increase-stock", {
-            productID: item.productID,
-            quantity: item.quantity
+    const order =
+        await Order.findOne({
+            orderID
         });
 
+
+    if (!order) {
+
+        const error =
+            new Error(
+                "Order not found"
+            );
+
+        error.statusCode = 404;
+
+        throw error;
+
     }
 
-    order.orderStatus = "Cancelled";
+
+    /* -----------------------------------------------------
+       Verify User
+    ----------------------------------------------------- */
+
+    if (
+        order.userID.toString() !==
+        userID
+    ) {
+
+        const error =
+            new Error(
+                "You are not allowed to cancel this order"
+            );
+
+        error.statusCode = 403;
+
+        throw error;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Cannot cancel shipped/delivered
+    ----------------------------------------------------- */
+
+    if (
+        order.orderStatus ===
+            "Shipped"
+        ||
+        order.orderStatus ===
+            "Delivered"
+    ) {
+
+        const error =
+            new Error(
+                "This order can no longer be cancelled"
+            );
+
+        error.statusCode = 400;
+
+        throw error;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Already cancelled
+    ----------------------------------------------------- */
+
+    if (
+        order.orderStatus ===
+        "Cancelled"
+    ) {
+
+        const error =
+            new Error(
+                "Order is already cancelled"
+            );
+
+        error.statusCode = 400;
+
+        throw error;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Restore Stock
+    ----------------------------------------------------- */
+
+    for (
+        const item of order.products
+    ) {
+
+        await prodclient.patch(
+
+            "/internal/increase-stock",
+
+            {
+
+                productID:
+                    item.productID,
+
+                quantity:
+                    item.quantity
+
+            }
+
+        );
+
+    }
+
+
+    /* -----------------------------------------------------
+       Cancel Order
+    ----------------------------------------------------- */
+
+    order.orderStatus =
+        "Cancelled";
+
 
     await order.save();
 
-    return order
-}
+
+    return order;
+
+};
 
 
+/* =========================================================
+   EXPORT
+========================================================= */
 
+module.exports = {
 
-module.exports = {                                                                            // EXPORTS                                                    
     createorder,
+
     gettallords,
+
     getorderbyid,
+
     getMyOrders,
+
     updateOrderStatus,
+
     cancelOrder
 
 };

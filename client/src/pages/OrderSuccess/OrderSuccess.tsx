@@ -1,6 +1,5 @@
 import React, {
     useEffect,
-    useMemo,
     useState
 } from "react";
 
@@ -316,6 +315,68 @@ totalAmount:
 }, [orderID, navigate]);
 
     /* =====================================================
+       Live Order Status Sync
+       Pending -> Confirmed / Rejected without page refresh
+    ===================================================== */
+
+    useEffect(() => {
+
+        if (!orderID) return;
+
+        const syncOrderStatus = async () => {
+
+            try {
+
+                const response = await orderService.getOrder(orderID);
+
+                if (!response?.success || !response?.order) {
+                    return;
+                }
+
+                setOrder((previous) => {
+
+                    if (!previous) return previous;
+
+                    const latest = response.order;
+
+                    if (
+                        previous.orderStatus === latest.orderStatus
+                    ) {
+                        return previous;
+                    }
+
+                    return {
+                        ...previous,
+                        orderStatus: latest.orderStatus,
+                        createdAt:
+                            latest.createdAt || previous.createdAt
+                    };
+
+                });
+
+            } catch (error) {
+
+                console.error(
+                    "Order status sync failed:",
+                    error
+                );
+
+            }
+
+        };
+
+        const interval = window.setInterval(
+            syncOrderStatus,
+            5000
+        );
+
+        return () => {
+            window.clearInterval(interval);
+        };
+
+    }, [orderID]);
+
+    /* =====================================================
        Helpers
     ===================================================== */
 
@@ -375,35 +436,44 @@ totalAmount:
 
     };
 
+    const normalizedStatus =
+        String(order?.orderStatus || "Pending").toLowerCase();
+
+    const isRejected =
+        normalizedStatus === "cancelled" ||
+        normalizedStatus === "rejected";
+
+    const isConfirmed =
+        normalizedStatus === "confirmed";
+
+    const isPending =
+        normalizedStatus === "pending";
+
     const estimatedDelivery =
-        useMemo(() => {
+        !isRejected
+            ? (() => {
+                const date = new Date();
+                date.setDate(date.getDate() + 5);
 
-            const date =
-                new Date();
+                return date.toLocaleDateString(
+                    "en-IN",
+                    {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "long"
+                    }
+                );
+            })()
+            : null;
 
-            date.setDate(
-
-                date.getDate() + 5
-
-            );
-
-            return date.toLocaleDateString(
-
-                "en-IN",
-
-                {
-
-                    weekday: "long",
-
-                    day: "numeric",
-
-                    month: "long"
-
-                }
-
-            );
-
-        }, []);
+    const displayStatus =
+        isRejected
+            ? "Rejected"
+            : isConfirmed
+                ? "Confirmed"
+                : isPending
+                    ? "Pending"
+                    : order?.orderStatus || "Pending";
 
     /* =====================================================
        Actions
@@ -882,7 +952,7 @@ totalAmount:
 
                 <motion.div
 
-                    className="order-success-circle"
+                    className={`order-success-circle ${isRejected ? "order-success-circle--rejected" : isPending ? "order-success-circle--pending" : ""}`}
 
                     variants={scaleIn}
 
@@ -892,7 +962,13 @@ totalAmount:
 
                 >
 
-                    <PackageCheck />
+                    {isRejected ? (
+                        <CircleDollarSign />
+                    ) : isPending ? (
+                        <Clock3 />
+                    ) : (
+                        <PackageCheck />
+                    )}
 
                 </motion.div>
 
@@ -908,29 +984,68 @@ totalAmount:
 
                 >
 
-                    <span className="order-success-badge">
+                    <span
+                        className={`order-success-badge ${
+                            isRejected
+                                ? "order-success-badge--rejected"
+                                : isPending
+                                    ? "order-success-badge--pending"
+                                    : "order-success-badge--confirmed"
+                        }`}
+                    >
 
-                        <Sparkles size={15} />
+                        {isRejected ? (
+                            <CircleDollarSign size={15} />
+                        ) : isPending ? (
+                            <Clock3 size={15} />
+                        ) : (
+                            <Sparkles size={15} />
+                        )}
 
-                        Order Confirmed Successfully
+                        {isRejected
+                            ? "Order Rejected"
+                            : isPending
+                                ? "Order Placed — Awaiting Confirmation"
+                                : "Order Confirmed Successfully"}
 
                     </span>
 
                     <h1>
 
-                        Thank You For Your Order
+                        {isRejected
+                            ? "We're Sorry About Your Order"
+                            : isPending
+                                ? "Thank You For Your Order"
+                                : "Thank You For Your Order"}
 
                     </h1>
 
                     <p>
 
-                        Your luxury jewellery order has been confirmed
-                        successfully.
-
-                        <br />
-
-                        Our artisans have started preparing your
-                        handcrafted masterpiece.
+                        {isRejected ? (
+                            <>
+                                Your order has been rejected by HIRANYA.
+                                <br />
+                                If payment was already made, your refund will
+                                be processed according to the payment method.
+                            </>
+                        ) : isPending ? (
+                            <>
+                                Your order has been placed successfully and
+                                is awaiting confirmation from our team.
+                                <br />
+                                You will see the status update here
+                                automatically.
+                            </>
+                        ) : (
+                            <>
+                                Your luxury jewellery order has been
+                                confirmed successfully.
+                                <br />
+                                Our artisans have started preparing your
+                                handcrafted masterpiece.
+                            </>
+                        )}
 
                     </p>
 
@@ -1028,23 +1143,45 @@ totalAmount:
 
                 </div>
 
-                <div className="order-info-card">
+                {!isRejected && (
+                    <div className="order-info-card">
 
-                    <Truck />
+                        <Truck />
 
-                    <span>
+                        <span>
 
-                        Estimated Delivery
+                            Estimated Delivery
 
-                    </span>
+                        </span>
 
-                    <h3>
+                        <h3>
 
-                        {estimatedDelivery}
+                            {estimatedDelivery}
 
-                    </h3>
+                        </h3>
 
-                </div>
+                    </div>
+                )}
+
+                {isRejected && (
+                    <div className="order-info-card order-info-card--rejected">
+
+                        <CircleDollarSign />
+
+                        <span>
+
+                            Refund Status
+
+                        </span>
+
+                        <h3>
+
+                            Refund will be processed
+
+                        </h3>
+
+                    </div>
+                )}
 
             </motion.section>
 
@@ -1407,93 +1544,123 @@ totalAmount:
 
                     <div className="order-timeline">
 
-                        <div className="timeline-item active">
+                        <div
+                            className={`timeline-item ${
+                                isRejected
+                                    ? "timeline-item--rejected active"
+                                    : "active"
+                            }`}
+                        >
 
-                            <BadgeCheck />
+                            {isRejected ? <CircleDollarSign /> : <BadgeCheck />}
 
                             <div>
 
                                 <h4>
-
-                                    Order Confirmed
-
+                                    {isRejected
+                                        ? "Order Rejected"
+                                        : isConfirmed
+                                            ? "Order Confirmed"
+                                            : "Order Placed"}
                                 </h4>
 
                                 <span>
-
-                                    Your order has been placed successfully.
-
+                                    {isRejected
+                                        ? "This order was rejected by HIRANYA."
+                                        : isConfirmed
+                                            ? "Your order has been confirmed successfully."
+                                            : "Your order has been placed and is awaiting confirmation."}
                                 </span>
 
                             </div>
 
                         </div>
 
-                        <div className="timeline-item active">
+                        {!isRejected && (
+                            <>
+                                <div
+                                    className={`timeline-item ${
+                                        isConfirmed ? "active" : ""
+                                    }`}
+                                >
 
-                            <PackageCheck />
+                                    <PackageCheck />
 
-                            <div>
+                                    <div>
 
-                                <h4>
+                                        <h4>
+                                            Processing
+                                        </h4>
 
-                                    Processing
+                                        <span>
+                                            {isConfirmed
+                                                ? "Our artisans are preparing your jewellery."
+                                                : "Processing will begin after your order is confirmed."}
+                                        </span>
 
-                                </h4>
+                                    </div>
 
-                                <span>
+                                </div>
 
-                                    Our artisans are preparing your jewellery.
+                                <div className="timeline-item">
 
-                                </span>
+                                    <Gem />
+
+                                    <div>
+
+                                        <h4>
+                                            Quality Inspection
+                                        </h4>
+
+                                        <span>
+                                            Hallmark and quality verification.
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                                <div className="timeline-item">
+
+                                    <Truck />
+
+                                    <div>
+
+                                        <h4>
+                                            Ready For Dispatch
+                                        </h4>
+
+                                        <span>
+                                            Secure packaging and shipment preparation.
+                                        </span>
+
+                                    </div>
+
+                                </div>
+                            </>
+                        )}
+
+                        {isRejected && (
+                            <div className="timeline-item timeline-item--rejected active">
+
+                                <CircleDollarSign />
+
+                                <div>
+
+                                    <h4>
+                                        Refund
+                                    </h4>
+
+                                    <span>
+                                        If payment was completed, the refund
+                                        will be processed according to the
+                                        payment method.
+                                    </span>
+
+                                </div>
 
                             </div>
-
-                        </div>
-
-                        <div className="timeline-item">
-
-                            <Gem />
-
-                            <div>
-
-                                <h4>
-
-                                    Quality Inspection
-
-                                </h4>
-
-                                <span>
-
-                                    Hallmark and quality verification.
-
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                        <div className="timeline-item">
-
-                            <Truck />
-
-                            <div>
-
-                                <h4>
-
-                                    Ready For Dispatch
-
-                                </h4>
-
-                                <span>
-
-                                    Secure packaging and shipment preparation.
-
-                                </span>
-
-                            </div>
-
-                        </div>
+                        )}
 
                     </div>
 
@@ -1658,9 +1825,17 @@ totalAmount:
 
                             <span>Status</span>
 
-                            <strong className="order-status-success">
+                            <strong
+                                className={
+                                    isRejected
+                                        ? "order-status-rejected"
+                                        : isPending
+                                            ? "order-status-pending"
+                                            : "order-status-confirmed"
+                                }
+                            >
 
-                                {order?.orderStatus}
+                                {displayStatus}
 
                             </strong>
 
@@ -1690,17 +1865,31 @@ totalAmount:
 
                         </div>
 
-                        <div>
+                        {!isRejected && (
+                            <div>
 
-                            <span>Estimated Delivery</span>
+                                <span>Estimated Delivery</span>
 
-                            <strong>
+                                <strong>
 
-                                {estimatedDelivery}
+                                    {estimatedDelivery}
 
-                            </strong>
+                                </strong>
 
-                        </div>
+                            </div>
+                        )}
+
+                        {isRejected && (
+                            <div className="order-rejected-refund-row">
+
+                                <span>Refund</span>
+
+                                <strong>
+                                    Will be processed
+                                </strong>
+
+                            </div>
+                        )}
 
                     </div>
 
@@ -1983,22 +2172,43 @@ totalAmount:
 
                     <h2>
 
-                        Thank You For Choosing
-                        <span> HIRANYA</span>
+                        {isRejected
+                            ? "Order Status"
+                            : "Thank You For Choosing"}
+                        {!isRejected && <span> HIRANYA</span>}
 
                     </h2>
 
                     <p>
 
-                        Every HIRANYA masterpiece is handcrafted
-                        with exceptional artistry, authenticity
-                        and timeless elegance.
-
-                        <br />
-
-                        Your order is now being carefully prepared
-                        by our master craftsmen and will soon begin
-                        its secure journey to your doorstep.
+                        {isRejected ? (
+                            <>
+                                We are sorry that this order could not be
+                                processed.
+                                <br />
+                                {`Order ${order?.orderID} has been rejected. `}
+                                If payment was already made, the applicable
+                                refund will be processed.
+                            </>
+                        ) : isPending ? (
+                            <>
+                                Your order is safely placed with HIRANYA and
+                                is currently awaiting confirmation.
+                                <br />
+                                This page will automatically sync when the
+                                admin confirms or rejects the order.
+                            </>
+                        ) : (
+                            <>
+                                Every HIRANYA masterpiece is handcrafted
+                                with exceptional artistry, authenticity
+                                and timeless elegance.
+                                <br />
+                                Your order is now being carefully prepared
+                                by our master craftsmen and will soon begin
+                                its secure journey to your doorstep.
+                            </>
+                        )}
 
                     </p>
 

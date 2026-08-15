@@ -1729,3 +1729,101 @@
     }
 
 }
+/* ===========================================================
+   REJECTED ORDER - RED THEME
+=========================================================== */
+
+/* Rejected status badge */
+.myorder-status.rejected {
+    background: #fde8e8 !important;
+    color: #c62828 !important;
+    border: 1px solid #f3b5b5;
+}
+
+/* Rejected order card */
+.myorder-card:has(.myorder-status.rejected) {
+    border: 1px solid rgba(198, 40, 40, 0.25);
+    box-shadow:
+        0 20px 50px rgba(198, 40, 40, 0.07);
+}
+
+/* Rejected card hover */
+.myorder-card:has(.myorder-status.rejected):hover {
+    border-color: rgba(198, 40, 40, 0.40);
+    box-shadow:
+        0 30px 70px rgba(198, 40, 40, 0.12);
+}
+
+/* Rejected message box */
+.myorder-rejected-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    margin-bottom: 28px;
+    padding: 18px 20px;
+
+    background: #fff5f5;
+
+    border: 1px solid #f1c1c1;
+    border-left: 4px solid #d0342c;
+
+    border-radius: 16px;
+}
+
+/* Rejected icon */
+.myorder-rejected-message svg {
+    flex-shrink: 0;
+    color: #d0342c;
+    margin-top: 2px;
+}
+
+/* Rejected title */
+.myorder-rejected-message strong {
+    display: block;
+
+    color: #c62828;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    margin-bottom: 6px;
+}
+
+/* Rejected description */
+.myorder-rejected-message p {
+    margin: 0;
+
+    color: #8f3b3b;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Rejected product amount */
+.myorder-card:has(.myorder-status.rejected) .myorder-product strong {
+    color: #c62828;
+}
+
+/* Rejected total */
+.myorder-card:has(.myorder-status.rejected) .myorder-total {
+    color: #c62828 !important;
+}
+
+/* Rejected footer icons */
+.myorder-card:has(.myorder-status.rejected) .myorder-footer-item svg {
+    color: #c62828;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+    .myorder-rejected-message {
+        padding: 16px;
+    }
+
+    .myorder-rejected-message p {
+        font-size: 13px;
+    }
+
+}

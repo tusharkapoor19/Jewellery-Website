@@ -1403,3 +1403,156 @@
     border-radius:20px;
 
 }
+/* =========================================================
+   REJECTED / CANCELLED ORDER
+   Hide delivery-related information completely
+========================================================= */
+
+.track-page--rejected .estimated-delivery,
+.track-page--rejected .estimated-delivery-card,
+.track-page--rejected .delivery-estimate,
+.track-page--rejected .delivery-estimate-card,
+.track-page--rejected .track-estimated-delivery,
+.track-page--rejected .track-delivery-estimate {
+    display: none !important;
+}
+
+
+/* Hide delivery information if it is inside
+   the order details / summary sections */
+
+.track-page--rejected .delivery-row,
+.track-page--rejected .estimated-delivery-row,
+.track-page--rejected .delivery-method-row {
+    display: none !important;
+}
+
+
+/* Rejected status styling */
+
+.track-page--rejected .track-status {
+    color: #b42318;
+    background: #fff1f0;
+    border-color: #f1c2bd;
+}
+
+
+/* Rejected card */
+
+.track-page--rejected .track-rejected-card {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+
+    margin: 24px 0;
+
+    padding: 28px 32px;
+
+    border: 1px solid #efd3cf;
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffdfc,
+            #fff7f5
+        );
+
+    box-shadow:
+        0 12px 35px rgba(90, 60, 30, 0.06);
+}
+
+
+.track-page--rejected .track-rejected-icon {
+    width: 64px;
+    height: 64px;
+
+    min-width: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: #b42318;
+    background: #fff0ee;
+}
+
+
+.track-page--rejected .track-rejected-content span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #a27a2a;
+}
+
+
+.track-page--rejected .track-rejected-content h2 {
+    margin: 0 0 8px;
+
+    font-size: 24px;
+
+    color: #252525;
+}
+
+
+.track-page--rejected .track-rejected-content p {
+    margin: 5px 0;
+
+    color: #777;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   EXTRA SAFETY:
+   If old Track Order UI has cards labelled
+   Estimated Delivery, hide them when rejected.
+========================================================= */
+
+.track-page--rejected [class*="estimated-delivery"],
+.track-page--rejected [class*="EstimatedDelivery"],
+.track-page--rejected [class*="delivery-estimate"],
+.track-page--rejected [class*="DeliveryEstimate"] {
+    display: none !important;
+}
+
+
+/* =========================================================
+   Rejected order timeline should never appear
+========================================================= */
+
+.track-page--rejected .track-timeline {
+    display: none !important;
+}
+
+
+/* =========================================================
+   Keep product images visible
+========================================================= */
+
+.track-page--rejected .track-product-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+
+.track-page--rejected .track-product-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}

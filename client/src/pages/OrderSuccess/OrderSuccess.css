@@ -1803,3 +1803,91 @@
     }
 
 }
+
+/* ===========================================================
+   LIVE ORDER STATUS SYNC
+   Pending / Confirmed / Rejected
+=========================================================== */
+
+/* Status colors */
+.order-status-confirmed{
+    color:#2e8b57 !important;
+}
+
+.order-status-pending{
+    color:#b68d40 !important;
+}
+
+.order-status-rejected{
+    color:#c62828 !important;
+}
+
+/* Hero status badge */
+.order-success-badge--confirmed{
+    color:#2e8b57 !important;
+    border-color:rgba(46,139,87,.22) !important;
+    background:rgba(46,139,87,.06) !important;
+}
+
+.order-success-badge--pending{
+    color:#a87816 !important;
+    border-color:rgba(212,175,55,.28) !important;
+    background:rgba(212,175,55,.08) !important;
+}
+
+.order-success-badge--rejected{
+    color:#c62828 !important;
+    border-color:rgba(198,40,40,.22) !important;
+    background:rgba(198,40,40,.06) !important;
+}
+
+/* Hero circle */
+.order-success-circle--pending{
+    background:linear-gradient(135deg,#f6d365,#b68d40) !important;
+}
+
+.order-success-circle--rejected{
+    background:linear-gradient(135deg,#ef5350,#b71c1c) !important;
+    box-shadow:0 25px 65px rgba(198,40,40,.25) !important;
+}
+
+/* Rejected info card */
+.order-info-card--rejected{
+    border-color:rgba(198,40,40,.20) !important;
+    background:rgba(198,40,40,.035) !important;
+}
+
+.order-info-card--rejected svg{
+    color:#c62828 !important;
+}
+
+.order-info-card--rejected h3{
+    color:#c62828 !important;
+    font-size:16px;
+}
+
+/* Rejected timeline */
+.timeline-item--rejected{
+    background:rgba(198,40,40,.055) !important;
+    border-color:rgba(198,40,40,.25) !important;
+}
+
+.timeline-item--rejected svg{
+    color:#c62828 !important;
+}
+
+.timeline-item--rejected h4{
+    color:#b71c1c !important;
+}
+
+/* Refund row */
+.order-rejected-refund-row strong{
+    color:#c62828 !important;
+}
+
+/* Keep status readable on smaller screens */
+@media(max-width:768px){
+    .order-info-card--rejected h3{
+        font-size:15px;
+    }
+}

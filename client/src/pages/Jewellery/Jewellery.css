@@ -1169,3 +1169,2073 @@ html{
     background:#b8891f;
 
 }
+/* =========================================================
+   HIRANYA JEWELLERY FILTER
+   COLLECTION-STYLE COMPACT LAYOUT
+========================================================= */
+
+.jewellery-filter-panel {
+    width: 94%;
+    max-width: 1450px;
+    margin: 0 auto 28px;
+
+    padding: 26px 32px;
+
+    display: grid;
+    grid-template-columns:
+        1.05fr
+        1.15fr
+        1.15fr
+        .72fr
+        auto;
+
+    align-items: center;
+    gap: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff,
+            #faf7f0
+        );
+
+    border: 1px solid rgba(201,162,74,.25);
+    border-radius: 26px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.06),
+        0 0 35px rgba(201,162,74,.05);
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER / REFINE COLLECTION
+========================================================= */
+
+.filter-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 0;
+
+    border: none;
+}
+
+.filter-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.filter-heading > svg {
+    color: #b88616;
+
+    filter:
+        drop-shadow(
+            0 0 5px rgba(201,162,74,.25)
+        );
+}
+
+.filter-heading > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-heading span {
+    color: #806b48;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 2.3px;
+}
+
+.filter-heading em {
+    width: fit-content;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    background: #fbf5e7;
+
+    border: 1px solid #ead9b5;
+
+    color: #a67b1c;
+
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+/* Current selection text */
+
+.filter-heading > div::after {
+    content: "";
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+.filter-reset-btn {
+    justify-self: end;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-width: 105px;
+    height: 52px;
+
+    padding: 0 18px;
+
+    border: 1px solid #dfd2b8;
+    border-radius: 16px;
+
+    background: #fffdf9;
+
+    color: #916b18;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.filter-reset-btn:hover {
+    color: white;
+
+    border-color: #b8891f;
+
+    background:
+        linear-gradient(
+            135deg,
+            #c9a24a,
+            #a87c18
+        );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(176,138,32,.20);
+}
+
+
+/* =========================================================
+   METAL + JEWELLERY
+========================================================= */
+
+.filter-dropdown-row {
+    display: contents;
+}
+
+.filter-dropdown-group {
+    padding: 0 !important;
+
+    border: none !important;
+}
+
+.filter-group-title {
+    margin-bottom: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filter-group-title span {
+    color: #806b48;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   DROPDOWNS
+========================================================= */
+
+.premium-select {
+    position: relative;
+
+    width: 100%;
+}
+
+.premium-select select {
+    width: 100%;
+    height: 52px;
+
+    padding: 0 42px 0 16px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    border: 1px solid #e2d5bd;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffefa,
+            #faf7f0
+        );
+
+    color: #39352f;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.premium-select select:hover {
+    border-color: #c9a24a;
+
+    box-shadow:
+        0 7px 20px
+        rgba(176,138,32,.08);
+}
+
+.premium-select select:focus {
+    border-color: #b8891f;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(201,162,74,.10);
+}
+
+.premium-select svg {
+    position: absolute;
+
+    right: 14px;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color: #a77b18;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.filter-bottom-grid {
+    display: contents;
+}
+
+.price-filter {
+    min-width: 0;
+}
+
+.price-filter .filter-group-title {
+    margin-bottom: 4px;
+}
+
+.price-filter .filter-group-title strong {
+    color: #b27f16;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+/* Slider */
+
+.price-range {
+    position: relative;
+
+    width: 100%;
+    height: 27px;
+
+    margin-top: 4px;
+}
+
+.price-range::before {
+    content: "";
+
+    position: absolute;
+
+    left: 8px;
+    right: 8px;
+    top: 12px;
+
+    height: 5px;
+
+    border-radius: 10px;
+
+    background: #e4dccd;
+}
+
+.range-slider {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 27px;
+
+    margin: 0;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: transparent;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+.range-slider.range-top {
+    z-index: 3;
+}
+
+.range-slider::-webkit-slider-runnable-track {
+    height: 5px;
+
+    background: transparent;
+}
+
+.range-slider::-moz-range-track {
+    height: 5px;
+
+    background: transparent;
+}
+
+.range-slider::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 20px;
+    height: 20px;
+
+    margin-top: -7px;
+
+    border: 3px solid white;
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d5af3e,
+            #a77b18
+        );
+
+    box-shadow:
+        0 2px 7px rgba(0,0,0,.18),
+        0 0 0 1px #c9a24a;
+
+    pointer-events: auto;
+
+    cursor: grab;
+}
+
+.range-slider::-moz-range-thumb {
+    width: 17px;
+    height: 17px;
+
+    border: 3px solid white;
+    border-radius: 50%;
+
+    background: #c9a24a;
+
+    box-shadow:
+        0 2px 7px rgba(0,0,0,.18);
+
+    pointer-events: auto;
+
+    cursor: grab;
+}
+
+
+/* Price labels */
+
+.price-values {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: -2px;
+
+    color: #999084;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   PRICE PRESETS
+========================================================= */
+
+.price-presets {
+    display: flex;
+    gap: 6px;
+
+    margin-top: 8px;
+}
+
+.price-presets button {
+    height: 29px;
+
+    padding: 0 10px;
+
+    border: 1px solid #e1d6c3;
+    border-radius: 18px;
+
+    background: #fffdf9;
+
+    color: #777067;
+
+    font-family: inherit;
+
+    font-size: 9px;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+.price-presets button:hover {
+    color: #9a7117;
+
+    border-color: #c9a24a;
+
+    background: #fffaf0;
+}
+
+.price-presets button.active {
+    color: white;
+
+    border-color: #b8891f;
+
+    background:
+        linear-gradient(
+            135deg,
+            #c9a24a,
+            #a87c18
+        );
+
+    box-shadow:
+        0 5px 13px
+        rgba(176,138,32,.17);
+}
+
+
+/* =========================================================
+   SORT
+========================================================= */
+
+.sort-filter {
+    min-width: 0;
+}
+
+.sort-filter .filter-group-title {
+    margin-bottom: 9px;
+}
+
+.sort-select {
+    position: relative;
+}
+
+.sort-select select {
+    width: 100%;
+    height: 52px;
+
+    padding: 0 40px 0 15px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    border: 1px solid #e2d5bd;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffefa,
+            #faf7f0
+        );
+
+    color: #39352f;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.sort-select select:hover,
+.sort-select select:focus {
+    border-color: #c9a24a;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(201,162,74,.08);
+}
+
+.sort-select svg {
+    position: absolute;
+
+    right: 14px;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color: #a27a1c;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   RESULTS BAR
+========================================================= */
+
+.jewellery-results-bar {
+    width: 94%;
+    max-width: 1450px;
+
+    margin: 0 auto 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    color: #81796e;
+
+    font-size: 13px;
+}
+
+.jewellery-results-bar strong {
+    color: #ad801d;
+}
+
+.jewellery-results-bar > span {
+    color: #aaa093;
+
+    font-size: 12px;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .jewellery-filter-panel {
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 22px;
+    }
+
+    .filter-panel-header {
+        grid-column: span 2;
+    }
+
+    .filter-reset-btn {
+        grid-column: 2;
+        grid-row: 3;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .jewellery-filter-panel {
+        width: 92%;
+
+        grid-template-columns: 1fr;
+
+        padding: 22px 18px;
+
+        gap: 20px;
+
+        border-radius: 22px;
+    }
+
+    .filter-panel-header {
+        grid-column: auto;
+
+        justify-content: space-between;
+    }
+
+    .filter-reset-btn {
+        grid-column: auto;
+        grid-row: auto;
+
+        justify-self: start;
+    }
+
+    .filter-dropdown-row {
+        display: contents;
+    }
+
+    .price-presets {
+        flex-wrap: wrap;
+    }
+
+    .price-presets button {
+        flex: 1;
+        min-width: 75px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .jewellery-filter-panel {
+        width: 94%;
+
+        padding: 20px 15px;
+    }
+
+    .filter-heading span {
+        font-size: 10px;
+
+        letter-spacing: 1.8px;
+    }
+
+    .filter-reset-btn {
+        width: 100%;
+    }
+
+    .price-presets {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .price-presets button {
+        width: 100%;
+    }
+
+}
+.custom-select {
+    position: relative;
+    width: 100%;
+    z-index: 50;
+}
+
+.custom-select-trigger {
+    width: 100%;
+    height: 52px;
+    padding: 0 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid #e2d5bd;
+    border-radius: 14px;
+
+    background: linear-gradient(
+        145deg,
+        #fffefa,
+        #faf7f0
+    );
+
+    color: #39352f;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.custom-select-trigger:hover {
+    border-color: #c9a24a;
+
+    box-shadow:
+        0 7px 20px
+        rgba(176,138,32,.09);
+}
+
+.custom-select-trigger:focus {
+    outline: none;
+    border-color: #b8891f;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(201,162,74,.10);
+}
+
+.select-arrow {
+    color: #a77b18;
+    transition: .25s ease;
+}
+
+.select-arrow.open {
+    transform: rotate(180deg);
+}
+
+.custom-select-menu {
+    position: absolute;
+
+    top: calc(100% + 7px);
+    left: 0;
+
+    width: 100%;
+
+    padding: 7px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffefa,
+            #faf6ed
+        );
+
+    border: 1px solid
+        rgba(201,162,74,.30);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.13),
+        0 0 25px
+        rgba(201,162,74,.07);
+
+    overflow: hidden;
+
+    animation:
+        dropdownOpen .2s ease;
+
+    z-index: 99999;
+}
+
+@keyframes dropdownOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.custom-option {
+    width: 100%;
+    min-height: 42px;
+
+    padding: 0 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border: none;
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: #504a41;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.custom-option:hover {
+    color: #9b7317;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(201,162,74,.10),
+            rgba(201,162,74,.04)
+        );
+
+    padding-left: 16px;
+}
+
+.custom-option.active {
+    color: #a47716;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(201,162,74,.17),
+            rgba(201,162,74,.07)
+        );
+
+    font-weight: 700;
+}
+
+.custom-option.active span:last-child {
+    color: #b8891f;
+    font-size: 14px;
+}
+/* =========================================================
+   JEWELLERY FILTER - FINAL FIX
+   ========================================================= */
+
+.jewellery-filter-panel {
+    display: grid !important;
+
+    grid-template-columns:
+        1.05fr
+        1fr
+        1fr
+        1.45fr
+        1fr
+        auto !important;
+
+    align-items: end;
+
+    gap: 24px;
+
+    padding: 28px 32px;
+}
+
+
+/* REFINE */
+
+.jewellery-filter-panel > .filter-panel-header {
+    grid-column: 1;
+    align-self: center;
+}
+
+
+/* METAL + JEWELLERY */
+
+.jewellery-filter-panel
+.filter-dropdown-row {
+    display: contents !important;
+}
+
+.jewellery-filter-panel
+.filter-dropdown-group:nth-child(1) {
+    grid-column: 2;
+}
+
+.jewellery-filter-panel
+.filter-dropdown-group:nth-child(2) {
+    grid-column: 3;
+}
+
+
+/* PRICE */
+
+.jewellery-filter-panel
+.filter-bottom-grid {
+    display: contents !important;
+}
+
+.jewellery-filter-panel
+.price-filter {
+    grid-column: 4;
+}
+
+
+/* SORT */
+
+.jewellery-filter-panel
+.sort-filter {
+    grid-column: 5;
+    min-width: 0;
+}
+
+
+/* RESET */
+
+.jewellery-filter-panel
+.filter-reset-btn {
+    grid-column: 6;
+
+    width: 108px;
+    min-width: 108px;
+
+    height: 52px;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   DROPDOWN WIDTH
+   ========================================================= */
+
+.jewellery-filter-panel
+.custom-select {
+    width: 100%;
+    min-width: 0;
+}
+
+.jewellery-filter-panel
+.custom-select-trigger {
+    width: 100%;
+    min-width: 0;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   DROPDOWN MENU
+   ========================================================= */
+
+.jewellery-filter-panel
+.custom-select-menu {
+    width: 100%;
+    min-width: 210px;
+
+    max-height: 300px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    box-sizing: border-box;
+
+    padding: 7px;
+}
+
+
+/* OPTIONS MUST NOT BREAK INTO WEIRD LINES */
+
+.jewellery-filter-panel
+.custom-option {
+    width: 100%;
+
+    min-height: 42px;
+
+    padding: 0 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    white-space: nowrap;
+
+    box-sizing: border-box;
+}
+
+
+/* Option text */
+
+.jewellery-filter-panel
+.custom-option > span:first-child {
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SORT DROPDOWN - EXTRA SPACE
+   ========================================================= */
+
+.jewellery-filter-panel
+.sort-filter
+.custom-select-menu {
+    min-width: 220px;
+
+    left: auto;
+    right: 0;
+}
+
+.jewellery-filter-panel
+.sort-filter
+.custom-option {
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PRICE PRESETS
+   ========================================================= */
+
+.jewellery-filter-panel
+.price-presets {
+    display: flex;
+    gap: 7px;
+
+    flex-wrap: nowrap;
+}
+
+.jewellery-filter-panel
+.price-presets button {
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   DESKTOP WIDTH
+   ========================================================= */
+
+@media (min-width: 1201px) {
+
+    .jewellery-filter-panel {
+        grid-template-columns:
+            1.05fr
+            1fr
+            1fr
+            1.45fr
+            1fr
+            auto !important;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .jewellery-filter-panel {
+        grid-template-columns:
+            1fr 1fr !important;
+
+        gap: 22px;
+    }
+
+    .jewellery-filter-panel
+    > .filter-panel-header {
+        grid-column: 1 / -1;
+    }
+
+    .jewellery-filter-panel
+    .filter-dropdown-group:nth-child(1),
+    .jewellery-filter-panel
+    .filter-dropdown-group:nth-child(2),
+    .jewellery-filter-panel
+    .price-filter,
+    .jewellery-filter-panel
+    .sort-filter {
+        grid-column: auto;
+    }
+
+    .jewellery-filter-panel
+    .filter-reset-btn {
+        grid-column: 2;
+        justify-self: end;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .jewellery-filter-panel {
+        grid-template-columns: 1fr !important;
+
+        padding: 22px 18px;
+    }
+
+    .jewellery-filter-panel
+    > .filter-panel-header,
+    .jewellery-filter-panel
+    .filter-dropdown-group:nth-child(1),
+    .jewellery-filter-panel
+    .filter-dropdown-group:nth-child(2),
+    .jewellery-filter-panel
+    .price-filter,
+    .jewellery-filter-panel
+    .sort-filter,
+    .jewellery-filter-panel
+    .filter-reset-btn {
+        grid-column: 1 !important;
+    }
+
+    .jewellery-filter-panel
+    .filter-reset-btn {
+        width: 100%;
+    }
+
+    .jewellery-filter-panel
+    .custom-select-menu {
+        min-width: 100%;
+    }
+
+}
+/* =========================================================
+   HIRANYA JEWELLERY FILTER
+   FINAL CLEAN COLLECTION-STYLE LAYOUT
+========================================================= */
+
+.jewellery-filter-panel {
+    width: 94%;
+    max-width: 1450px;
+
+    margin: 0 auto 28px;
+    padding: 28px 32px;
+
+    display: grid !important;
+
+    /*
+        ROW 1
+        REFINE | PRICE | SORT | RESET
+
+        ROW 2
+        METAL | JEWELLERY
+    */
+
+    grid-template-columns:
+        1.05fr
+        1.25fr
+        1.25fr
+        0.9fr
+        auto !important;
+
+    grid-template-rows:
+        auto
+        auto;
+
+    column-gap: 26px;
+    row-gap: 24px;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffefa,
+            #faf7f0
+        );
+
+    border: 1px solid rgba(201,162,74,.25);
+
+    border-radius: 26px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.055),
+        0 0 35px rgba(201,162,74,.05);
+}
+
+
+/* =========================================================
+   REFINE COLLECTION
+========================================================= */
+
+.jewellery-filter-panel
+.filter-panel-header {
+
+    grid-column: 1;
+    grid-row: 1;
+
+    align-self: center;
+}
+
+
+.jewellery-filter-panel
+.filter-heading {
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+.jewellery-filter-panel
+.filter-heading > svg {
+
+    flex-shrink: 0;
+
+    color: #b8891f;
+
+    filter:
+        drop-shadow(
+            0 0 5px
+            rgba(201,162,74,.25)
+        );
+}
+
+
+.jewellery-filter-panel
+.filter-heading > div {
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+
+.jewellery-filter-panel
+.filter-heading span {
+
+    color: #806b48;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 2.3px;
+
+    white-space: nowrap;
+}
+
+
+.jewellery-filter-panel
+.filter-heading em {
+
+    width: fit-content;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    background: #fbf5e7;
+
+    border: 1px solid #ead9b5;
+
+    color: #a67b1c;
+
+    font-size: 8px;
+
+    font-style: normal;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.jewellery-filter-panel
+.filter-bottom-grid {
+
+    display: contents !important;
+}
+
+
+.jewellery-filter-panel
+.price-filter {
+
+    grid-column: 2 / 4;
+    grid-row: 1;
+
+    min-width: 0;
+
+    align-self: center;
+}
+
+
+/* PRICE TITLE */
+
+.jewellery-filter-panel
+.price-filter .filter-group-title {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 4px;
+}
+
+
+.jewellery-filter-panel
+.price-filter .filter-group-title span {
+
+    color: #806b48;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+
+.jewellery-filter-panel
+.price-filter .filter-group-title strong {
+
+    color: #b27f16;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PRICE SLIDER
+========================================================= */
+
+.jewellery-filter-panel
+.price-range {
+
+    position: relative;
+
+    width: 100%;
+    height: 27px;
+
+    margin-top: 3px;
+}
+
+
+.jewellery-filter-panel
+.price-range::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 8px;
+    right: 8px;
+    top: 12px;
+
+    height: 5px;
+
+    border-radius: 10px;
+
+    background: #e4dccd;
+}
+
+
+.jewellery-filter-panel
+.range-slider {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 27px;
+
+    margin: 0;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: transparent;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+.jewellery-filter-panel
+.range-slider.range-top {
+    z-index: 3;
+}
+
+
+.jewellery-filter-panel
+.range-slider::-webkit-slider-runnable-track {
+
+    height: 5px;
+
+    background: transparent;
+}
+
+
+.jewellery-filter-panel
+.range-slider::-webkit-slider-thumb {
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 20px;
+    height: 20px;
+
+    margin-top: -7px;
+
+    border: 3px solid #fff;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d5af3e,
+            #a77b18
+        );
+
+    box-shadow:
+        0 2px 7px rgba(0,0,0,.18),
+        0 0 0 1px #c9a24a;
+
+    pointer-events: auto;
+
+    cursor: grab;
+}
+
+
+/* =========================================================
+   PRICE VALUES
+========================================================= */
+
+.jewellery-filter-panel
+.price-values {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: -2px;
+
+    color: #999084;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   PRICE PRESETS
+========================================================= */
+
+.jewellery-filter-panel
+.price-presets {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 8px;
+
+    flex-wrap: nowrap;
+
+    overflow: visible;
+}
+
+
+.jewellery-filter-panel
+.price-presets button {
+
+    height: 29px;
+
+    padding: 0 10px;
+
+    flex-shrink: 0;
+
+    border: 1px solid #e1d6c3;
+
+    border-radius: 18px;
+
+    background: #fffdf9;
+
+    color: #777067;
+
+    font-family: inherit;
+
+    font-size: 9px;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+
+.jewellery-filter-panel
+.price-presets button:hover,
+.jewellery-filter-panel
+.price-presets button.active {
+
+    color: #9a7117;
+
+    border-color: #c9a24a;
+
+    background: #fffaf0;
+}
+
+
+/* =========================================================
+   SORT
+========================================================= */
+
+.jewellery-filter-panel
+.sort-filter {
+
+    grid-column: 4;
+    grid-row: 1;
+
+    min-width: 0;
+
+    align-self: center;
+}
+
+
+.jewellery-filter-panel
+.sort-filter .filter-group-title {
+
+    margin-bottom: 9px;
+}
+
+
+.jewellery-filter-panel
+.sort-filter .filter-group-title span {
+
+    color: #806b48;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+
+/* SORT BUTTON */
+
+.jewellery-filter-panel
+.sort-filter
+.custom-select {
+
+    position: relative;
+
+    width: 100%;
+
+    z-index: 100;
+}
+
+
+.jewellery-filter-panel
+.sort-filter
+.custom-select-trigger {
+
+    width: 100%;
+    height: 52px;
+
+    padding: 0 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    box-sizing: border-box;
+
+    border: 1px solid #e2d5bd;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffefa,
+            #faf7f0
+        );
+
+    color: #39352f;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+
+.jewellery-filter-panel
+.sort-filter
+.custom-select-trigger:hover {
+
+    border-color: #c9a24a;
+
+    box-shadow:
+        0 7px 20px
+        rgba(176,138,32,.09);
+}
+
+
+.jewellery-filter-panel
+.sort-filter
+.select-arrow {
+
+    flex-shrink: 0;
+
+    color: #a77b18;
+
+    transition: .25s ease;
+}
+
+
+.jewellery-filter-panel
+.sort-filter
+.select-arrow.open {
+
+    transform: rotate(180deg);
+}
+
+
+/* SORT DROPDOWN */
+
+.jewellery-filter-panel
+.sort-filter
+.custom-select-menu {
+
+    position: absolute;
+
+    top: calc(100% + 7px);
+
+    left: 0;
+    right: auto;
+
+    width: 100%;
+
+    min-width: 220px;
+
+    padding: 7px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffefa,
+            #faf6ed
+        );
+
+    border:
+        1px solid
+        rgba(201,162,74,.30);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.13),
+        0 0 25px rgba(201,162,74,.07);
+
+    z-index: 999999;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+.jewellery-filter-panel
+.filter-reset-btn {
+
+    grid-column: 5;
+    grid-row: 1;
+
+    justify-self: end;
+
+    width: 108px;
+    min-width: 108px;
+
+    height: 52px;
+
+    margin: 0;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #dfd2b8;
+
+    border-radius: 16px;
+
+    background: #fffdf9;
+
+    color: #916b18;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+
+.jewellery-filter-panel
+.filter-reset-btn:hover {
+
+    color: white;
+
+    border-color: #b8891f;
+
+    background:
+        linear-gradient(
+            135deg,
+            #c9a24a,
+            #a87c18
+        );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(176,138,32,.20);
+}
+
+
+/* =========================================================
+   SECOND ROW — METAL + JEWELLERY
+========================================================= */
+
+.jewellery-filter-panel
+.filter-dropdown-row {
+
+    display: contents !important;
+}
+
+
+.jewellery-filter-panel
+.filter-dropdown-group:nth-child(1) {
+
+    grid-column: 1 / 4;
+    grid-row: 2;
+}
+
+
+.jewellery-filter-panel
+.filter-dropdown-group:nth-child(2) {
+
+    grid-column: 4 / 6;
+    grid-row: 2;
+}
+
+
+.jewellery-filter-panel
+.filter-dropdown-group {
+
+    min-width: 0;
+
+    padding-top: 22px !important;
+
+    border-top:
+        1px solid
+        rgba(201,162,74,.16) !important;
+}
+
+
+.jewellery-filter-panel
+.filter-group-title {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 9px;
+}
+
+
+.jewellery-filter-panel
+.filter-group-title span {
+
+    color: #806b48;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   METAL / JEWELLERY CUSTOM DROPDOWN
+========================================================= */
+
+.jewellery-filter-panel
+.filter-dropdown-group
+.custom-select {
+
+    position: relative;
+
+    width: 100%;
+
+    z-index: 100;
+}
+
+
+.jewellery-filter-panel
+.filter-dropdown-group
+.custom-select-trigger {
+
+    width: 100%;
+    height: 52px;
+
+    padding: 0 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    box-sizing: border-box;
+
+    border: 1px solid #e2d5bd;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffefa,
+            #faf7f0
+        );
+
+    color: #39352f;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+
+.jewellery-filter-panel
+.filter-dropdown-group
+.custom-select-trigger:hover {
+
+    border-color: #c9a24a;
+
+    box-shadow:
+        0 7px 20px
+        rgba(176,138,32,.09);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .jewellery-filter-panel {
+
+        grid-template-columns:
+            1fr 1fr !important;
+
+        gap: 22px;
+    }
+
+    .jewellery-filter-panel
+    .filter-panel-header {
+
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
+
+    .jewellery-filter-panel
+    .price-filter,
+    .jewellery-filter-panel
+    .sort-filter {
+
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .jewellery-filter-panel
+    .filter-reset-btn {
+
+        grid-column: 2;
+        grid-row: auto;
+
+        justify-self: end;
+    }
+
+    .jewellery-filter-panel
+    .filter-dropdown-group:nth-child(1),
+    .jewellery-filter-panel
+    .filter-dropdown-group:nth-child(2) {
+
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .jewellery-filter-panel {
+
+        width: 92%;
+
+        grid-template-columns: 1fr !important;
+
+        padding: 22px 18px;
+
+        gap: 20px;
+    }
+
+    .jewellery-filter-panel
+    .filter-panel-header,
+    .jewellery-filter-panel
+    .price-filter,
+    .jewellery-filter-panel
+    .sort-filter,
+    .jewellery-filter-panel
+    .filter-reset-btn,
+    .jewellery-filter-panel
+    .filter-dropdown-group:nth-child(1),
+    .jewellery-filter-panel
+    .filter-dropdown-group:nth-child(2) {
+
+        grid-column: 1 !important;
+        grid-row: auto !important;
+    }
+
+    .jewellery-filter-panel
+    .filter-reset-btn {
+
+        width: 100%;
+    }
+
+    .jewellery-filter-panel
+    .price-presets {
+
+        flex-wrap: wrap;
+    }
+}
+/* =========================================================
+   JEWELLERY DROPDOWN — SOFT HIRANYA GOLD
+========================================================= */
+
+/* Selected option */
+.jewellery-dropdown-option.active,
+.jewellery-option.active,
+.jewellery-select-option.active,
+.metal-dropdown-option.active,
+.metal-option.active {
+    background: linear-gradient(
+        135deg,
+        #d7b45a,
+        #e3c879
+    ) !important;
+
+    color: #fff !important;
+
+    border-color: #d1ad4d !important;
+
+    box-shadow:
+        0 4px 12px rgba(201, 161, 74, 0.12);
+}
+
+
+/* Selected option hover */
+.jewellery-dropdown-option.active:hover,
+.jewellery-option.active:hover,
+.jewellery-select-option.active:hover,
+.metal-dropdown-option.active:hover,
+.metal-option.active:hover {
+    background: linear-gradient(
+        135deg,
+        #d4b052,
+        #e0c271
+    ) !important;
+
+    color: #fff !important;
+}
+
+
+/* Check / arrow / icons inside selected option */
+.jewellery-dropdown-option.active svg,
+.jewellery-option.active svg,
+.jewellery-select-option.active svg,
+.metal-dropdown-option.active svg,
+.metal-option.active svg {
+    color: #fff !important;
+}
+
+
+/* Normal dropdown options */
+.jewellery-dropdown-option,
+.jewellery-option,
+.jewellery-select-option,
+.metal-dropdown-option,
+.metal-option {
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+/* Hover on normal options */
+.jewellery-dropdown-option:hover,
+.jewellery-option:hover,
+.jewellery-select-option:hover,
+.metal-dropdown-option:hover,
+.metal-option:hover {
+    background: #faf5e9 !important;
+    color: #a77a18 !important;
+}
