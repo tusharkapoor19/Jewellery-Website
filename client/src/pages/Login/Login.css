@@ -822,15 +822,15 @@
 
     gap: 14px;
 
-    margin: 21px 0;
+    margin: 22px 0 8px;
 
-    color: #aaa39a;
+    color: #9c9589;
 
-    font-size: 10px;
+    font-size: 11px;
 
     font-weight: 700;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
 }
 
 
@@ -846,7 +846,7 @@
         linear-gradient(
             to right,
             transparent,
-            #e3d5b8
+            #dfd2b8
         );
 }
 
@@ -856,45 +856,113 @@
         linear-gradient(
             to left,
             transparent,
-            #e3d5b8
+            #dfd2b8
         );
 }
 
 
 .login-divider span {
-    padding: 0 4px;
+    padding: 0 6px;
 
-    color: #999187;
+    color: #9b9284;
 }
 
 
 /* =========================================================
    GOOGLE LOGIN
+   The visible button is our own custom-styled <button>.
+   Google's real (official) button is rendered by the SDK
+   into ".google-login-btn-overlay", positioned exactly on
+   top of the custom button and made invisible, so the click
+   still lands on Google's real, secure button underneath.
 ========================================================= */
 
 .google-login-wrapper {
+    position: relative;
+
     width: 100%;
 
-    display: flex;
+    max-width: 400px;
 
-    justify-content: center;
+    height: 52px;
 
-    align-items: center;
-
-    margin-top: 2px;
-
-    overflow: hidden;
+    margin: 4px auto 0;
 }
 
 
-.google-login-btn {
-    width: auto !important;
+.google-btn-custom {
+    width: 100%;
 
-    max-width: 400px !important;
+    height: 100%;
 
-    min-height: 44px;
+    display: flex;
 
-    display: block !important;
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    background: #ffffff;
+
+    border: 1px solid #dcd4c4;
+
+    border-radius: 999px;
+
+    color: #3c3c3c;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+
+    cursor: pointer;
+
+    pointer-events: none;
+
+    transition:
+        box-shadow .25s ease,
+        border-color .25s ease,
+        transform .2s ease;
+}
+
+
+.google-icon {
+    flex-shrink: 0;
+}
+
+
+.google-login-btn-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100% !important;
+
+    height: 100%;
+
+    opacity: 0.01;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+}
+
+
+.google-login-btn-overlay iframe {
+    width: 100% !important;
+
+    height: 100% !important;
+}
+
+
+.google-login-wrapper:hover .google-btn-custom {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+    border-color: #c9a24a;
+
+    transform: translateY(-1px);
 }
 
 
@@ -1217,8 +1285,8 @@
     }
 
 
-    .google-login-btn {
-        max-width: 100% !important;
+    .google-login-wrapper {
+        max-width: 100%;
     }
 
 
@@ -1245,81 +1313,8 @@
         font-size: 13px;
     }
 }
-/* =========================================
-   GOOGLE LOGIN — LAST
-========================================= */
 
-.google-login-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 25px;
-}
 
-.google-login-btn {
-    width: 100% !important;
-    max-width: 400px !important;
-
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Google generated iframe */
-.google-login-btn iframe {
-    max-width: 100% !important;
-}
-
-/* =========================================
-   GOOGLE DIVIDER
-========================================= */
-
-.login-divider {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-
-    gap: 14px;
-
-    margin: 24px 0 4px;
-
-    color: #9c9589;
-
-    font-size: 11px;
-    font-weight: 700;
-
-    letter-spacing: 2px;
-}
-
-.login-divider::before,
-.login-divider::after {
-    content: "";
-
-    flex: 1;
-
-    height: 1px;
-
-    background: linear-gradient(
-        to right,
-        transparent,
-        #dfd2b8
-    );
-}
-
-.login-divider::after {
-    background: linear-gradient(
-        to left,
-        transparent,
-        #dfd2b8
-    );
-}
-
-.login-divider span {
-    padding: 0 6px;
-    color: #a29a8c;
-}
 /* =========================================================
    FINAL LOGIN ORDER FIX
    Google Login must stay at the very bottom.
@@ -1355,176 +1350,4 @@
 .login-card > .login-success {
     position: absolute;
     z-index: 100;
-}
-
-/* =========================================================
-   FINAL GOOGLE LOGIN — CLEAN PREMIUM PLACEMENT
-========================================================= */
-
-.login-card > .google-login-wrapper {
-    width: 100%;
-    min-height: 48px;
-    margin-top: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.login-card > .google-login-wrapper .google-login-btn {
-    width: 400px !important;
-    max-width: 100% !important;
-    min-height: 48px;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-}
-
-.login-card > .google-login-wrapper .google-login-btn iframe {
-    display: block;
-    max-width: 100% !important;
-}
-
-/* =========================================================
-   FINAL OR DIVIDER
-========================================================= */
-
-.login-card > .login-divider {
-    width: 100%;
-    margin: 22px 0 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-}
-
-.login-card > .login-divider::before,
-.login-card > .login-divider::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-}
-
-.login-card > .login-divider::before {
-    background: linear-gradient(
-        to right,
-        transparent,
-        #dfd2b8
-    );
-}
-
-.login-card > .login-divider::after {
-    background: linear-gradient(
-        to left,
-        transparent,
-        #dfd2b8
-    );
-}
-
-.login-card > .login-divider span {
-    padding: 0 7px;
-    color: #9b9284;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-/* =========================================================
-   MOBILE FINAL FIX
-========================================================= */
-
-@media (max-width: 480px) {
-
-    .login-card > .google-login-wrapper {
-        margin-top: 0;
-        min-height: 46px;
-    }
-
-    .login-card > .google-login-wrapper .google-login-btn {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    .login-card > .login-divider {
-        margin: 18px 0 7px;
-    }
-}
-/* =========================================================
-   GOOGLE LOGIN
-========================================================= */
-
-.google-login-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 8px;
-    overflow: visible;
-}
-
-.google-login-btn {
-    width: 400px !important;
-    max-width: 100% !important;
-    display: block !important;
-    overflow: visible !important;
-}
-
-/* DO NOT STYLE GOOGLE'S IFRAME */
-.google-login-btn iframe {
-    border: 0;
-}
-
-
-/* =========================================================
-   OR DIVIDER
-========================================================= */
-
-.login-divider {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-
-    margin: 24px 0 18px;
-
-    color: #9c9589;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-.login-divider::before,
-.login-divider::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-
-    background: linear-gradient(
-        to right,
-        transparent,
-        #dfd2b8
-    );
-}
-
-.login-divider::after {
-    background: linear-gradient(
-        to left,
-        transparent,
-        #dfd2b8
-    );
-}
-
-.login-divider span {
-    padding: 0 6px;
-    color: #9b9284;
-}
-
-
-@media (max-width: 480px) {
-
-    .google-login-btn {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
 }

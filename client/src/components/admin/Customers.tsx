@@ -24,6 +24,7 @@ const Customers: React.FC<CustomersProps> = ({
   const [busyId, setBusyId] = useState<string | null>(null);
   const [busyAction, setBusyAction] = useState<"role" | "delete" | null>(null);
   const [confirmTarget, setConfirmTarget] = useState<Customer | null>(null);
+  const [roleConfirmTarget, setRoleConfirmTarget] = useState<Customer | null>(null);
   const [actionError, setActionError] = useState("");
 
   const visibleCustomers = useMemo(
@@ -34,32 +35,31 @@ const Customers: React.FC<CustomersProps> = ({
 
   const adminCount = customers.filter((c) => c.role === "admin").length;
 
-  const handleToggleRole = async (customer: Customer) => {
-    const nextRole: UserRole = customer.role === "admin" ? "customer" : "admin";
-    const verb = nextRole === "admin" ? "make" : "remove";
-    if (
-      !window.confirm(
-        nextRole === "admin"
-          ? `Make ${customer.name} an admin? They will get full dashboard access.`
-          : `Remove admin access from ${customer.name}?`
-      )
-    ) {
-      return;
-    }
-    setBusyId(customer.id);
-    setBusyAction("role");
-    setActionError("");
-    try {
-      await onChangeRole(customer.id, nextRole);
-    } catch (err) {
-      setActionError(
-        err instanceof Error ? err.message : `Failed to ${verb} admin role`
-      );
-    } finally {
-      setBusyId(null);
-      setBusyAction(null);
-    }
-  };
+  const requestRoleChange = (customer: Customer) => {
+  setActionError("");
+  setRoleConfirmTarget(customer);
+};
+
+const cancelRoleChange = () => setRoleConfirmTarget(null);
+
+const confirmRoleChange = async () => {
+  if (!roleConfirmTarget) return;
+  const customer = roleConfirmTarget;
+  const nextRole: UserRole = customer.role === "admin" ? "customer" : "admin";
+  const verb = nextRole === "admin" ? "make" : "remove";
+  setBusyId(customer.id);
+  setBusyAction("role");
+  setActionError("");
+  try {
+    await onChangeRole(customer.id, nextRole);
+    setRoleConfirmTarget(null);
+  } catch (err) {
+    setActionError(err instanceof Error ? err.message : `Failed to ${verb} admin role`);
+  } finally {
+    setBusyId(null);
+    setBusyAction(null);
+  }
+};
 
   const requestDelete = (customer: Customer) => {
     setActionError("");
@@ -160,7 +160,7 @@ const Customers: React.FC<CustomersProps> = ({
                     className="btn-outline"
                     disabled={isBusy || isSelf}
                     title={isSelf ? "You can't change your own admin access" : undefined}
-                    onClick={() => handleToggleRole(customer)}
+                    onClick={() => requestRoleChange(customer)}
                   >
                     {isBusy && busyAction === "role"
                       ? "Updating..."
@@ -185,30 +185,26 @@ const Customers: React.FC<CustomersProps> = ({
         </div>
       )}
 
-      {confirmTarget && (
-        <div className="modal-overlay" onClick={cancelDelete}>
+      {roleConfirmTarget && (
+        <div className="modal-overlay" onClick={cancelRoleChange}>
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-            <h3>Delete this user?</h3>
+            <h3>
+              {roleConfirmTarget.role === "admin" ? "Remove admin access?" : "Make this user an admin?"}
+            </h3>
             <p>
-              <strong>{confirmTarget.name}</strong> ({confirmTarget.email}) will
-              be permanently removed. This cannot be undone.
+              {roleConfirmTarget.role === "admin" ? (
+                <>Admin access will be removed from <strong>{roleConfirmTarget.name}</strong>.</>
+              ) : (
+                <><strong>{roleConfirmTarget.name}</strong> will get full dashboard access.</>
+              )}
             </p>
+            {actionError && <p className="modal-error">{actionError}</p>}
             <div className="modal-actions">
-              <button
-                type="button"
-                className="modal-btn-cancel"
-                onClick={cancelDelete}
-                disabled={busyId === confirmTarget.id}
-              >
+              <button type="button" className="modal-btn-cancel" onClick={cancelRoleChange} disabled={busyId === roleConfirmTarget.id}>
                 Cancel
               </button>
-              <button
-                type="button"
-                className="modal-btn-delete"
-                onClick={confirmDelete}
-                disabled={busyId === confirmTarget.id}
-              >
-                {busyId === confirmTarget.id ? "Deleting..." : "Yes, delete"}
+              <button type="button" className="modal-btn-delete" onClick={confirmRoleChange} disabled={busyId === roleConfirmTarget.id}>
+                {busyId === roleConfirmTarget.id ? "Updating..." : "Yes, continue"}
               </button>
             </div>
           </div>
