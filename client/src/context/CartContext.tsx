@@ -3,9 +3,9 @@ import {
     useContext,
     useEffect,
     useState,
-    ReactNode
+    ReactNode,
+    useCallback
 } from "react";
-
 
 import axios from "axios";
 import cartService from "../services/cartService";
@@ -31,12 +31,21 @@ export const CartProvider = ({
     const [loading, setLoading] = useState(false);
 
     const [couponCode, setCouponCode] = useState("");
-    const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
-    const [giftWrap, setGiftWrap] = useState(false);
+    const [selectedCoupon, setSelectedCoupon] =
+        useState<Coupon | null>(null);
 
-    const refreshCart = async () => {
+    const [giftWrap, setGiftWrap] =
+        useState(false);
 
-        const token = localStorage.getItem("token");
+
+    /* =====================================================
+       REFRESH CART
+    ===================================================== */
+
+    const refreshCart = useCallback(async () => {
+
+        const token =
+            localStorage.getItem("token");
 
         if (!token) {
 
@@ -51,17 +60,32 @@ export const CartProvider = ({
 
             setLoading(true);
 
-            const data = await cartService.getCart();
+            const data =
+                await cartService.getCart();
 
-            setCartItems(data.cartItems);
+            /*
+             * Make sure old/stale state is completely
+             * replaced by latest backend cart.
+             */
 
-            setCartValue(data.cartValue);
+            setCartItems(
+                Array.isArray(data?.cartItems)
+                    ? data.cartItems
+                    : []
+            );
+
+            setCartValue(
+                Number(data?.cartValue || 0)
+            );
 
         }
 
         catch (error) {
 
-            console.log(error);
+            console.error(
+                "REFRESH CART ERROR:",
+                error
+            );
 
         }
 
@@ -71,61 +95,77 @@ export const CartProvider = ({
 
         }
 
-    };
+    }, []);
+
+
+    /* =====================================================
+       ADD TO CART
+    ===================================================== */
 
     const addToCart = async (
+        productId: string,
+        quantity: number = 1,
+        size: string = ""
+    ) => {
 
-    productId: string,
+        await cartService.addToCart(
+            productId,
+            quantity,
+            size
+        );
 
-    quantity: number = 1,
-
-    size: string = ""
-
-) => {
-
-       await cartService.addToCart(
-
-    productId,
-
-    quantity,
-
-    size
-
-);
+        /*
+         * Immediately sync UI with backend.
+         */
 
         await refreshCart();
 
-        // ==========================
-        // CREATE NOTIFICATION
-        // ==========================
+
+        /* ==========================
+           CREATE NOTIFICATION
+        ========================== */
 
         try {
 
-            const token = localStorage.getItem("token");
+            const token =
+                localStorage.getItem("token");
 
             if (!token) return;
 
-            const profileResponse = await axios.get(
-                "http://localhost:5005/profile/profile",
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
 
-            const userId = profileResponse.data.user.id;
+            const profileResponse =
+                await axios.get(
+                    "http://localhost:5005/profile/profile",
+                    {
+                        headers: {
+                            Authorization:
+                                `Bearer ${token}`
+                        }
+                    }
+                );
+
+
+            const userId =
+                profileResponse.data.user.id;
+
 
             await axios.post(
                 "http://localhost:5007/notifications",
                 {
                     userId,
-                    title: "Cart Updated 🛒",
-                    message: "Product added to your cart successfully."
+
+                    title:
+                        "Cart Updated 🛒",
+
+                    message:
+                        "Product added to your cart successfully."
                 }
             );
 
-            console.log("Cart Notification Created");
+
+            console.log(
+                "Cart Notification Created"
+            );
 
         }
 
@@ -139,49 +179,51 @@ export const CartProvider = ({
         }
 
     };
-        const updateQuantity = async (
 
-    productId: string,
 
-    quantity: number,
+    /* =====================================================
+       UPDATE QUANTITY
+    ===================================================== */
 
-    size: string = ""
+    const updateQuantity = async (
+        productId: string,
+        quantity: number,
+        size: string = ""
+    ) => {
 
-) => {
-
-     await cartService.updateQuantity(
-
-    productId,
-
-    quantity,
-
-    size
-
-);
+        await cartService.updateQuantity(
+            productId,
+            quantity,
+            size
+        );
 
         await refreshCart();
 
     };
 
- const removeFromCart = async (
 
-    productId: string,
+    /* =====================================================
+       REMOVE FROM CART
+    ===================================================== */
 
-    size: string = ""
+    const removeFromCart = async (
+        productId: string,
+        size: string = ""
+    ) => {
 
-) => {
-
-       await cartService.removeFromCart(
-
-    productId,
-
-    size
-
-);
+        await cartService.removeFromCart(
+            productId,
+            size
+        );
 
         await refreshCart();
 
     };
+
+
+    /* =====================================================
+       CLEAR CART
+    ===================================================== */
 
     const clearCart = () => {
 
@@ -191,25 +233,110 @@ export const CartProvider = ({
 
     };
 
+
+    /* =====================================================
+       INITIAL + LIVE CART SYNC
+    ===================================================== */
+
     useEffect(() => {
-    refreshCart();
 
-    const interval = setInterval(() => {
+        /*
+         * Load cart immediately when provider mounts.
+         */
+
         refreshCart();
-    }, 5000);
 
-    return () => clearInterval(interval);
-}, []);
+
+        /*
+         * Keep cart synchronized with backend.
+         */
+
+        const interval =
+            window.setInterval(() => {
+
+                refreshCart();
+
+            }, 5000);
+
+
+        /*
+         * Login / logout / auth changes.
+         */
+
+        const handleAuthChange = () => {
+
+            refreshCart();
+
+        };
+
+
+        /*
+         * When user returns to tab/page,
+         * immediately fetch latest cart.
+         */
+
+        const handleVisibilityChange = () => {
+
+            if (
+                document.visibilityState ===
+                "visible"
+            ) {
+
+                refreshCart();
+
+            }
+
+        };
+
+
+        window.addEventListener(
+            "auth-change",
+            handleAuthChange
+        );
+
+
+        document.addEventListener(
+            "visibilitychange",
+            handleVisibilityChange
+        );
+
+
+        return () => {
+
+            window.clearInterval(
+                interval
+            );
+
+
+            window.removeEventListener(
+                "auth-change",
+                handleAuthChange
+            );
+
+
+            document.removeEventListener(
+                "visibilitychange",
+                handleVisibilityChange
+            );
+
+        };
+
+    }, [refreshCart]);
+
+
+    /* =====================================================
+       CONTEXT
+    ===================================================== */
 
     return (
 
         <CartContext.Provider
-
             value={{
 
                 cartItems,
 
-                cartCount: cartItems.length,
+                cartCount:
+                    cartItems.length,
 
                 cartValue,
 
@@ -238,7 +365,6 @@ export const CartProvider = ({
                 clearCart
 
             }}
-
         >
 
             {children}
@@ -249,9 +375,15 @@ export const CartProvider = ({
 
 };
 
+
+/* ==========================================================
+   useCart
+========================================================== */
+
 export const useCart = () => {
 
-    const context = useContext(CartContext);
+    const context =
+        useContext(CartContext);
 
     if (!context) {
 

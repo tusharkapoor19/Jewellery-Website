@@ -4,195 +4,254 @@ const BASE_URL = "http://localhost:5005/cart";
 
 class CartService {
 
+    /* =====================================================
+       HEADERS
+    ===================================================== */
+
     private getHeaders() {
 
-        const token = localStorage.getItem("token");
+        const token =
+            localStorage.getItem("token");
 
         return {
             "Content-Type": "application/json",
 
-            Authorization: `Bearer ${token}`
-
+            Authorization:
+                `Bearer ${token}`
         };
 
     }
 
+
+    /* =====================================================
+       GET CART
+    ===================================================== */
+
     async getCart(): Promise<CartResponse> {
 
         const response = await fetch(
-
             `${BASE_URL}/get`,
-
             {
-
                 method: "GET",
 
-                headers: this.getHeaders()
+                headers: this.getHeaders(),
 
+                /*
+                 * IMPORTANT:
+                 * Always fetch latest cart from backend.
+                 * Prevent browser from returning cached data.
+                 */
+                cache: "no-store"
             }
-
         );
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         if (!response.ok) {
 
             throw new Error(
-
                 data.message ||
-
                 "Failed to fetch cart"
-
             );
 
         }
+
+        /*
+         * Backend response:
+         *
+         * {
+         *   success: true,
+         *   cart: {
+         *      cartItems: [],
+         *      cartValue: ...
+         *   }
+         * }
+         */
 
         return data.cart;
 
     }
 
-        async addToCart(
 
-            productId: string,
+    /* =====================================================
+       ADD TO CART
+    ===================================================== */
 
-            quantity: number = 1,
-            size: string = ""
+    async addToCart(
 
-        ) {
+        productId: string,
 
-        const response = await fetch(
+        quantity: number = 1,
 
-            `${BASE_URL}/add/${productId}`,
+        size: string = ""
 
-            {
+    ) {
 
-                method: "POST",
+        const response =
+            await fetch(
 
-                headers: this.getHeaders(),
+                `${BASE_URL}/add/${productId}`,
 
-                body: JSON.stringify({
+                {
+                    method: "POST",
 
-                    quantity,
-                    size
+                    headers:
+                        this.getHeaders(),
 
-                })
+                    body:
+                        JSON.stringify({
 
-            }
+                            quantity,
 
-        );
+                            size
 
-        const data = await response.json();
+                        })
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
 
         if (!response.ok) {
 
             throw new Error(
 
                 data.message ||
-
                 "Failed to add product"
 
             );
 
         }
 
+
         return data;
 
     }
 
-   async updateQuantity(
 
-    productId: string,
+    /* =====================================================
+       UPDATE QUANTITY
+    ===================================================== */
 
-    quantity: number,
+    async updateQuantity(
 
-    size: string = ""
+        productId: string,
 
-) {
+        quantity: number,
 
-        const response = await fetch(
+        size: string = ""
 
-            `${BASE_URL}/update/${productId}`,
+    ) {
 
-            {
+        const response =
+            await fetch(
 
-                method: "PATCH",
+                `${BASE_URL}/update/${productId}`,
 
-                headers: this.getHeaders(),
+                {
 
-                body: JSON.stringify({
+                    method: "PATCH",
 
-                    quantity,
-                    size
+                    headers:
+                        this.getHeaders(),
 
-                })
+                    body:
+                        JSON.stringify({
 
-            }
+                            quantity,
 
-        );
+                            size
 
-        const data = await response.json();
+                        })
+
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
 
         if (!response.ok) {
 
             throw new Error(
 
                 data.message ||
-
                 "Failed to update cart"
 
             );
 
         }
 
+
         return data;
 
     }
 
+
+    /* =====================================================
+       REMOVE FROM CART
+    ===================================================== */
+
     async removeFromCart(
 
         productId: string,
-          size: string = ""
+
+        size: string = ""
 
     ) {
 
-       const response = await fetch(
+        const response =
+            await fetch(
 
-    `${BASE_URL}/remove/${productId}`,
+                `${BASE_URL}/remove/${productId}`,
 
-    {
+                {
 
-        method: "DELETE",
+                    method: "DELETE",
 
-        headers: this.getHeaders(),
+                    headers:
+                        this.getHeaders(),
 
-        body: JSON.stringify({
+                    body:
+                        JSON.stringify({
 
-            size
+                            size
 
-        })
+                        })
 
-    }
+                }
 
-);
+            );
 
-        const data = await response.json();
+
+        const data =
+            await response.json();
+
 
         if (!response.ok) {
 
             throw new Error(
 
                 data.message ||
-
                 "Failed to remove product"
 
             );
 
         }
 
+
         return data;
 
     }
 
 }
+
 
 export default new CartService();
