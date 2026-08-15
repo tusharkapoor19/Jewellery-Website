@@ -12,9 +12,9 @@ import "./TopBar.css";
 
 const TROY_OUNCE_TO_GRAM = 31.1035;
 
-const GOLD_PREMIUM = 15.3;
-const SILVER_PREMIUM = 27.6;
-const PLATINUM_PREMIUM = 15.3;
+const GOLD_PREMIUM = 14.9;
+const SILVER_PREMIUM = 18.46;
+const PLATINUM_PREMIUM = 14;
 
 const TopBar = () => {
   const [gold24, setGold24] = useState("--");
