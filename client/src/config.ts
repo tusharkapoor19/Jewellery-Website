@@ -25,6 +25,12 @@ export const ORDER_API_BASE =
 export const CUSTOM_DESIGN_API_BASE =
   process.env.REACT_APP_CUSTOM_DESIGN_API_URL || "http://localhost:5006/custom-design-save";
 
+// analytics-services -> PORT 5008. Powers the admin dashboard's Analytics
+// tab: top ordered products, monthly revenue (with a Gold/Silver/Platinum
+// breakdown), and top customers for a selected month.
+export const ANALYTICS_API_BASE =
+  process.env.REACT_APP_ANALYTICS_API_URL || "http://localhost:5008/analytics";
+
   
 // Key used to persist the admin JWT + name in localStorage between reloads.
 // NOTE: this must match the key AuthContext.tsx actually writes to

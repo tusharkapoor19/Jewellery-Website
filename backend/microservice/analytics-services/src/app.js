@@ -1,0 +1,10 @@
+const express = require("express");
+const app = express();
+app.use(express.json());
+const cors = require("cors");
+const analyticsRoutes = require("./routes/analytics_routes");
+const errorMiddleware = require("./middleware/errormidd");
+app.use(cors());
+app.use("/analytics", analyticsRoutes);
+app.use(errorMiddleware);
+module.exports = app;

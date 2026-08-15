@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Sidebar, { View } from "../../components/admin/Sidebar";
+import Analytics from "../../components/admin/Analytics";
 import PendingOrders from "../../components/admin/PendingOrders";
 import Catalogue from "../../components/admin/Catalogue";
 import Customers from "../../components/admin/Customers";
@@ -28,7 +29,8 @@ const ADMIN_VIEW_STORAGE_KEY = "hiranya_admin_view";
 
 const getInitialView = (): View => {
   const stored = window.localStorage.getItem(ADMIN_VIEW_STORAGE_KEY);
-  return stored === "catalogue" ||
+  return stored === "analytics" ||
+    stored === "catalogue" ||
     stored === "orders" ||
     stored === "customers" ||
     stored === "customDesign"
@@ -159,6 +161,8 @@ const Dashboard: React.FC = () => {
 
         {view === "customDesign" ? (
           <CustomDesignAdmin onPendingCountChange={setCustomDesignPendingCount} />
+        ) : view === "analytics" ? (
+          <Analytics onUnauthorized={logout} />
         ) : loading ? (
           <div className="empty-state">
             <p>Loading…</p>

@@ -12,7 +12,8 @@
     "server5": "npm start --prefix backend/microservice/user-services",
     "server6": "npm start --prefix backend/microservice/custom-design-services",
     "server7": "npm start --prefix backend/microservice/notification-service",
-    "dev": "concurrently \"npm run server1\" \"npm run server2\" \"npm run server3\" \"npm run server4\" \"npm run server5\" \"npm run server6\" \"npm run server7\" \"npm run client\""
+    "server8": "npm start --prefix backend/microservice/analytics-services",
+    "dev": "concurrently \"npm run server1\" \"npm run server2\" \"npm run server3\" \"npm run server4\" \"npm run server5\" \"npm run server6\" \"npm run server7\" \"npm run server8\" \"npm run client\""
   },
   "keywords": [],
   "type": "commonjs",
