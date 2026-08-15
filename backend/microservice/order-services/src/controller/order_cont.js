@@ -235,6 +235,56 @@ const cancelOrder = async (req, res, next) => {
 
 };
 
+/* -------------------------------- */
+/* Mark Order Paid (internal)       */
+/* -------------------------------- */
+
+const markOrderPaid = async (req, res, next) => {
+
+    try {
+
+        const { orderID } = req.body;
+
+        if (!orderID) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message: "orderID is required"
+
+            });
+
+        }
+
+        const order = await ordsvc.markOrderPaid(
+
+            orderID
+
+        );
+
+        res.status(200).json({
+
+            success: true,
+
+            message: "Order marked as paid",
+
+            order
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        next(error);
+
+    }
+
+};
+
 module.exports = {
 
     createorder,
@@ -247,6 +297,8 @@ module.exports = {
 
     updateOrderStatus,
 
-    cancelOrder
+    cancelOrder,
+
+    markOrderPaid
 
 };

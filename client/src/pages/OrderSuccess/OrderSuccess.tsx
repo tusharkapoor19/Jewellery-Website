@@ -120,6 +120,8 @@ interface OrderSuccessState {
 
     orderStatus: string;
 
+    paymentStatus?: string;
+
     createdAt: string;
 
 }
@@ -282,6 +284,9 @@ totalAmount:
     orderStatus:
         data.orderStatus,
 
+    paymentStatus:
+        data.paymentStatus || "Unpaid",
+
     createdAt:
         data.createdAt
 });
@@ -341,6 +346,8 @@ totalAmount:
 
                     if (
                         previous.orderStatus === latest.orderStatus
+                        &&
+                        previous.paymentStatus === (latest.paymentStatus || "Unpaid")
                     ) {
                         return previous;
                     }
@@ -348,6 +355,7 @@ totalAmount:
                     return {
                         ...previous,
                         orderStatus: latest.orderStatus,
+                        paymentStatus: latest.paymentStatus || "Unpaid",
                         createdAt:
                             latest.createdAt || previous.createdAt
                     };
@@ -448,6 +456,10 @@ totalAmount:
 
     const isPending =
         normalizedStatus === "pending";
+
+    const isPaid =
+        String(order?.paymentStatus || "Unpaid").toLowerCase() ===
+        "paid";
 
     const estimatedDelivery =
         !isRejected
@@ -1123,20 +1135,22 @@ totalAmount:
 
                     <span>
 
-                        Total Paid
+                        {
+                            isPaid
+                                ? "Total Paid"
+                                : "Payment"
+                        }
 
                     </span>
 
                     <h3>
 
                         {
-
-                            formatCurrency(
-
-                                order?.totalAmount
-
-                            )
-
+                            isPaid
+                                ? formatCurrency(
+                                    order?.totalAmount
+                                )
+                                : "Not Charged"
                         }
 
                     </h3>
@@ -1170,13 +1184,21 @@ totalAmount:
 
                         <span>
 
-                            Refund Status
+                            {
+                                isPaid
+                                    ? "Refund Status"
+                                    : "Payment Status"
+                            }
 
                         </span>
 
                         <h3>
 
-                            Refund will be processed
+                            {
+                                isPaid
+                                    ? "Refund will be processed"
+                                    : "Payment was cancelled"
+                            }
 
                         </h3>
 

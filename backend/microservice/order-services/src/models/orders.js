@@ -216,6 +216,34 @@ const orderSchema = new mongoose.Schema({
 
         default: "Pending"
 
+    },
+
+    /* ----------------------------- */
+    /* Payment Status                */
+    /* Tracks whether the customer   */
+    /* was actually charged for this */
+    /* order — independent of        */
+    /* orderStatus, which stays      */
+    /* "Pending" by default and is   */
+    /* only ever changed by an admin.*/
+    /* ----------------------------- */
+
+    paymentStatus: {
+
+        type: String,
+
+        enum: [
+
+            "Unpaid",
+
+            "Paid",
+
+            "Refunded"
+
+        ],
+
+        default: "Unpaid"
+
     }
 
 }, {

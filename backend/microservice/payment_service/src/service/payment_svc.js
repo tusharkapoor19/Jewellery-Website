@@ -2,6 +2,7 @@ const Payment = require("../models/payment");
 const razorpay = require("../utils/razorpay");
 const axios = require("axios");
 const crypto = require("crypto");
+const orderClient = require("../utils/orderclient");
 
 
 
@@ -105,6 +106,41 @@ const verifyPayment = async (paymentData) => {                                  
 
     // updated for notification service
     await payment.save();
+
+    /*
+     * Record that the order was actually paid for (paymentStatus),
+     * WITHOUT touching orderStatus — orderStatus stays "Pending"
+     * by default and is only ever moved forward by an admin. This
+     * is only used so the UI can tell a genuinely-paid order apart
+     * from one that was cancelled before payment ever completed
+     * (e.g. no false "refund" messaging for an order nobody paid
+     * for). This is a service-to-service call, so it hits the
+     * unauthenticated /internal route rather than the normal
+     * user-authenticated order routes.
+     */
+
+    try {
+
+        await orderClient.patch(
+            "/internal/mark-paid",
+            {
+                orderID: payment.orderID
+            }
+        );
+
+        console.log(
+            "Order marked as paid:",
+            payment.orderID
+        );
+
+    } catch (err) {
+
+        console.log(
+            "Failed to mark order as paid:",
+            err.message
+        );
+
+    }
 
 console.log("Payment Object:");
 console.log(payment);

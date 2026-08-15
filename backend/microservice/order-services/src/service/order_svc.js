@@ -642,6 +642,52 @@ const cancelOrder = async (
 
 
 /* =========================================================
+   MARK ORDER AS PAID (internal — called by payment-service)
+   Records that the customer was actually charged, WITHOUT
+   touching orderStatus. orderStatus stays "Pending" by
+   default and only moves forward when an admin changes it —
+   this only tracks whether money was received, so the UI can
+   tell a genuinely-paid order apart from one that was never
+   paid for (e.g. cancelled before payment completed).
+========================================================= */
+
+const markOrderPaid = async (
+    orderID
+) => {
+
+    const order =
+        await Order.findOne({
+            orderID
+        });
+
+
+    if (!order) {
+
+        const error =
+            new Error(
+                "Order not found"
+            );
+
+        error.statusCode = 404;
+
+        throw error;
+
+    }
+
+
+    order.paymentStatus =
+        "Paid";
+
+
+    await order.save();
+
+
+    return order;
+
+};
+
+
+/* =========================================================
    EXPORT
 ========================================================= */
 
@@ -657,6 +703,8 @@ module.exports = {
 
     updateOrderStatus,
 
-    cancelOrder
+    cancelOrder,
+
+    markOrderPaid
 
 };
