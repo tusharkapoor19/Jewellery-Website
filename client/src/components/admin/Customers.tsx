@@ -210,6 +210,39 @@ const confirmRoleChange = async () => {
           </div>
         </div>
       )}
+
+      {confirmTarget && (
+        <div className="modal-overlay" onClick={cancelDelete}>
+          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+            <h3>Delete this user?</h3>
+            <p>
+              <strong>{confirmTarget.name}</strong> ({confirmTarget.email}) will be
+              permanently removed. This action cannot be undone.
+            </p>
+            {actionError && <p className="modal-error">{actionError}</p>}
+            <div className="modal-actions">
+              <button
+                type="button"
+                className="modal-btn-cancel"
+                onClick={cancelDelete}
+                disabled={busyId === confirmTarget.id}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="modal-btn-delete"
+                onClick={confirmDelete}
+                disabled={busyId === confirmTarget.id}
+              >
+                {busyId === confirmTarget.id && busyAction === "delete"
+                  ? "Deleting..."
+                  : "Yes, delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
