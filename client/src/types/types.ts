@@ -39,6 +39,17 @@ export interface Product {
   createdAt: string;
 }
 
+export interface Offer {
+  id: string; // backend Mongo _id
+  code: string;
+  description: string;
+  discountType: "percentage" | "flat";
+  discountValue: number;
+  minCartValue: number;
+  isActive: boolean;
+  createdAt: string;
+}
+
 export type UserRole = "customer" | "admin";
 
 export interface Customer {

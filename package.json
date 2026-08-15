@@ -13,7 +13,8 @@
     "server6": "npm start --prefix backend/microservice/custom-design-services",
     "server7": "npm start --prefix backend/microservice/notification-service",
     "server8": "npm start --prefix backend/microservice/analytics-services",
-    "dev": "concurrently \"npm run server1\" \"npm run server2\" \"npm run server3\" \"npm run server4\" \"npm run server5\" \"npm run server6\" \"npm run server7\" \"npm run server8\" \"npm run client\""
+    "server9": "npm start --prefix backend/microservice/offer-services",
+    "dev": "concurrently \"npm run server1\" \"npm run server2\" \"npm run server3\" \"npm run server4\" \"npm run server5\" \"npm run server6\" \"npm run server7\" \"npm run server8\" \"npm run server9\" \"npm run client\""
   },
   "keywords": [],
   "type": "commonjs",

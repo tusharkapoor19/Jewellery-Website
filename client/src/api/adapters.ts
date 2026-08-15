@@ -1,7 +1,8 @@
 import { ApiOrder, ApiOrderStatus } from "./orders";
 import { ApiProduct } from "./products";
 import { ApiUser } from "./users";
-import { Customer, OrderItem, OrderStatus, Product, ProductCategory } from "../types/types";
+import { ApiOffer } from "./offers";
+import { Customer, Offer, OrderItem, OrderStatus, Product, ProductCategory } from "../types/types";
 import { PRODUCT_IMAGE_BASE } from "../config";
 
 const placeholderImage =
@@ -69,4 +70,15 @@ export const userToUi = (user: ApiUser): Customer => ({
   email: user.email,
   phone: user.phone || "—",
   role: user.role,
+});
+
+export const offerToUi = (offer: ApiOffer): Offer => ({
+  id: offer._id,
+  code: offer.code,
+  description: offer.description,
+  discountType: offer.discountType,
+  discountValue: offer.discountValue,
+  minCartValue: offer.minCartValue,
+  isActive: offer.isActive,
+  createdAt: offer.createdAt,
 });

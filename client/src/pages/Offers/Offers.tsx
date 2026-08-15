@@ -1,9 +1,13 @@
 import "./Offers.css";
 
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { TicketPercent, Copy } from "lucide-react";
 import TopBar from "../../components/TopBar/TopBar";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import { ApiOffer, fetchActiveOffers } from "../../api/offers";
 
 import offersHero from "../../assets/images/offers-hero.jpg";
 import featuredOffer from "../../assets/images/offer-feature.jpg";
@@ -11,7 +15,35 @@ import offerFestival from "../../assets/images/offer-festival.jpg";
 import offerMembership from "../../assets/images/offer-membership.jpg";
 import offersBanner from "../../assets/images/offers-banner.jpg";
 
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(value);
+
 const Offers = () => {
+
+  const [liveOffers, setLiveOffers] = useState<ApiOffer[]>([]);
+
+  useEffect(() => {
+    const loadOffers = async () => {
+      try {
+        const offers = await fetchActiveOffers();
+        setLiveOffers(offers);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    loadOffers();
+  }, []);
+
+  const copyCode = (code: string) => {
+    navigator.clipboard
+      .writeText(code)
+      .then(() => toast.success(`Copied "${code}" — paste it in your cart`))
+      .catch(() => toast.error("Couldn't copy code"));
+  };
 
   const offerCards = [
 
@@ -194,6 +226,73 @@ const Offers = () => {
         </div>
 
       </section>
+
+      {liveOffers.length > 0 && (
+        <section className="live-offers-section">
+
+          <div className="container">
+
+            <div className="section-heading">
+
+              <span>ACTIVE RIGHT NOW</span>
+
+              <h2>Coupon Codes You Can Use Today</h2>
+
+              <p>
+                Tap a code to copy it, then paste it into the coupon box on your
+                cart page to see your total update instantly.
+              </p>
+
+            </div>
+
+            <div className="live-offers-grid">
+
+              {liveOffers.map((offer) => (
+
+                <div className="live-offer-card" key={offer._id}>
+
+                  <div className="live-offer-card-top">
+
+                    <span className="live-offer-badge">
+                      <TicketPercent size={16} />
+                      {offer.discountType === "percentage"
+                        ? `${offer.discountValue}% OFF`
+                        : `${formatCurrency(offer.discountValue)} OFF`}
+                    </span>
+
+                  </div>
+
+                  <button
+                    type="button"
+                    className="live-offer-code"
+                    onClick={() => copyCode(offer.code)}
+                  >
+                    {offer.code}
+                    <Copy size={15} />
+                  </button>
+
+                  <p>{offer.description}</p>
+
+                  <small>
+                    {offer.minCartValue > 0
+                      ? `Min cart ${formatCurrency(offer.minCartValue)}`
+                      : "No minimum cart value"}
+                  </small>
+
+                  <Link to="/cart" className="live-offer-link">
+                    Use in cart →
+                  </Link>
+
+                </div>
+
+              ))}
+
+            </div>
+
+          </div>
+
+        </section>
+      )}
 
       <section className="offers-grid-section">
 

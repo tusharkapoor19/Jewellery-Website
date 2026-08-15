@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import productService from "../../services/productService";
 import { Product } from "../../types";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import { fetchActiveOffers, validateOffer as validateOfferApi } from "../../api/offers";
+import { ApiError } from "../../api/client";
 import {
   calculatePricing
 } from "../../utils/pricing";
@@ -60,21 +62,32 @@ const Cart: React.FC = () => {
 
   const [couponError, setCouponError] = useState<string>("");
   const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([]);
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
 
-  const coupons: Coupon[] = [
-    {
-      code: "HIRANYA10",
-      description: "Get 10% OFF on orders above ₹50,000",
-      minimumCart: 50000,
-      discountPercentage: 10
-    },
-    {
-      code: "ROYAL5000",
-      description: "Flat ₹5,000 OFF on orders above ₹1,000,000",
-      minimumCart: 100000,
-      discountAmount: 5000
-    }
-  ];
+  // Live, admin-managed offers — created and toggled from the Offers tab
+  // in the admin dashboard. Loaded once on mount so the coupon list here
+  // (and its "Apply" flow below) always reflects what the admin has set up.
+  useEffect(() => {
+    const loadOffers = async () => {
+      try {
+        const activeOffers = await fetchActiveOffers();
+        setCoupons(
+          activeOffers.map((offer) => ({
+            code: offer.code,
+            description: offer.description,
+            minimumCart: offer.minCartValue,
+            discountAmount: offer.discountType === "flat" ? offer.discountValue : undefined,
+            discountPercentage:
+              offer.discountType === "percentage" ? offer.discountValue : undefined
+          }))
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    loadOffers();
+  }, []);
 
   const pricing = calculatePricing(cartItems, selectedCoupon, giftWrap);
 
@@ -106,27 +119,38 @@ const Cart: React.FC = () => {
     }
 };
 
-  const applyCoupon = () => {
+  const applyCoupon = async () => {
     const enteredCode = couponCode.trim().toUpperCase();
 
-    const coupon = coupons.find((item) => item.code === enteredCode);
-
-    if (!coupon) {
-      setCouponError("Invalid Coupon Code");
-      setSelectedCoupon(null);
+    if (!enteredCode) {
+      setCouponError("Enter A Coupon Code");
       return;
     }
 
-    if (pricing.subtotal < coupon.minimumCart) {
-      setCouponError(
-        `Minimum Cart Value ₹${coupon.minimumCart.toLocaleString("en-IN")} Required`
-      );
-      setSelectedCoupon(null);
-      return;
-    }
-
+    setApplyingCoupon(true);
     setCouponError("");
-    setSelectedCoupon(coupon);
+
+    try {
+      // Always confirmed against the backend so a coupon the admin just
+      // added, edited, or deactivated is honoured immediately — not just
+      // whatever was cached in `coupons` when the page loaded.
+      const offer = await validateOfferApi(enteredCode, pricing.subtotal);
+      setSelectedCoupon({
+        code: offer.code,
+        description: offer.description,
+        minimumCart: offer.minCartValue,
+        discountAmount: offer.discountType === "flat" ? offer.discountValue : undefined,
+        discountPercentage:
+          offer.discountType === "percentage" ? offer.discountValue : undefined
+      });
+    } catch (error) {
+      setSelectedCoupon(null);
+      setCouponError(
+        error instanceof ApiError ? error.message : "Failed To Apply Coupon"
+      );
+    } finally {
+      setApplyingCoupon(false);
+    }
   };
 
   const removeCoupon = () => {
@@ -374,11 +398,19 @@ const Cart: React.FC = () => {
                           setCouponCode(e.target.value.toUpperCase())
                         }
                       />
-                      <button onClick={applyCoupon}>Apply</button>
+                      <button onClick={applyCoupon} disabled={applyingCoupon}>
+                        {applyingCoupon ? "Applying..." : "Apply"}
+                      </button>
                     </div>
 
                     {couponError && (
                       <p className="coupon-error">{couponError}</p>
+                    )}
+
+                    {coupons.length === 0 && !selectedCoupon && (
+                      <p className="coupon-error" style={{ color: "#8a6d2f" }}>
+                        No active offers right now — check back soon.
+                      </p>
                     )}
 
                     {selectedCoupon && (

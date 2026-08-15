@@ -1,12 +1,13 @@
 import React from "react";
 
-export type View = "analytics" | "orders" | "catalogue" | "customers" | "customDesign";
+export type View = "analytics" | "orders" | "catalogue" | "offers" | "customers" | "customDesign";
 
 interface SidebarProps {
   active: View;
   onNavigate: (view: View) => void;
   pendingCount: number;
   pendingCustomDesignCount?: number;
+  activeOfferCount?: number;
   adminName: string;
   onLogout: () => void;
 }
@@ -16,6 +17,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   onNavigate,
   pendingCount,
   pendingCustomDesignCount = 0,
+  activeOfferCount = 0,
   adminName,
   onLogout,
 }) => {
@@ -92,6 +94,27 @@ const Sidebar: React.FC<SidebarProps> = ({
           </span>
           Catalogue
         </button>
+
+        <button
+          className={`nav-item ${active === "offers" ? "nav-item--active" : ""}`}
+          onClick={() => onNavigate("offers")}
+        >
+          <span className="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18">
+              <path
+                d="M20.5 12.7 12.7 20.5 a1.4 1.4 0 0 1 -2 0 L3.5 13.3 V4.5 a1 1 0 0 1 1 -1 h8.8 l7.2 7.2 a1.4 1.4 0 0 1 0 2 Z"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeLinejoin="round"
+              />
+              <circle cx="8" cy="8" r="1.6" fill="none" stroke="currentColor" strokeWidth="1.4" />
+            </svg>
+          </span>
+          Offers
+          {activeOfferCount > 0 && <span className="nav-badge">{activeOfferCount}</span>}
+        </button>
+
         <button
           className={`nav-item ${active === "customers" ? "nav-item--active" : ""}`}
           onClick={() => onNavigate("customers")}

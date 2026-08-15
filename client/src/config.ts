@@ -31,6 +31,12 @@ export const CUSTOM_DESIGN_API_BASE =
 export const ANALYTICS_API_BASE =
   process.env.REACT_APP_ANALYTICS_API_URL || "http://localhost:5008/analytics";
 
+// offer-services -> PORT 5009. Powers admin-managed coupon offers: the
+// admin dashboard's Offers tab (create/edit/delete coupons) and the
+// storefront's Offers page + Cart page (viewing and applying coupons).
+export const OFFER_API_BASE =
+  process.env.REACT_APP_OFFER_API_URL || "http://localhost:5009/offers";
+
   
 // Key used to persist the admin JWT + name in localStorage between reloads.
 // NOTE: this must match the key AuthContext.tsx actually writes to
