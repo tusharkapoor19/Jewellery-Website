@@ -1622,3 +1622,98 @@ justify-content:center;
 }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .section-subtitle {
+  color: #bbb4b4;
+}
+
+body.dark-mode .primary-btn {
+  color: #e7e4e4;
+}
+
+body.dark-mode .primary-btn:hover {
+  background: #171717;
+}
+
+body.dark-mode .secondary-btn:hover {
+  color: #e7e4e4;
+}
+
+body.dark-mode .who-we-are {
+  background: var(--bg, #15130f);
+}
+
+body.dark-mode .who-content h2 {
+  color: var(--text, #e7e4e4);
+}
+
+body.dark-mode .who-content p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .feature-card {
+  background: var(--bg, #15130f);
+}
+
+body.dark-mode .feature-card span {
+  color: #e7e4e4;
+}
+
+body.dark-mode .our-story {
+  background: var(--bg, #15130f);
+}
+
+body.dark-mode .story-heading h2 {
+  color: var(--text, #e7e4e4);
+}
+
+body.dark-mode .story-heading p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .timeline-content {
+  background: var(--bg, #15130f);
+}
+
+body.dark-mode .timeline-content h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .timeline-content p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .craftsmanship {
+  background: var(--bg, #15130f);
+}
+
+body.dark-mode .craft-content h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .craft-content p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .craft-card {
+  background: var(--bg, #15130f);
+}
+
+body.dark-mode .craft-card h4 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .craft-card p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .promise-icon {
+  color: #e7e4e4;
+}

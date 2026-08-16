@@ -436,3 +436,35 @@
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .hiranya-delete-modal {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-delete-close {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-delete-modal h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-delete-modal p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-delete-modal strong {
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-delete-cancel {
+  background: #171717;
+  color: #e7e4e4;
+}

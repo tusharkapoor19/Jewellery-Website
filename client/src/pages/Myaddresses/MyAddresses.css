@@ -741,3 +741,51 @@ select:focus-visible{
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .hiranya-address-page-header h1 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-address-page-header p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .hiranya-address-toolbar {
+  background: rgba(23, 23, 23, 0.82);
+}
+
+body.dark-mode .hiranya-search-box {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-search-box input {
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-search-box input::placeholder {
+  color: #bbb4b4;
+}
+
+body.dark-mode .hiranya-filter-group button {
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-filter-group button.active {
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-filter-group button.active svg {
+  color: #e7e4e4;
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #121212;
+}

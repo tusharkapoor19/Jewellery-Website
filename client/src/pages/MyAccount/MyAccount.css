@@ -2445,3 +2445,154 @@ textarea:focus-visible{
         transition-duration:.01ms !important;
     }
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .account-hero-content span {
+  background: rgba(23, 23, 23, 0.08);
+}
+
+body.dark-mode .form-field label {
+  color: #e7e4e4;
+}
+
+body.dark-mode .form-field input, body.dark-mode .form-field textarea {
+  background: #1c1912;
+}
+
+body.dark-mode .form-field input:disabled, body.dark-mode .form-field textarea:disabled {
+  background: #15130f;
+  color: #bbb4b4;
+}
+
+body.dark-mode .field-static {
+  background: #15130f;
+}
+
+body.dark-mode .eye-toggle {
+  color: #bbb4b4;
+}
+
+body.dark-mode .strength-track {
+  background: #121212;
+}
+
+body.dark-mode .gold-btn:active:not(:disabled)::after {
+  background: rgba(23, 23, 23, 0.25);
+}
+
+body.dark-mode .outline-btn {
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .verify-badge-failed {
+  background: rgba(50, 27, 27, 0.1);
+}
+
+body.dark-mode .otp-row input {
+  background: #1c1912;
+}
+
+body.dark-mode .new-value-row input {
+  background: #1c1912;
+}
+
+body.dark-mode .danger-section .account-card, body.dark-mode .danger-card {
+  background: #1c1412;
+}
+
+body.dark-mode .danger-card {
+  border: 1px solid rgba(76, 47, 46, 0.25);
+}
+
+body.dark-mode .danger-card-icon {
+  background: rgba(50, 27, 27, 0.1);
+}
+
+body.dark-mode .danger-checkbox {
+  color: #e7e4e4;
+}
+
+body.dark-mode .danger-confirm-row input {
+  background: #171717;
+}
+
+body.dark-mode .danger-confirm-row input:disabled {
+  background: #121212;
+}
+
+body.dark-mode .account-page::before {
+  background: rgba(50, 44, 27, 0.1);
+}
+
+body.dark-mode .account-hero::before {
+  border: 1px solid rgba(76, 68, 46, 0.12);
+}
+
+body.dark-mode .account-hero-content span {
+  border: 1px solid rgba(76, 68, 46, 0.24);
+  background: rgba(23, 23, 23, 0.055);
+}
+
+body.dark-mode .overview-icon {
+  border: 1px solid rgba(61, 61, 61, 0.5);
+}
+
+body.dark-mode .overview-card p {
+  color: #bbb8b4;
+}
+
+body.dark-mode .avatar-block p {
+  color: #bbb8b4;
+}
+
+body.dark-mode .form-field label {
+  color: #bcb8b4;
+}
+
+body.dark-mode .form-field input, body.dark-mode .form-field textarea, body.dark-mode .field-static, body.dark-mode .otp-row input, body.dark-mode .new-value-row input, body.dark-mode .danger-confirm-row input {
+  border-color: #474033;
+  background: rgba(23, 23, 23, 0.72);
+}
+
+body.dark-mode .form-field input:focus, body.dark-mode .form-field textarea:focus, body.dark-mode .otp-row input:focus, body.dark-mode .new-value-row input:focus, body.dark-mode .danger-confirm-row input:focus {
+  background: #171717;
+}
+
+body.dark-mode .field-change-btn {
+  background: #15130f;
+}
+
+body.dark-mode .field-change-btn:hover {
+  background: #322a1b;
+}
+
+body.dark-mode .eye-toggle:hover {
+  background: #15130f;
+}
+
+body.dark-mode .outline-btn {
+  background: rgba(23, 23, 23, 0.75);
+}
+
+body.dark-mode .outline-btn:hover:not(:disabled) {
+  background: #15130f;
+}
+
+body.dark-mode .verify-card-header p {
+  color: #bcb8b3;
+}
+
+body.dark-mode .otp-hint {
+  color: #bbb8b4;
+}
+
+body.dark-mode .hiranya-address-type {
+  background: #15130f;
+}

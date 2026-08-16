@@ -236,3 +236,22 @@
 }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .footer-social a:hover {
+  color: #e7e4e4;
+}
+
+body.dark-mode .footer-bottom {
+  border-top: 1px solid rgba(61, 61, 61, 0.12);
+}
+
+body.dark-mode .back-to-top {
+  color: #e7e4e4;
+}

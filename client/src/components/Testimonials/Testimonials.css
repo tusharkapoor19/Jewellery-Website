@@ -229,3 +229,34 @@ min-height:auto;
     margin-bottom:12px;
     opacity:.9;
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .testimonial-heading h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .testimonial-heading p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .testimonial-card {
+  background: rgba(23, 23, 23, 0.75);
+}
+
+body.dark-mode .testimonial-card .review {
+  color: #e7e4e4;
+}
+
+body.dark-mode .testimonial-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .testimonial-card span {
+  color: #bbb4b4;
+}

@@ -3239,3 +3239,222 @@ html{
     background: #faf5e9 !important;
     color: #a77a18 !important;
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .jewellery-page {
+  background: #1c1812;
+}
+
+body.dark-mode .hero-content span {
+  background: rgba(23, 23, 23, 0.08);
+}
+
+body.dark-mode .glass-btn {
+  border: 1px solid rgba(61, 61, 61, 0.18);
+  background: rgba(23, 23, 23, 0.08);
+}
+
+body.dark-mode .glass-btn:hover {
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .hero-features div {
+  background: rgba(23, 23, 23, 0.08);
+}
+
+body.dark-mode .hero-features div:hover {
+  background: rgba(23, 23, 23, 0.14);
+}
+
+body.dark-mode .section-title h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-title p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .metal-filter button {
+  border: 1px solid #494232;
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .category-filter button {
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .loading-products {
+  color: #bbb4b4;
+}
+
+body.dark-mode .why-hiranya {
+  background: #171717;
+}
+
+body.dark-mode .why-title h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .why-title p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .why-card {
+  background: #171717;
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-mode .why-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .why-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .newsletter-form input {
+  background: #171717;
+}
+
+body.dark-mode .newsletter-success {
+  background: rgba(23, 23, 23, 0.1);
+  border: 1px solid rgba(61, 61, 61, 0.12);
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+body.dark-mode .filter-heading em {
+  background: #15130f;
+  border: 1px solid #4c432e;
+}
+
+body.dark-mode .filter-reset-btn {
+  border: 1px solid #494132;
+  background: #1c1812;
+}
+
+body.dark-mode .premium-select select {
+  border: 1px solid #494131;
+  color: #e7e6e4;
+}
+
+body.dark-mode .price-range::before {
+  background: #2d2820;
+}
+
+body.dark-mode .range-slider::-webkit-slider-thumb {
+  border: 3px solid #3d3d3d;
+}
+
+body.dark-mode .range-slider::-moz-range-thumb {
+  border: 3px solid #3d3d3d;
+}
+
+body.dark-mode .price-values {
+  color: #bcb8b4;
+}
+
+body.dark-mode .price-presets button {
+  border: 1px solid #474033;
+  background: #1c1812;
+  color: #bbb8b4;
+}
+
+body.dark-mode .price-presets button:hover {
+  background: #1c1812;
+}
+
+body.dark-mode .sort-select select {
+  border: 1px solid #494131;
+  color: #e7e6e4;
+}
+
+body.dark-mode .jewellery-results-bar {
+  color: #bbb8b4;
+}
+
+body.dark-mode .jewellery-results-bar > span {
+  color: #bdb8b2;
+}
+
+body.dark-mode .custom-select-trigger {
+  border: 1px solid #494131;
+  color: #e7e6e4;
+}
+
+body.dark-mode .custom-option {
+  color: #e7e6e4;
+}
+
+body.dark-mode .jewellery-filter-panel
+.filter-heading em {
+  background: #15130f;
+  border: 1px solid #4c432e;
+}
+
+body.dark-mode .jewellery-filter-panel
+.price-range::before {
+  background: #2d2820;
+}
+
+body.dark-mode .jewellery-filter-panel
+.range-slider::-webkit-slider-thumb {
+  border: 3px solid #3d3d3d;
+}
+
+body.dark-mode .jewellery-filter-panel
+.price-values {
+  color: #bcb8b4;
+}
+
+body.dark-mode .jewellery-filter-panel
+.price-presets button {
+  border: 1px solid #474033;
+  background: #1c1812;
+  color: #bbb8b4;
+}
+
+body.dark-mode .jewellery-filter-panel
+.price-presets button:hover, body.dark-mode .jewellery-filter-panel
+.price-presets button.active {
+  background: #1c1812;
+}
+
+body.dark-mode .jewellery-filter-panel
+.sort-filter
+.custom-select-trigger {
+  border: 1px solid #494131;
+  color: #e7e6e4;
+}
+
+body.dark-mode .jewellery-filter-panel
+.filter-reset-btn {
+  border: 1px solid #494132;
+  background: #1c1812;
+}
+
+body.dark-mode .jewellery-filter-panel
+.filter-dropdown-group
+.custom-select-trigger {
+  border: 1px solid #494131;
+  color: #e7e6e4;
+}
+
+body.dark-mode .jewellery-dropdown-option.active, body.dark-mode .jewellery-option.active, body.dark-mode .jewellery-select-option.active, body.dark-mode .metal-dropdown-option.active, body.dark-mode .metal-option.active {
+  border-color: #4c442e !important;
+}
+
+body.dark-mode .jewellery-dropdown-option:hover, body.dark-mode .jewellery-option:hover, body.dark-mode .jewellery-select-option:hover, body.dark-mode .metal-dropdown-option:hover, body.dark-mode .metal-option:hover {
+  background: #15130f !important;
+}

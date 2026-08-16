@@ -623,3 +623,90 @@
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .primary-btn {
+  color: #e7e4e4;
+}
+
+body.dark-mode .secondary-btn:hover {
+  color: #e7e4e4;
+}
+
+body.dark-mode .blogs-section {
+  background: #15130f;
+}
+
+body.dark-mode .search-filter input {
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-mode .filter-buttons button {
+  background: #171717;
+}
+
+body.dark-mode .filter-buttons button.active {
+  color: #e7e4e4;
+}
+
+body.dark-mode .filter-buttons button:hover {
+  color: #e7e4e4;
+}
+
+body.dark-mode .featured-btn {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-title h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-title p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .blog-card {
+  background: #171717;
+}
+
+body.dark-mode .blog-category {
+  color: #e7e4e4;
+}
+
+body.dark-mode .blog-content h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .blog-content p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .blog-meta {
+  color: #bbb4b4;
+}
+
+body.dark-mode .read-more-btn:hover {
+  color: #e7e4e4;
+}
+
+body.dark-mode .no-results h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .no-results p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .luxury-btn {
+  color: #e7e4e4;
+}
+
+body.dark-mode .newsletter-form button {
+  color: #e7e4e4;
+}

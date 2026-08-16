@@ -225,3 +225,18 @@
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .hiranya-empty-content h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-empty-content p {
+  color: #bbb4b4;
+}

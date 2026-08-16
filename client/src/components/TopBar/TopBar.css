@@ -589,3 +589,50 @@
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .topbar {
+  color: #e7e6e4;
+}
+
+body.dark-mode .shipping-item {
+  color: #e7e6e4;
+}
+
+body.dark-mode .shipping-item svg {
+  color: #e7e6e4;
+}
+
+body.dark-mode .certified {
+  color: #e7e6e4;
+}
+
+body.dark-mode .separator {
+  color: rgba(189, 185, 179, 0.55);
+}
+
+body.dark-mode .silver-rate {
+  color: #b4b7bb;
+}
+
+body.dark-mode .silver-rate svg {
+  color: #b4b7bb;
+}
+
+body.dark-mode .platinum-rate {
+  color: #b4b7bb;
+}
+
+body.dark-mode .store-link {
+  color: #e7e6e4;
+}
+
+body.dark-mode .track-item {
+  color: #e7e6e4;
+}

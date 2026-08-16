@@ -365,3 +365,27 @@
   font-weight: 600;
   margin-top: 2px;
 }
+
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .btn-secondary {
+  background: #171717;
+}
+
+body.dark-mode .btn-danger {
+  background: rgba(50, 27, 27, 0.15);
+}
+
+body.dark-mode .jewel-card {
+  background: #171717;
+}
+
+body.dark-mode .jewel-card-fav {
+  background: rgba(23, 23, 23, 0.9);
+}

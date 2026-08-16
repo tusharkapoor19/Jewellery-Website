@@ -182,3 +182,22 @@
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .shipping-card {
+  border: 1px solid rgba(61, 61, 61, 0.15);
+}
+
+body.dark-mode .shipping-section {
+  border-bottom: 1px solid rgba(61, 61, 61, 0.15);
+}
+
+body.dark-mode .shipping-contact {
+  border: 1px solid rgba(61, 61, 61, 0.15);
+}

@@ -792,3 +792,91 @@ font-size:42px;
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .faq-categories {
+  background: #1c1812;
+}
+
+body.dark-mode .section-heading h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-heading p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .category-card {
+  background: #171717;
+}
+
+body.dark-mode .category-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .category-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .faq-section {
+  background: #171717;
+}
+
+body.dark-mode .faq-item {
+  background: #171717;
+}
+
+body.dark-mode .faq-question {
+  color: #e7e4e4;
+}
+
+body.dark-mode .faq-answer p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .care-banner {
+  background: #1c1812;
+}
+
+body.dark-mode .care-content h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .care-content p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .care-content ul li {
+  color: #e7e4e4;
+}
+
+body.dark-mode .faq-help {
+  background: #171717;
+}
+
+body.dark-mode .help-card {
+  background: #171717;
+}
+
+body.dark-mode .help-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .help-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .cta-secondary {
+  border: 2px solid rgba(61, 61, 61, 0.7);
+}
+
+body.dark-mode .cta-secondary:hover {
+  background: #171717;
+  color: #e7e4e4;
+}

@@ -1351,3 +1351,88 @@
     position: absolute;
     z-index: 100;
 }
+
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .login-brand span {
+  color: #e7e6e4;
+}
+
+body.dark-mode .login-brand li {
+  color: #e7e6e4;
+}
+
+body.dark-mode .login-header h2 {
+  color: #e7e6e4;
+}
+
+body.dark-mode .login-header p {
+  color: #bbb8b4;
+}
+
+body.dark-mode .input-group label {
+  color: #bbb9b4;
+}
+
+body.dark-mode .input-group input {
+  border: 1px solid #4a4130;
+  background: rgba(23, 23, 23, 0.82);
+  color: #e7e6e4;
+}
+
+body.dark-mode .input-group input:hover {
+  border-color: #4b432f;
+}
+
+body.dark-mode .input-group input::placeholder {
+  color: #bbb9b4;
+}
+
+body.dark-mode .input-group input:focus {
+  background: #171717;
+}
+
+body.dark-mode .password-box button:hover {
+  background: #15130f;
+}
+
+body.dark-mode .server-error {
+  background: #150f0f;
+  border: 1px solid #4c322e;
+}
+
+body.dark-mode .login-options label {
+  color: #bbb8b4;
+}
+
+body.dark-mode .create-account {
+  color: #bbb9b4;
+}
+
+body.dark-mode .login-divider {
+  color: #bbb9b4;
+}
+
+body.dark-mode .login-divider span {
+  color: #bcb9b3;
+}
+
+body.dark-mode .google-btn-custom {
+  background: #171717;
+  border: 1px solid #454035;
+  color: #e7e4e4;
+}
+
+body.dark-mode .login-success h3 {
+  color: #e7e6e4;
+}
+
+body.dark-mode .login-success p {
+  color: #bbb8b4;
+}

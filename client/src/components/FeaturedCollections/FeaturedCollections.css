@@ -299,3 +299,18 @@
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .featured {
+  background: #171717;
+}
+
+body.dark-mode .featured-heading span {
+  color: #bbb4b4;
+}

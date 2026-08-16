@@ -177,3 +177,30 @@ width:100%;
 }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .home-newsletter-container h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .home-newsletter-container p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .newsletter-form input {
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-mode .newsletter-form button {
+  color: #e7e4e4;
+}
+
+body.dark-mode .home-newsletter-container small {
+  color: #bbb4b4;
+}

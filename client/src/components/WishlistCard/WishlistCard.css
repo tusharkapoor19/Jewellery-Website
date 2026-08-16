@@ -392,3 +392,42 @@
     padding: 10px 10px;
   }
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .hiranya-wishlist-card {
+  background: var(--hiranya-#171717);
+}
+
+body.dark-mode .hiranya-badge-metal {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .hiranya-badge-certified {
+  background: rgba(23, 23, 23, 0.9);
+}
+
+body.dark-mode .hiranya-badge-stock.out-of-stock {
+  color: #bbb4b4;
+}
+
+body.dark-mode .hiranya-wishlist-heart-btn:hover {
+  background: var(--hiranya-#171717);
+}
+
+body.dark-mode .hiranya-card-content {
+  background: var(--hiranya-#171717);
+}
+
+body.dark-mode .hiranya-card-title {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .hiranya-btn-secondary {
+  color: var(--hiranya-#e7e4e4);
+}

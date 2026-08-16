@@ -601,3 +601,119 @@
 footer{
     margin-top:0;
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .primary-btn {
+  color: #e7e4e4;
+}
+
+body.dark-mode .primary-btn:hover {
+  background: #171717;
+}
+
+body.dark-mode .secondary-btn:hover {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-heading h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-heading p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .importance-section {
+  background: #15130f;
+}
+
+body.dark-mode .importance-card {
+  background: #171717;
+}
+
+body.dark-mode .importance-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .importance-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .methods-section {
+  background: #171717;
+}
+
+body.dark-mode .method-card {
+  background: #171717;
+}
+
+body.dark-mode .method-content h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .method-content p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .ring-table {
+  background: #171717;
+}
+
+body.dark-mode .ring-table thead th {
+  color: #e7e4e4;
+}
+
+body.dark-mode .ring-table tbody td {
+  color: #e7e4e4;
+  border-bottom: 1px solid #3d3d3d;
+}
+
+body.dark-mode .ring-table tbody tr:hover {
+  background: #15130f;
+}
+
+body.dark-mode .steps-section {
+  background: #15130f;
+}
+
+body.dark-mode .step-card {
+  background: #171717;
+}
+
+body.dark-mode .step-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .step-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .tips-section {
+  background: #171717;
+}
+
+body.dark-mode .tips-section .importance-card {
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-mode .faq-section {
+  background: #15130f;
+}
+
+body.dark-mode .faq-card {
+  background: #171717;
+}
+
+body.dark-mode .faq-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .faq-card p {
+  color: #bbb4b4;
+}

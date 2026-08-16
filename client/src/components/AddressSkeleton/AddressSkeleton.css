@@ -201,3 +201,38 @@
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .hiranya-address-skeleton {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-sk-chip {
+  background: #121212;
+}
+
+body.dark-mode .hiranya-sk-badge {
+  background: #121212;
+}
+
+body.dark-mode .hiranya-sk-title {
+  background: #121212;
+}
+
+body.dark-mode .hiranya-sk-phone {
+  background: #121212;
+}
+
+body.dark-mode .hiranya-sk-line {
+  background: #121212;
+}
+
+body.dark-mode .hiranya-sk-btn {
+  background: #121212;
+}

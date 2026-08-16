@@ -106,3 +106,22 @@
     cursor:pointer;
     font-size:20px;
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .play-btn {
+  background: rgba(23, 23, 23, 0.15);
+}
+
+body.dark-mode .play-btn:hover {
+  color: #e7e4e4;
+}
+
+body.dark-mode .close-btn {
+  background: #171717;
+}

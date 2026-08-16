@@ -202,3 +202,18 @@
 }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .cookie-banner {
+  border: 1px solid rgba(61, 61, 61, 0.15);
+}
+
+body.dark-mode .reject-btn:hover {
+  background: rgba(23, 23, 23, 0.08);
+}

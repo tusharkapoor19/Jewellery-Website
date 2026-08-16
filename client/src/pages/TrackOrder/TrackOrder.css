@@ -1556,3 +1556,183 @@
 
     object-fit: cover;
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .track-spinner {
+  border: 4px solid #4c442e;
+}
+
+body.dark-mode .track-loader h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .track-badge {
+  background: #171717;
+}
+
+body.dark-mode .track-heading h1 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .track-heading p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .track-search-box {
+  background: #171717;
+}
+
+body.dark-mode .track-order-header span {
+  color: #bbb4b4;
+}
+
+body.dark-mode .track-order-header h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .track-status.pending {
+  background: #15130f;
+}
+
+body.dark-mode .track-status.confirmed {
+  background: #0f1510;
+}
+
+body.dark-mode .track-status.packed {
+  background: #0f1215;
+}
+
+body.dark-mode .track-status.shipped {
+  background: #0f1115;
+}
+
+body.dark-mode .track-status.outfordelivery {
+  background: #110f15;
+}
+
+body.dark-mode .track-status.delivered {
+  background: #0f1511;
+}
+
+body.dark-mode .track-status.cancelled {
+  background: #150f0f;
+}
+
+body.dark-mode .track-timeline::before {
+  background: #121212;
+}
+
+body.dark-mode .track-step-icon {
+  background: #171717;
+  border: 2px solid #3d3d3d;
+}
+
+body.dark-mode .track-step-icon svg {
+  color: #bbb4b4;
+}
+
+body.dark-mode .track-step span {
+  color: #bbb4b4;
+}
+
+body.dark-mode .track-step.active span {
+  color: #e7e4e4;
+}
+
+body.dark-mode .track-card {
+  background: rgba(23, 23, 23, 0.92);
+}
+
+body.dark-mode .track-card-title h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .track-product {
+  border: 1px solid #3d3d3d;
+  background: #171717;
+}
+
+body.dark-mode .track-product-image {
+  background: #15130f;
+  border: 1px solid #4c452e;
+}
+
+body.dark-mode .track-product-info h4 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .track-product-info span {
+  color: #bbb4b4;
+}
+
+body.dark-mode .track-address h4 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .track-address p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .track-summary div {
+  border-bottom: 1px solid #3d3d3d;
+}
+
+body.dark-mode .track-summary span {
+  color: #bbb4b4;
+}
+
+body.dark-mode .track-summary strong {
+  color: #e7e4e4;
+}
+
+body.dark-mode .track-help-text {
+  color: #bbb4b4;
+}
+
+body.dark-mode .track-outline-btn {
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .track-outline-btn:hover {
+  background: #15130f;
+}
+
+body.dark-mode .track-empty {
+  background: #171717;
+}
+
+body.dark-mode .track-empty h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .track-empty p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .track-page--rejected .track-status {
+  background: #1c1312;
+  border-color: #4c312e;
+}
+
+body.dark-mode .track-page--rejected .track-rejected-card {
+  border: 1px solid #4c322e;
+}
+
+body.dark-mode .track-page--rejected .track-rejected-icon {
+  background: #150f0f;
+}
+
+body.dark-mode .track-page--rejected .track-rejected-content h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .track-page--rejected .track-rejected-content p {
+  color: #bbb4b4;
+}

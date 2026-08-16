@@ -2588,3 +2588,203 @@ html {
 
     color: #a77a18 !important;
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .jewellery-page {
+  background: #1c1912;
+}
+
+body.dark-mode .hero-features div {
+  background: rgba(23, 23, 23, 0.07);
+  border: 1px solid rgba(61, 61, 61, 0.12);
+}
+
+body.dark-mode .hero-features div:hover {
+  background: rgba(23, 23, 23, 0.13);
+}
+
+body.dark-mode .section-title h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-title p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .collection-controls {
+  background: rgba(23, 23, 23, 0.92);
+  border: 1px solid #474033;
+}
+
+body.dark-mode .refine-label em {
+  background: #15130f;
+  border: 1px solid #4c442e;
+}
+
+body.dark-mode .filter-heading strong {
+  color: #e7e4e4;
+}
+
+body.dark-mode .control-label span {
+  color: #bbb4b4;
+}
+
+body.dark-mode .range-slider {
+  background: #2f291e;
+}
+
+body.dark-mode .range-slider::-webkit-slider-thumb {
+  border: 3px solid #3d3d3d;
+}
+
+body.dark-mode .range-slider::-moz-range-thumb {
+  border: 3px solid #3d3d3d;
+}
+
+body.dark-mode .price-limits {
+  color: #bbb4b4;
+}
+
+body.dark-mode .price-preset {
+  border: 1px solid #484132;
+  background: #1c1812;
+  color: #bbb4b4;
+}
+
+body.dark-mode .price-preset:hover {
+  background: #1c1812;
+}
+
+body.dark-mode .sort-filter label {
+  color: #bbb4b4;
+}
+
+body.dark-mode .sort-filter select {
+  border: 1px solid #464034;
+  background: #1c1812;
+  color: #e7e4e4;
+}
+
+body.dark-mode .reset-filters {
+  border: 1px solid #484132;
+  background: #171717;
+  color: #bbb4b4;
+}
+
+body.dark-mode .reset-filters:hover {
+  background: #1c1812;
+}
+
+body.dark-mode .collection-dropdown-section {
+  border-top: 1px solid #494132;
+}
+
+body.dark-mode .collection-dropdown-trigger {
+  border: 1px solid #484132;
+  color: #e7e4e4;
+}
+
+body.dark-mode .collection-dropdown-menu {
+  border: 1px solid #484032;
+  background: rgba(28, 24, 18, 0.98);
+}
+
+body.dark-mode .collection-dropdown-menu::-webkit-scrollbar-thumb {
+  background: #302a1d;
+}
+
+body.dark-mode .collection-dropdown-option {
+  color: #e7e4e4;
+}
+
+body.dark-mode .collection-dropdown-option:hover {
+  background: #15130f;
+}
+
+body.dark-mode .collection-results-info {
+  color: #bbb4b4;
+}
+
+body.dark-mode .collection-results-info span:last-child {
+  color: #e7e4e4;
+}
+
+body.dark-mode .loading-products {
+  color: #bbb4b4;
+}
+
+body.dark-mode .no-products {
+  border: 1px solid #494131;
+  background: #171717;
+}
+
+body.dark-mode .no-products h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .no-products p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .why-card {
+  border: 1px solid rgba(61, 61, 61, 0.1);
+  background: rgba(23, 23, 23, 0.055);
+}
+
+body.dark-mode .why-card:hover {
+  background: rgba(23, 23, 23, 0.09);
+}
+
+body.dark-mode .newsletter-box {
+  border: 1px solid rgba(61, 61, 61, 0.12);
+}
+
+body.dark-mode .newsletter-form input {
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .newsletter-form input::placeholder {
+  color: #bbb4b4;
+}
+
+body.dark-mode .newsletter-success {
+  background: rgba(23, 23, 23, 0.08);
+  border: 1px solid rgba(61, 61, 61, 0.12);
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #15130f;
+}
+
+body.dark-mode .collection-dropdown-section {
+  border-top: 1px solid #494132 !important;
+}
+
+body.dark-mode .collection-dropdown-trigger {
+  border: 1px solid #494131 !important;
+  color: #e7e6e4 !important;
+}
+
+body.dark-mode .collection-dropdown-menu {
+  background: rgba(28, 24, 18, 0.99) !important;
+  border: 1px solid #494131 !important;
+}
+
+body.dark-mode .collection-dropdown-option {
+  color: #e7e6e4 !important;
+}
+
+body.dark-mode .collection-dropdown-option.active, body.dark-mode .collection-option.active, body.dark-mode .collection-select-option.active {
+  border-color: #4c442e !important;
+}
+
+body.dark-mode .collection-dropdown-option:hover, body.dark-mode .collection-option:hover, body.dark-mode .collection-select-option:hover {
+  background: #15130f !important;
+}

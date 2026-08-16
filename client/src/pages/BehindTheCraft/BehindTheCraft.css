@@ -623,3 +623,58 @@ font-size:15px;
 }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .craft-process {
+  background: #1c1912;
+}
+
+body.dark-mode .process-content h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .process-content p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .craft-highlight {
+  background: #171717;
+}
+
+body.dark-mode .craft-highlight h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .craft-journey {
+  background: #1c1812;
+}
+
+body.dark-mode .behind-craft-card {
+  background: #171717;
+}
+
+body.dark-mode .behind-craft-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .behind-craft-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .craft-gallery {
+  background: #171717;
+}
+
+body.dark-mode .gallery-text h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .gallery-text p {
+  color: #bbb4b4;
+}

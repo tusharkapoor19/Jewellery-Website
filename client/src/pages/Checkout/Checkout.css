@@ -3085,3 +3085,264 @@ img{
     margin-bottom:12px;
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .hiranya-checkout-error-banner {
+  background: #15100f;
+}
+
+body.dark-mode .hiranya-highlight {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-highlight span {
+  color: #e7e6e4;
+}
+
+body.dark-mode .hiranya-step-circle {
+  border: 2px solid #444036;
+  background: #171717;
+  color: #bcb9b4;
+}
+
+body.dark-mode .hiranya-step span {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-step.active span, body.dark-mode .hiranya-step.completed span {
+  color: #e8e6e3;
+}
+
+body.dark-mode .hiranya-step-line {
+  background: #15130f;
+}
+
+body.dark-mode .hiranya-outline-btn {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-empty-address {
+  background: #1c1912;
+}
+
+body.dark-mode .hiranya-empty-address p {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-address-card {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-address-type {
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-default-badge {
+  background: #0f1511;
+}
+
+body.dark-mode .hiranya-address-body h4 {
+  color: #e8e6e3;
+}
+
+body.dark-mode .hiranya-address-body p {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-address-footer button {
+  background: #15130f;
+}
+
+body.dark-mode .hiranya-delivery-card {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-delivery-icon.express {
+  background: #15130f;
+}
+
+body.dark-mode .hiranya-delivery-top span {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-delivery-card p {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-gift-item {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-gift-left h4 {
+  color: #e8e6e3;
+}
+
+body.dark-mode .hiranya-gift-left p {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-switch span {
+  background: #2b2821;
+}
+
+body.dark-mode .hiranya-switch span::before {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-gift-message {
+  background: #1c1912;
+}
+
+body.dark-mode .hiranya-message-header h4 {
+  color: #e8e6e3;
+}
+
+body.dark-mode .hiranya-message-header p {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-gift-message textarea {
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-message-footer {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-notes-card {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-notes-content h4 {
+  color: #e8e6e3;
+}
+
+body.dark-mode .hiranya-notes-content p {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-notes-textarea {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-notes-footer {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-summary-card {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-summary-products h3 {
+  color: #e8e6e3;
+}
+
+body.dark-mode .hiranya-summary-product {
+  background: #1c1a12;
+}
+
+body.dark-mode .hiranya-summary-product img {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-summary-product-info h4 {
+  color: #e8e6e3;
+}
+
+body.dark-mode .hiranya-summary-product-info span {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-coupon-input {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-price-breakdown div {
+  color: #e7e6e4;
+}
+
+body.dark-mode .hiranya-price-breakdown strong {
+  color: #e8e6e3;
+}
+
+body.dark-mode .hiranya-delivery-info {
+  background: #1c1a12;
+}
+
+body.dark-mode .hiranya-delivery-info h4 {
+  color: #e8e6e3;
+}
+
+body.dark-mode .hiranya-delivery-info p {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-security {
+  background: #0f1511;
+}
+
+body.dark-mode .hiranya-trust-grid div {
+  background: #15130f;
+}
+
+body.dark-mode .hiranya-payment-strip {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-trust-section {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-trust-header h2 {
+  color: #e8e6e3;
+}
+
+body.dark-mode .hiranya-trust-header p {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-trust-card {
+  background: #15130f;
+}
+
+body.dark-mode .hiranya-trust-card:hover {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-trust-card h4 {
+  color: #e8e6e3;
+}
+
+body.dark-mode .hiranya-trust-card p {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-security-strip {
+  background: #121c14;
+}
+
+body.dark-mode .hiranya-mobile-price span {
+  color: #bcb8b3;
+}
+
+body.dark-mode .hiranya-mobile-price strong {
+  color: #e8e6e3;
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #15130f;
+}
+
+@media (max-width:768px) {
+body.dark-mode .hiranya-mobile-sticky-bar {
+  background: rgba(23, 23, 23, 0.96);
+}
+
+}

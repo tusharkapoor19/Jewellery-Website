@@ -925,3 +925,111 @@ font-size:16px;
     background:#b8902c;
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .contact-info {
+  background: #1c1712;
+}
+
+body.dark-mode .section-heading h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-heading p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .info-card {
+  background: #171717;
+}
+
+body.dark-mode .info-icon {
+  background: #15130f;
+}
+
+body.dark-mode .info-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .info-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .contact-form-section {
+  background: #171717;
+}
+
+body.dark-mode .contact-form h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .contact-form p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .contact-form input, body.dark-mode .contact-form textarea {
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-mode .contact-services {
+  background: #1c1712;
+}
+
+body.dark-mode .service-card {
+  background: #171717;
+}
+
+body.dark-mode .service-icon {
+  background: #15130f;
+}
+
+body.dark-mode .service-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .service-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .contact-map {
+  background: #171717;
+}
+
+body.dark-mode .map-content h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .map-content>p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .detail-item h4 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .detail-item p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .outline-light-btn {
+  border: 2px solid #3d3d3d;
+}
+
+body.dark-mode .outline-light-btn:hover {
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .success-message h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .success-message p {
+  color: #bbb4b4;
+}

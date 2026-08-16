@@ -989,3 +989,74 @@
     font-size: 0.78rem;
   }
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode ::selection {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .hiranya-cart-page {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .item-details h3 {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .quantity-controls button {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .quantity-controls button:hover {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .quantity-controls span {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .item-total {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .summary-card h2 {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .summary-row strong {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .grand-total h3 {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .coupon-box input {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .coupon-box button:hover {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .checkout-btn:hover {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .empty-cart h2 {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .section-heading h2 {
+  color: var(--hiranya-#e7e4e4);
+}
+
+body.dark-mode .trust-card h3 {
+  color: var(--hiranya-#e7e4e4);
+}

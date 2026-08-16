@@ -1276,3 +1276,74 @@ body.light .hero-card {
     border-radius: 15px;
   }
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .hero-primary-btn:hover {
+  background: #322b1b;
+}
+
+body.dark-mode .hero-right::before {
+  background: rgba(49, 42, 27, 0.1);
+}
+
+body.dark-mode .hero-card {
+  background: rgba(23, 23, 23, 0.72);
+}
+
+body.dark-mode .hero-card::before {
+  border: 1px solid rgba(61, 61, 61, 0.75);
+}
+
+body.dark-mode .heroSwiper .swiper-button-prev, body.dark-mode .heroSwiper .swiper-button-next {
+  border: 1px solid rgba(61, 61, 61, 0.48);
+}
+
+body.dark-mode .heroSwiper .swiper-button-prev:hover, body.dark-mode .heroSwiper .swiper-button-next:hover {
+  border-color: rgba(61, 61, 61, 0.7);
+}
+
+body.dark-mode .heroSwiper .swiper-pagination-bullet {
+  background: rgba(23, 23, 23, 0.8);
+}
+
+body.dark-mode .hero-card {
+  background: rgba(23, 23, 23, 0.92);
+}
+
+body.dark-mode .heroSwiper .swiper-button-prev, body.dark-mode .heroSwiper .swiper-button-next {
+  border: 1px solid rgba(61, 61, 61, 0.42);
+}
+
+body.dark-mode .hero-card {
+  border: 1px solid rgba(76, 67, 46, 0.65);
+}
+
+body.dark-mode .hero-card::before {
+  border: 2px solid rgba(76, 67, 46, 0.55);
+}
+
+body.dark-mode .hero-card {
+  border: 1px solid rgba(76, 67, 46, 0.55) !important;
+}
+
+body.dark-mode .heroSwiper .swiper-button-prev, body.dark-mode .heroSwiper .swiper-button-next {
+  border: 1px solid rgba(61, 61, 61, 0.45);
+}
+
+body.dark-mode .heroSwiper .swiper-button-prev:hover, body.dark-mode .heroSwiper .swiper-button-next:hover {
+  border-color: rgba(61, 61, 61, 0.75);
+}
+
+body.dark-mode .heroSwiper .swiper-pagination-bullet {
+  background: rgba(23, 23, 23, 0.8);
+}
+
+body.dark-mode .heroSwiper .swiper-pagination-bullet-active {
+  background: #322a1b;
+}

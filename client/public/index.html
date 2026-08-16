@@ -40,6 +40,22 @@
 
   <body>
 
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("hiranya-theme");
+          if (saved === "dark") {
+            document.body.classList.add("dark-mode");
+            document.documentElement.setAttribute("data-theme", "dark");
+          } else {
+            document.body.classList.add("light");
+          }
+        } catch (e) {
+          document.body.classList.add("light");
+        }
+      })();
+    </script>
+
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
     <div id="root"></div>

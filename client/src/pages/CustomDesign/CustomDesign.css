@@ -11,3 +11,15 @@
   cursor: pointer;
   border: 2px solid #0d0c0b;
 }
+
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .custom-design-range::-webkit-slider-thumb {
+  background: #30291c;
+}

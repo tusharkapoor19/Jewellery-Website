@@ -813,3 +813,122 @@ footer{
         padding:60px 0 20px;
     }
 }
+
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .primary-btn {
+  color: #e7e4e4;
+}
+
+body.dark-mode .secondary-btn {
+  border: 2px solid #3d3d3d;
+}
+
+body.dark-mode .secondary-btn:hover {
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-heading h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-heading p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .offers-grid-section {
+  background: #15130f;
+}
+
+body.dark-mode .offer-card {
+  background: #171717;
+}
+
+body.dark-mode .offer-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .offer-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .festival-section {
+  background: #171717;
+}
+
+body.dark-mode .festival-card {
+  background: #15130f;
+}
+
+body.dark-mode .festival-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .festival-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .membership-content ul li {
+  border-bottom: 1px solid rgba(61, 61, 61, 0.08);
+}
+
+body.dark-mode .why-shop-section {
+  background: #15130f;
+}
+
+body.dark-mode .why-card {
+  background: #171717;
+}
+
+body.dark-mode .why-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .why-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .faq-section {
+  background: #171717;
+}
+
+body.dark-mode .faq-card {
+  background: #15130f;
+}
+
+body.dark-mode .faq-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .faq-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .live-offers-section {
+  background: #15130f;
+}
+
+body.dark-mode .live-offer-card {
+  background: #171717;
+}
+
+body.dark-mode .live-offer-code {
+  background: #15130f;
+  border: 1px solid #4c442e;
+  color: #e7e4e4;
+}
+
+body.dark-mode .live-offer-code:hover {
+  background: #322c1b;
+}
+
+body.dark-mode .live-offer-card p {
+  color: #e7e4e4;
+}

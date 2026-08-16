@@ -490,3 +490,105 @@
 .navbar .dropdown-menu li:hover a{
     color: var(--gold) !important;
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .details-breadcrumb {
+  color: #bbb4b4;
+}
+
+body.dark-mode .details-breadcrumb a {
+  color: #bbb4b4;
+}
+
+body.dark-mode .details-breadcrumb p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .details-image {
+  background: #171717;
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-mode .details-content h1 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .details-rating span {
+  color: #bbb4b4;
+}
+
+body.dark-mode .details-info p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .details-info strong {
+  color: #e7e4e4;
+}
+
+body.dark-mode .details-description {
+  color: #bbb4b4;
+}
+
+body.dark-mode .quantity-wrapper h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .quantity-box {
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-mode .quantity-box button {
+  background: #171717;
+}
+
+body.dark-mode .cart-btn {
+  background: #171717;
+}
+
+body.dark-mode .specifications h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .spec-card {
+  background: #171717;
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-mode .spec-card p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .related-products .section-heading h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .related-products .section-heading p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .related-card {
+  background: #171717;
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-mode .related-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .related-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .product-not-found h1 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .product-not-found p {
+  color: #bbb4b4;
+}

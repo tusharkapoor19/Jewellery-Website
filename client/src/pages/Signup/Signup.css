@@ -1291,3 +1291,85 @@ transform:scale(1);
         width: 100% !important;
     }
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .signup-brand p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .signup-brand span {
+  color: #bbb4b4;
+}
+
+body.dark-mode .signup-brand li {
+  color: #e7e4e4;
+}
+
+body.dark-mode .signup-header h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .signup-header p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .input-group label {
+  color: #e7e4e4;
+}
+
+body.dark-mode .input-group input, body.dark-mode .input-group select {
+  border: 1px solid #4b422f;
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .phone-box {
+  border: 1px solid #4b422f;
+  background: #171717;
+}
+
+body.dark-mode .phone-box span {
+  background: #15130f;
+}
+
+body.dark-mode .terms-box p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .already-account {
+  color: #bbb4b4;
+}
+
+body.dark-mode .success-box {
+  background: #1c1912;
+}
+
+body.dark-mode .success-icon {
+  background: #15130f;
+}
+
+body.dark-mode .success-box h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .success-box p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .signup-divider {
+  color: #bbb4b4;
+}
+
+body.dark-mode .signup-divider::before, body.dark-mode .signup-divider::after {
+  background: #302a1d;
+}
+
+body.dark-mode .signup-divider span {
+  color: #bbb4b4;
+}

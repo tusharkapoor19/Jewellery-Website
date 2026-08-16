@@ -459,6 +459,88 @@
   font-weight: 500;
 }
 
+/* ==========================
+   DARK MODE TOGGLE
+========================== */
+.profile-theme-toggle {
+  margin-top: 6px;
+  padding: 10px 12px 4px;
+  border-top: 1px solid rgba(200, 162, 77, 0.18);
+}
+
+.mobile-theme-toggle {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  background: rgba(200, 162, 77, 0.06);
+  border: 1px solid rgba(200, 162, 77, 0.2);
+  border-radius: 12px;
+}
+
+.theme-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.theme-toggle-row--mobile {
+  padding: 0;
+}
+
+.theme-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text, #222);
+}
+
+.theme-toggle-label svg {
+  color: var(--gold, #c8a24d);
+  flex-shrink: 0;
+}
+
+.theme-switch {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 162, 77, 0.35);
+  background: rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.theme-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.25s ease;
+}
+
+.theme-switch.is-on {
+  background: linear-gradient(
+    135deg,
+    var(--gold-dim, #8f6820),
+    var(--gold, #c8a24d)
+  );
+  border-color: var(--gold, #c8a24d);
+}
+
+.theme-switch.is-on .theme-switch-thumb {
+  transform: translateX(18px);
+  background: #171717;
+}
+
 .btn-auth {
   padding: 10px 16px;
   border-radius: 8px;
@@ -1167,4 +1249,176 @@
   border: 2px solid #fff;
 
   box-sizing: border-box;
+}
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .navbar {
+  background: #171717;
+}
+
+body.dark-mode .logo span {
+  color: var(--text, #e7e4e4);
+}
+
+body.dark-mode .nav-links > li {
+  color: var(--text, #e7e4e4);
+}
+
+body.dark-mode .dropdown-menu {
+  background: var(--card, #171717);
+}
+
+body.dark-mode .dropdown-menu li {
+  color: var(--text, #e7e4e4);
+}
+
+body.dark-mode .nav-icons i {
+  color: var(--text, #e7e4e4);
+}
+
+body.dark-mode .cart-popup-nudge {
+  background: #1c1812;
+  color: #e7e4e4;
+}
+
+body.dark-mode .close-nudge {
+  color: #bbb4b4;
+}
+
+body.dark-mode .close-nudge:hover {
+  color: #e7e4e4;
+}
+
+body.dark-mode .cart-popup-nudge::before {
+  background: #1c1812;
+}
+
+body.dark-mode .close-nudge {
+  color: #bbb4b4;
+}
+
+body.dark-mode .close-nudge:hover {
+  color: #e7e4e4;
+}
+
+body.dark-mode .logout-btn:hover {
+  background: rgba(50, 27, 27, 0.08);
+}
+
+body.dark-mode .profile-welcome {
+  color: #bbb4b4;
+}
+
+body.dark-mode .btn-signup {
+  color: var(--text, #e7e4e4);
+}
+
+body.dark-mode .hamburger i {
+  color: var(--text, #e7e4e4);
+}
+
+body.dark-mode .mobile-menu {
+  background: var(--bg, #171717);
+}
+
+body.dark-mode .mobile-header i {
+  color: var(--text, #e7e4e4);
+}
+
+body.dark-mode .mobile-links > li {
+  border-bottom: 1px solid rgba(61, 61, 61, 0.15);
+  color: var(--text, #e7e4e4);
+}
+
+body.dark-mode .mobile-divider {
+  border-top: 1px solid rgba(61, 61, 61, 0.18);
+}
+
+@media (max-width: 576px) {
+body.dark-mode .cart-popup-nudge {
+  background: #1c1812;
+  color: #e7e4e4;
+}
+
+}
+
+body.dark-mode .profile-greeting span {
+  color: #bbb4b4;
+}
+
+body.dark-mode .mobile-logout {
+  background: rgba(50, 27, 27, 0.08);
+  border: 1px solid rgba(76, 47, 46, 0.2);
+}
+
+body.dark-mode .profile-greeting span {
+  color: #bbb4b4;
+}
+
+body.dark-mode .mobile-logout {
+  background: rgba(50, 27, 27, 0.08);
+  border: 1px solid rgba(76, 47, 46, 0.2);
+}
+
+body.dark-mode .notification-dropdown-menu {
+  background: #171717;
+}
+
+body.dark-mode .notification-content h4 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .notification-content p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .notification-time {
+  color: #bbb4b4;
+}
+
+body.dark-mode .no-notifications {
+  color: #bbb4b4;
+}
+
+body.dark-mode .navbar a, body.dark-mode .navbar button {
+  color: #e7e4e4;
+}
+
+body.dark-mode .navbar svg {
+  color: #e7e4e4;
+}
+
+body.dark-mode .wishlist-count {
+  border: 2px solid #3d3d3d;
+}
+
+/* ---- Dark mode toggle switch (manual, added with the feature) ---- */
+
+body.dark-mode .profile-theme-toggle {
+  border-top-color: rgba(230, 194, 122, 0.18);
+}
+
+body.dark-mode .mobile-theme-toggle {
+  background: rgba(230, 194, 122, 0.08);
+  border-color: rgba(230, 194, 122, 0.22);
+}
+
+body.dark-mode .theme-switch {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(230, 194, 122, 0.4);
+}
+
+body.dark-mode .theme-switch-thumb {
+  background: #e7e4e4;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .theme-switch.is-on .theme-switch-thumb {
+  background: #171717;
 }

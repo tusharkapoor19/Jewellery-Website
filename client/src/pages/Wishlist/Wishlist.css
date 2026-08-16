@@ -543,3 +543,100 @@
 .image-hover{ overflow:hidden; }
 .image-hover img{ transition:transform .6s ease; }
 .image-hover:hover img{ transform:scale(1.06); }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .wishlist-page {
+  background: #1c1912;
+}
+
+body.dark-mode .wishlist-badge {
+  background: rgba(23, 23, 23, 0.72);
+}
+
+body.dark-mode .wishlist-description {
+  color: #bbb4b4;
+}
+
+body.dark-mode .wishlist-counter {
+  background: rgba(23, 23, 23, 0.82);
+}
+
+body.dark-mode .wishlist-counter span {
+  color: #bbb4b4;
+}
+
+body.dark-mode .wishlist-stat-card {
+  background: rgba(23, 23, 23, 0.88);
+}
+
+body.dark-mode .wishlist-stat-content p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .wishlist-section-header p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .wishlist-skeleton {
+  background: #171717;
+}
+
+body.dark-mode .wishlist-empty {
+  background: #171717;
+}
+
+body.dark-mode .wishlist-empty p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .wishlist-concierge-badge {
+  background: rgba(23, 23, 23, 0.08);
+}
+
+body.dark-mode .wishlist-call-btn {
+  border: 1px solid rgba(61, 61, 61, 0.15);
+  background: rgba(23, 23, 23, 0.05);
+}
+
+body.dark-mode .wishlist-call-btn:hover {
+  background: #171717;
+}
+
+body.dark-mode .gold-circle.medium {
+  background: #322b1b;
+}
+
+body.dark-mode .gold-circle.small {
+  background: #171717;
+}
+
+body.dark-mode .wishlist-trust-item {
+  background: #171717;
+}
+
+body.dark-mode .wishlist-trust-item p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .wishlist-newsletter p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .wishlist-quote-box {
+  background: #171717;
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #15130f;
+}
+
+body.dark-mode .glass-effect {
+  background: rgba(23, 23, 23, 0.72);
+  border: 1px solid rgba(61, 61, 61, 0.25);
+}

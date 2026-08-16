@@ -1397,3 +1397,21 @@
 }
 
 }
+
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .cg-secondary {
+  border: 1px solid rgba(61, 61, 61, 0.55);
+}
+
+body.dark-mode .cg-secondary:hover {
+  background: #171717;
+  color: #e7e6e4;
+  border-color: #3d3d3d;
+}

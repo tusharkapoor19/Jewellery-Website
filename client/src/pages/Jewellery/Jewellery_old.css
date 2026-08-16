@@ -756,3 +756,83 @@ body{
     -webkit-text-fill-color: #222 !important;
     filter: none !important;
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .collections-title h1 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .collections-title p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .section-heading h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-heading p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .why-hiranya {
+  background: #171717;
+}
+
+body.dark-mode .why-heading h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .why-heading p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .collection-card {
+  background: #171717;
+}
+
+body.dark-mode .icon-btn {
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .collection-content h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .collection-content p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .why-card {
+  background: #171717;
+}
+
+body.dark-mode .why-card:hover {
+  background: #171717;
+}
+
+body.dark-mode .why-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .collection-content {
+  background: #171717;
+}
+
+body.dark-mode .collection-content h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .collection-content p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .collection-card .collection-content h3 {
+  color: #e7e4e4 !important;
+}

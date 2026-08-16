@@ -765,3 +765,83 @@ font-size:16px;
 }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .featured-store {
+  background: #1c1712;
+}
+
+body.dark-mode .featured-content h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .featured-content p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .feature-item {
+  color: #e7e4e4;
+}
+
+body.dark-mode .store-info p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .stores-section {
+  background: #171717;
+}
+
+body.dark-mode .section-heading h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-heading p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .store-card {
+  background: #171717;
+}
+
+body.dark-mode .store-content h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .store-content p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .store-map {
+  background: #1c1712;
+}
+
+body.dark-mode .map-content h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .map-content>p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .info-box h4 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .info-box p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .outline-light-btn {
+  border: 2px solid #3d3d3d;
+}
+
+body.dark-mode .outline-light-btn:hover {
+  background: #171717;
+  color: #e7e4e4;
+}

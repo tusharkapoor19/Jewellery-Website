@@ -1042,3 +1042,75 @@
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .hiranya-card {
+  background: #171717;
+}
+
+body.dark-mode .collection-chip {
+  background: rgba(23, 23, 23, 0.82);
+  color: #e7e4e4;
+}
+
+body.dark-mode .wishlist-btn {
+  background: rgba(23, 23, 23, 0.84);
+}
+
+body.dark-mode .wishlist-btn svg {
+  color: #e7e4e4;
+}
+
+body.dark-mode .quick-view {
+  background: rgba(23, 23, 23, 0.9);
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-content {
+  background: #171717;
+}
+
+body.dark-mode .rating-pill {
+  background: #15130f;
+}
+
+body.dark-mode .secure-pill {
+  background: #121212;
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-title {
+  color: #e7e4e4;
+}
+
+body.dark-mode .metal-tag {
+  background: #15130f;
+}
+
+body.dark-mode .certificate-tag {
+  background: #121212;
+  color: #e7e4e4;
+}
+
+body.dark-mode .price-label {
+  color: #bbb4b4;
+}
+
+body.dark-mode .details-button {
+  background: rgba(23, 23, 23, 0.88);
+}
+
+body.dark-mode .hiranya-image-area .compare-btn {
+  background: rgba(23, 23, 23, 0.92) !important;
+  color: #e7e4e4 !important;
+}
+
+body.dark-mode .hiranya-image-area .compare-btn svg {
+  color: #e7e4e4 !important;
+}

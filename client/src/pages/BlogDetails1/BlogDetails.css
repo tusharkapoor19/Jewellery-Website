@@ -595,3 +595,90 @@ blockquote{
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .breadcrumb {
+  color: #bbb4b4;
+}
+
+body.dark-mode .breadcrumb span {
+  color: #bbb4b4;
+}
+
+body.dark-mode .author-card {
+  background: #171717;
+}
+
+body.dark-mode .author-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .author-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .author-card button:hover {
+  color: #e7e4e4;
+}
+
+body.dark-mode .table-of-content {
+  background: #15130f;
+}
+
+body.dark-mode .table-of-content li {
+  color: #e7e4e4;
+}
+
+body.dark-mode .blog-intro p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .blog-content-section h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .blog-content-section p {
+  color: #e7e4e4;
+}
+
+body.dark-mode .info-card {
+  background: #171717;
+}
+
+body.dark-mode .info-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .info-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .related-blogs h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .related-card {
+  background: #171717;
+}
+
+body.dark-mode .related-card h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .related-card p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .primary-btn {
+  color: #e7e4e4;
+}
+
+body.dark-mode .secondary-btn:hover {
+  color: #e7e4e4;
+}

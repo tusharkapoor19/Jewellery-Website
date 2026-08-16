@@ -1266,3 +1266,175 @@
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .compare-page {
+  color: #e7e6e4;
+}
+
+body.dark-mode .compare-back-btn {
+  border: 1px solid #494131;
+  background: rgba(23, 23, 23, 0.72);
+  color: #e7e6e4;
+}
+
+body.dark-mode .compare-back-btn:hover {
+  background: #1c1812;
+}
+
+body.dark-mode .compare-clear-all {
+  border: 1px solid #4b4230;
+  color: #bbb8b4;
+}
+
+body.dark-mode .compare-clear-all:hover {
+  border-color: #4c432e;
+  background: #1c1812;
+}
+
+body.dark-mode .compare-header h1 {
+  color: #e7e6e4;
+}
+
+body.dark-mode .compare-header p {
+  color: #bbb8b4;
+}
+
+body.dark-mode .compare-count {
+  background: #15130f;
+  border: 1px solid #4c442e;
+}
+
+body.dark-mode .comparison-container {
+  border: 1px solid #494131;
+  background: rgba(23, 23, 23, 0.82);
+}
+
+body.dark-mode .comparison-container::-webkit-scrollbar-track {
+  background: #15120f;
+}
+
+body.dark-mode .comparison-specs {
+  border-right: 1px solid #484132;
+}
+
+body.dark-mode .spec-product-space {
+  border-bottom: 1px solid #484032;
+}
+
+body.dark-mode .spec-row {
+  border-bottom: 1px solid #484032;
+  color: #bdb9b2;
+}
+
+body.dark-mode .spec-action-space {
+  color: #beb9b1;
+}
+
+body.dark-mode .comparison-product {
+  border-right: 1px solid #4a4131;
+  background: rgba(23, 23, 23, 0.65);
+}
+
+body.dark-mode .comparison-product-header {
+  border-bottom: 1px solid #484032;
+}
+
+body.dark-mode .comparison-remove {
+  border: 1px solid #4a4230;
+  background: rgba(23, 23, 23, 0.95);
+  color: #bbb4b4;
+}
+
+body.dark-mode .comparison-remove:hover {
+  background: #15130f;
+}
+
+body.dark-mode .comparison-product-header h2 {
+  color: #e7e6e4;
+}
+
+body.dark-mode .comparison-product-id {
+  color: #bdb8b2;
+}
+
+body.dark-mode .comparison-value {
+  border-bottom: 1px solid #484032;
+  color: #e7e6e4;
+}
+
+body.dark-mode .comparison-product
+.comparison-value:nth-child(odd) {
+  background: rgba(21, 19, 15, 0.45);
+}
+
+body.dark-mode .price-value small {
+  color: #bdb9b2;
+}
+
+body.dark-mode .weight-value {
+  color: #e7e6e4;
+}
+
+body.dark-mode .weight-value span {
+  color: #bcb8b4;
+}
+
+body.dark-mode .stock-status.available {
+  color: #afc2ad;
+  background: #10150f;
+  border: 1px solid #374832;
+}
+
+body.dark-mode .stock-status.unavailable {
+  background: #150f0f;
+  border: 1px solid #4b2f2f;
+}
+
+body.dark-mode .description-value {
+  color: #bbb8b4;
+}
+
+body.dark-mode .comparison-empty-slot {
+  border-right: 1px dashed #484133;
+}
+
+body.dark-mode .comparison-empty-slot > div {
+  border: 1px dashed #494231;
+}
+
+body.dark-mode .comparison-empty-slot span {
+  color: #bdb8b3;
+}
+
+body.dark-mode .comparison-empty-slot small {
+  color: #bcb9b3;
+}
+
+body.dark-mode .comparison-empty-slot button {
+  background: #1c1812;
+}
+
+body.dark-mode .comparison-note {
+  border: 1px solid #4b4230;
+  background: rgba(23, 23, 23, 0.58);
+  color: #bcb8b3;
+}
+
+body.dark-mode .empty-compare-icon {
+  border: 1px solid #4c432e;
+}
+
+body.dark-mode .empty-compare h1 {
+  color: #e7e6e4;
+}
+
+body.dark-mode .empty-compare p {
+  color: #bbb8b4;
+}

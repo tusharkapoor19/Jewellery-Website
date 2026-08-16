@@ -542,3 +542,59 @@
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .compare-info h3 {
+  color: #e8e6e3;
+}
+
+body.dark-mode .compare-info span {
+  color: #bbb8b4;
+}
+
+body.dark-mode .compare-product {
+  background: rgba(23, 23, 23, 0.78);
+  border: 1px solid #4b4230;
+}
+
+body.dark-mode .compare-product:hover {
+  border-color: #4c442e;
+}
+
+body.dark-mode .compare-product-image {
+  background: #15130f;
+  border: 1px solid #4c412f;
+}
+
+body.dark-mode .compare-product-name {
+  color: #e7e6e4;
+}
+
+body.dark-mode .compare-product-metal {
+  color: #c1baae;
+}
+
+body.dark-mode .compare-remove {
+  color: #bbb9b4;
+}
+
+body.dark-mode .compare-remove:hover {
+  background: #322b1b;
+}
+
+body.dark-mode .compare-clear-btn {
+  border: 1px solid #4a4230;
+  background: rgba(23, 23, 23, 0.72);
+  color: #bcb9b3;
+}
+
+body.dark-mode .compare-clear-btn:hover {
+  border-color: #4c432e;
+  background: #1c1812;
+}

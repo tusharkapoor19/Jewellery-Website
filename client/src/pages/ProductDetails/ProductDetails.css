@@ -1244,3 +1244,146 @@
     border-color:#C8A24D;
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .back-link-btn {
+  background: var(--bg-pure-#171717);
+}
+
+body.dark-mode .breadcrumbs .current {
+  color: var(--charcoal-#e7e4e4);
+}
+
+body.dark-mode .thumb-box {
+  background: var(--bg-pure-#171717);
+}
+
+body.dark-mode .main-display-frame {
+  background: var(--bg-pure-#171717);
+}
+
+body.dark-mode .zoom-btn {
+  background: rgba(23, 23, 23, 0.9);
+  color: var(--charcoal-#e7e4e4);
+}
+
+body.dark-mode .share-icon-btn {
+  background: var(--bg-pure-#171717);
+}
+
+body.dark-mode .product-title-serif {
+  color: var(--charcoal-#e7e4e4);
+}
+
+body.dark-mode .rating-val {
+  color: var(--charcoal-#e7e4e4);
+}
+
+body.dark-mode .original {
+  color: #bbb4b4;
+}
+
+body.dark-mode .quick-spec-item {
+  background: var(--bg-pure-#171717);
+}
+
+body.dark-mode .spec-value {
+  color: var(--charcoal-#e7e4e4);
+}
+
+body.dark-mode .qty-control {
+  background: var(--bg-pure-#171717);
+}
+
+body.dark-mode .wishlist-action-btn {
+  background: #171717;
+  color: var(--charcoal-#e7e4e4);
+}
+
+body.dark-mode .pincode-box {
+  background: var(--bg-pure-#171717);
+}
+
+body.dark-mode .pincode-form input {
+  border: 1px solid #3d3d3d;
+}
+
+body.dark-mode .assurance-item h4 {
+  color: var(--charcoal-#e7e4e4);
+}
+
+body.dark-mode .details-tabs-section {
+  background: var(--bg-pure-#171717);
+}
+
+body.dark-mode .tabs-bar {
+  border-bottom: 1px solid #3d3d3d;
+}
+
+body.dark-mode .pane-title {
+  color: var(--charcoal-#e7e4e4);
+}
+
+body.dark-mode .spec-box .val {
+  color: var(--charcoal-#e7e4e4);
+}
+
+body.dark-mode .header-title {
+  color: var(--charcoal-#e7e4e4);
+}
+
+body.dark-mode .why-card {
+  background: var(--bg-pure-#171717);
+}
+
+body.dark-mode .review-item {
+  background: var(--bg-pure-#171717);
+}
+
+body.dark-mode .faq-card {
+  background: var(--bg-pure-#171717);
+}
+
+body.dark-mode .faq-head {
+  color: var(--charcoal-#e7e4e4);
+}
+
+body.dark-mode .faq-body {
+  border-top: 1px solid #3d3d3d;
+}
+
+body.dark-mode .bottom-concierge-banner p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .concierge-btn.whatsapp {
+  border: 1px solid rgba(61, 61, 61, 0.25);
+}
+
+body.dark-mode .concierge-btn.phone {
+  color: #e7e4e4;
+}
+
+body.dark-mode .size-section h4 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .size-btn {
+  background: #171717;
+  color: #e7e4e4;
+}
+
+body.dark-mode .size-title {
+  color: #e7e4e4;
+}
+
+body.dark-mode .size-btn {
+  border: 1px solid #3d3d3d;
+  background: #171717;
+}

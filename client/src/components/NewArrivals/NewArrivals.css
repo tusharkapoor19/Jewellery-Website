@@ -231,3 +231,39 @@
     }
 
 }
+
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .section-heading h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .section-heading p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .arrival-card {
+  background: #171717;
+}
+
+body.dark-mode .wishlist {
+  background: #171717;
+}
+
+body.dark-mode .wishlist i {
+  color: #e7e4e4;
+}
+
+body.dark-mode .arrival-content h3 {
+  color: #e7e4e4 !important;
+}
+
+body.dark-mode .price del {
+  color: #bbb4b4;
+}

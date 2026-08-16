@@ -548,3 +548,57 @@ font-size:26px;
 
 
 }
+
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .loginotp-brand p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .loginotp-brand span {
+  color: #e7e4e4;
+}
+
+body.dark-mode .loginotp-brand li {
+  color: #e7e4e4;
+}
+
+body.dark-mode .loginotp-card {
+  background: rgba(23, 23, 23, 0.75);
+  border: 1px solid rgba(61, 61, 61, 0.5);
+}
+
+body.dark-mode .loginotp-header h2 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .loginotp-header p {
+  color: #bbb4b4;
+}
+
+body.dark-mode .otp-success h3 {
+  color: #e7e4e4;
+}
+
+body.dark-mode .server-error {
+  background: #150f0f;
+}
+
+body.dark-mode .input-group label {
+  color: #e7e4e4;
+}
+
+body.dark-mode .input-group input {
+  border: 1px solid #3d3d3d;
+  background: #171717;
+}
+
+body.dark-mode .resend-box p {
+  color: #bbb4b4;
+}

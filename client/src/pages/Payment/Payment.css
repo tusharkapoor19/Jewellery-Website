@@ -2062,3 +2062,70 @@ input:focus-visible{
     }
 
 }
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+body.dark-mode .payment-card {
+  border: 1px solid rgba(61, 61, 61, 0.55);
+}
+
+body.dark-mode .payment-order-id {
+  background: #171717;
+}
+
+body.dark-mode .shimmer {
+  background: #121212;
+}
+
+body.dark-mode .payment-product-image {
+  background: #171717;
+}
+
+body.dark-mode .payment-contact-row span {
+  background: #171717;
+}
+
+body.dark-mode .payment-notes {
+  background: #171717;
+}
+
+body.dark-mode .checkbox-custom {
+  background: #171717;
+}
+
+body.dark-mode .payment-pay-btn {
+  color: #e7e4e4;
+}
+
+body.dark-mode .payment-retry-btn {
+  background: #171717;
+}
+
+body.dark-mode .payment-retry-btn:hover:not(:disabled) {
+  background: #1c1a12;
+}
+
+body.dark-mode .payment-method-card {
+  background: #171717;
+}
+
+body.dark-mode .payment-primary-btn {
+  color: #e7e4e4;
+}
+
+body.dark-mode .payment-secondary-btn {
+  background: #171717;
+}
+
+body.dark-mode .payment-secondary-btn:hover {
+  background: #1c1a12;
+}
