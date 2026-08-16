@@ -636,3 +636,19 @@ body.dark-mode .store-link {
 body.dark-mode .track-item {
   color: #e7e6e4;
 }
+
+body.dark-mode .topbar {
+  background: linear-gradient(180deg, #171512 0%, #100f0d 100%);
+  border-bottom: 1px solid rgba(201, 161, 74, 0.22);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.03) inset,
+    0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .gold-rate {
+  color: #e6c98a;
+}
+
+body.dark-mode .separator {
+  color: rgba(231, 230, 228, 0.3);
+}

@@ -396,6 +396,86 @@
 }
 
 /* ==========================
+   THEME TOGGLE (ON/OFF SWITCH)
+========================== */
+.theme-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 14px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.theme-toggle-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--text, #222);
+  opacity: 0.8;
+}
+
+.theme-toggle-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 44px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+  background: #e4dcc8;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.theme-toggle-switch.is-dark {
+  background: #171512;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.theme-toggle-switch.is-dark .theme-toggle-thumb {
+  transform: translateX(20px);
+  background: #c9a667;
+}
+
+.theme-toggle-icon {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.theme-toggle-icon-sun {
+  margin-left: 4px;
+  color: #a9793a;
+}
+
+.theme-toggle-icon-moon {
+  margin-left: auto;
+  margin-right: 4px;
+  color: #f0e9d8;
+}
+
+.mobile-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ==========================
    PROFILE DROPDOWN REFINEMENT
 ========================== */
 .profile-dropdown {
@@ -1259,7 +1339,12 @@
    ========================================================== */
 
 body.dark-mode .navbar {
-  background: #171717;
+  background: linear-gradient(
+    180deg,
+    #171512 0%,
+    #100f0d 100%
+  ) !important;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
 }
 
 body.dark-mode .logo span {

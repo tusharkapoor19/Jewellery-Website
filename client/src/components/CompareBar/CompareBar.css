@@ -550,6 +550,21 @@
    properties are touched (backgrounds, text, borders, outlines).
    ========================================================== */
 
+body.dark-mode .compare-bar {
+  background: linear-gradient(
+    135deg,
+    rgba(23, 21, 18, 0.97),
+    rgba(16, 15, 13, 0.97)
+  );
+  border-top: 1px solid rgba(201, 162, 74, 0.3);
+}
+
+body.dark-mode .compare-icon {
+  background: linear-gradient(135deg, #322b1b, #1c1812);
+  color: #e6c98a;
+  border-color: rgba(201, 162, 74, 0.35);
+}
+
 body.dark-mode .compare-info h3 {
   color: #e8e6e3;
 }

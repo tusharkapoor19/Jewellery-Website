@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { useWishlist } from "../../context/WishlistContext";
 import { useCart } from "../../context/CartContext";
+import { useTheme } from "../../context/ThemeContext";
 
 import axios from "axios";
 
@@ -26,6 +27,8 @@ import {
   X,
   Menu,
   BriefcaseBusiness,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 // ====================================================
@@ -107,6 +110,7 @@ const studio = [
 const Navbar = () => {
   const { cartCount } = useCart();
   const { wishlistCount } = useWishlist();
+  const { isDark, toggleTheme } = useTheme();
 
   const navigate = useNavigate();
 
@@ -945,6 +949,44 @@ const Navbar = () => {
 
           <div className="dropdown-menu profile-menu">
 
+            {/* THEME TOGGLE */}
+
+            <div className="theme-toggle-row">
+
+              <span className="theme-toggle-label">
+                {isDark ? "Dark Mode" : "Light Mode"}
+              </span>
+
+              <button
+                type="button"
+                className={`theme-toggle-switch ${
+                  isDark ? "is-dark" : "is-light"
+                }`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleTheme();
+                }}
+                role="switch"
+                aria-checked={isDark}
+                aria-label={`Switch to ${
+                  isDark ? "light" : "dark"
+                } mode`}
+              >
+                <Sun
+                  size={12}
+                  className="theme-toggle-icon theme-toggle-icon-sun"
+                />
+
+                <Moon
+                  size={12}
+                  className="theme-toggle-icon theme-toggle-icon-moon"
+                />
+
+                <span className="theme-toggle-thumb" />
+              </button>
+
+            </div>
+
             {userIsAuthenticated ? (
               <div className="profile-user-box">
 
@@ -1083,16 +1125,45 @@ const Navbar = () => {
             HIRANYA
           </h2>
 
-          <button
-            type="button"
-            onClick={() =>
-              setMobileOpen(false)
-            }
-            aria-label="Close menu"
-            className="mobile-close-btn"
-          >
-            <X size={23} />
-          </button>
+          <div className="mobile-header-actions">
+
+            <button
+              type="button"
+              className={`theme-toggle-switch ${
+                isDark ? "is-dark" : "is-light"
+              }`}
+              onClick={toggleTheme}
+              role="switch"
+              aria-checked={isDark}
+              aria-label={`Switch to ${
+                isDark ? "light" : "dark"
+              } mode`}
+            >
+              <Sun
+                size={12}
+                className="theme-toggle-icon theme-toggle-icon-sun"
+              />
+
+              <Moon
+                size={12}
+                className="theme-toggle-icon theme-toggle-icon-moon"
+              />
+
+              <span className="theme-toggle-thumb" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+              aria-label="Close menu"
+              className="mobile-close-btn"
+            >
+              <X size={23} />
+            </button>
+
+          </div>
 
         </div>
 

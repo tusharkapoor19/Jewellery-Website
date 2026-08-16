@@ -418,10 +418,12 @@ body.dark-mode .chat-body {
 
 body.dark-mode .quick-buttons button {
   background: #171717;
+  color: #e7e4e4;
+  border-color: #d4af37;
 }
 
 body.dark-mode .quick-buttons button:hover {
-  color: #e7e4e4;
+  color: #111;
 }
 
 body.dark-mode .message {
@@ -434,7 +436,7 @@ body.dark-mode .message.bot {
 }
 
 body.dark-mode .message.user {
-  color: #e7e4e4 !important;
+  color: #111 !important;
 }
 
 body.dark-mode .chat-input {

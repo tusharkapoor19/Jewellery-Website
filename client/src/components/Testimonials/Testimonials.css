@@ -260,3 +260,15 @@ body.dark-mode .testimonial-card h3 {
 body.dark-mode .testimonial-card span {
   color: #bbb4b4;
 }
+
+body.dark-mode .testimonials {
+  background: linear-gradient(180deg, #141414 0%, #1a1a1a 100%);
+}
+
+body.dark-mode .testimonial-card {
+  border-color: rgba(212, 175, 55, 0.2);
+}
+
+body.dark-mode .testimonial-card:hover {
+  border-color: #d4af37;
+}

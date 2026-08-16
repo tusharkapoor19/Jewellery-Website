@@ -314,3 +314,7 @@ body.dark-mode .featured {
 body.dark-mode .featured-heading span {
   color: #bbb4b4;
 }
+
+body.dark-mode .featured-heading h2 {
+  color: #e7e4e4;
+}

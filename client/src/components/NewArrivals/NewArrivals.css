@@ -267,3 +267,21 @@ body.dark-mode .arrival-content h3 {
 body.dark-mode .price del {
   color: #bbb4b4;
 }
+
+body.dark-mode .new-arrivals {
+  background: linear-gradient(180deg, #141414 0%, #1a1a1a 100%);
+}
+
+body.dark-mode .arrival-card {
+  border-color: rgba(201, 162, 77, 0.22);
+}
+
+body.dark-mode .arrival-btn {
+  background: #2a2a2a;
+  border: 1px solid rgba(201, 162, 77, 0.35);
+}
+
+body.dark-mode .arrival-btn:hover {
+  background: #c9a24d;
+  color: #111;
+}

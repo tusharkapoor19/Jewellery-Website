@@ -778,3 +778,20 @@ body.dark-mode .collection-card h3 {
 body.dark-mode .collections-footer-content span {
   color: #e7e4e4;
 }
+
+body.dark-mode .collections-footer-content {
+  background: linear-gradient(135deg, #171717, #1f1a12);
+  border-color: rgba(200, 162, 77, 0.25);
+}
+
+body.dark-mode .feature {
+  border-color: rgba(200, 162, 77, 0.18);
+}
+
+body.dark-mode .feature-divider {
+  background: rgba(200, 162, 77, 0.18);
+}
+
+body.dark-mode .section-subtitle {
+  color: #d8b463;
+}
