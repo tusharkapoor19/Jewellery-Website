@@ -102,6 +102,70 @@ body.light{
 }
 
 /* =====================================
+   DARK MODE
+   Applied when <body> carries the `dark-mode` class (see ThemeContext).
+   Re-declares every token used across the site's stylesheets so anything
+   built on var(--bg)/var(--card)/var(--text)/etc. re-skins automatically.
+   Gold stays the same warm accent in both themes — classic black + gold.
+===================================== */
+
+body.dark-mode{
+
+    --bg-deep: #0f0e0c;
+    --bg-panel: #17140f;
+    --bg-panel-alt: #1c1812;
+    --bg-canvas: #131110;
+
+    --gold: #c9a44f;
+    --gold-light: #e6c98a;
+    --gold-dim: #a9793a;
+    --gold-soft: rgba(201, 164, 79, 0.16);
+    --emerald-700: #2f6b52;
+    --gold-500: #d1ac5c;
+    --gold-300: #e3c785;
+    --gold-100: #2a2114;
+    --gold-700: #e3c785;
+
+    --charcoal: #f2ede2;
+    --charcoal-soft: #b8ae9c;
+    --rose-600: #e08585;
+    --rose-100: #3a1f21;
+    --green-600: #4caf7d;
+    --green-100: #16301f;
+    --amber-600: #d8a14a;
+    --amber-100: #3a2c14;
+
+    --border-soft: #3a3226;
+    --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.4);
+    --ivory: #efe9db;
+    --muted: #b0a68f;
+    --text-light: #9c927c;
+
+    --line: #37311f;
+    --border-gold: rgba(201, 164, 79, 0.3);
+
+    --success: #3ecf76;
+    --danger: #ff6b6b;
+    --warning: #ffb74d;
+    --info: #64b5f6;
+
+    --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 15px 40px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 25px 70px rgba(0, 0, 0, 0.55);
+
+    --bg: #0f0e0c;
+    --card: #17140f;
+    --text: #efe9db;
+    --border: #3a3226;
+
+    color-scheme: dark;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: rgba(201, 164, 79, 0.4);
+}
+
+/* =====================================
    GLOBAL
 ===================================== */
 
@@ -155,12 +219,6 @@ ul{
 
 html{
     color-scheme:light;
-}
-
-
-body{
-    background:#F8F5F0;
-    color:#1A1A1A;
 }
 
 
@@ -1729,4 +1787,143 @@ textarea {
     position: static;
     max-height: none;
   }
+}
+
+
+/* ==========================================================
+   DARK MODE (auto-generated)
+   Scoped overrides applied when <body> has the `dark-mode` class.
+   Generated from the light-theme rules above; only color-related
+   properties are touched (backgrounds, text, borders, outlines).
+   ========================================================== */
+
+body.dark-mode .brand {
+  border-bottom: 1px solid rgba(76, 67, 46, 0.2);
+}
+
+body.dark-mode .nav-item:hover {
+  background: rgba(50, 43, 27, 0.1);
+}
+
+body.dark-mode .nav-item--active {
+  background: rgba(50, 43, 27, 0.16);
+}
+
+body.dark-mode .sidebar-footer {
+  border-top: 1px solid rgba(76, 67, 46, 0.2);
+}
+
+body.dark-mode .stat-card {
+  background: #171717;
+}
+
+body.dark-mode .filter-chip {
+  background: #171717;
+}
+
+body.dark-mode .month-picker {
+  background: #171717;
+}
+
+body.dark-mode .analytics-card {
+  background: #171717;
+}
+
+body.dark-mode .metal-stat-card {
+  background: #171717;
+}
+
+body.dark-mode .order-table-wrap {
+  background: #171717;
+}
+
+body.dark-mode .order-table tbody tr:hover {
+  background: #1c1912;
+}
+
+body.dark-mode .empty-state {
+  background: #171717;
+}
+
+body.dark-mode .product-form {
+  background: #171717;
+}
+
+body.dark-mode .product-card {
+  background: #171717;
+}
+
+body.dark-mode .modal-card {
+  background: #171717;
+}
+
+body.dark-mode .modal-card p {
+  color: #e7e6e4;
+}
+
+body.dark-mode .modal-btn-cancel {
+  background: #15130f;
+  color: #e7e6e4;
+}
+
+body.dark-mode .modal-btn-cancel:hover {
+  background: #2e291e;
+}
+
+body.dark-mode .modal-btn-delete {
+  background: var(--rose-600, #321b1b);
+}
+
+body.dark-mode .product-card-edit:hover {
+  background: var(--gold-100, #15130f);
+}
+
+body.dark-mode .product-card-delete {
+  border: 1px solid var(--rose-600, #4c2e2e);
+}
+
+body.dark-mode .product-card-delete:hover {
+  background: var(--rose-100, #150f0f);
+}
+
+body.dark-mode .product-form-cancel-link {
+  color: var(--charcoal-soft, #bbb8b4);
+}
+
+body.dark-mode .customer-card {
+  background: #171717;
+}
+
+body.dark-mode .customer-avatar {
+  background: var(--gold-100, #15130f);
+}
+
+body.dark-mode .role-badge {
+  background: #121310;
+  color: #e4e7e5;
+}
+
+body.dark-mode .role-badge--admin {
+  background: var(--gold-100, #15130f);
+}
+
+body.dark-mode .btn-outline {
+  background: #171717;
+  color: var(--charcoal, #e7e6e4);
+}
+
+body.dark-mode .btn-outline:hover {
+  background: #15130f;
+}
+
+body.dark-mode .cd-list {
+  background: #171717;
+}
+
+body.dark-mode .cd-list-item:hover {
+  background: #1c1912;
+}
+
+body.dark-mode .cd-detail-card {
+  background: #171717;
 }
