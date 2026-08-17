@@ -1107,3 +1107,39 @@ body.dark-mode .item-image {
 body.dark-mode .summary-row {
   border-color: rgba(201, 161, 74, 0.12);
 }
+
+/* .coupon-card used var(--hiranya-bg)/var(--hiranya-champagne), neither of
+   which were re-declared for dark mode, so the coupon carousel ("INDIA",
+   etc.) stayed on a white card inside an otherwise dark cart sidebar. */
+body.dark-mode .coupon-card {
+  background: #1c1912;
+  border-color: rgba(201, 161, 74, 0.4);
+}
+
+body.dark-mode .coupon-card:hover {
+  background: rgba(201, 161, 74, 0.12);
+  border-color: var(--hiranya-gold-primary);
+}
+
+body.dark-mode .coupon-card h4 {
+  color: var(--hiranya-gold-light);
+}
+
+body.dark-mode .coupon-card p {
+  color: #cfc9bd;
+}
+
+/* .recommendation-section used var(--hiranya-bg-alt) and .trust-section used
+   var(--hiranya-bg) — neither variable was ever redeclared for dark mode
+   (only --hiranya-muted was), so both whole sections (including the "You
+   May Also Like" heading, which only had its color, not its background,
+   flipped) stayed on a light cream background below the cart items. */
+body.dark-mode .recommendation-section {
+  background: #17140f;
+  border-top-color: rgba(201, 161, 74, 0.16);
+}
+
+body.dark-mode .trust-section {
+  background: #15130f;
+  border-top-color: rgba(201, 161, 74, 0.16);
+}

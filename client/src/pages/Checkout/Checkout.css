@@ -3346,3 +3346,48 @@ body.dark-mode .hiranya-mobile-sticky-bar {
 }
 
 }
+
+/* --------------------------------------------------------
+   Additional dark-mode fixes: the outer page + hero wrapper
+   kept their hardcoded light gradients, and every
+   .hiranya-checkout-section card (address/delivery/gift/notes
+   sections) reads background:var(--hiranya-card) — a local
+   var that was never redeclared for dark mode, so the whole
+   page and every section card stayed light. The .selected /
+   .active states on address + delivery cards also had their
+   own light gradient that overrides the base dark fix.
+   -------------------------------------------------------- */
+
+body.dark-mode .hiranya-checkout-page {
+  background:
+    radial-gradient(1100px 550px at 15% -5%, rgba(201,164,79,.06), transparent 60%),
+    radial-gradient(800px 450px at 100% 8%, rgba(201,164,79,.04), transparent 55%),
+    linear-gradient(
+        180deg,
+        #0f0e0c 0%,
+        #131110 45%,
+        #17140f 100%
+    );
+}
+
+body.dark-mode .hiranya-checkout-hero {
+  background:
+    linear-gradient(
+        135deg,
+        #17140f,
+        #131110,
+        #0f0e0c
+    );
+}
+
+body.dark-mode .hiranya-checkout-section {
+  background: #171717;
+}
+
+body.dark-mode .hiranya-address-card.selected {
+  background: linear-gradient(180deg, #1c1912, #171717);
+}
+
+body.dark-mode .hiranya-delivery-card.active {
+  background: linear-gradient(180deg, #1c1912, #171717);
+}

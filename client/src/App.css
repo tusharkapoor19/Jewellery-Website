@@ -45,7 +45,7 @@
   margin: 0;
   line-height: 1.1;
   letter-spacing: 0.02em;
-  color: #8f6820;
+  color: var(--gold-dim, #8f6820);
 }
 
 .app-header-name span {
@@ -384,6 +384,10 @@ body.dark-mode .btn-danger {
 
 body.dark-mode .jewel-card {
   background: #171717;
+}
+
+body.dark-mode .jewel-card-thumb {
+  background: radial-gradient(circle at 50% 30%, #2a251c, #1c1812);
 }
 
 body.dark-mode .jewel-card-fav {

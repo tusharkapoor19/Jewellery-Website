@@ -1276,6 +1276,37 @@
 
 body.dark-mode .compare-page {
   color: #e7e6e4;
+  background:
+    radial-gradient(
+        circle at 50% 0%,
+        #17140f 0%,
+        #131110 42%,
+        #0f0e0c 100%
+    );
+}
+
+body.dark-mode .comparison-specs {
+  background: linear-gradient(180deg, #1c1812, #17140f);
+}
+
+body.dark-mode .comparison-empty-slot {
+  background:
+    repeating-linear-gradient(
+        45deg,
+        rgba(23, 20, 15, .4),
+        rgba(23, 20, 15, .4) 10px,
+        rgba(28, 24, 18, .4) 10px,
+        rgba(28, 24, 18, .4) 20px
+    );
+}
+
+body.dark-mode .comparison-empty-slot button {
+  background: #1c1812;
+  color: #e6c98a;
+}
+
+body.dark-mode .certification-value {
+  color: #bdb9b2;
 }
 
 body.dark-mode .compare-back-btn {

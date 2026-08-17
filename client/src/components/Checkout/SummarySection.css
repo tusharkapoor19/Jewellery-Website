@@ -69,6 +69,10 @@
    properties are touched (backgrounds, text, borders, outlines).
    ========================================================== */
 
+body.dark-mode .hiranya-summary-product {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
 body.dark-mode .hiranya-summary-product-info p {
   color: #bbb4b4;
 }

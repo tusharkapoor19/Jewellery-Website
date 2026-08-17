@@ -233,6 +233,12 @@
    properties are touched (backgrounds, text, borders, outlines).
    ========================================================== */
 
+body.dark-mode .hiranya-empty-address {
+  background: linear-gradient(145deg, #1c1912, #171717);
+  border-color: rgba(212, 175, 55, 0.22);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+}
+
 body.dark-mode .hiranya-empty-content h2 {
   color: #e7e4e4;
 }

@@ -1,6 +1,6 @@
 .rewards-section{
 padding:60px 20px;
-background:var(--bg-color);
+background:var(--bg);
 min-height:100vh;
 }
 
@@ -13,7 +13,7 @@ margin:auto;
 display:flex;
 align-items:center;
 gap:30px;
-background:var(--card-bg);
+background:var(--card);
 padding:35px;
 border-radius:20px;
 box-shadow:0 8px 20px rgba(0,0,0,.08);
@@ -42,11 +42,11 @@ letter-spacing:2px;
 .rewards-content h1{
 margin:10px 0;
 font-size:38px;
-color:var(--text-color);
+color:var(--text);
 }
 
 .rewards-content p{
-color:var(--secondary-text);
+color:var(--muted);
 line-height:1.8;
 }
 
@@ -87,7 +87,7 @@ margin-bottom:35px;
 }
 
 .benefit-card{
-background:var(--card-bg);
+background:var(--card);
 padding:30px;
 border-radius:18px;
 text-align:center;
@@ -107,11 +107,11 @@ margin-bottom:18px;
 
 .benefit-card h3{
 margin-bottom:12px;
-color:var(--text-color);
+color:var(--text);
 }
 
 .benefit-card p{
-color:var(--secondary-text);
+color:var(--muted);
 line-height:1.8;
 }
 

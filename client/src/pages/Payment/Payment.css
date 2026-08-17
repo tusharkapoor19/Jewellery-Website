@@ -2129,3 +2129,64 @@ body.dark-mode .payment-secondary-btn {
 body.dark-mode .payment-secondary-btn:hover {
   background: #1c1a12;
 }
+
+/* --------------------------------------------------------
+   Additional dark-mode fixes: the local :root palette above
+   (--text, --text-light, --white, --off-white, --border,
+   --glass, --glass-strong) is static and was never redeclared
+   for dark mode, and the hardcoded light `body{}` background
+   was never overridden, so the whole page + several cards
+   stayed light even with dark-mode active.
+   -------------------------------------------------------- */
+
+body.dark-mode {
+  --text: var(--ivory);
+  --text-light: var(--muted);
+  --white: var(--card);
+  --off-white: var(--bg-panel-alt);
+  --border: var(--border-gold);
+  --glass: rgba(23, 20, 15, .74);
+  --glass-strong: rgba(23, 20, 15, .88);
+
+  background:
+    radial-gradient(circle at top left,
+    rgba(201, 164, 79, .10),
+    transparent 34%),
+
+    radial-gradient(circle at bottom right,
+    rgba(201, 164, 79, .08),
+    transparent 36%),
+
+    linear-gradient(
+        180deg,
+        #0f0e0c 0%,
+        #131110 100%
+    );
+}
+
+body.dark-mode .payment-badge {
+  background: linear-gradient(135deg, rgba(23, 20, 15, .96), rgba(42, 33, 20, .82));
+  color: var(--gold-light);
+}
+
+body.dark-mode .payment-product {
+  background: linear-gradient(135deg, rgba(23, 20, 15, .96), rgba(28, 24, 18, .82));
+}
+
+body.dark-mode .gift-item {
+  background: linear-gradient(180deg, rgba(23, 20, 15, .95), rgba(28, 24, 18, .92));
+}
+
+body.dark-mode .payment-message-box {
+  background: linear-gradient(135deg, rgba(42, 33, 20, .75), rgba(23, 20, 15, .92));
+}
+
+body.dark-mode .payment-info-card,
+body.dark-mode .payment-note-card {
+  background: linear-gradient(180deg, rgba(23, 20, 15, .94), rgba(28, 24, 18, .92));
+}
+
+body.dark-mode .payment-empty-state,
+body.dark-mode .payment-error-state {
+  background: linear-gradient(180deg, rgba(23, 20, 15, .95), rgba(28, 24, 18, .92));
+}

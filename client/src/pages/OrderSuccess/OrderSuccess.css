@@ -1900,6 +1900,13 @@
    properties are touched (backgrounds, text, borders, outlines).
    ========================================================== */
 
+/* .order-success-page itself was never re-colored, so the whole page
+   (behind every card) stayed on its light cream gradient even with
+   dark mode active — this was the main "whole page still light" bug. */
+body.dark-mode .order-success-page {
+  background: linear-gradient(180deg, #15130f 0%, #1a1712 35%, #17140f 100%);
+}
+
 body.dark-mode .order-loader-circle {
   border: 4px solid #4b432f;
 }

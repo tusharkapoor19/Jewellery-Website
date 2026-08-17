@@ -555,6 +555,34 @@ body.dark-mode .wishlist-page {
   background: #1c1912;
 }
 
+/* .wishlist-hero kept its light gradient background and .wishlist-title /
+   .wishlist-newsletter-card / .wishlist-newsletter h2 kept var(--dark)
+   (#111) text on it, so the whole hero + newsletter band stayed light
+   even with dark mode active. */
+body.dark-mode .wishlist-hero {
+  background:
+    radial-gradient(circle at top right, rgba(200, 162, 77, .16), transparent 38%),
+    radial-gradient(circle at bottom left, rgba(200, 162, 77, .10), transparent 42%),
+    linear-gradient(180deg, #1c1912, #17140f);
+}
+
+body.dark-mode .wishlist-hero-bg {
+  background-image: linear-gradient(rgba(255, 255, 255, .03), rgba(255, 255, 255, .03));
+}
+
+body.dark-mode .wishlist-title {
+  color: #f2ede2;
+}
+
+body.dark-mode .wishlist-newsletter-card {
+  background: linear-gradient(135deg, #1c1912, #171310);
+  border-color: rgba(200, 162, 77, .2);
+}
+
+body.dark-mode .wishlist-newsletter h2 {
+  color: #f2ede2;
+}
+
 body.dark-mode .wishlist-badge {
   background: rgba(23, 23, 23, 0.72);
 }

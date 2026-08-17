@@ -1387,3 +1387,24 @@ body.dark-mode .size-btn {
   border: 1px solid #3d3d3d;
   background: #171717;
 }
+
+/* --------------------------------------------------------
+   Root-wrapper fix: .product-details-page reads
+   background-color:var(--bg-champagne) and color:var(--charcoal-soft),
+   plus a dozen descendants (breadcrumbs, tab copy, spec labels,
+   review/FAQ body text, why-card copy, tax notice, etc.) read
+   var(--text-muted) — none of these local :root tokens were ever
+   redeclared for dark mode, so the whole page and most of its
+   secondary text stayed on the light palette. --charcoal-black is
+   intentionally left alone: it also backs two "always-dark" chip
+   buttons (.tab-btn.active, .pincode-form button) that must stay
+   dark-on-white text in both themes, and its every use as a text
+   color is already flipped individually above.
+   -------------------------------------------------------- */
+body.dark-mode {
+  --bg-champagne: #100e0b;
+  --bg-pure-white: #171717;
+  --bg-soft-beige: #1c1812;
+  --charcoal-soft: #d8d2c5;
+  --text-muted: #b0a68f;
+}

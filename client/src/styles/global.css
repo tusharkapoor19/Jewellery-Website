@@ -10,8 +10,8 @@ html{
 
 body{
     font-family:'Poppins',sans-serif;
-    background:#fff;
-    color:#111;
+    background:var(--bg, var(--color-ink, #fff));
+    color:var(--text, var(--color-ivory, #111));
 }
 
 a{

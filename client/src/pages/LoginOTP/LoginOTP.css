@@ -597,6 +597,7 @@ body.dark-mode .input-group label {
 body.dark-mode .input-group input {
   border: 1px solid #3d3d3d;
   background: #171717;
+  color: #e7e4e4;
 }
 
 body.dark-mode .resend-box p {

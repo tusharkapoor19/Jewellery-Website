@@ -2,6 +2,19 @@
 
 .cg{
 
+    /* --bg-color / --text-color / --secondary-bg / --text-secondary
+       are not defined anywhere else in the codebase (the master
+       theme in src/index.css uses --bg/--text/--bg-panel/--muted),
+       so every rule below that reads them was resolving to nothing
+       and silently falling back to transparent/inherited values in
+       both light and dark mode. Aliasing them here to the real,
+       theme-aware tokens fixes every usage throughout this file at
+       once, including automatic dark-mode adaptation. */
+    --bg-color: var(--bg);
+    --text-color: var(--text);
+    --secondary-bg: var(--bg-panel);
+    --text-secondary: var(--muted);
+
     background:var(--bg-color);
     color:var(--text-color);
     font-family:'Inter', sans-serif;

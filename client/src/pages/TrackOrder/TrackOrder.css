@@ -1756,3 +1756,7 @@ body.dark-mode .track-badge {
 body.dark-mode .track-page--rejected .track-rejected-card {
   background: linear-gradient(135deg, #1c1210, #17100f);
 }
+
+body.dark-mode .track-page--rejected .track-rejected-content span {
+  color: #d8b969;
+}

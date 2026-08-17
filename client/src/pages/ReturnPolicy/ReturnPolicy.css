@@ -1,8 +1,8 @@
 .return-policy{
     width:100%;
     min-height:100vh;
-    background:var(--bg-color);
-    color:var(--text-color);
+    background:var(--bg);
+    color:var(--text);
 }
 
 /* Banner */
@@ -10,13 +10,13 @@
 .return-banner{
     text-align:center;
     padding:90px 20px 70px;
-    background:var(--secondary-bg);
+    background:var(--card);
 }
 
 .return-banner h1{
     font-size:3rem;
     margin-bottom:20px;
-    color:var(--text-color);
+    color:var(--text);
 }
 
 .return-banner span{
@@ -28,7 +28,7 @@
     max-width:800px;
     margin:auto;
     line-height:1.8;
-    color:var(--text-secondary);
+    color:var(--muted);
 }
 
 /* Feature Cards */
@@ -44,7 +44,7 @@
 }
 
 .return-card{
-    background:var(--secondary-bg);
+    background:var(--card);
     padding:35px 25px;
     border-radius:16px;
     text-align:center;
@@ -69,7 +69,7 @@
 }
 
 .return-card p{
-    color:var(--text-secondary);
+    color:var(--muted);
     line-height:1.8;
 }
 
@@ -94,12 +94,12 @@
 .return-section h2{
     font-size:1.8rem;
     margin-bottom:18px;
-    color:var(--text-color);
+    color:var(--text);
 }
 
 .return-section p{
     line-height:1.9;
-    color:var(--text-secondary);
+    color:var(--muted);
 }
 
 .return-section strong{
@@ -113,7 +113,7 @@
 
 .return-section li{
     margin-bottom:12px;
-    color:var(--text-secondary);
+    color:var(--muted);
 }
 
 /* Contact Card */
@@ -121,7 +121,7 @@
 .return-contact{
     margin-top:25px;
     padding:25px;
-    background:var(--secondary-bg);
+    background:var(--card);
     border-radius:14px;
     border:1px solid rgba(180,180,180,.15);
 }

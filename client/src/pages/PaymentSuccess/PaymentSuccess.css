@@ -1917,3 +1917,34 @@ body.dark-mode .payment-explore-card h3 {
 body.dark-mode .payment-explore-card p {
   color: #bbb4b4;
 }
+
+/* The outermost page wrapper's light gradient background was never
+   overridden (same bug pattern as OrderSuccess.css), so the whole
+   page stayed light with dark cards floating on it. */
+body.dark-mode .payment-success-page {
+  background:
+    linear-gradient(
+        180deg,
+        #0f0e0c 0%,
+        #17140f 30%,
+        #131110 100%
+    );
+}
+
+body.dark-mode .concierge-card {
+  background:
+    linear-gradient(
+        135deg,
+        rgba(201, 164, 79, .10),
+        rgba(23, 20, 15, .95)
+    );
+}
+
+body.dark-mode .payment-image-placeholder {
+  background:
+    linear-gradient(
+        135deg,
+        #2a2114,
+        #171717
+    );
+}

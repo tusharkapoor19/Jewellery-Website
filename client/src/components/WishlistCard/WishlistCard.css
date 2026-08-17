@@ -404,7 +404,16 @@ body.dark-mode .hiranya-wishlist-card {
   background: #171717;
 }
 
+body.dark-mode .hiranya-card-image-wrapper {
+  background-color: #171717;
+}
+
+body.dark-mode .hiranya-image-skeleton {
+  background: linear-gradient(90deg, #171717 25%, #121212 50%, #171717 75%);
+}
+
 body.dark-mode .hiranya-badge-metal {
+  background: rgba(23, 23, 23, 0.75);
   color: #e7e4e4;
 }
 
@@ -414,6 +423,10 @@ body.dark-mode .hiranya-badge-certified {
 
 body.dark-mode .hiranya-badge-stock.out-of-stock {
   color: #bbb4b4;
+}
+
+body.dark-mode .hiranya-wishlist-heart-btn {
+  background: rgba(23, 23, 23, 0.65);
 }
 
 body.dark-mode .hiranya-wishlist-heart-btn:hover {
@@ -428,6 +441,16 @@ body.dark-mode .hiranya-card-title {
   color: #e7e4e4;
 }
 
+body.dark-mode .hiranya-card-subtitle,
+body.dark-mode .hiranya-price-label {
+  color: #bbb4b4;
+}
+
+body.dark-mode .hiranya-card-pricing {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
 body.dark-mode .hiranya-btn-secondary {
   color: #e7e4e4;
+  border-color: rgba(255, 255, 255, 0.2);
 }

@@ -2023,6 +2023,10 @@ body.dark-mode .myorder-rejected-message {
   border: 1px solid #4c2e2e;
 }
 
+body.dark-mode .myorder-rejected-message p {
+  color: #e0a3a3;
+}
+
 /* ==========================================================
    DARK MODE — contrast fix (manual pass)
    .myorders-page itself was never overridden, so the whole page

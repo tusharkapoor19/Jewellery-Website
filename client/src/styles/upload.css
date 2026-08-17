@@ -24,7 +24,7 @@
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #8f6820;
+  color: var(--gold-dim);
   margin-bottom: 10px;
 }
 
@@ -39,8 +39,8 @@
 
 .upload-hero-title em {
   font-style: italic;
-  color: #8f6820;
-  -webkit-text-fill-color: #8f6820;
+  color: var(--gold-dim);
+  -webkit-text-fill-color: var(--gold-dim);
 }
 
 @keyframes shimmer {

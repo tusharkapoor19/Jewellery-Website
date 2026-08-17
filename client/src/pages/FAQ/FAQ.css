@@ -816,6 +816,10 @@ body.dark-mode .category-card {
   background: #171717;
 }
 
+body.dark-mode .category-icon {
+  background: linear-gradient(135deg, #15130f, #d4af37);
+}
+
 body.dark-mode .category-card h3 {
   color: #e7e4e4;
 }
@@ -862,6 +866,10 @@ body.dark-mode .faq-help {
 
 body.dark-mode .help-card {
   background: #171717;
+}
+
+body.dark-mode .help-icon {
+  background: linear-gradient(135deg, #15130f, #d4af37);
 }
 
 body.dark-mode .help-card h3 {

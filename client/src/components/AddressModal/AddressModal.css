@@ -695,10 +695,33 @@
    ========================================================== */
 
 body.dark-mode .hiranya-address-modal {
+  background: linear-gradient(180deg, rgba(23, 21, 18, 0.97) 0%, rgba(18, 16, 13, 0.98) 100%);
   color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-modal-header h2 {
+  background: linear-gradient(135deg, #f2ede2 0%, #c9a44f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #e7e4e4;
+}
+
+body.dark-mode .hiranya-field:has(.hiranya-error) input,
+body.dark-mode .hiranya-field:has(.hiranya-error) select {
+  background-color: #2a1416 !important;
+}
+
+body.dark-mode .hiranya-field input:disabled,
+body.dark-mode .hiranya-field select:disabled {
+  background: #1c1812;
+  border-color: #3a3226;
+  color: #7a7266;
+}
+
+body.dark-mode .hiranya-cancel-btn:hover {
+  background: #221d13;
+  border-color: var(--hiranya-gold-400);
   color: #e7e4e4;
 }
 

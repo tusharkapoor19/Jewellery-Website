@@ -932,3 +932,7 @@ body.dark-mode .live-offer-code:hover {
 body.dark-mode .live-offer-card p {
   color: #e7e4e4;
 }
+
+body.dark-mode .live-offer-card small {
+  color: #e6c98a;
+}

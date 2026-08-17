@@ -123,7 +123,7 @@
   width: 30px;
   height: 30px;
   object-fit: contain;
-  background: #f3efe7;
+  background: var(--bg-panel-alt);
   border-radius: 6px;
   flex-shrink: 0;
 }
@@ -315,20 +315,4 @@
   .layer-panel {
     width: 100%;
   }
-}
-
-
-/* ==========================================================
-   DARK MODE (auto-generated)
-   Scoped overrides applied when <body> has the `dark-mode` class.
-   Generated from the light-theme rules above; only color-related
-   properties are touched (backgrounds, text, borders, outlines).
-   ========================================================== */
-
-body.dark-mode .layer-row:hover {
-  background: rgba(23, 23, 23, 0.03);
-}
-
-body.dark-mode .layer-thumb {
-  background: #15130f;
 }

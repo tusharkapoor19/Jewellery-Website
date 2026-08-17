@@ -3447,6 +3447,7 @@ body.dark-mode .jewellery-filter-panel
 body.dark-mode .jewellery-filter-panel
 .filter-dropdown-group
 .custom-select-trigger {
+  background: linear-gradient(145deg, #1c1812, #171310);
   border: 1px solid #494131;
   color: #e7e6e4;
 }

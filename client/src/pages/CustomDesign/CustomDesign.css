@@ -20,6 +20,9 @@
    properties are touched (backgrounds, text, borders, outlines).
    ========================================================== */
 
+/* Keep the slider thumb a visible gold accent in dark mode too —
+   the previous override dimmed it to a near-black brown that
+   blended into its own near-black border and disappeared. */
 body.dark-mode .custom-design-range::-webkit-slider-thumb {
-  background: #30291c;
+  background: #e0bd69;
 }

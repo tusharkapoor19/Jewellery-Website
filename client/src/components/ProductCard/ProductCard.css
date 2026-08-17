@@ -1054,6 +1054,19 @@ body.dark-mode .hiranya-card {
   background: #171717;
 }
 
+body.dark-mode .hiranya-image-area {
+  background: linear-gradient(135deg, #1c1912, #171717);
+}
+
+body.dark-mode .price-box {
+  background: linear-gradient(135deg, #1c1912, #171717);
+  border-color: rgba(200, 162, 77, 0.25);
+}
+
+body.dark-mode .metal-tag {
+  color: #d8a14a;
+}
+
 body.dark-mode .collection-chip {
   background: rgba(23, 23, 23, 0.82);
   color: #e7e4e4;

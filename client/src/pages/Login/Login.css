@@ -1457,3 +1457,18 @@ body.dark-mode .login-card {
   background: linear-gradient(145deg, rgba(28, 25, 18, 0.96), rgba(23, 20, 15, 0.92));
   border: 1px solid rgba(201, 162, 74, 0.22);
 }
+
+body.dark-mode .login-brand p {
+  color: #e6c98a;
+}
+
+/* .login-success (the post-login overlay) and its icon badge kept
+   their light cream backgrounds, so the success screen would still
+   flash white over an otherwise dark card. */
+body.dark-mode .login-success {
+  background: radial-gradient(circle at center, #17140f, #0f0e0c);
+}
+
+body.dark-mode .success-icon {
+  background: linear-gradient(145deg, #2a2114, #1c1812);
+}
