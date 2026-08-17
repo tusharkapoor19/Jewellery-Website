@@ -789,3 +789,19 @@ body.dark-mode .hiranya-filter-group button.active svg {
 body.dark-mode ::-webkit-scrollbar-track {
   background: #121212;
 }
+
+/* ==========================================================
+   DARK MODE — contrast fix (manual pass)
+   .hiranya-address-page itself was never overridden, so the page
+   shell stayed on its light gradient while the heading/toolbar
+   text above were already flipped to light — leaving "My
+   Addresses" almost invisible against the still-light page.
+   ========================================================== */
+
+body.dark-mode .hiranya-address-page {
+  background: linear-gradient(180deg, #100e0b 0%, #15130f 40%, #100e0b 100%);
+}
+
+body.dark-mode .hiranya-page-badge {
+  background: rgba(23, 23, 23, 0.6);
+}

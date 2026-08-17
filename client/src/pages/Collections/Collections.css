@@ -2788,3 +2788,14 @@ body.dark-mode .collection-dropdown-option.active, body.dark-mode .collection-op
 body.dark-mode .collection-dropdown-option:hover, body.dark-mode .collection-option:hover, body.dark-mode .collection-select-option:hover {
   background: #15130f !important;
 }
+
+/* ==========================================================
+   DARK MODE — contrast fix (manual pass)
+   .collection-dropdown-trigger ("All Collections") only had its
+   border/text flipped — the trigger kept its light frosted-glass
+   background, so the light text landed on a near-white pill.
+   ========================================================== */
+
+body.dark-mode .collection-dropdown-trigger {
+  background: linear-gradient(145deg, #1c1812, #171310) !important;
+}

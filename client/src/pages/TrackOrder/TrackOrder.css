@@ -1736,3 +1736,23 @@ body.dark-mode .track-page--rejected .track-rejected-content h2 {
 body.dark-mode .track-page--rejected .track-rejected-content p {
   color: #bbb4b4;
 }
+
+/* ==========================================================
+   DARK MODE — contrast fix (manual pass)
+   .track-page itself was never overridden, so it stayed on its
+   light cream gradient while .track-heading h1/p were already
+   flipped to light text — leaving the "Track Your Order" title
+   almost invisible against the still-light page.
+   ========================================================== */
+
+body.dark-mode .track-page {
+  background: linear-gradient(180deg, #100e0b 0%, #15130f 50%, #100e0b 100%);
+}
+
+body.dark-mode .track-badge {
+  color: #d8b969;
+}
+
+body.dark-mode .track-page--rejected .track-rejected-card {
+  background: linear-gradient(135deg, #1c1210, #17100f);
+}

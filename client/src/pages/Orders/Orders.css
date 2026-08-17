@@ -2022,3 +2022,22 @@ body.dark-mode .myorder-rejected-message {
   background: #1c1212;
   border: 1px solid #4c2e2e;
 }
+
+/* ==========================================================
+   DARK MODE — contrast fix (manual pass)
+   .myorders-page itself was never overridden, so the whole page
+   shell stayed on its light cream gradient even though every
+   card inside it already had a dark variant.
+   ========================================================== */
+
+body.dark-mode .myorders-page {
+  background: linear-gradient(180deg, #100e0b 0%, #15130f 50%, #100e0b 100%);
+}
+
+body.dark-mode .myorders-badge {
+  background: rgba(23, 23, 23, 0.85);
+}
+
+body.dark-mode .myorders-empty svg {
+  color: #d4af37;
+}

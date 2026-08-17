@@ -640,3 +640,34 @@ body.dark-mode .glass-effect {
   background: rgba(23, 23, 23, 0.72);
   border: 1px solid rgba(61, 61, 61, 0.25);
 }
+
+/* ==========================================================
+   DARK MODE — contrast fixes (manual pass)
+   The block above only flipped backgrounds; several headings/
+   text nodes still used the light-only --dark (#111) variable
+   and went invisible once their container turned dark. These
+   rules restore readable, on-brand light text/borders wherever
+   a parent background was switched to the dark palette.
+   ========================================================== */
+
+body.dark-mode .wishlist-counter h3,
+body.dark-mode .wishlist-stat-content h3,
+body.dark-mode .wishlist-section-header h2,
+body.dark-mode .wishlist-empty h2,
+body.dark-mode .wishlist-trust-item h4 {
+  color: #f2ede2;
+}
+
+body.dark-mode .wishlist-quote-box blockquote {
+  color: #f2ede2 !important;
+}
+
+body.dark-mode .wishlist-skeleton-image,
+body.dark-mode .wishlist-skeleton-line,
+body.dark-mode .wishlist-skeleton-buttons span {
+  background: linear-gradient(90deg, #201d17, #2a251c, #201d17);
+}
+
+body.dark-mode .wishlist-empty-circle {
+  background: linear-gradient(135deg, #201d17, #171717);
+}

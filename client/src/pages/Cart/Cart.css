@@ -998,65 +998,112 @@
    ========================================================== */
 
 body.dark-mode ::selection {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-cart-page {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .item-details h3 {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .quantity-controls button {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .quantity-controls button:hover {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .quantity-controls span {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .item-total {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .summary-card h2 {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .summary-row strong {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .grand-total h3 {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .coupon-box input {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .coupon-box button:hover {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .checkout-btn:hover {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .empty-cart h2 {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .section-heading h2 {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .trust-card h3 {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
+}
+
+/* ==========================================================
+   DARK MODE — contrast fixes (manual pass)
+   The auto-generated block above only re-colored text; the page
+   background and every card still used the light "glass"
+   palette (--hiranya-bg / --hiranya-card-bg / --hiranya-glass-card),
+   so the whole Cart page stayed cream/white. These rules give the
+   page shell and every card a real dark surface.
+   ========================================================== */
+
+body.dark-mode {
+  --hiranya-muted: #b0a897;
+}
+
+body.dark-mode .hiranya-cart-page {
+  background-color: #15130f;
+}
+
+body.dark-mode .cart-item-card,
+body.dark-mode .trust-card {
+  background: #1c1912;
+  border-color: rgba(201, 161, 74, 0.22);
+}
+
+body.dark-mode .summary-card {
+  background: rgba(23, 19, 15, 0.9);
+  border-color: rgba(201, 161, 74, 0.3);
+}
+
+body.dark-mode .coupon-box input {
+  background: #171717;
+  color: #e7e4e4;
+  border-color: rgba(201, 161, 74, 0.25);
+}
+
+body.dark-mode .coupon-box input:focus,
+body.dark-mode .coupon-box input:focus-visible {
+  background: #1c1912;
+}
+
+body.dark-mode .item-image {
+  border-color: rgba(201, 161, 74, 0.22);
+}
+
+body.dark-mode .summary-row {
+  border-color: rgba(201, 161, 74, 0.12);
 }

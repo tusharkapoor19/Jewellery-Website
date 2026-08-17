@@ -602,3 +602,13 @@ body.dark-mode .input-group input {
 body.dark-mode .resend-box p {
   color: #bbb4b4;
 }
+
+/* ==========================================================
+   DARK MODE — contrast fix (manual pass)
+   .loginotp-page never got a dark background even though the
+   brand copy on top of it was already flipped to light text.
+   ========================================================== */
+
+body.dark-mode .loginotp-page {
+  background: linear-gradient(135deg, #100e0b, #15130f);
+}

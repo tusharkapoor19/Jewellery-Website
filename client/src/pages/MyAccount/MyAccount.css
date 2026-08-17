@@ -2596,3 +2596,89 @@ body.dark-mode .otp-hint {
 body.dark-mode .hiranya-address-type {
   background: #15130f;
 }
+
+/* ==========================================================
+   DARK MODE — contrast fixes (manual pass)
+   A later "ultra premium override" block re-declared .account-page,
+   .overview-card, .account-card, .verify-card and the form inputs
+   with literal light-cream gradients (not CSS variables), so they
+   never picked up dark mode. This section gives every one of those
+   containers a real dark surface and flips the shared --ha-ink /
+   --ha-muted text variables so copy stays readable on top of them.
+   ========================================================== */
+
+body.dark-mode {
+  --ha-ink: #f2ede2;
+  --ha-muted: #b0a897;
+}
+
+body.dark-mode .account-page {
+  background:
+    radial-gradient(circle at 7% 18%, rgba(240, 213, 138, 0.08), transparent 27%),
+    radial-gradient(circle at 92% 42%, rgba(200, 160, 75, 0.05), transparent 28%),
+    linear-gradient(180deg, #15130f 0%, #100e0b 100%);
+}
+
+body.dark-mode .overview-card,
+body.dark-mode .account-card,
+body.dark-mode .verify-card {
+  background: linear-gradient(145deg, #1c1912, #171512);
+  border-color: rgba(212, 175, 55, 0.18);
+}
+
+body.dark-mode .overview-icon {
+  box-shadow: 0 12px 25px rgba(159, 116, 29, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+body.dark-mode .form-field input,
+body.dark-mode .form-field textarea,
+body.dark-mode .field-static,
+body.dark-mode .otp-row input,
+body.dark-mode .new-value-row input,
+body.dark-mode .danger-confirm-row input {
+  background: rgba(23, 23, 23, 0.85);
+  border-color: rgba(212, 175, 55, 0.2);
+  color: #f2ede2;
+}
+
+body.dark-mode .form-field input:focus,
+body.dark-mode .form-field textarea:focus,
+body.dark-mode .otp-row input:focus,
+body.dark-mode .new-value-row input:focus,
+body.dark-mode .danger-confirm-row input:focus {
+  background: #1c1912;
+}
+
+body.dark-mode .form-field input:disabled,
+body.dark-mode .form-field textarea:disabled {
+  background: #171512;
+  color: #8f887c;
+}
+
+body.dark-mode .avatar-circle {
+  background: radial-gradient(circle at 30% 25%, #2a2416, #201c14 55%, #171310);
+  border-color: rgba(212, 175, 55, 0.32);
+}
+
+body.dark-mode .danger-section .account-card,
+body.dark-mode .danger-card {
+  background:
+    radial-gradient(circle at 95% 5%, rgba(180, 63, 56, 0.1), transparent 28%),
+    linear-gradient(135deg, #1c1210, #17100f);
+  border-color: rgba(180, 63, 56, 0.3);
+}
+
+body.dark-mode .flow-locked-note {
+  background: linear-gradient(135deg, #241d10, #1c170e);
+  border-color: rgba(200, 160, 75, 0.28);
+  color: #d8b969;
+}
+
+body.dark-mode .verify-icon {
+  background: linear-gradient(145deg, #241d10, #171512);
+  border-color: rgba(159, 116, 29, 0.25);
+}
+
+body.dark-mode .hiranya-default-address-box {
+  border-color: rgba(159, 116, 29, 0.25);
+}

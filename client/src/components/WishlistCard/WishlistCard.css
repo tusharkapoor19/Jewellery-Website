@@ -401,11 +401,11 @@
    ========================================================== */
 
 body.dark-mode .hiranya-wishlist-card {
-  background: var(--hiranya-#171717);
+  background: #171717;
 }
 
 body.dark-mode .hiranya-badge-metal {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-badge-certified {
@@ -417,17 +417,17 @@ body.dark-mode .hiranya-badge-stock.out-of-stock {
 }
 
 body.dark-mode .hiranya-wishlist-heart-btn:hover {
-  background: var(--hiranya-#171717);
+  background: #171717;
 }
 
 body.dark-mode .hiranya-card-content {
-  background: var(--hiranya-#171717);
+  background: #171717;
 }
 
 body.dark-mode .hiranya-card-title {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-btn-secondary {
-  color: var(--hiranya-#e7e4e4);
+  color: #e7e4e4;
 }

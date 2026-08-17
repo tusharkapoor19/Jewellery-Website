@@ -695,25 +695,25 @@
    ========================================================== */
 
 body.dark-mode .hiranya-address-modal {
-  color: var(--hiranya-#e7e4e4-900);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-modal-header h2 {
-  color: var(--hiranya-#e7e4e4-900);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-close-btn {
   background: rgba(23, 23, 23, 0.8);
-  color: var(--hiranya-#e7e4e4-800);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-field label {
-  color: var(--hiranya-#e7e4e4-800);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-field input[type="text"], body.dark-mode .hiranya-field input[type="tel"], body.dark-mode .hiranya-field select {
-  color: var(--hiranya-#e7e4e4-900);
-  background: var(--hiranya-#171717);
+  color: #e7e4e4;
+  background: #171717;
 }
 
 body.dark-mode .hiranya-field input[type="text"]:hover:not(:disabled), body.dark-mode .hiranya-field input[type="tel"]:hover:not(:disabled), body.dark-mode .hiranya-field select:hover:not(:disabled) {
@@ -721,27 +721,27 @@ body.dark-mode .hiranya-field input[type="text"]:hover:not(:disabled), body.dark
 }
 
 body.dark-mode .hiranya-field input[type="text"]:focus, body.dark-mode .hiranya-field input[type="tel"]:focus, body.dark-mode .hiranya-field select:focus {
-  background: var(--hiranya-#171717);
+  background: #171717;
 }
 
 body.dark-mode .hiranya-address-type-selector label {
-  color: var(--hiranya-#e7e4e4-800);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-chip {
-  background: var(--hiranya-#171717);
+  background: #171717;
 }
 
 body.dark-mode .hiranya-chip:hover {
-  color: var(--hiranya-#e7e4e4-900);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-default-option label {
-  color: var(--hiranya-#e7e4e4-800);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-default-option input[type="checkbox"] {
-  background: var(--hiranya-#171717);
+  background: #171717;
 }
 
 body.dark-mode .hiranya-modal-footer {
@@ -749,13 +749,13 @@ body.dark-mode .hiranya-modal-footer {
 }
 
 body.dark-mode .hiranya-cancel-btn {
-  color: var(--hiranya-#e7e4e4-800);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-cancel-btn:hover {
-  color: var(--hiranya-#e7e4e4-900);
+  color: #e7e4e4;
 }
 
 body.dark-mode .hiranya-save-btn {
-  color: var(--hiranya-#e7e4e4-900);
+  color: #e7e4e4;
 }

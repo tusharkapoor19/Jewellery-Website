@@ -3458,3 +3458,30 @@ body.dark-mode .jewellery-dropdown-option.active, body.dark-mode .jewellery-opti
 body.dark-mode .jewellery-dropdown-option:hover, body.dark-mode .jewellery-option:hover, body.dark-mode .jewellery-select-option:hover, body.dark-mode .metal-dropdown-option:hover, body.dark-mode .metal-option:hover {
   background: #15130f !important;
 }
+
+/* ==========================================================
+   DARK MODE — contrast fixes (manual pass)
+   .jewellery-filter-panel and .custom-select-trigger only ever
+   had their text/border color flipped — the panel and every
+   "All Metals / All Jewellery / Sort" dropdown trigger kept
+   their light "frosted glass" background, so light text landed
+   on a near-white box (the washed-out "Refine Collection" panel
+   and dropdowns seen in dark mode).
+   ========================================================== */
+
+body.dark-mode .jewellery-filter-panel {
+  background: linear-gradient(145deg, #1c1812, #171310);
+  border: 1px solid #474033;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .custom-select-trigger {
+  background: linear-gradient(145deg, #1c1812, #171310);
+  border: 1px solid #494131;
+  color: #e7e6e4;
+}
+
+body.dark-mode .filter-panel-header h2,
+body.dark-mode .filter-panel-header p {
+  color: #e7e6e4;
+}

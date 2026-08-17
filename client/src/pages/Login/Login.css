@@ -1436,3 +1436,24 @@ body.dark-mode .login-success h3 {
 body.dark-mode .login-success p {
   color: #bbb8b4;
 }
+
+/* ==========================================================
+   DARK MODE — contrast fixes (manual pass)
+   Neither .login-page (the page shell) nor .login-card (the form
+   panel) were ever given a dark background, yet .login-brand
+   span/li and .login-header h2/p were already flipped to light
+   text — so "Welcome Back" and the brand copy went almost
+   invisible against the still-light cream page/card.
+   ========================================================== */
+
+body.dark-mode .login-page {
+  background:
+    radial-gradient(circle at 8% 12%, rgba(201, 162, 74, 0.1), transparent 30%),
+    radial-gradient(circle at 92% 85%, rgba(201, 162, 74, 0.07), transparent 30%),
+    linear-gradient(135deg, #100e0b 0%, #15130f 45%, #100e0b 100%);
+}
+
+body.dark-mode .login-card {
+  background: linear-gradient(145deg, rgba(28, 25, 18, 0.96), rgba(23, 20, 15, 0.92));
+  border: 1px solid rgba(201, 162, 74, 0.22);
+}

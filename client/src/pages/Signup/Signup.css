@@ -1373,3 +1373,22 @@ body.dark-mode .signup-divider::before, body.dark-mode .signup-divider::after {
 body.dark-mode .signup-divider span {
   color: #bbb4b4;
 }
+
+/* ==========================================================
+   DARK MODE — contrast fixes (manual pass)
+   Same issue as Login: .signup-page and .signup-card kept their
+   light cream backgrounds while .signup-brand/.signup-header text
+   was already flipped to light — making the brand copy and
+   "Create Account" heading nearly invisible in dark mode.
+   ========================================================== */
+
+body.dark-mode .signup-page {
+  background:
+    radial-gradient(circle at top left, rgba(201, 162, 74, 0.1), transparent 35%),
+    linear-gradient(135deg, #100e0b, #15130f);
+}
+
+body.dark-mode .signup-card {
+  background: linear-gradient(145deg, #1c1912, #17140f);
+  border: 1px solid rgba(201, 162, 74, 0.22);
+}
