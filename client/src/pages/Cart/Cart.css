@@ -1129,6 +1129,15 @@ body.dark-mode .coupon-card p {
   color: #cfc9bd;
 }
 
+body.dark-mode .quantity-controls {
+  background: #171717;
+  border-color: rgba(201, 161, 74, 0.35);
+}
+
+body.dark-mode .item-price-row {
+  color: var(--hiranya-gold-light);
+}
+
 /* .recommendation-section used var(--hiranya-bg-alt) and .trust-section used
    var(--hiranya-bg) — neither variable was ever redeclared for dark mode
    (only --hiranya-muted was), so both whole sections (including the "You

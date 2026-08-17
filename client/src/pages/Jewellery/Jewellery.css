@@ -3434,8 +3434,16 @@ body.dark-mode .jewellery-filter-panel
 body.dark-mode .jewellery-filter-panel
 .sort-filter
 .custom-select-trigger {
+  background: linear-gradient(145deg, #1c1812, #171310);
   border: 1px solid #494131;
   color: #e7e6e4;
+}
+
+body.dark-mode .jewellery-filter-panel
+.sort-filter
+.custom-select-menu {
+  background: linear-gradient(145deg, #1c1812, #171310);
+  border: 1px solid rgba(201, 162, 74, 0.3);
 }
 
 body.dark-mode .jewellery-filter-panel
