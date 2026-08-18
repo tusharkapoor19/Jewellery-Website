@@ -1494,6 +1494,22 @@ html{
     background: #e4dccd;
 }
 
+.range-fill {
+    position: absolute;
+
+    top: 12px;
+
+    height: 5px;
+
+    border-radius: 10px;
+
+    background: linear-gradient(90deg, #d5af3e, #a77b18);
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
 .range-slider {
     position: absolute;
 
@@ -3353,6 +3369,10 @@ body.dark-mode .price-range::before {
   background: #2d2820;
 }
 
+body.dark-mode .range-fill {
+  background: linear-gradient(90deg, #e3c15f, #b8912c);
+}
+
 body.dark-mode .range-slider::-webkit-slider-thumb {
   border: 3px solid #3d3d3d;
 }
@@ -3406,6 +3426,11 @@ body.dark-mode .jewellery-filter-panel
 body.dark-mode .jewellery-filter-panel
 .price-range::before {
   background: #2d2820;
+}
+
+body.dark-mode .jewellery-filter-panel
+.range-fill {
+  background: linear-gradient(90deg, #e3c15f, #b8912c);
 }
 
 body.dark-mode .jewellery-filter-panel

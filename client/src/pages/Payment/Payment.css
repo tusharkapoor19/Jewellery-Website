@@ -2190,3 +2190,23 @@ body.dark-mode .payment-empty-state,
 body.dark-mode .payment-error-state {
   background: linear-gradient(180deg, rgba(23, 20, 15, .95), rgba(28, 24, 18, .92));
 }
+
+/* --------------------------------------------------------
+   .security-item kept its light cream card background in
+   dark mode (hardcoded rgba white gradient), while its <h4>
+   title inherited the page's light text color — white text
+   on a near-white card made every title invisible.
+   -------------------------------------------------------- */
+
+body.dark-mode .security-item {
+  background: linear-gradient(135deg, rgba(23, 20, 15, .96), rgba(28, 24, 18, .88));
+  border: 1px solid rgba(212, 175, 55, .18);
+}
+
+body.dark-mode .security-item h4 {
+  color: var(--ivory);
+}
+
+body.dark-mode .security-item p {
+  color: var(--muted);
+}

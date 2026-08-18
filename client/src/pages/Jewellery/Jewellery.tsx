@@ -1119,6 +1119,26 @@ const Jewellery = () => {
               <div className="price-range">
 
 
+                {/* GOLD FILL BETWEEN THUMBS */}
+
+                <div
+                  className="range-fill"
+                  style={{
+                    left: `${
+                      ((selectedMinPrice - minPrice) /
+                        (maxPrice - minPrice || 1)) *
+                      100
+                    }%`,
+                    right: `${
+                      100 -
+                      ((selectedMaxPrice - minPrice) /
+                        (maxPrice - minPrice || 1)) *
+                        100
+                    }%`,
+                  }}
+                />
+
+
                 {/* MIN */}
 
                 <input

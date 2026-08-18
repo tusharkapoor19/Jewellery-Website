@@ -218,11 +218,6 @@ const Cart: React.FC = () => {
           <img src={cartBanner} alt="Luxury Cart" />
           <div className="hero-overlay">
             <div className="container">
-              <div className="breadcrumb">
-                <Link to="/">Home</Link>
-                <ChevronRight size={14} />
-                <span>Shopping Bag</span>
-              </div>
               <span className="hero-tag">HIRANYA LUXURY EXPERIENCE</span>
               <h1>Your Shopping Bag</h1>
               <p>

@@ -470,6 +470,43 @@
 }
 
 
+.range-track {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    top: 10px;
+
+    height: 5px;
+
+    background: #e9dfcb;
+
+    border-radius: 10px;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+.range-fill {
+    position: absolute;
+
+    top: 10px;
+
+    height: 5px;
+
+    background: linear-gradient(90deg, #b08a20, #e9c874, #b08a20);
+
+    border-radius: 10px;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
 .range-slider {
     position: absolute;
 
@@ -488,7 +525,7 @@
 
     -webkit-appearance: none;
 
-    background: #e9dfcb;
+    background: transparent;
 
     border-radius: 10px;
 
@@ -2635,8 +2672,12 @@ body.dark-mode .control-label span {
   color: #bbb4b4;
 }
 
-body.dark-mode .range-slider {
+body.dark-mode .range-track {
   background: #2f291e;
+}
+
+body.dark-mode .range-fill {
+  background: linear-gradient(90deg, #b8912c, #e3c15f, #b8912c);
 }
 
 body.dark-mode .range-slider::-webkit-slider-thumb {

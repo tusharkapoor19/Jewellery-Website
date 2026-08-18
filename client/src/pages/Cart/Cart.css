@@ -71,6 +71,7 @@
 }
 
 .hiranya-cart-page {
+  padding-top: 50px;
   background-color: var(--hiranya-bg);
   color: var(--hiranya-black);
   font-family: var(--hiranya-font-sans);
@@ -1127,6 +1128,18 @@ body.dark-mode .coupon-card h4 {
 
 body.dark-mode .coupon-card p {
   color: #cfc9bd;
+}
+
+body.dark-mode .cart-actions {
+  border-top-color: rgba(201, 161, 74, 0.18);
+}
+
+body.dark-mode .cart-actions button {
+  color: #cfc9bd;
+}
+
+body.dark-mode .cart-actions button:hover {
+  color: var(--hiranya-gold-light);
 }
 
 body.dark-mode .quantity-controls {
