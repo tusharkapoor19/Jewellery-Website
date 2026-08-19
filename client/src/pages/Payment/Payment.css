@@ -49,7 +49,20 @@ html{
     scroll-behavior:smooth;
 }
 
-body{
+/* --------------------------------------------------------
+   NOTE: this background used to be declared on the bare
+   `body` selector. Because Payment.css is a page-scoped
+   stylesheet, that leaked a hardcoded LIGHT background onto
+   the global <body> element for the whole app — and whichever
+   page's CSS happened to load last in the bundle would win the
+   fight over body's background. That's why the payment page
+   sometimes rendered as a plain white/blank page behind the
+   Razorpay modal instead of the site's themed background: this
+   rule was losing (or winning) the cascade unpredictably
+   depending on navigation order. Scoped to `.payment-page`
+   instead so it only ever affects this route.
+   -------------------------------------------------------- */
+.payment-page{
     margin:0;
     background:
         radial-gradient(circle at top left,
@@ -67,7 +80,26 @@ body{
         );
 
     color:var(--text);
+}
 
+body.dark-mode .payment-page{
+    background:
+        radial-gradient(circle at top left,
+        rgba(201, 164, 79, .10),
+        transparent 34%),
+
+        radial-gradient(circle at bottom right,
+        rgba(201, 164, 79, .08),
+        transparent 36%),
+
+        linear-gradient(
+            180deg,
+            #0f0e0c 0%,
+            #131110 100%
+        );
+}
+
+body{
     overflow-x:hidden;
 }
 
@@ -2102,9 +2134,13 @@ body.dark-mode .checkbox-custom {
   background: #171717;
 }
 
-body.dark-mode .payment-pay-btn {
-  color: #e7e4e4;
-}
+/* NOTE: .payment-pay-btn keeps its gold gradient background in
+   dark mode (never overridden above), so its text must stay dark
+   for contrast — do NOT lighten this color. The auto-generated
+   pass previously flipped it to a light grey, which made the
+   "Pay" button text nearly invisible against the unchanged gold
+   background. Left intentionally unset so it inherits the base
+   `.payment-pay-btn { color:#222 }` rule. */
 
 body.dark-mode .payment-retry-btn {
   background: #171717;
@@ -2118,9 +2154,11 @@ body.dark-mode .payment-method-card {
   background: #171717;
 }
 
-body.dark-mode .payment-primary-btn {
-  color: #e7e4e4;
-}
+/* Same reasoning as .payment-pay-btn above: .payment-primary-btn
+   also keeps its gold gradient background in dark mode, so its
+   text must stay dark. Left unset to inherit the base
+   `.payment-primary-btn { color:#1c1c1c }` rule instead of the
+   previous light-grey override that made it unreadable. */
 
 body.dark-mode .payment-secondary-btn {
   background: #171717;
@@ -2134,9 +2172,11 @@ body.dark-mode .payment-secondary-btn:hover {
    Additional dark-mode fixes: the local :root palette above
    (--text, --text-light, --white, --off-white, --border,
    --glass, --glass-strong) is static and was never redeclared
-   for dark mode, and the hardcoded light `body{}` background
-   was never overridden, so the whole page + several cards
-   stayed light even with dark-mode active.
+   for dark mode, so several cards stayed light even with
+   dark-mode active. (The page's own dark background is now
+   handled by the scoped `body.dark-mode .payment-page` rule
+   near the top of this file, not here — see the note above
+   that rule for why it was moved off the bare `body` selector.)
    -------------------------------------------------------- */
 
 body.dark-mode {
@@ -2147,21 +2187,6 @@ body.dark-mode {
   --border: var(--border-gold);
   --glass: rgba(23, 20, 15, .74);
   --glass-strong: rgba(23, 20, 15, .88);
-
-  background:
-    radial-gradient(circle at top left,
-    rgba(201, 164, 79, .10),
-    transparent 34%),
-
-    radial-gradient(circle at bottom right,
-    rgba(201, 164, 79, .08),
-    transparent 36%),
-
-    linear-gradient(
-        180deg,
-        #0f0e0c 0%,
-        #131110 100%
-    );
 }
 
 body.dark-mode .payment-badge {
@@ -2209,4 +2234,33 @@ body.dark-mode .security-item h4 {
 
 body.dark-mode .security-item p {
   color: var(--muted);
+}
+
+/* --------------------------------------------------------
+   .summary-row.discount strong used a hardcoded forest green
+   (#2e7d32) meant for a light card. On the dark summary card
+   that green is too close to the near-black background and
+   loses almost all contrast, so swap it for the lighter green
+   already defined for dark mode elsewhere on the site.
+   -------------------------------------------------------- */
+
+body.dark-mode .summary-row.discount strong {
+  color: var(--success);
+}
+
+/* --------------------------------------------------------
+   The card border-glow pseudo-elements (.payment-card::before,
+   .payment-summary-card::before) fade from solid white at both
+   ends. On dark cards that reads as a bright white outline
+   instead of a subtle glow, so use the same gold glow with a
+   dark fade instead of white.
+   -------------------------------------------------------- */
+
+body.dark-mode .payment-card::before {
+  background: linear-gradient(
+    135deg,
+    rgba(201, 164, 79, .35),
+    rgba(201, 164, 79, .15),
+    rgba(201, 164, 79, .32)
+  );
 }

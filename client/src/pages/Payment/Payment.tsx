@@ -41,6 +41,7 @@ import orderService from "../../services/orderService";
 import paymentService from "../../services/paymentService";
 import productService from "../../services/productService";
 import { useCart } from "../../context/CartContext";
+import { useTheme } from "../../context/ThemeContext";
 declare global {
   interface Window {
     Razorpay: new (
@@ -71,6 +72,7 @@ interface RazorpayOptions {
   notes?: Record<string, string>;
   theme?: {
     color: string;
+    backdrop_color?: string;
   };
   modal?: {
     ondismiss?: () => void;
@@ -149,6 +151,8 @@ const Payment = () => {
   const navigate = useNavigate();
 
   const { clearCart } = useCart();
+
+  const { isDark } = useTheme();
 
 
   const location = useLocation();
@@ -377,6 +381,16 @@ setOrder({
 
         theme: {
           color: "#C6A45D",
+          /*
+           * Without this, Razorpay falls back to its own default
+           * backdrop. Setting it explicitly keeps the dimmed
+           * overlay behind the modal on-brand and consistent
+           * with whichever theme (light/dark) the site is
+           * currently in, instead of leaving it to chance.
+           */
+          backdrop_color: isDark
+            ? "rgba(11,10,9,0.82)"
+            : "rgba(20,16,8,0.55)",
         },
 
         modal: {
@@ -453,6 +467,7 @@ setOrder({
     acceptedTerms,
     order,
     verifyPayment,
+    isDark,
   ]);
 
   const retryPayment = useCallback(async () => {
