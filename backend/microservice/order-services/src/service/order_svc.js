@@ -1,16 +1,206 @@
 const Order = require("../models/orders");
 const prodclient = require("../utils/prodclient");
+const axios = require("axios");
 
 require("dotenv").config();
+
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+// User Service
+const USER_SERVICE_URL =
+    process.env.USER_SERVICE_URL ||
+    "http://localhost:5005";
+
+// Notification Service
+const NOTIFICATION_SERVICE_URL =
+    process.env.NOTIFICATION_SERVICE_URL ||
+    "http://localhost:5007";
+
+
+/* =========================================================
+   ORDER NOTIFICATION HELPER
+========================================================= */
+
+/*
+    This function:
+
+    1. Gets user email/name from User Service
+    2. Sends notification request to Notification Service
+    3. Notification Service handles:
+       - In-app notification
+       - Email
+       - SMS
+
+    IMPORTANT:
+    Notification failure will NOT break the order operation.
+*/
+
+const sendOrderNotification = async (
+    order,
+    title,
+    message
+) => {
+
+    try {
+
+        console.log(
+            "\n========================================"
+        );
+
+        console.log(
+            "ORDER NOTIFICATION"
+        );
+
+        console.log(
+            "Order ID:",
+            order.orderID
+        );
+
+        console.log(
+            "User ID:",
+            order.userID
+        );
+
+
+        /* -----------------------------------------------------
+           GET USER DETAILS
+        ----------------------------------------------------- */
+
+        const userResponse =
+            await axios.get(
+
+                `${USER_SERVICE_URL}/profile/internal/${order.userID}`
+
+            );
+
+
+        const user =
+            userResponse.data?.user;
+
+
+        if (!user) {
+
+            console.log(
+                "User details not found."
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "User Email:",
+            user.email
+        );
+
+        console.log(
+            "User Phone:",
+            user.phone
+        );
+
+
+        /* -----------------------------------------------------
+           PHONE
+
+           Prefer shipping phone because that is the
+           number entered for this particular order.
+
+           If unavailable, use profile phone.
+        ----------------------------------------------------- */
+
+        const phone =
+            order.shippingAddress?.phone ||
+            user.phone;
+
+
+        /* -----------------------------------------------------
+           SEND TO NOTIFICATION SERVICE
+        ----------------------------------------------------- */
+
+        await axios.post(
+
+            `${NOTIFICATION_SERVICE_URL}/notifications`,
+
+            {
+
+                userId:
+                    order.userID,
+
+                title,
+
+                message,
+
+                type:
+                    "ORDER",
+
+                email:
+                    user.email,
+
+                phone,
+
+                userName:
+                    user.name
+
+            }
+
+        );
+
+
+        console.log(
+            "Order notification sent successfully."
+        );
+
+
+        console.log(
+            "========================================\n"
+        );
+
+
+    }
+
+    catch (error) {
+
+        /*
+            VERY IMPORTANT
+
+            If email/SMS/notification service fails,
+            order creation/status update should NOT fail.
+        */
+
+        console.error(
+            "\nORDER NOTIFICATION ERROR:"
+        );
+
+        console.error(
+            error.response?.data ||
+            error.message
+        );
+
+        console.log(
+            "Order operation will continue normally."
+        );
+
+    }
+
+};
 
 
 /* =========================================================
    CREATE ORDER
 ========================================================= */
 
-const createorder = async (userID, orderdata) => {
+const createorder = async (
+    userID,
+    orderdata
+) => {
 
-    const { products } = orderdata;
+    const {
+        products
+    } = orderdata;
 
 
     if (
@@ -43,7 +233,8 @@ const createorder = async (userID, orderdata) => {
             });
 
 
-    let orderID = "ORD001";
+    let orderID =
+        "ORD001";
 
 
     if (lastOrder) {
@@ -111,14 +302,19 @@ const createorder = async (userID, orderdata) => {
 
 
         await prodclient.patch(
+
             "/internal/reduce-stock",
+
             {
+
                 productID:
                     product.productID,
 
                 quantity:
                     item.quantity
+
             }
+
         );
 
     }
@@ -186,51 +382,55 @@ const createorder = async (userID, orderdata) => {
             deliveryMethod:
                 orderdata.deliveryMethod,
 
-
             giftBox:
                 orderdata.giftBox,
-
 
             giftWrap:
                 orderdata.giftWrap,
 
-
             hideInvoice:
                 orderdata.hideInvoice,
-
 
             giftMessage:
                 orderdata.giftMessage,
 
-
             notes:
                 orderdata.notes,
-
 
             subtotal:
                 orderdata.subtotal,
 
-
             shippingCharge:
                 orderdata.shippingCharge,
-
 
             discount:
                 orderdata.discount,
 
-
             gst:
                 orderdata.gst,
 
-
             totalAmount:
                 orderdata.totalAmount,
-
 
             orderStatus:
                 "Pending"
 
         });
+
+
+    /* -----------------------------------------------------
+       ORDER PLACED NOTIFICATION
+    ----------------------------------------------------- */
+
+    await sendOrderNotification(
+
+        order,
+
+        "Order Placed Successfully 🛍️",
+
+        `Your order ${order.orderID} has been placed successfully. We will keep you updated about your order status.`
+
+    );
 
 
     return order;
@@ -352,9 +552,11 @@ const getorderbyid = async (
 
     console.log(
         "MongoDB Result:",
+
         order
             ? "ORDER FOUND"
             : "ORDER NOT FOUND"
+
     );
 
 
@@ -436,6 +638,10 @@ const updateOrderStatus = async (
     status
 ) => {
 
+    /* -----------------------------------------------------
+       Valid Status
+    ----------------------------------------------------- */
+
     const validStatus = [
 
         "Pending",
@@ -469,6 +675,10 @@ const updateOrderStatus = async (
     }
 
 
+    /* -----------------------------------------------------
+       Find Order
+    ----------------------------------------------------- */
+
     const order =
         await Order.findOne({
 
@@ -491,11 +701,86 @@ const updateOrderStatus = async (
     }
 
 
+    /* -----------------------------------------------------
+       Update Status
+    ----------------------------------------------------- */
+
     order.orderStatus =
         status;
 
 
     await order.save();
+
+
+    /* -----------------------------------------------------
+       STATUS NOTIFICATION
+    ----------------------------------------------------- */
+
+    const statusNotifications = {
+
+        Confirmed: {
+
+            title:
+                "Order Confirmed ✅",
+
+            message:
+                `Your order ${order.orderID} has been confirmed. We are now preparing it for shipment.`
+
+        },
+
+
+        Shipped: {
+
+            title:
+                "Order Shipped 🚚",
+
+            message:
+                `Your order ${order.orderID} has been shipped and is on its way to you.`
+
+        },
+
+
+        Delivered: {
+
+            title:
+                "Order Delivered 📦",
+
+            message:
+                `Your order ${order.orderID} has been delivered successfully. Thank you for shopping with HIRANYA.`
+
+        },
+
+
+        Cancelled: {
+
+            title:
+                "Order Cancelled ❌",
+
+            message:
+                `Your order ${order.orderID} has been cancelled.`
+
+        }
+
+    };
+
+
+    const notification =
+        statusNotifications[status];
+
+
+    if (notification) {
+
+        await sendOrderNotification(
+
+            order,
+
+            notification.title,
+
+            notification.message
+
+        );
+
+    }
 
 
     return order;
@@ -558,11 +843,15 @@ const cancelOrder = async (
     ----------------------------------------------------- */
 
     if (
+
         order.orderStatus ===
             "Shipped"
+
         ||
+
         order.orderStatus ===
             "Delivered"
+
     ) {
 
         const error =
@@ -636,19 +925,29 @@ const cancelOrder = async (
     await order.save();
 
 
+    /* -----------------------------------------------------
+       CANCEL NOTIFICATION
+    ----------------------------------------------------- */
+
+    await sendOrderNotification(
+
+        order,
+
+        "Order Cancelled ❌",
+
+        `Your order ${order.orderID} has been cancelled successfully.`
+
+    );
+
+
     return order;
 
 };
 
 
 /* =========================================================
-   MARK ORDER AS PAID (internal — called by payment-service)
-   Records that the customer was actually charged, WITHOUT
-   touching orderStatus. orderStatus stays "Pending" by
-   default and only moves forward when an admin changes it —
-   this only tracks whether money was received, so the UI can
-   tell a genuinely-paid order apart from one that was never
-   paid for (e.g. cancelled before payment completed).
+   MARK ORDER AS PAID
+   Internal — called by payment-service
 ========================================================= */
 
 const markOrderPaid = async (
@@ -674,6 +973,15 @@ const markOrderPaid = async (
 
     }
 
+
+    /*
+        IMPORTANT:
+
+        Payment service only changes
+        paymentStatus.
+
+        It does NOT change orderStatus.
+    */
 
     order.paymentStatus =
         "Paid";

@@ -644,7 +644,7 @@ const handleBuyNow = useCallback(async () => {
                 { id: "description", label: "Description" },
                 { id: "specifications", label: "Specifications" },
                 { id: "care", label: "Jewellery Care" },
-                { id: "shipping", label: "Shipping & Exchange" }
+                { id: "shipping", label: "Shipping & Returns" }
               ].map((t) => (
                 <button
                   key={t.id}

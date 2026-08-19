@@ -19,6 +19,7 @@ import {
     ArrowRight,
     CircleCheckBig,
     Clock3,
+    Download,
     Gem,
     MapPin,
     Package,
@@ -27,6 +28,9 @@ import {
     Sparkles,
     XCircle
 } from "lucide-react";
+
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 import TopBar from "../../components/TopBar/TopBar";
 import Navbar from "../../components/Navbar/Navbar";
@@ -48,24 +52,47 @@ interface Product {
     price: number;
 }
 
+
 interface ShippingAddress {
     fullName: string;
     phone: string;
     address: string;
+    landmark?: string;
     city: string;
     state: string;
     country: string;
     pincode: string;
 }
 
+
 interface Order {
     orderID: string;
+
     products: Product[];
+
     shippingAddress: ShippingAddress;
+
     deliveryMethod: string;
+
+    subtotal?: number;
+
+    shippingCharge?: number;
+
+    discount?: number;
+
+    gst?: number;
+
     totalAmount: number;
+
     orderStatus: string;
+
+    paymentStatus?: string;
+
+    hideInvoice?: boolean;
+
     createdAt: string;
+
+    updatedAt?: string;
 }
 
 
@@ -143,17 +170,6 @@ const TrackOrder: React.FC = () => {
 
             setLoading(true);
 
-            /*
-             * Clear previous result first.
-             *
-             * Example:
-             * ORD024 was valid
-             * then user searches ORD999
-             *
-             * ORD024 should not remain visible
-             * while ORD999 is being checked.
-             */
-
             setOrder(null);
 
 
@@ -171,9 +187,9 @@ const TrackOrder: React.FC = () => {
             );
 
 
-            /* --------------------------------------------------
+            /* ----------------------------------------------
                GET ORDER
-            -------------------------------------------------- */
+            ---------------------------------------------- */
 
             const response =
                 await orderService.getOrder(
@@ -201,20 +217,18 @@ const TrackOrder: React.FC = () => {
 
 
             /*
-             * IMPORTANT:
+             * Set order immediately.
              *
-             * Set the order immediately.
-             *
-             * Even if product image fetching fails,
-             * the order itself must remain visible.
+             * Product image failure should
+             * never hide the complete order.
              */
 
             setOrder(orderData);
 
 
-            /* --------------------------------------------------
+            /* ----------------------------------------------
                LOAD PRODUCT IMAGES
-            -------------------------------------------------- */
+            ---------------------------------------------- */
 
             if (
                 Array.isArray(
@@ -231,7 +245,7 @@ const TrackOrder: React.FC = () => {
                             ) => {
 
                                 /*
-                                 * Order already has image.
+                                 * Image already exists
                                  */
 
                                 if (
@@ -244,7 +258,8 @@ const TrackOrder: React.FC = () => {
 
 
                                 /*
-                                 * Try product service.
+                                 * Fetch image from
+                                 * Product Service
                                  */
 
                                 try {
@@ -267,14 +282,9 @@ const TrackOrder: React.FC = () => {
 
                                 }
 
-                                catch (imageError) {
-
-                                    /*
-                                     * VERY IMPORTANT:
-                                     *
-                                     * Image failure should NOT
-                                     * make the order disappear.
-                                     */
+                                catch (
+                                    imageError
+                                ) {
 
                                     console.error(
                                         "Product image fetch failed:",
@@ -293,11 +303,6 @@ const TrackOrder: React.FC = () => {
                     );
 
 
-                /*
-                 * Update only product images.
-                 * Order itself is already loaded.
-                 */
-
                 setOrder({
 
                     ...orderData,
@@ -311,19 +316,15 @@ const TrackOrder: React.FC = () => {
 
         }
 
-        catch (error: any) {
+        catch (
+            error: any
+        ) {
 
             console.error(
                 "TRACK ORDER ERROR:",
                 error
             );
 
-
-            /*
-             * Only here do we show Order Not Found.
-             *
-             * This means the actual order API failed.
-             */
 
             setOrder(null);
 
@@ -366,6 +367,7 @@ const TrackOrder: React.FC = () => {
         const cleanID =
             searchID.trim();
 
+
         if (!cleanID) {
 
             toast.error(
@@ -376,28 +378,26 @@ const TrackOrder: React.FC = () => {
 
         }
 
+
         fetchOrder(cleanID);
 
     };
 
 
     /*
-     * IMPORTANT:
-     * The search UI is handled as a real form.
-     * This makes both the Search button click
-     * and Enter key use exactly the same handler.
+     * Form submit handles:
+     *
+     * 1. Search button click
+     * 2. Enter key
+     *
+     * So both work correctly.
      */
+
     const handleSearchSubmit = (
         e: React.FormEvent<HTMLFormElement>
     ) => {
 
         e.preventDefault();
-
-        searchOrder();
-
-    };
-
-    const handleSearchButtonClick = () => {
 
         searchOrder();
 
@@ -428,6 +428,13 @@ const TrackOrder: React.FC = () => {
         date: string
     ) => {
 
+        if (!date) {
+
+            return "-";
+
+        }
+
+
         return new Date(
             date
         ).toLocaleDateString(
@@ -443,17 +450,972 @@ const TrackOrder: React.FC = () => {
 
 
     /* ======================================================
+       INVOICE DOWNLOAD
+    ====================================================== */
+
+    const downloadInvoice = (
+        selectedOrder: Order
+    ) => {
+
+        try {
+
+            /* ----------------------------------------------
+               PDF
+            ---------------------------------------------- */
+
+            const doc =
+                new jsPDF({
+                    orientation: "portrait",
+                    unit: "mm",
+                    format: "a4"
+                });
+
+
+            const pageWidth = 210;
+
+            const gold: [
+                number,
+                number,
+                number
+            ] = [
+                178,
+                132,
+                38
+            ];
+
+
+            const dark: [
+                number,
+                number,
+                number
+            ] = [
+                20,
+                28,
+                45
+            ];
+
+
+            const cream: [
+                number,
+                number,
+                number
+            ] = [
+                248,
+                244,
+                230
+            ];
+
+
+            const grey: [
+                number,
+                number,
+                number
+            ] = [
+                95,
+                95,
+                95
+            ];
+
+
+            /* ----------------------------------------------
+               INVOICE CURRENCY
+            ---------------------------------------------- */
+
+            const formatRs = (
+                amount: number = 0
+            ) => {
+
+                return `Rs. ${amount.toLocaleString(
+                    "en-IN"
+                )}`;
+
+            };
+
+
+            const address =
+                selectedOrder.shippingAddress;
+
+
+            /* ==================================================
+               PREMIUM HEADER
+            ================================================== */
+
+            doc.setFillColor(
+                ...cream
+            );
+
+            doc.rect(
+                0,
+                0,
+                pageWidth,
+                42,
+                "F"
+            );
+
+
+            /* ----------------------------------------------
+               HIRANYA
+            ---------------------------------------------- */
+
+            doc.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            doc.setFontSize(25);
+
+            doc.setTextColor(
+                ...gold
+            );
+
+            doc.text(
+                "HIRANYA",
+                14,
+                17
+            );
+
+
+            /* ----------------------------------------------
+               TAGLINE
+            ---------------------------------------------- */
+
+            doc.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            doc.setFontSize(8.5);
+
+            doc.text(
+                "CRAFTED FOR LUXURY",
+                15,
+                25
+            );
+
+
+            /* ----------------------------------------------
+               INVOICE TITLE
+            ---------------------------------------------- */
+
+            doc.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            doc.setFontSize(21);
+
+            doc.setTextColor(
+                ...dark
+            );
+
+            doc.text(
+                "INVOICE",
+                195,
+                15,
+                {
+                    align: "right"
+                }
+            );
+
+
+            doc.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            doc.setFontSize(8.5);
+
+            doc.text(
+                `Order ID: ${selectedOrder.orderID}`,
+                195,
+                24,
+                {
+                    align: "right"
+                }
+            );
+
+
+            doc.text(
+                `Date: ${formatDate(
+                    selectedOrder.createdAt
+                )}`,
+                195,
+                31,
+                {
+                    align: "right"
+                }
+            );
+
+
+            /* ==================================================
+               STATUS / DELIVERY
+            ================================================== */
+
+            doc.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            doc.setFontSize(8.5);
+
+            doc.setTextColor(
+                ...gold
+            );
+
+
+            doc.text(
+                `STATUS: ${(
+                    selectedOrder.orderStatus ||
+                    "PENDING"
+                ).toUpperCase()}`,
+                14,
+                57
+            );
+
+
+            doc.text(
+                `DELIVERY: ${(
+                    selectedOrder.deliveryMethod ||
+                    "STANDARD"
+                ).toUpperCase()}`,
+                118,
+                57
+            );
+
+
+            doc.setDrawColor(
+                ...gold
+            );
+
+            doc.setLineWidth(
+                0.35
+            );
+
+            doc.line(
+                14,
+                64,
+                196,
+                64
+            );
+
+
+            /* ==================================================
+               DELIVERY ADDRESS
+            ================================================== */
+
+            doc.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            doc.setFontSize(11);
+
+            doc.setTextColor(
+                ...gold
+            );
+
+            doc.text(
+                "DELIVERY ADDRESS",
+                14,
+                77
+            );
+
+
+            let addressY = 87;
+
+
+            doc.setTextColor(
+                ...dark
+            );
+
+            doc.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            doc.setFontSize(9.5);
+
+
+            doc.text(
+                address?.fullName || "-",
+                14,
+                addressY
+            );
+
+
+            addressY += 8;
+
+
+            doc.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            doc.setFontSize(9);
+
+
+            if (
+                address?.phone
+            ) {
+
+                doc.text(
+                    address.phone,
+                    14,
+                    addressY
+                );
+
+                addressY += 7;
+
+            }
+
+
+            if (
+                address?.address
+            ) {
+
+                const addressLines =
+                    doc.splitTextToSize(
+                        address.address,
+                        170
+                    );
+
+
+                doc.text(
+                    addressLines,
+                    14,
+                    addressY
+                );
+
+
+                addressY +=
+                    addressLines.length *
+                    5 +
+                    2;
+
+            }
+
+
+            if (
+                address?.landmark
+            ) {
+
+                doc.text(
+                    address.landmark,
+                    14,
+                    addressY
+                );
+
+                addressY += 7;
+
+            }
+
+
+            const cityState =
+                [
+                    address?.city,
+                    address?.state
+                ]
+                    .filter(Boolean)
+                    .join(", ");
+
+
+            if (cityState) {
+
+                doc.text(
+                    cityState,
+                    14,
+                    addressY
+                );
+
+                addressY += 7;
+
+            }
+
+
+            if (
+                address?.country ||
+                address?.pincode
+            ) {
+
+                doc.text(
+                    `${address?.country || "India"} - ${
+                        address?.pincode || ""
+                    }`,
+                    14,
+                    addressY
+                );
+
+                addressY += 7;
+
+            }
+
+
+            /* ==================================================
+               ORDERED JEWELLERY
+            ================================================== */
+
+            const jewelleryTitleY =
+                Math.max(
+                    addressY + 13,
+                    112
+                );
+
+
+            doc.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            doc.setFontSize(11);
+
+            doc.setTextColor(
+                ...gold
+            );
+
+
+            doc.text(
+                "ORDERED JEWELLERY",
+                14,
+                jewelleryTitleY
+            );
+
+
+            /* ==================================================
+               PRODUCT TABLE
+            ================================================== */
+
+            const rows =
+                selectedOrder.products.map(
+                    (
+                        product
+                    ) => [
+
+                        product.name,
+
+                        "—",
+
+                        String(
+                            product.quantity
+                        ),
+
+                        formatRs(
+                            product.price
+                        ),
+
+                        formatRs(
+                            product.price *
+                            product.quantity
+                        )
+
+                    ]
+                );
+
+
+            autoTable(
+                doc,
+                {
+
+                    startY:
+                        jewelleryTitleY + 9,
+
+                    margin: {
+                        left: 10,
+                        right: 10
+                    },
+
+                    head: [
+                        [
+                            "PRODUCT",
+                            "SIZE",
+                            "QTY",
+                            "PRICE",
+                            "TOTAL"
+                        ]
+                    ],
+
+                    body: rows,
+
+                    theme:
+                        "grid",
+
+                    styles: {
+
+                        font:
+                            "helvetica",
+
+                        fontSize: 8.5,
+
+                        cellPadding: 4,
+
+                        textColor:
+                            dark,
+
+                        lineColor: [
+                            205,
+                            205,
+                            205
+                        ],
+
+                        lineWidth:
+                            0.2,
+
+                        valign:
+                            "middle"
+
+                    },
+
+                    headStyles: {
+
+                        fillColor:
+                            gold,
+
+                        textColor: [
+                            255,
+                            255,
+                            255
+                        ],
+
+                        fontStyle:
+                            "bold",
+
+                        halign:
+                            "center",
+
+                        fontSize:
+                            8.5
+
+                    },
+
+                    bodyStyles: {
+
+                        minCellHeight:
+                            14
+
+                    },
+
+                    alternateRowStyles: {
+
+                        fillColor: [
+                            250,
+                            249,
+                            246
+                        ]
+
+                    },
+
+                    columnStyles: {
+
+                        0: {
+                            cellWidth: 76,
+                            halign: "left"
+                        },
+
+                        1: {
+                            cellWidth: 24,
+                            halign: "center"
+                        },
+
+                        2: {
+                            cellWidth: 18,
+                            halign: "center"
+                        },
+
+                        3: {
+                            cellWidth: 35,
+                            halign: "right"
+                        },
+
+                        4: {
+                            cellWidth: 35,
+                            halign: "right"
+                        }
+
+                    }
+
+                }
+            );
+
+
+            /* ==================================================
+               TOTALS
+            ================================================== */
+
+            const tableEndY =
+                (
+                    doc as any
+                ).lastAutoTable?.finalY ||
+                150;
+
+
+            let totalsY =
+                tableEndY + 15;
+
+
+            const subtotal =
+                selectedOrder.subtotal ??
+                selectedOrder.products.reduce(
+                    (
+                        total,
+                        product
+                    ) =>
+                        total +
+                        (
+                            product.price *
+                            product.quantity
+                        ),
+                    0
+                );
+
+
+            const shipping =
+                selectedOrder.shippingCharge ??
+                0;
+
+
+            const discount =
+                selectedOrder.discount ??
+                0;
+
+
+            const gst =
+                selectedOrder.gst ??
+                0;
+
+
+            /* ----------------------------------------------
+               TOP GOLD LINE
+            ---------------------------------------------- */
+
+            doc.setDrawColor(
+                ...gold
+            );
+
+            doc.setLineWidth(
+                0.35
+            );
+
+            doc.line(
+                105,
+                totalsY - 5,
+                196,
+                totalsY - 5
+            );
+
+
+            /* ----------------------------------------------
+               TOTAL ROW HELPER
+            ---------------------------------------------- */
+
+            const drawTotalRow = (
+                label: string,
+                value: string,
+                y: number,
+                bold = false
+            ) => {
+
+                doc.setFont(
+                    "helvetica",
+                    bold
+                        ? "bold"
+                        : "normal"
+                );
+
+
+                doc.setFontSize(
+                    bold
+                        ? 10.5
+                        : 8.5
+                );
+
+
+                if (bold) {
+
+                    doc.setTextColor(
+                        ...dark
+                    );
+
+                }
+
+                else {
+
+                    doc.setTextColor(
+                        ...grey
+                    );
+
+                }
+
+
+                doc.text(
+                    label,
+                    115,
+                    y
+                );
+
+
+                doc.text(
+                    value,
+                    196,
+                    y,
+                    {
+                        align: "right"
+                    }
+                );
+
+            };
+
+
+            /* ----------------------------------------------
+               SUBTOTAL
+            ---------------------------------------------- */
+
+            drawTotalRow(
+                "Subtotal",
+                formatRs(
+                    subtotal
+                ),
+                totalsY + 5
+            );
+
+
+            totalsY += 10;
+
+
+            /* ----------------------------------------------
+               SHIPPING
+            ---------------------------------------------- */
+
+            drawTotalRow(
+                "Shipping",
+                formatRs(
+                    shipping
+                ),
+                totalsY
+            );
+
+
+            totalsY += 10;
+
+
+            /* ----------------------------------------------
+               DISCOUNT
+            ---------------------------------------------- */
+
+            drawTotalRow(
+                "Discount",
+                `-${formatRs(
+                    discount
+                )}`,
+                totalsY
+            );
+
+
+            totalsY += 10;
+
+
+            /* ----------------------------------------------
+               GST
+            ---------------------------------------------- */
+
+            drawTotalRow(
+                "GST",
+                formatRs(
+                    gst
+                ),
+                totalsY
+            );
+
+
+            totalsY += 11;
+
+
+            /* ----------------------------------------------
+               TOTAL LINE
+            ---------------------------------------------- */
+
+            doc.setDrawColor(
+                ...gold
+            );
+
+            doc.setLineWidth(
+                0.35
+            );
+
+            doc.line(
+                105,
+                totalsY - 5,
+                196,
+                totalsY - 5
+            );
+
+
+            /* ----------------------------------------------
+               TOTAL
+            ---------------------------------------------- */
+
+            drawTotalRow(
+                "TOTAL",
+                formatRs(
+                    selectedOrder.totalAmount
+                ),
+                totalsY + 4,
+                true
+            );
+
+
+            /* ==================================================
+               PAYMENT STATUS
+            ================================================== */
+
+            const paymentY =
+                totalsY + 22;
+
+
+            doc.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            doc.setFontSize(
+                8.5
+            );
+
+            doc.setTextColor(
+                ...gold
+            );
+
+
+            doc.text(
+                "PAYMENT STATUS",
+                14,
+                paymentY
+            );
+
+
+            doc.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            doc.setTextColor(
+                ...dark
+            );
+
+
+            doc.text(
+                selectedOrder.paymentStatus ||
+                "Pending",
+                14,
+                paymentY + 7
+            );
+
+
+            /* ==================================================
+               FOOTER
+            ================================================== */
+
+            doc.setDrawColor(
+                220,
+                220,
+                220
+            );
+
+            doc.setLineWidth(
+                0.2
+            );
+
+
+            doc.line(
+                14,
+                274,
+                196,
+                274
+            );
+
+
+            doc.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            doc.setFontSize(
+                7.5
+            );
+
+            doc.setTextColor(
+                115,
+                115,
+                115
+            );
+
+
+            doc.text(
+                "Thank you for choosing HIRANYA Jewellery.",
+                105,
+                282,
+                {
+                    align: "center"
+                }
+            );
+
+
+            doc.text(
+                "This is a computer-generated invoice and does not require a signature.",
+                105,
+                288,
+                {
+                    align: "center"
+                }
+            );
+
+
+            /* ==================================================
+               DOWNLOAD
+            ================================================== */
+
+            doc.save(
+                `HIRANYA-Invoice-${selectedOrder.orderID}.pdf`
+            );
+
+
+            toast.success(
+                "Invoice downloaded successfully"
+            );
+
+        }
+
+        catch (
+            error
+        ) {
+
+            console.error(
+                "Invoice generation error:",
+                error
+            );
+
+
+            toast.error(
+                "Unable to generate invoice"
+            );
+
+        }
+
+    };
+
+
+    /* ======================================================
        REJECTED / CANCELLED
     ====================================================== */
 
     const isRejected =
         order?.orderStatus
             ?.trim()
-            .toLowerCase() === "cancelled"
+            .toLowerCase() ===
+            "cancelled"
         ||
         order?.orderStatus
             ?.trim()
-            .toLowerCase() === "rejected";
+            .toLowerCase() ===
+            "rejected";
 
 
     /* ======================================================
@@ -618,14 +1580,16 @@ const TrackOrder: React.FC = () => {
 
 
                 {/* ==================================================
-                   SEARCH ORDER
+                   SEARCH
                 ================================================== */}
 
                 <section className="track-search-section">
 
                     <form
                         className="track-search-box"
-                        onSubmit={handleSearchSubmit}
+                        onSubmit={
+                            handleSearchSubmit
+                        }
                     >
 
                         <Search
@@ -635,46 +1599,47 @@ const TrackOrder: React.FC = () => {
 
                         <input
                             type="text"
-                            placeholder="Enter Order ID"
-                            value={searchID}
 
-                            onChange={(e) =>
+                            placeholder="Enter Order ID"
+
+                            value={
+                                searchID
+                            }
+
+                            onChange={(
+                                e
+                            ) =>
                                 setSearchID(
                                     e.target.value
                                 )
                             }
 
                             autoComplete="off"
+
                             aria-label="Order ID"
-
-                            onKeyDown={(e) => {
-
-                                if (
-                                    e.key === "Enter"
-                                ) {
-
-                                    e.preventDefault();
-
-                                    searchOrder();
-
-                                }
-
-                            }}
                         />
 
 
                         <button
-                            type="button"
+                            type="submit"
+
                             className="track-search-btn"
-                            onClick={handleSearchButtonClick}
-                            disabled={loading}
+
+                            disabled={
+                                loading ||
+                                !searchID.trim()
+                            }
                         >
 
-                            <Search size={17} />
+                            <Search
+                                size={17}
+                            />
 
-                            {loading
-                                ? "Searching..."
-                                : "Search"}
+                            {
+                                loading
+                                    ? "Searching..."
+                                    : "Search"
+                            }
 
                         </button>
 
@@ -738,7 +1703,7 @@ const TrackOrder: React.FC = () => {
 
 
                         {/* ==========================================
-                           REJECTED MESSAGE
+                           REJECTED
                         =========================================== */}
 
                         {isRejected && (
@@ -789,7 +1754,9 @@ const TrackOrder: React.FC = () => {
                                         your order{" "}
 
                                         <strong>
-                                            {order.orderID}
+                                            {
+                                                order.orderID
+                                            }
                                         </strong>.
 
                                     </p>
@@ -811,7 +1778,7 @@ const TrackOrder: React.FC = () => {
 
 
                         {/* ==========================================
-                           NORMAL ORDER TIMELINE
+                           TIMELINE
                         =========================================== */}
 
                         {!isRejected && (
@@ -825,7 +1792,10 @@ const TrackOrder: React.FC = () => {
                                     ) => (
 
                                         <div
-                                            key={item}
+                                            key={
+                                                item
+                                            }
+
                                             className={`track-step ${
                                                 index <= activeIndex
                                                     ? "active"
@@ -870,14 +1840,14 @@ const TrackOrder: React.FC = () => {
 
 
                             {/* ==================================================
-                               LEFT COLUMN
+                               LEFT
                             ================================================== */}
 
                             <div className="track-left">
 
 
                                 {/* ==========================================
-                                   ORDERED PRODUCTS
+                                   PRODUCTS
                                 =========================================== */}
 
                                 <div className="track-card">
@@ -904,11 +1874,9 @@ const TrackOrder: React.FC = () => {
                                                     key={
                                                         product.productID
                                                     }
+
                                                     className="track-product"
                                                 >
-
-
-                                                    {/* PRODUCT IMAGE */}
 
                                                     <div className="track-product-image">
 
@@ -942,8 +1910,6 @@ const TrackOrder: React.FC = () => {
                                                     </div>
 
 
-                                                    {/* PRODUCT DETAILS */}
-
                                                     <div className="track-product-info">
 
                                                         <h4>
@@ -962,8 +1928,6 @@ const TrackOrder: React.FC = () => {
 
                                                     </div>
 
-
-                                                    {/* PRICE */}
 
                                                     <strong>
 
@@ -987,7 +1951,7 @@ const TrackOrder: React.FC = () => {
 
 
                                 {/* ==========================================
-                                   DELIVERY ADDRESS
+                                   ADDRESS
                                 =========================================== */}
 
                                 <div className="track-card">
@@ -1025,6 +1989,23 @@ const TrackOrder: React.FC = () => {
                                             }
 
                                         </p>
+
+
+                                        {order
+                                            .shippingAddress
+                                            .landmark && (
+
+                                            <p>
+
+                                                {
+                                                    order
+                                                        .shippingAddress
+                                                        .landmark
+                                                }
+
+                                            </p>
+
+                                        )}
 
 
                                         <p>
@@ -1083,14 +2064,14 @@ const TrackOrder: React.FC = () => {
 
 
                             {/* ==================================================
-                               RIGHT COLUMN
+                               RIGHT
                             ================================================== */}
 
                             <div className="track-right">
 
 
                                 {/* ==========================================
-                                   ORDER SUMMARY
+                                   SUMMARY
                                 =========================================== */}
 
                                 <div className="track-card">
@@ -1109,8 +2090,6 @@ const TrackOrder: React.FC = () => {
                                     <div className="track-summary">
 
 
-                                        {/* ORDER ID */}
-
                                         <div>
 
                                             <span>
@@ -1125,8 +2104,6 @@ const TrackOrder: React.FC = () => {
 
                                         </div>
 
-
-                                        {/* ORDER DATE */}
 
                                         <div>
 
@@ -1144,9 +2121,6 @@ const TrackOrder: React.FC = () => {
 
                                         </div>
 
-
-                                        {/* DELIVERY
-                                            HIDDEN WHEN REJECTED */}
 
                                         {!isRejected && (
 
@@ -1167,9 +2141,6 @@ const TrackOrder: React.FC = () => {
                                         )}
 
 
-                                        {/* ESTIMATED DELIVERY
-                                            HIDDEN WHEN REJECTED */}
-
                                         {!isRejected && (
 
                                             <div>
@@ -1187,9 +2158,6 @@ const TrackOrder: React.FC = () => {
                                         )}
 
 
-                                        {/* REFUND
-                                            ONLY FOR REJECTED */}
-
                                         {isRejected && (
 
                                             <div>
@@ -1206,8 +2174,6 @@ const TrackOrder: React.FC = () => {
 
                                         )}
 
-
-                                        {/* TOTAL */}
 
                                         <div className="track-total">
 
@@ -1262,6 +2228,7 @@ const TrackOrder: React.FC = () => {
 
                                     <button
                                         type="button"
+
                                         className="track-support-btn"
 
                                         onClick={() =>
@@ -1289,8 +2256,11 @@ const TrackOrder: React.FC = () => {
                         <section className="track-actions">
 
 
+                            {/* MY ORDERS */}
+
                             <button
                                 type="button"
+
                                 className="track-outline-btn"
 
                                 onClick={() =>
@@ -1309,31 +2279,39 @@ const TrackOrder: React.FC = () => {
                             </button>
 
 
-                            {/* INVOICE
-                                HIDDEN WHEN REJECTED */}
+                            {/* DOWNLOAD INVOICE */}
 
-                            {!isRejected && (
+                            {!isRejected &&
+                                !order.hideInvoice && (
 
-                                <button
-                                    type="button"
-                                    className="track-outline-btn"
+                                    <button
+                                        type="button"
 
-                                    onClick={() =>
-                                        toast.success(
-                                            "Invoice download coming soon."
-                                        )
-                                    }
-                                >
+                                        className="track-outline-btn"
 
-                                    Download Invoice
+                                        onClick={() =>
+                                            downloadInvoice(
+                                                order
+                                            )
+                                        }
+                                    >
 
-                                </button>
+                                        <Download
+                                            size={18}
+                                        />
 
-                            )}
+                                        Download Invoice
 
+                                    </button>
+
+                                )}
+
+
+                            {/* CONTINUE SHOPPING */}
 
                             <button
                                 type="button"
+
                                 className="track-primary-btn"
 
                                 onClick={() =>
@@ -1362,43 +2340,44 @@ const TrackOrder: React.FC = () => {
                    ORDER NOT FOUND
                 ================================================== */}
 
-                {!loading && !order && (
+                {!loading &&
+                    !order && (
 
-                    <section className="track-empty">
+                        <section className="track-empty">
 
-                        <Package
-                            size={70}
-                        />
-
-
-                        <h2>
-                            Order Not Found
-                        </h2>
+                            <Package
+                                size={70}
+                            />
 
 
-                        <p>
-                            We couldn't find any order
-                            with the provided Order ID.
-                        </p>
+                            <h2>
+                                Order Not Found
+                            </h2>
 
 
-                        <button
-                            type="button"
+                            <p>
+                                We couldn't find any order
+                                with the provided Order ID.
+                            </p>
 
-                            onClick={() =>
-                                navigate(
-                                    "/jewellery"
-                                )
-                            }
-                        >
 
-                            Browse Jewellery
+                            <button
+                                type="button"
 
-                        </button>
+                                onClick={() =>
+                                    navigate(
+                                        "/jewellery"
+                                    )
+                                }
+                            >
 
-                    </section>
+                                Browse Jewellery
 
-                )}
+                            </button>
+
+                        </section>
+
+                    )}
 
             </main>
 

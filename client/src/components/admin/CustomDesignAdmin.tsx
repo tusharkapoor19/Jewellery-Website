@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import axios from "axios";
 import {
   fetchAdminDesigns,
   fetchAdminDesignSummary,
@@ -9,6 +10,9 @@ import {
 } from "../../api/adminCustomDesign";
 import { ApiError } from "../../api/client";
 import type { ChatMessage, CustomDesignRecord } from "../../types";
+
+const NOTIFICATION_SERVICE_URL =
+  process.env.REACT_APP_NOTIFICATION_SERVICE_URL || "http://localhost:5007";
 
 const ORDER_STATUSES = [
   "Pending",
@@ -130,10 +134,39 @@ function DesignDetail({
   const handleSave = async () => {
     setSaving(true);
     setSaveMsg("");
+
     try {
-      const updated = await updateAdminDesign(design._id, { orderStatus: status, adminNotes: notes });
+      const previousStatus = design.orderStatus || "Pending";
+      const statusChanged = previousStatus !== status;
+
+      const updated = await updateAdminDesign(design._id, {
+        orderStatus: status,
+        adminNotes: notes,
+      });
+
       onUpdated(updated);
       setSaveMsg("Saved.");
+
+      // Notify the customer whenever the admin changes the custom-design status.
+      // Guest submissions may not have a userId, so there is no customer account
+      // to which a notification can be delivered in that case.
+      if (statusChanged && design.userId) {
+        try {
+          await axios.post(
+            `${NOTIFICATION_SERVICE_URL}/notifications`,
+            {
+              userId: design.userId,
+              title: "Custom Design Status Updated",
+              message: `Your custom design order ${design.customOrderId || design._id} status has been updated to "${status}".`,
+            }
+          );
+
+          console.log("Custom design status notification created successfully");
+        } catch (notificationError) {
+          // The status update succeeded; notification failure must not undo it.
+          console.error("Custom design notification error:", notificationError);
+        }
+      }
     } catch {
       setSaveMsg("Failed to save.");
     } finally {

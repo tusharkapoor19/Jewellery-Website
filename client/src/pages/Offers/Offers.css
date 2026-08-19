@@ -936,3 +936,23 @@ body.dark-mode .live-offer-card p {
 body.dark-mode .live-offer-card small {
   color: #e6c98a;
 }
+
+.offer-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.festival-card h3,
+.why-card h3,
+.membership-content li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.festival-card h3 svg,
+.why-card h3 svg,
+.membership-content li svg {
+  flex-shrink: 0;
+}
