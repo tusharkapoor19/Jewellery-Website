@@ -56,7 +56,24 @@ const getMonthlyAnalytics = async (monthStr) => {
 
     const orders = await Order.find({
         createdAt: { $gte: startDate, $lt: endDate },
-        orderStatus: { $ne: "Cancelled" }
+        /*
+         * Only count orders that have actually been confirmed by
+         * the admin — same "approved" bucket the Pending Orders
+         * panel uses (see statusToUi in client/src/api/adapters.ts).
+         * Excludes "Pending"/"Payment Pending" (not yet approved)
+         * and "Cancelled"/"Refunded" (rejected) — previously only
+         * "Cancelled" was excluded, so pending and refunded orders
+         * were inflating totalRevenue.
+         */
+        orderStatus: {
+            $in: [
+                "Confirmed",
+                "Packed",
+                "Shipped",
+                "Out For Delivery",
+                "Delivered"
+            ]
+        }
     });
 
     const emptyResult = {

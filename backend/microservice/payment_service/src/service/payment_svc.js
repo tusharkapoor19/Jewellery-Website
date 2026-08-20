@@ -23,37 +23,6 @@ const createPayment = async (userID,orderID,token) => {                         
         error.statusCode = 404;
         throw error;
     }
-
-    /*
-     * orderID is unique on the Payment collection. If the user
-     * already started a payment for this order once (e.g. they
-     * opened Razorpay, cancelled/dismissed it, and are now
-     * hitting "Retry Payment" on the same order), a Payment
-     * document for this orderID already exists. Blindly calling
-     * Payment.create() again would violate that unique index
-     * (Mongo E11000) and — since that error has no statusCode —
-     * surface to the client as a raw, unhelpful 500.
-     *
-     * Instead, reuse that existing document: if it hasn't been
-     * paid yet, refresh it with a brand-new Razorpay order so
-     * the retry can proceed. If it was already paid, block the
-     * duplicate payment with a clear message.
-     */
-    const existingPayment = await Payment.findOne({
-        orderID: order.orderID
-    });
-
-    if (
-        existingPayment &&
-        existingPayment.paymentStatus === "Success"
-    ) {
-        const error = new Error(
-            "This order has already been paid for."
-        );
-        error.statusCode = 400;
-        throw error;
-    }
-
     const razorpayOrder = await razorpay.orders.create({
         amount: order.totalAmount * 100,
         currency: "INR",
@@ -63,26 +32,14 @@ const createPayment = async (userID,orderID,token) => {                         
 
     });
 
-    let payment;
-
-    if (existingPayment) {
-        existingPayment.amount = order.totalAmount;
-        existingPayment.razorpayOrderID = razorpayOrder.id;
-        existingPayment.paymentStatus = "Pending";
-        existingPayment.razorpayPaymentID = undefined;
-        existingPayment.razorpaySignature = undefined;
-
-        payment = await existingPayment.save();
-    } else {
-        payment = await Payment.create({
-            paymentID: `PAY-${Date.now()}`,
-            orderID: order.orderID,
-            userID,
-            amount: order.totalAmount,
-            razorpayOrderID: razorpayOrder.id,
-            paymentStatus: "Pending"
-        });
-    }
+    const payment = await Payment.create({
+        paymentID: `PAY-${Date.now()}`,
+        orderID: order.orderID,
+        userID,
+        amount: order.totalAmount,
+        razorpayOrderID: razorpayOrder.id,
+        paymentStatus: "Pending"
+    });
 
     return {
         payment,
