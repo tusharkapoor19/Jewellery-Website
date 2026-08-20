@@ -36,6 +36,26 @@
   box-shadow: var(--shadow-md);
 }
 
+/* ---------- Face/hand detection overlay ---------- */
+.tryon-detecting-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(11, 14, 17, 0.45);
+  pointer-events: none;
+}
+
+.tryon-detecting-overlay .loader-inline {
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  box-shadow: var(--shadow-lg);
+}
+
 /* ---------- Canvas top toolbar ---------- */
 .canvas-toolbar {
   display: flex;

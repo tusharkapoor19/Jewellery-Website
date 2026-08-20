@@ -13,6 +13,9 @@ export interface PlacementResult {
   top: number;
   scaleFactor: number;
   angle: number;
+  /** Mirror the artwork horizontally — used for the second earring of a
+   *  pair, since a single earring asset is reused for both ears. */
+  flipX?: boolean;
 }
 
 /**

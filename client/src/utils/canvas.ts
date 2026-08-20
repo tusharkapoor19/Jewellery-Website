@@ -1,8 +1,8 @@
 import { fabric } from 'fabric';
 import { v4 as uuidv4 } from 'uuid';
 import { loadFabricImage } from '../services/fabric';
-import { getDefaultPlacement, type PlacementBounds } from './placement';
-import type { JewelleryItem } from '../types/Jewellery';
+import { getDefaultPlacement, type PlacementBounds, type PlacementResult } from './placement';
+import type { JewelleryItem, JewelleryCategoryId } from '../types/Jewellery';
 
 export interface AddJewelleryResult {
   object: fabric.Image;
@@ -12,14 +12,50 @@ export interface AddJewelleryResult {
 /**
  * Adds a jewellery PNG/SVG image onto the canvas at a sensible default
  * position derived from the photo bounds, ready for manual fine-tuning.
+ *
+ * When `placementOverride` is supplied (e.g. computed from real face/hand
+ * landmark detection for necklaces, earrings and bangles) it is used
+ * instead of the fixed proportional default.
  */
 export const addJewelleryToCanvas = async (
   canvas: fabric.Canvas,
   item: JewelleryItem,
-  photoBounds: PlacementBounds
+  photoBounds: PlacementBounds,
+  placementOverride?: PlacementResult
+): Promise<AddJewelleryResult> => {
+  const placement = placementOverride ?? getDefaultPlacement(item.anchor, photoBounds);
+  const result = await placeJewelleryImage(canvas, item, placement);
+  canvas.setActiveObject(result.object);
+  canvas.requestRenderAll();
+  return result;
+};
+
+/**
+ * Adds the same jewellery image to the canvas twice — once per placement —
+ * for anchors that need two instances of a single-item asset (earrings on
+ * both ears: one earring image worn on the left ear and, mirrored via
+ * `placement.flipX`, on the right ear).
+ */
+export const addJewelleryPairToCanvas = async (
+  canvas: fabric.Canvas,
+  item: JewelleryItem,
+  placements: [PlacementResult, PlacementResult]
+): Promise<[AddJewelleryResult, AddJewelleryResult]> => {
+  const [first, second] = await Promise.all([
+    placeJewelleryImage(canvas, item, placements[0]),
+    placeJewelleryImage(canvas, item, placements[1]),
+  ]);
+  canvas.setActiveObject(second.object);
+  canvas.requestRenderAll();
+  return [first, second];
+};
+
+const placeJewelleryImage = async (
+  canvas: fabric.Canvas,
+  item: JewelleryItem,
+  placement: PlacementResult
 ): Promise<AddJewelleryResult> => {
   const img = await loadFabricImage(item.image);
-  const placement = getDefaultPlacement(item.anchor, photoBounds);
   const layerId = uuidv4();
 
   const naturalWidth = img.width || 200;
@@ -33,6 +69,7 @@ export const addJewelleryToCanvas = async (
     scaleX: scale,
     scaleY: scale,
     angle: placement.angle,
+    flipX: !!placement.flipX,
     opacity: 1,
     hasControls: true,
     hasBorders: true,
@@ -49,8 +86,6 @@ export const addJewelleryToCanvas = async (
   });
 
   canvas.add(img);
-  canvas.setActiveObject(img);
-  canvas.requestRenderAll();
 
   return { object: img, layerId };
 };
@@ -77,6 +112,23 @@ export const deleteLayer = (canvas: fabric.Canvas, layerId: string): void => {
     canvas.remove(obj);
     canvas.requestRenderAll();
   }
+};
+
+/**
+ * Removes every placed layer belonging to a given jewellery category
+ * (e.g. so applying a new necklace/pair of earrings/bangle replaces the
+ * one already worn instead of stacking on top of it). Only touches
+ * layers, never the background photo.
+ */
+export const removeLayersByCategory = (
+  canvas: fabric.Canvas,
+  categoryId: JewelleryCategoryId
+): void => {
+  const toRemove = canvas
+    .getObjects()
+    .filter((o: any) => !o.data?.isBackground && o.data?.categoryId === categoryId);
+  toRemove.forEach((obj) => canvas.remove(obj));
+  if (toRemove.length) canvas.requestRenderAll();
 };
 
 export const duplicateActiveObject = (canvas: fabric.Canvas): void => {
