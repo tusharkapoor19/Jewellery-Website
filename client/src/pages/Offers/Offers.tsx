@@ -293,7 +293,7 @@ const Offers = () => {
           FEATURED OFFER
       ================================================= */}
 
-      <section
+      {/* <section
         className="featured-offer-section"
         id="featured-offer"
       >
@@ -355,7 +355,7 @@ const Offers = () => {
 
         </div>
 
-      </section>
+      </section> */}
 
 
       {/* =================================================

@@ -402,6 +402,33 @@ const MyOrders: React.FC = () => {
                     );
 
                 }
+            ).sort(
+                (a, b) => {
+
+                    /*
+                     * Newest order first — ORD023 before ORD001.
+                     * Order IDs are "ORD" + a zero-padded number
+                     * (see order_svc.js createorder), so pulling
+                     * the numeric part out and comparing it
+                     * descending sorts newest-to-oldest reliably
+                     * even once the number grows past 3 digits.
+                     */
+
+                    const numA =
+                        parseInt(
+                            a.orderID.replace(/\D/g, ""),
+                            10
+                        ) || 0;
+
+                    const numB =
+                        parseInt(
+                            b.orderID.replace(/\D/g, ""),
+                            10
+                        ) || 0;
+
+                    return numB - numA;
+
+                }
             );
 
         }, [

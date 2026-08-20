@@ -31,10 +31,22 @@ const filters: { label: string; value: OrderStatus | "all" }[] = [
 const PendingOrders: React.FC<PendingOrdersProps> = ({ orders, onUpdateStatus }) => {
   const [filter, setFilter] = useState<OrderStatus | "all">("pending");
 
-  const visibleOrders = useMemo(
-    () => (filter === "all" ? orders : orders.filter((o) => o.status === filter)),
-    [orders, filter]
-  );
+  const visibleOrders = useMemo(() => {
+    const filtered =
+      filter === "all" ? orders : orders.filter((o) => o.status === filter);
+
+    /*
+     * Newest order first — ORD023 before ORD001 — across every tab
+     * (All / Pending / Approved / Rejected). orderCode is "ORD" + a
+     * zero-padded number, so compare the numeric part descending
+     * rather than the string (keeps it correct past 3 digits too).
+     */
+    return [...filtered].sort((a, b) => {
+      const numA = parseInt(a.orderCode.replace(/\D/g, ""), 10) || 0;
+      const numB = parseInt(b.orderCode.replace(/\D/g, ""), 10) || 0;
+      return numB - numA;
+    });
+  }, [orders, filter]);
 
   const pendingCount = orders.filter((o) => o.status === "pending").length;
   const approvedValue = orders
