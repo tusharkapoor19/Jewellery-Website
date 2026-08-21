@@ -163,10 +163,20 @@ const getMonthlyAnalytics = async (monthStr) => {
 
             const user = userMap.get(order.userID);
 
+            /*
+             * The user account behind order.userID may no longer
+             * exist (deleted / re-created with a new _id, or an
+             * order created with a stale reference). In that case
+             * fall back to the details captured on the order itself
+             * at checkout time instead of showing "Unknown customer".
+             */
+            const fallbackName = order.shippingAddress?.fullName;
+            const fallbackContact = order.shippingAddress?.phone;
+
             customerStatsMap.set(order.userID, {
                 userID: order.userID,
-                name: user ? user.name : "Unknown customer",
-                email: user ? user.email : "—",
+                name: user ? user.name : (fallbackName || "Unknown customer"),
+                email: user ? user.email : (fallbackContact || "—"),
                 orderCount: 1,
                 totalSpent: order.totalAmount
             });

@@ -19,8 +19,8 @@ const TROY_OUNCE_TO_GRAM = 31.1035
 
 // India market premiums over international spot (import duty, GST on
 // bullion, dealer margin) — same figures the TopBar ticker has always used.
-const GOLD_PREMIUM = 14.9
-const SILVER_PREMIUM = 18.46
+const GOLD_PREMIUM = 14.4
+const SILVER_PREMIUM = 15.2
 const PLATINUM_PREMIUM = 14
 
 const REFRESH_INTERVAL_MS = 60000
